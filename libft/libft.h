@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:06:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/22 17:15:58 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/03 22:37:25 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char				*ft_strnstr(const char *big, const char *little,
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
+void				insertend(t_list **root, void *new_value, int *flag);
 void				*ft_memset(void *s, int c, size_t n);
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 void				ft_lstadd_back(t_list **lst, t_list *new);

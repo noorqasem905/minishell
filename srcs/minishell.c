@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:32:33 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/03 22:38:23 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/05 21:31:29 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,39 @@ int read_input(char **input)
     return (0);
 }
 
+int save_data(char **input, t_cmd **cmd, int *flag)
+{
+    char **temp;
+    int size;
+    int iterator;
+
+    *flag = 0;
+    temp = ft_split(*input, ' ');
+    if (temp == NULL)
+        return (-1);
+    size = ft_2dlen(temp);
+    (*cmd)->word = NULL;
+    iterator = -1;
+    while (++iterator < size)
+        if (temp[iterator] != NULL)
+        {
+            insertend(&((*cmd)->word), temp[iterator], flag);
+            if (*flag == 12)
+                break;
+        }
+    free(*input);
+    frees_split(temp);
+    return (*flag);
+}
 int main(int argc, char *argv[])
 {
     t_cmd *cmd;
     char *str = "hello";
+    int         size;
+    int         iterator;
+    int         flag;
 
     cmd = malloc(sizeof(t_cmd));
-    // insertend(&cmd->word , str, 0);
-    // printf("cmd->word: %s\n", (char *)cmd->word->content);
-    // malloc for word or use linked list i think it's better
     if (argc > 1)
     {
         fprintf(stderr, "Usage: %s\n", argv[0]);
@@ -64,18 +88,14 @@ int main(int argc, char *argv[])
             free(input);
             break;
         }
-        ft_printf("You entered: %s\n", input);
-        // cmd->word = ft_split(input, ' ');
-        // frees_split(cmd->word);
-        // cmd->word = malloc(sizeof(char *) * 2);
-    
-        // if (cmd->word == NULL)
-        // {
-        //     free(input);
-        //     return (-1);
-        // }
-        // ft_printf("Command: %s\n", cmd->word[0]);
-        free(input);
+        if (save_data(&input, &cmd, &flag) == -1)
+        {
+            perror("save_data");
+            free(input);
+            break;
+        }
+        frees(&cmd->word);
     }
+    free(cmd);
     return 0;
 }

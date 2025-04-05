@@ -1,7 +1,7 @@
 CC =  cc
 # CFLAGS = -Wall -Werror -Wextra -g
 NAME = minishell
-SRCS = srcs/minishell.c
+SRCS = srcs/minishell.c srcs/handling.c
 
 all: $(NAME)
 

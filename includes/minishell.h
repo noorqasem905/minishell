@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/03 22:37:35 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/05 21:21:29 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ struct          s_cmd
     t_list            *word;
 };
 int read_input(char **input);
+int save_data(char **input, t_cmd **cmd, int *flag);
+void	frees(t_list **root);
+
 
 #endif

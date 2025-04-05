@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handling.c                                         :+:      :+:    :+:   */
+/*   ft_2dlen.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 20:40:01 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/05 19:03:15 by nqasem           ###   ########.fr       */
+/*   Created: 2025/04/05 18:51:57 by nqasem            #+#    #+#             */
+/*   Updated: 2025/04/05 18:56:10 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	frees(t_list **root)
+int	ft_2dlen(char **str)
 {
-	t_list	*cur;
-	t_list	*cur2;
+	int		counter;
 
-	cur = *root;
-	while (cur != NULL)
-	{
-		cur2 = cur;
-		cur = cur->next;
-		free(cur2);
-	}
-	free(cur);
-	*root = NULL;
+	while (!str)
+		return (0);
+	counter = 0;
+	while (str[counter] != NULL)
+		counter++;
+	return (counter);
 }

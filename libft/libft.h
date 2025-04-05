@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:06:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/03 22:37:25 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/05 18:55:24 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int					ft_isprint(int c);
 int					hexa_to_int(char *s);
 int					ft_atoi_hexa(char s);
 int					ft_lstsize(t_list *lst);
+int					ft_2dlen(char **str);
 int					ft_power(int num, int power);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);

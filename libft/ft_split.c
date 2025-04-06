@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 22:04:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/22 17:15:29 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/06 19:00:28 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	frees_split(char **root)
 		i++;
 	}
 	free(root);
+	root = NULL;
 }
 
 int	word_count(char const *s, char c)

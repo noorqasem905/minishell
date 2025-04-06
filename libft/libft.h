@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:06:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/05 18:55:24 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/06 19:39:23 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
-
 int					ft_toupper(int c);
 int					ft_abs(int __x);
 int					ft_tolower(int c);

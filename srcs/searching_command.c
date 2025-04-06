@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_2dlen.c                                         :+:      :+:    :+:   */
+/*   searching_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 18:51:57 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/06 14:00:31 by nqasem           ###   ########.fr       */
+/*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
+/*   Updated: 2025/04/06 20:24:30 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-int	ft_2dlen(char **str)
+int    searching_comand(char **input, char **temp)
 {
-	int		counter;
-
-	while (!str)
-		return (0);
-	counter = 0;
-	while (str[counter] != NULL)
-		counter++;
-	return (counter);
+    if (ft_strcmp(temp[0], "exit") == 0)
+	{
+		// free(*input);
+        return (-1);
+    }
+    if (ft_strcmp(temp[0], "clear") == 0) {
+        // clear_terminal(); // Clear the terminal
+        free(*input);
+        return (0);
+    }
+    return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:27:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/05 21:22:38 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/06 19:38:59 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	insertend(t_list **root, void *new_value, int *flag)
 	}
 	curr = *root;
 	while (curr->next)
-	{
 		curr = curr->next;
-	}
 	curr->next = new_node;
 }

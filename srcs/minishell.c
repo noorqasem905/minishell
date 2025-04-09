@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char *argv[])
+int	main(int argc, char *argv[], char **env)
 {
 	t_cmd	*cmd;
 	char	*input;

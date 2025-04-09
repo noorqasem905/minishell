@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/06 20:24:30 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/09 20:07:00 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int    searching_comand(char **input, char **temp)
     }
     if (ft_strcmp(temp[0], "clear") == 0) {
         // clear_terminal(); // Clear the terminal
-        free(*input);
+        clear_history();
+        // free(*input);
         return (0);
     }
     return (0);

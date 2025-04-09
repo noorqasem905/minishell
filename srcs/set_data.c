@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/06 20:22:15 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/09 20:21:20 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,6 @@ void print_saved_cmd(t_list *saved_cmd) {
     }
 }
 
-void clear_terminal() {
-    system("clear");
-}
 int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 {
     if (*input)
@@ -91,8 +88,6 @@ int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
     return (0);
 }
 
-
-
 int reading_manager(t_cmd **cmd, int *flag, char ***temp)
 {
     char *input;
@@ -108,6 +103,9 @@ int reading_manager(t_cmd **cmd, int *flag, char ***temp)
             *flag = 0;
             continue;
         }
+        print_saved_cmd((*cmd)->word);
+        printf("Command saved successfully.\n");
+        printf("%s\n", temp[0][0]);  
         frees_split(*temp);
         frees((&(*cmd)->word));
     }

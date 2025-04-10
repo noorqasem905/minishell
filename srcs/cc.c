@@ -44,13 +44,24 @@ int main() {
         close(pipe_fd[0]);
 
         // Define arguments for execve
-        char *cmd2 = "/usr/bin/ls"; // Full path to grep
-        char *args2[] = {"ls", "-l", NULL};
+        char *cmd2 = "/usr/bin/grep"; // Full path to grep
+        char *args2[] = {"grep","n.c", NULL};
         execve(cmd2, args2, NULL); // Execute grep txt
         // perror("execve grep"); // If execve fails
         exit(EXIT_FAILURE);
     }
+    if (pid2 > 0) {
+        dup2(pipe_fd[0], STDIN_FILENO);
+        close(pipe_fd[1]);
+        close(pipe_fd[0]);
 
+        // Define arguments for execve
+        char *cmd3 = "/usr/bin/wc"; // Full path to grep
+        char *args3[] = {"wc", "-l", NULL};
+        execve(cmd3, args3, NULL); // Execute grep txt
+        // perror("execve grep"); // If execve fails
+        exit(EXIT_FAILURE);
+    }
     // Parent process: Close both ends of the pipe
     close(pipe_fd[0]);
     close(pipe_fd[1]);
@@ -68,3 +79,4 @@ int main() {
 
     return 0;
 }
+    // int pipefd[2 * (MAX_CMDS - 1)]; // multiply by 2 for read and write ends

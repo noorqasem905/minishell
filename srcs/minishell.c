@@ -13,6 +13,7 @@
 #include "../includes/minishell.h"
 
 int	main(int argc, char *argv[], char **env)
+
 {
 	t_cmd	*cmd;
 	char	*input;
@@ -23,13 +24,13 @@ int	main(int argc, char *argv[], char **env)
 	temp = NULL;
 	cmd = malloc(sizeof(t_cmd));
 
-	signal(SIGINT,signal_handler);
-	signal(SIGQUIT, SIG_IGN);
 	if (cmd == NULL)
 	{
 		perror("malloc");
 		return (1);
 	}
+	signal(SIGINT,signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 	if (argc > 1)
 	{
 		fprintf(stderr, "Usage: %s\n", argv[0]);

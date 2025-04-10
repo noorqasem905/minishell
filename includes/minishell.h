@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/10 18:12:11 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/10 19:07:43 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ char					*check_access(char **paths, char **result);
 
 
 
-int signal_handler(int x);
+void signal_handler(int x);
 
 #endif

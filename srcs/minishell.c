@@ -22,6 +22,9 @@ int	main(int argc, char *argv[], char **env)
 	input = NULL;
 	temp = NULL;
 	cmd = malloc(sizeof(t_cmd));
+
+	signal(SIGINT,signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 	if (cmd == NULL)
 	{
 		perror("malloc");

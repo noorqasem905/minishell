@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 19:32:33 by nqasem            #+#             */
+/*   Created: 2025/04/03 19:32:33 by nqasem            #+#             		  */
 /*   Updated: 2025/04/06 12:20:41 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -38,7 +38,7 @@ int	main(int argc, char *argv[], char **robo_env)
 		return (1);
 	}
     cmd->word = NULL;
-    reading_manager(&cmd, &flag, &temp);
+    reading_manager(&cmd, &flag, &temp, robo_env);
 	free(cmd);
 	return (0);
 }

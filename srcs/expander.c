@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
 /*   Updated: 2025/04/12 15:59:52 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/12 16:53:56 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +50,7 @@ static char *expantions(char *input, int *i, char **env)
     return (value);
 }
 
-char *expander_input(char *input, char **env)
+char *expander_input(t_list *input, char **env)
 {
     char *expanded = ft_strdup("");
     char *expand_var;

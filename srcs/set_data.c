@@ -6,30 +6,15 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/09 20:21:20 by nqasem           ###   ########.fr       */
+=======
+/*   Updated: 2025/04/12 15:25:15 by aalquraa         ###   ########.fr       */
+>>>>>>> 44fea22 (expander added)
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	read_input(char **input)
-{
-	size_t	length;
-	char	*read;
-
-	ft_printf("Roboshell> ");
-	read = get_next_line(0);
-	if (read == NULL)
-		return (-1);
-	length = ft_strlen(read);
-	(*input) = ft_strdup(read);
-	free(read);
-	if ((*input) == NULL)
-		return (-1);
-	if (length > 0 && (*input)[length - 1] == '\n')
-		(*input)[length - 1] = '\0';
-	return (0);
-}
 
 int	save_data(char **input, t_cmd **cmd, int *flag, char ***temp)
 {
@@ -37,10 +22,11 @@ int	save_data(char **input, t_cmd **cmd, int *flag, char ***temp)
 	int	iterator;
 
 	*flag = 0;
-	*temp = ft_split(*input, ' ');
+	*temp = ft_split(*input, '|');
 	free(*input);
 	if (*temp == NULL)
 		return (-1);
+
 	size = ft_2dlen(*temp);
     if (size == 0)
         return (*flag = -3);
@@ -80,6 +66,8 @@ int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
         free(*input);
 		return (-1);
 	}
+    expander_input((*temp)[0], NULL);
+    print_saved_cmd((*cmd)->word);
     if (searching_comand(input, *temp) == -1)
     {
         free(*input);
@@ -92,7 +80,11 @@ int reading_manager(t_cmd **cmd, int *flag, char ***temp)
 {
     char *input;
     int ret;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 44fea22 (expander added)
     while ((input = readline("Roboshell> ")) != NULL)
     {
         ret = process_input(cmd, flag, temp, &input);
@@ -103,9 +95,6 @@ int reading_manager(t_cmd **cmd, int *flag, char ***temp)
             *flag = 0;
             continue;
         }
-        print_saved_cmd((*cmd)->word);
-        printf("Command saved successfully.\n");
-        printf("%s\n", temp[0][0]);  
         frees_split(*temp);
         frees((&(*cmd)->word));
     }

@@ -12,7 +12,8 @@
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char *argv[], char **env)
+int	main(int argc, char *argv[], char **robo_env)
+
 {
 	t_cmd	*cmd;
 	char	*input;
@@ -22,11 +23,14 @@ int	main(int argc, char *argv[], char **env)
 	input = NULL;
 	temp = NULL;
 	cmd = malloc(sizeof(t_cmd));
+
 	if (cmd == NULL)
 	{
 		perror("malloc");
 		return (1);
 	}
+	signal(SIGINT,signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 	if (argc > 1)
 	{
 		fprintf(stderr, "Usage: %s\n", argv[0]);

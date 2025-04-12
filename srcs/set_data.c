@@ -5,12 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
+/*   Updated: 2025/04/12 15:25:15 by aalquraa         ###   ########.fr       */
 /*   Updated: 2025/04/12 17:36:22 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "../includes/minishell.h"
 
@@ -77,10 +76,8 @@ int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input,  char 
 int reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 {
     char *input;
-    int ret;
-
-
-    
+    int ret
+     
     while ((input = readline("Roboshell> ")) != NULL)
     {
         ret = process_input(cmd, flag, temp, &input, robo_env);

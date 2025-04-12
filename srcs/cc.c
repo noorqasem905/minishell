@@ -5,6 +5,7 @@
 
 int main() {
     int pipe_fd[2];
+    int pipe_fd2[2 * 3 ];
     pid_t pid1, pid2;
 
     // Create pipe

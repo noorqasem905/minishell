@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/12 17:32:36 by aalquraa         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/04/12 17:36:22 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #include "../includes/minishell.h"
@@ -48,7 +49,7 @@ void print_saved_cmd(t_list *saved_cmd) {
     }
 }
 
-int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
+int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input,  char **robo_env)
 {
     if (*input)
         add_history(*input);
@@ -63,7 +64,7 @@ int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
         free(*input);
 		return (-1);
 	}
-    expander_input((*temp)[0], NULL);
+    expander_input((*cmd)->word, robo_env);
     print_saved_cmd((*cmd)->word);
     if (searching_comand(input, *temp) == -1)
     {
@@ -73,15 +74,16 @@ int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
     return (0);
 }
 
-int reading_manager(t_cmd **cmd, int *flag, char ***temp)
+int reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 {
     char *input;
     int ret;
 
+
     
     while ((input = readline("Roboshell> ")) != NULL)
     {
-        ret = process_input(cmd, flag, temp, &input);
+        ret = process_input(cmd, flag, temp, &input, robo_env);
         if (ret == -1)
             break;
         else if (ret == -3)

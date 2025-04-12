@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/12 17:29:37 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:35:41 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ struct					s_cmd
 {
 	t_list						*word;
 };
-int						process_input(t_cmd **cmd, int *flag, char ***temp, char **input);
+int						process_input(t_cmd **cmd, int *flag, char ***temp, char **input, char **robo_env);
 int						check_validation(char **paths, char **result, char **m);
 int						get_path(char **ev);
 int						execution(t_cmd **cmd, char **env);
@@ -44,12 +44,11 @@ int    					searching_comand(char **input, char **temp);
 int						save_data(char **input, t_cmd **cmd, int *flag,
 							char ***temp);
 int						reading_manager(t_cmd **cmd, int *flag,
-							char ***temp);
+							char ***temp, char **robo_env);
 int						read_input(char **input);
 void					free_list(t_list **root);
 void					frees(t_list **root);
 char					*check_access(char **paths, char **result);
-
 
 char *expander_input(char *input, char **env);
 

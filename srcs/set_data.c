@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/04/09 20:21:20 by nqasem           ###   ########.fr       */
-=======
-/*   Updated: 2025/04/12 15:25:15 by aalquraa         ###   ########.fr       */
->>>>>>> 44fea22 (expander added)
+/*   Updated: 2025/04/12 17:32:36 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../includes/minishell.h"
 
@@ -80,11 +77,8 @@ int reading_manager(t_cmd **cmd, int *flag, char ***temp)
 {
     char *input;
     int ret;
-<<<<<<< HEAD
 
-=======
     
->>>>>>> 44fea22 (expander added)
     while ((input = readline("Roboshell> ")) != NULL)
     {
         ret = process_input(cmd, flag, temp, &input);

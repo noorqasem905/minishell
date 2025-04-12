@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/04/10 15:20:35 by nqasem           ###   ########.fr       */
-=======
-/*   Updated: 2025/04/12 13:27:17 by aalquraa         ###   ########.fr       */
->>>>>>> 44fea22 (expander added)
+/*   Updated: 2025/04/12 17:29:37 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +49,10 @@ int						read_input(char **input);
 void					free_list(t_list **root);
 void					frees(t_list **root);
 char					*check_access(char **paths, char **result);
-<<<<<<< HEAD
-=======
 
 
 char *expander_input(char *input, char **env);
 
 void signal_handler(int x);
 
->>>>>>> 44fea22 (expander added)
 #endif

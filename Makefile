@@ -1,11 +1,8 @@
 CC =  cc
 # CFLAGS = -Wall -Werror -Wextra -g
 NAME = minishell
-<<<<<<< HEAD
-SRCS = srcs/minishell.c srcs/handling.c srcs/set_data.c srcs/searching_command.c
-=======
+
 SRCS = srcs/minishell.c srcs/handling.c srcs/set_data.c srcs/searching_command.c srcs/signal.c srcs/expander.c
->>>>>>> 44fea22 (expander added)
 
 all: $(NAME)
 

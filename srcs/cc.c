@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "../includes/minishell.h"
+#include <string.h>
 #include <sys/wait.h>
 
 int main() {
     int pipe_fd[2];
-    int pipe_fd2[2 * 3 ];
+    int pipe_fd2[2 * 3];
     pid_t pid1, pid2;
 
     // Create pipe
@@ -13,71 +15,69 @@ int main() {
         // perror("pipe");
         exit(EXIT_FAILURE);
     }
+    int i = 0;
+    while (i < 3) {
+        if (pipe(pipe_fd2 + i * 2) == -1) {
+            perror("pipe");
+            exit(EXIT_FAILURE);
+        }
+        i++; // Ensure the loop increments to avoid infinite loop
+    }        
 
-    // Save the original stdout to restore it later
-    int saved_stdout = dup(STDOUT_FILENO);
-
-    // First child: "ls -l"
-    // printf("Creating first child process...\n");
-    pid1 = fork();
-    if (pid1 == 0) {
-        // Redirect stdout to write end of pipe
-        dup2(pipe_fd[1], STDOUT_FILENO); // Redirect to pipe
-        close(pipe_fd[0]); // Close unused read end
-        close(pipe_fd[1]); // Close write end after dup2
-
-        // Print to screen as well before executing
-        // printf("This will not be printed, as stdout is redirected to the pipe.\n");
-
-        // Define arguments for execve
-        char *cmd1 = "/bin/ls"; // Full path to ls
-        char *args1[] = {"ls", "-l", NULL};
-        execve(cmd1, args1, NULL); // Execute ls -l
-        // perror("execve ls"); // If execve fails
-        exit(EXIT_FAILURE);
+    int size = 3;
+    i = 0;
+    while (i < size) {
+        pid1 = fork();
+        if (pid1 == 0) {
+            // Child process
+            if (i != size - 1) {
+                // Redirect stdout to the write end of the current pipe
+                dup2(pipe_fd2[(i * 2) + 1], STDOUT_FILENO);
+            }
+            if (i != 0) {
+                // Redirect stdin to the read end of the previous pipe
+                dup2(pipe_fd2[(i - 1) * 2], STDIN_FILENO);
+            }
+            // Close all pipe ends in the child process
+            int j = 0;
+            while (j < size) {
+                close(pipe_fd2[j * 2]);
+                close(pipe_fd2[(j * 2) + 1]);
+                j++;
+            }
+            // Execute command based on the child index
+            if (i == 0) {
+                char *cmd1 = "/usr/bin/ls";
+                char *args1[] = {"ls", "-al", NULL};
+                execve(cmd1, args1, NULL);
+            } else if (i == 1) {
+                char *cmd2 = "/usr/bin/grep";
+                char *args2[] = {"grep", ".c", NULL};
+                execve(cmd2, args2, NULL);
+            } else if (i == 2) {
+                char *cmd3 = "/usr/bin/wc";
+                char *args3[] = {"wc", "-l", NULL};
+                execve(cmd3, args3, NULL);
+            }
+            // If execve fails
+            perror("execve");
+            exit(EXIT_FAILURE);
+        }
+        i++;
     }
-
-    // Second child: "grep txt"
-    pid2 = fork();
-    if (pid2 == 0) {
-        dup2(pipe_fd[0], STDIN_FILENO);
-        close(pipe_fd[1]);
-        close(pipe_fd[0]);
-
-        // Define arguments for execve
-        char *cmd2 = "/usr/bin/grep"; // Full path to grep
-        char *args2[] = {"grep","n.c", NULL};
-        execve(cmd2, args2, NULL); // Execute grep txt
-        // perror("execve grep"); // If execve fails
-        exit(EXIT_FAILURE);
+    // Close all pipe ends in the parent process
+    int j = 0;
+    while (j < size) {
+        close(pipe_fd2[j * 2]);
+        close(pipe_fd2[(j * 2) + 1]);
+        j++;
     }
-    if (pid2 > 0) {
-        dup2(pipe_fd[0], STDIN_FILENO);
-        close(pipe_fd[1]);
-        close(pipe_fd[0]);
-
-        // Define arguments for execve
-        char *cmd3 = "/usr/bin/wc"; // Full path to grep
-        char *args3[] = {"wc", "-l", NULL};
-        execve(cmd3, args3, NULL); // Execute grep txt
-        // perror("execve grep"); // If execve fails
-        exit(EXIT_FAILURE);
+    // Wait for all child processes to finish
+    i = 0;
+    while (i < size) {
+        wait(NULL);
+        i++;
     }
-    // Parent process: Close both ends of the pipe
-    close(pipe_fd[0]);
-    close(pipe_fd[1]);
-
-    // Wait for both children to finish
-    waitpid(pid1, NULL, 0);
-    waitpid(pid2, NULL, 0);
-
-    // Restore original stdout and print the output
-    dup2(saved_stdout, STDOUT_FILENO);
-    close(saved_stdout);
-
-    // Print a final message to confirm we're back to normal stdout
-    // printf("Back to normal stdout. Output after this message will go to the terminal.\n");
 
     return 0;
 }
-    // int pipefd[2 * (MAX_CMDS - 1)]; // multiply by 2 for read and write ends

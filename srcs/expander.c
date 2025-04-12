@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/04/12 15:59:52 by aalquraa         ###   ########.fr       */
-/*   Updated: 2025/04/12 16:53:56 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/12 21:14:28 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
 
+#include "../includes/minishell.h"
+/* 
 static char *get_env_value(char *name, char **env)
 {
     int len;
@@ -92,3 +92,4 @@ char *expander_input(t_list *input, char **env)
     }
     return (expanded);
 }
+ */

@@ -5,12 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 20:14:59 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/09 20:17:22 by nqasem           ###   ########.fr       */
+/*   Created: 2025/04/09 20:14:59 by nqasem            #+#             */
+/*   Updated: 2025/04/10 14:42:50 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	free_it_now(char **s, char *s2, int emassage)
+{
+	int	n;
+
+	n = 0;
+	if (s2 != NULL)
+		free(s2);
+	while (s[n])
+	{
+		free(s[n]);
+		n++;
+	}
+	free(s);
+	if (emassage || emassage == -1)
+		perror("Error");
+}
 
 int	check_validation(char **paths, char **result, char **m)
 {
@@ -27,19 +44,20 @@ int	check_validation(char **paths, char **result, char **m)
 	}
 	if (ft_strncmp(result[0], "./", 2) == 0)
 	{
-			if (access(result[0], X_OK) == -1) 
-			{
-        		perror("Error: File is not executable or doesn't exist");
-        		return (1);
-    		}
-			*m = result[0];
+		if (access(result[0], X_OK) == -1) 
+		{
+			free_it_now(paths, NULL, 0); // Free paths before returning
+			perror("Error: File is not executable or doesn't exist");
+			return (1);
+		}
+		*m = ft_strdup(result[0]); // Ensure memory duplication
 		return (4);
 	}
 	if (ft_strncmp(result[0], "/", 1) == 0)
 	{
-		
 		if (access(result[0], F_OK | X_OK) == 0)	
 		{
+			*m = ft_strdup(result[0]); // Fix missing assignment to *m
 			return (5);
 		}
 		else
@@ -122,6 +140,8 @@ int	ft_execve(char *file, char **ev)
 	if (m == NULL || flag < 0)
 	{
 		free_it_now(result, NULL, 1);
+		if (m != NULL) // Free m if allocated
+			free(m);
 		return (-1);
 	}
 	if (execve(m, result, ev) == -1)

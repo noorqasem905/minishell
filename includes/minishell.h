@@ -6,7 +6,11 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2025/04/10 15:20:35 by nqasem           ###   ########.fr       */
+=======
 /*   Updated: 2025/04/12 13:27:17 by aalquraa         ###   ########.fr       */
+>>>>>>> 1997373ca21debd5f2cf97323e866b9cd3c4522c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +40,9 @@ struct					s_cmd
 int						process_input(t_cmd **cmd, int *flag, char ***temp, char **input);
 int						check_validation(char **paths, char **result, char **m);
 int						get_path(char **ev);
-int						execution(t_cmd **cmd);
-int						free_it_now(char **temp, char **input, int flag);
+int						execution(t_cmd **cmd, char **env);
+int						f4ree_it_now(char **temp, char **input, int flag);
+void					free_it_now(char **s, char *s2, int emassage);
 int						ft_execve(char *file, char **ev);
 int    					searching_comand(char **input, char **temp);
 int						save_data(char **input, t_cmd **cmd, int *flag,

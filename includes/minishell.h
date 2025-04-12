@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/10 19:07:43 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/12 13:27:17 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void					frees(t_list **root);
 char					*check_access(char **paths, char **result);
 
 
-
+char *expander_input(char *input, char **env);
 
 void signal_handler(int x);
 

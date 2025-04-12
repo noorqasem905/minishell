@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char *argv[], char **env)
+int	main(int argc, char *argv[], char **robo_env)
 
 {
 	t_cmd	*cmd;

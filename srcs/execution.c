@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/10 18:25:46 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/12 16:12:32 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int execution(t_cmd **cmd, char **env)
 	}
 	return (0);
 }
-
-int main(int argc, char *argv[], char **env)
+/* 
+int madin(int argc, char *argv[], char **env)
 {
 	t_cmd *cmd;
 	// char str[4][20] = {"ls -l", "grep .c", "wc -l"};
@@ -74,7 +74,7 @@ int main(int argc, char *argv[], char **env)
 		execution(&cmd, env);
 	free(cmd);
 	return (0);
-}
+} */
 
 	/* int	maind(int argc, char *argv[], char **env)
 	{

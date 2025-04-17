@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/17 19:53:29 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/17 20:01:01 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
             dprintf(2,"No command found\n");
             if (ret == -12)
             {
+                // There is an issue child process does not die
                 free(cmd);
                 exit(EXIT_FAILURE);
             }

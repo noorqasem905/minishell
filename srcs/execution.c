@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/17 18:55:29 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/17 19:55:32 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int execution(t_cmd **cmd, char **env)
 				j++;
             }
 			if (ft_execve(current->content, env) == -1)
-				exit(EXIT_FAILURE);
+				return (-12);
 		}
 		if (i > 0)
 			close(pipe_fd2[i - 1][0]);
@@ -104,6 +104,7 @@ int execution(t_cmd **cmd, char **env)
     i = -1;
     while (++i < size)
         wait(NULL);
+	return (0);
 }
 /* 
 int madin(int argc, char *argv[], char **env)

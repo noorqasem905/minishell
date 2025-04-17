@@ -31,11 +31,6 @@ void	free_it_now(char **s, char *s2, int emassage)
 
 int	check_validation(char **paths, char **result, char **m)
 {
-	char	*o;
-	char	*s;
-
-	o = "bash";
-	s = " ";
 	*m = NULL;
 	if (!paths)
 	{
@@ -123,11 +118,6 @@ int	ft_execve(char *file, char **ev)
 	int 	flag;
 	char	*m;
 
-	if (file == NULL)
-	{
-		perror("Error: No command provided");
-		return (-1);
-	}
 	result = ft_split(file, ' ');
 	if (!result)
 	{

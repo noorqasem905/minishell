@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/17 18:54:03 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/17 19:53:29 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,35 +53,28 @@ int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input,  char 
     if (*input)
         add_history(*input);
     *temp = ft_split(*input, '|');
+    // if (searching_comand(input, *temp) == -1)
+    //     return (-1);
 	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3)
     {
-            dprintf(2,"No  found\n");
         if (*flag == -3)
-        {   
-            // frees_split(*temp);
             return (-3);
-        }
-
 		return (-1);
-	}
+    }
     // expander_input((*cmd)->word, robo_env);
-    execution(cmd, robo_env);
-    if (ft_strcmp(*temp[0], "exit") == 0)
+    if (execution(cmd, robo_env) == -1)
     {
+        return (-12);
+    }
+    // execution(cmd, robo_env);
+    //     {}// exit(EXIT_FAILURE);
+    if (ft_strcmp(*temp[0], "exit") == 0)
+	{
         free(*input);
+		// free(*input);
         return (-1);
     }
     free(*input);
-    // print_saved_cmd((*cmd)->word);
-    // if (searching_comand(input, *temp) == -1)
-    // {
-    //     free(*input);
-    //     return (-1);
-    // }
-    // free(*input);
-    // frees_split(*temp);
-    // free(temp);
-    // free(*input);
 
     return (0);
 }
@@ -94,24 +87,27 @@ int reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
     while ((input = readline("Roboshell> ")) != NULL)
     {
         ret = process_input(cmd, flag, temp, &input, robo_env);
-        if (ret == -1)
+        if (ret == -1 || ret == -12)
         {
             frees_split(*temp);
             free_list((&(*cmd)->word));        
             dprintf(2,"No command found\n");
-            // free(*input);
+            if (ret == -12)
+            {
+                free(cmd);
+                exit(EXIT_FAILURE);
+            }
             break;
         }
         else if (ret == -3)
         {
             *flag = 0;
+            frees_split(*temp);
             free_list(&(*cmd)->word);
             continue;
         }
         frees_split(*temp);
         free_list(&(*cmd)->word);
-        // free(*temp);
-        // frees((&(*cmd)->word));
     }
     printf("Exiting...\n");
     return (0);

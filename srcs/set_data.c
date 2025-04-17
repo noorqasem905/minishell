@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/12 21:14:16 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/17 18:54:03 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	save_data(char **input, t_cmd **cmd, int *flag, char ***temp)
 	int	iterator;
 
 	*flag = 0;
-	*temp = ft_split(*input, '|');
-	free(*input);
 	if (*temp == NULL)
+    {
+        perror("ft_split");
 		return (-1);
-
-	size = ft_2dlen(*temp);
+    }
+    size = ft_2dlen(*temp);
     if (size == 0)
         return (*flag = -3);
 	(*cmd)->word = NULL;
@@ -52,24 +52,37 @@ int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input,  char 
 {
     if (*input)
         add_history(*input);
-	if (save_data(input, cmd, flag, temp) == -1 || *flag == -3)
-	{
+    *temp = ft_split(*input, '|');
+	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3)
+    {
+            dprintf(2,"No  found\n");
         if (*flag == -3)
         {   
-            frees_split(*temp);
+            // frees_split(*temp);
             return (-3);
         }
-        perror("save_data");
-        free(*input);
+
 		return (-1);
 	}
     // expander_input((*cmd)->word, robo_env);
-    print_saved_cmd((*cmd)->word);
-    if (searching_comand(input, *temp) == -1)
+    execution(cmd, robo_env);
+    if (ft_strcmp(*temp[0], "exit") == 0)
     {
         free(*input);
         return (-1);
     }
+    free(*input);
+    // print_saved_cmd((*cmd)->word);
+    // if (searching_comand(input, *temp) == -1)
+    // {
+    //     free(*input);
+    //     return (-1);
+    // }
+    // free(*input);
+    // frees_split(*temp);
+    // free(temp);
+    // free(*input);
+
     return (0);
 }
 
@@ -82,14 +95,23 @@ int reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
     {
         ret = process_input(cmd, flag, temp, &input, robo_env);
         if (ret == -1)
+        {
+            frees_split(*temp);
+            free_list((&(*cmd)->word));        
+            dprintf(2,"No command found\n");
+            // free(*input);
             break;
+        }
         else if (ret == -3)
         {
             *flag = 0;
+            free_list(&(*cmd)->word);
             continue;
         }
         frees_split(*temp);
-        frees((&(*cmd)->word));
+        free_list(&(*cmd)->word);
+        // free(*temp);
+        // frees((&(*cmd)->word));
     }
     printf("Exiting...\n");
     return (0);

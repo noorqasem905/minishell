@@ -29,7 +29,8 @@ int	main(int argc, char *argv[], char **robo_env)
 		perror("malloc");
 		return (1);
 	}
-	signal(SIGINT,signal_handler);
+	cmd->word = NULL;
+	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 	if (argc > 1)
 	{
@@ -37,8 +38,8 @@ int	main(int argc, char *argv[], char **robo_env)
 		free(cmd);
 		return (1);
 	}
-    cmd->word = NULL;
-    reading_manager(&cmd, &flag, &temp, robo_env);
+	reading_manager(&cmd, &flag, &temp, robo_env);
+	// free_list(&cmd->word); // Free the linked list before freeing cmd
 	free(cmd);
 	return (0);
 }

@@ -3,37 +3,107 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/12 16:12:32 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:55:29 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+#include "../libft/libft.h"
+void print_saved_cmd1(t_list *saved_cmd) {
+    t_list *current = saved_cmd;
+    while (current != NULL) {
+        ft_printf("Command: %s\n", (char *)current->content);
+        current = current->next;
+    }
+}
 int execution(t_cmd **cmd, char **env)
 {
-	pid_t pid1;
+	int size;
+    pid_t pid;
+    int i;
+	size = ft_lstsize((*cmd)->word);
+	t_list *current = (*cmd)->word;
+    int pipe_fd2[size][2];
+	int	j;
 
+	i = 0;
+	j = 0;
 	if (!cmd || !(*cmd) || !(*cmd)->word)
 	{
 		perror("Invalid command structure");
 		return (-1);
 	}
-	while ((*cmd)->word)
+	if (size == 0)
 	{
-		pid1 = fork();
-		if (pid1 == 0)
+		perror("No commands to execute");
+		return (-1);
+	}
+	while (i < size - 1) 
+	{
+        if (pipe(pipe_fd2[i]) == -1)
+        {
+            perror("pipe");
+            exit(EXIT_FAILURE);
+        }
+		i++;
+    }   
+	i = 0;	
+	while (i < size)
+	{
+		pid = fork();
+        if (pid < 0)
+        {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
+        if (pid == 0) 
 		{
-			if (ft_execve((*cmd)->word->content, env) == -1)
+            if (i != 0)
+            {
+                if (dup2(pipe_fd2[i - 1][0], STDIN_FILENO) == -1)
+                {
+                    perror("dup2");
+                    exit(EXIT_FAILURE);
+                }
+            }
+            if (i != size - 1)
+            {
+                if (dup2(pipe_fd2[i][1], STDOUT_FILENO) == -1)
+                {
+                    perror("dup2");
+                    exit(EXIT_FAILURE);
+                }
+            }
+			j = 0;
+            while (j < size - 1)
+            {
+                close(pipe_fd2[j][0]);
+                close(pipe_fd2[j][1]);
+				j++;
+            }
+			if (ft_execve(current->content, env) == -1)
 				exit(EXIT_FAILURE);
 		}
-		printf("Command: %s\n", (char *)((*cmd)->word->content));
-		(*cmd)->word = (*cmd)->word->next;
-		waitpid(pid1, NULL, 0);
+		if (i > 0)
+			close(pipe_fd2[i - 1][0]);
+		if (i < size - 1)
+			close(pipe_fd2[i][1]);
+		current = current->next;
+		i++;
 	}
-	return (0);
+	 j = 0;
+	while (j < size - 1)
+    {
+        close(pipe_fd2[j][0]);
+        close(pipe_fd2[j][1]);
+		j++;
+	}
+    i = -1;
+    while (++i < size)
+        wait(NULL);
 }
 /* 
 int madin(int argc, char *argv[], char **env)

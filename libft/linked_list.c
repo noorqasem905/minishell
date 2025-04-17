@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:27:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/06 19:38:59 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/17 18:43:11 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,13 @@ void	insertend(t_list **root, void *new_value, int *flag)
 		*flag = 12;
 		return ;
 	}
-	new_node->content = new_value;
+	new_node->content = ft_strdup(new_value);
+	if (new_node->content == NULL)
+	{
+		free(new_node);
+		*flag = 12;
+		return ;
+	}
 	new_node->next = NULL;
 	if (*root == NULL)
 	{

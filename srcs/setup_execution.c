@@ -46,18 +46,18 @@ int	check_validation(char **paths, char **result, char **m)
 	{
 		if (access(result[0], X_OK) == -1) 
 		{
-			free_it_now(paths, NULL, 0); // Free paths before returning
+			free_it_now(paths, NULL, 0);
 			perror("Error: File is not executable or doesn't exist");
 			return (1);
 		}
-		*m = ft_strdup(result[0]); // Ensure memory duplication
+		*m = ft_strdup(result[0]);
 		return (4);
 	}
 	if (ft_strncmp(result[0], "/", 1) == 0)
 	{
 		if (access(result[0], F_OK | X_OK) == 0)	
 		{
-			*m = ft_strdup(result[0]); // Fix missing assignment to *m
+			*m = ft_strdup(result[0]);
 			return (5);
 		}
 		else
@@ -123,6 +123,11 @@ int	ft_execve(char *file, char **ev)
 	int 	flag;
 	char	*m;
 
+	if (file == NULL)
+	{
+		perror("Error: No command provided");
+		return (-1);
+	}
 	result = ft_split(file, ' ');
 	if (!result)
 	{
@@ -140,7 +145,7 @@ int	ft_execve(char *file, char **ev)
 	if (m == NULL || flag < 0)
 	{
 		free_it_now(result, NULL, 1);
-		if (m != NULL) // Free m if allocated
+		if (m != NULL)
 			free(m);
 		return (-1);
 	}

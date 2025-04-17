@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 20:40:01 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/07 18:13:52 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/17 18:45:37 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ void free_list(t_list **saved_cmd) {
     t_list *next;
 
     current = *saved_cmd;
-    while (current != NULL) {
+    while (current != NULL) 
+	{
         next = current->next;
-        free(current->content); // Free the duplicated content
-        free(current);          // Free the node itself
+        free(current->content);
+        free(current);
         current = next;
     }
     *saved_cmd = NULL;

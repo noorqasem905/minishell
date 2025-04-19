@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   searching_command.c                                :+:      :+:    :+:   */
+/*   bulidin_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/17 19:24:38 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/19 13:58:54 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int    searching_comand(char **input, char **temp)
 {
     if (ft_strcmp(temp[0], "exit") == 0)
 	{
-		// free(*input);
+		free(*input);
         return (-1);
     }
     // if (ft_strcmp(temp[0], "clear") == 0) {

@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/17 17:40:33 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/19 15:25:48 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -53,7 +52,7 @@ void					frees_list(t_list **head);
 void					frees(t_list **root);
 char					*check_access(char **paths, char **result);
 
-char *expander_input(char *input, char **env);
+char *expander_input(t_list *input, char **env);
 
 void signal_handler(int x);
 

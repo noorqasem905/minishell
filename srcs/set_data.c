@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/17 20:01:01 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/19 14:00:50 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,20 @@ int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input,  char 
     if (*input)
         add_history(*input);
     *temp = ft_split(*input, '|');
-    // if (searching_comand(input, *temp) == -1)
-    //     return (-1);
 	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3)
     {
         if (*flag == -3)
             return (-3);
 		return (-1);
     }
+    if (searching_comand(input, *temp) == -1)
+        return (-1);
     // expander_input((*cmd)->word, robo_env);
     if (execution(cmd, robo_env) == -1)
     {
         return (-12);
     }
-    // execution(cmd, robo_env);
-    //     {}// exit(EXIT_FAILURE);
-    if (ft_strcmp(*temp[0], "exit") == 0)
-	{
-        free(*input);
-		// free(*input);
-        return (-1);
-    }
     free(*input);
-
     return (0);
 }
 

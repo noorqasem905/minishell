@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/17 19:55:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/19 15:25:52 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int execution(t_cmd **cmd, char **env)
 	t_list *current = (*cmd)->word;
     int pipe_fd2[size][2];
 	int	j;
+    pid_t pids[size];
 
 	i = 0;
 	j = 0;
@@ -53,13 +54,13 @@ int execution(t_cmd **cmd, char **env)
 	i = 0;	
 	while (i < size)
 	{
-		pid = fork();
-        if (pid < 0)
+		pids[i] = fork();
+        if (pids[i] < 0)
         {
             perror("fork");
             exit(EXIT_FAILURE);
         }
-        if (pid == 0) 
+        if (pids[i] == 0) 
 		{
             if (i != 0)
             {
@@ -85,8 +86,18 @@ int execution(t_cmd **cmd, char **env)
 				j++;
             }
 			if (ft_execve(current->content, env) == -1)
-				return (-12);
+			{
+				dprintf(2,"No command found in ft_execve...\n");
+				int k = -1;
+				while (++k < size)
+	        	    kill(pids[k], SIGKILL);
+				exit(EXIT_FAILURE);
+			}
 		}
+		else
+            setpgid(pids[i], pids[0]);
+
+	
 		if (i > 0)
 			close(pipe_fd2[i - 1][0]);
 		if (i < size - 1)
@@ -103,9 +114,141 @@ int execution(t_cmd **cmd, char **env)
 	}
     i = -1;
     while (++i < size)
-        wait(NULL);
+    {
+        int status;
+        waitpid(pids[i], &status, 0);
+        if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+        {
+			int k = -1;
+			while (++k < size)
+	            kill(pids[k], SIGKILL);
+            break;
+        }
+    }
 	return (0);
 }
+/* 
+#include <signal.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+int execution(t_cmd **cmd, char **env)
+{
+    int size;
+    pid_t pid;
+    int i;
+    size = ft_lstsize((*cmd)->word);
+    t_list *current = (*cmd)->word;
+    int pipe_fd2[size][2];
+    int j;
+    pid_t pids[size]; // Array to store child PIDs
+
+    i = 0;
+    j = 0;
+    if (!cmd || !(*cmd) || !(*cmd)->word)
+    {
+        perror("Invalid command structure");
+        return (-1);
+    }
+    if (size == 0)
+    {
+        perror("No commands to execute");
+        return (-1);
+    }
+    while (i < size - 1)
+    {
+        if (pipe(pipe_fd2[i]) == -1)
+        {
+            perror("pipe");
+            exit(EXIT_FAILURE);
+        }
+        i++;
+    }
+    i = 0;
+    while (i < size)
+    {
+        pid = fork();
+        if (pid < 0)
+        {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
+        if (pid == 0)
+        {
+            // Set process group ID for all children
+            setpgid(0, 0);
+
+            if (i != 0)
+            {
+                if (dup2(pipe_fd2[i - 1][0], STDIN_FILENO) == -1)
+                {
+                    perror("dup2");
+                    exit(EXIT_FAILURE);
+                }
+            }
+            if (i != size - 1)
+            {
+                if (dup2(pipe_fd2[i][1], STDOUT_FILENO) == -1)
+                {
+                    perror("dup2");
+                    exit(EXIT_FAILURE);
+                }
+            }
+            j = 0;
+            while (j < size - 1)
+            {
+                close(pipe_fd2[j][0]);
+                close(pipe_fd2[j][1]);
+                j++;
+            }
+            if (ft_execve(current->content, env) == -1)
+            {
+                perror("Command not found");
+                killpg(0, SIGKILL); // Kill all child processes in the group
+                exit(EXIT_FAILURE);
+            }
+        }
+        else
+        {
+            // Store child PID
+            pids[i] = pid;
+
+            // Set process group ID for the parent to manage children
+            setpgid(pid, pids[0]);
+        }
+        if (i > 0)
+            close(pipe_fd2[i - 1][0]);
+        if (i < size - 1)
+            close(pipe_fd2[i][1]);
+        current = current->next;
+        i++;
+    }
+    j = 0;
+    while (j < size - 1)
+    {
+        close(pipe_fd2[j][0]);
+        close(pipe_fd2[j][1]);
+        j++;
+    }
+    i = -1;
+    while (++i < size)
+    {
+        int status;
+        waitpid(pids[i], &status, 0);
+        if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+        {
+			int k = -1;
+			while (++k < size)
+			{
+	            kill(pids[k], SIGKILL);
+			}
+            break;
+        }
+    }
+    return (0);
+} */
 /* 
 int madin(int argc, char *argv[], char **env)
 {

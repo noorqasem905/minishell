@@ -6,7 +6,7 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/handling.c 					\
 		srcs/set_data.c 					\
 		srcs/signal.c 						\
-		srcs/searching_command.c			\
+		srcs/bulidin_cmd.c					\
 		srcs/expander.c						\
 		srcs/setup_execution.c				\
 		srcs/execution.c

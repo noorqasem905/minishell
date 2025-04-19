@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/17 17:40:33 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/19 17:17:23 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int						read_input(char **input);
 void					free_list(t_list **root);
 void					frees_list(t_list **head);
 void					frees(t_list **root);
+void					robo_cd(char **temp, char **robo_env);
 char					*check_access(char **paths, char **result);
-
-char *expander_input(char *input, char **env);
+char					*expander_input(t_list *input, char **env);
 
 void signal_handler(int x);
 

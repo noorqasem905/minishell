@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/19 14:00:50 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/19 18:42:48 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,16 @@ int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input,  char 
             return (-3);
 		return (-1);
     }
-    if (searching_comand(input, *temp) == -1)
-        return (-1);
+    char **split;
+    split = ft_split((*temp)[0], ' ');
+    if (ft_strncmp(split[0], "cd", 2) == 0)
+    {
+        robo_cd(split, robo_env);
+        free(*input);
+        return (-3);
+    }
+    if (searching_comand(input, *temp) == -13)
+        return (-13);
     // expander_input((*cmd)->word, robo_env);
     if (execution(cmd, robo_env) == -1)
     {
@@ -78,14 +86,14 @@ int reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
     while ((input = readline("Roboshell> ")) != NULL)
     {
         ret = process_input(cmd, flag, temp, &input, robo_env);
-        if (ret == -1 || ret == -12)
+        if (ret < 0 && ret != -3)
         {
             frees_split(*temp);
-            free_list((&(*cmd)->word));        
-            dprintf(2,"No command found\n");
+            free_list((&(*cmd)->word));
+            if (ret == -1)
+                dprintf(2,"No command found\n");
             if (ret == -12)
             {
-                // There is an issue child process does not die
                 free(cmd);
                 exit(EXIT_FAILURE);
             }

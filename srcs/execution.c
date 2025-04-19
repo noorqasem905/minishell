@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/19 15:25:52 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/19 17:05:57 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int execution(t_cmd **cmd, char **env)
             }
 			if (ft_execve(current->content, env) == -1)
 			{
-				dprintf(2,"No command found in ft_execve...\n");
+				errno = ENOENT;
+				perror("Command not found");
 				int k = -1;
 				while (++k < size)
 	        	    kill(pids[k], SIGKILL);
@@ -95,9 +96,7 @@ int execution(t_cmd **cmd, char **env)
 			}
 		}
 		else
-            setpgid(pids[i], pids[0]);
-
-	
+            setpgid(pids[i], pids[0]);// not allowd to use
 		if (i > 0)
 			close(pipe_fd2[i - 1][0]);
 		if (i < size - 1)
@@ -105,7 +104,7 @@ int execution(t_cmd **cmd, char **env)
 		current = current->next;
 		i++;
 	}
-	 j = 0;
+	j = 0;
 	while (j < size - 1)
     {
         close(pipe_fd2[j][0]);
@@ -119,6 +118,7 @@ int execution(t_cmd **cmd, char **env)
         waitpid(pids[i], &status, 0);
         if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
         {
+			errno = ENOENT;
 			int k = -1;
 			while (++k < size)
 	            kill(pids[k], SIGKILL);

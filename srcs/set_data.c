@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/20 19:52:16 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/20 22:06:10 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input,  char 
     if (*input)
         add_history(*input);
     *temp = ft_split(*input, '|');
+    if (*temp == NULL)
+    {
+        perror("ft_split");
+        free(*input);
+        return (-1);
+    }
+    free(*input);
 	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3)
     {
         if (*flag == -3)
@@ -62,20 +69,24 @@ int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input,  char 
     }
     char **split;
     split = ft_split((*temp)[0], ' ');
+    if (split == NULL)
+    {
+        perror("ft_split");
+        return (-1);
+    }
     if (ft_strncmp(split[0], "cd", 2) == 0)
     {
         robo_cd(split, robo_env);
-        free(*input);
+        frees_split(split);
         return (-3);
     }
-    if (searching_comand(input, *temp) == -13)
-        return (-13);
-    // expander_input((*cmd)->word, robo_env);
-    if (execution(cmd, robo_env) == -1)
+    frees_split(split);
+    if (searching_comand(NULL, *temp) == -13)
     {
-        return (-12);
+        return (-13);
     }
-    free(*input);
+    if (execution(cmd, robo_env) == -1)
+        return (-12);
     return (0);
 }
 
@@ -95,7 +106,7 @@ int reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
                 dprintf(2,"No command found\n");
             if (ret == -12)
             {
-                free(cmd);
+                free(*cmd);
                 exit(EXIT_FAILURE);
             }
             break;

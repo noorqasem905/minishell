@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/20 20:09:04 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/20 22:00:36 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ int    searching_comand(char **input, char **temp)
 {
     if (ft_strcmp(temp[0], "exit") == 0)
 	{
-		free(*input);
         return (-13);
     }
 	if (!ft_strncmp(temp[0], "cd", 3))

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/19 18:40:06 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/20 20:09:04 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,42 +48,68 @@ void robo_cd(char **temp, char **robo_env)
         free(cwd);
         return ;
     }
-        char *o = malloc(sizeof(char) * 100);
-        // if (temp[1][0] == '"')
-        {
-            int k = 0;
-            int i = 0;
-            int j = 1;
-            // o = ft_strchr(temp[1], '\"');
- /*             while (temp[i])
-            {
-                    dprintf(2,"temp[%i] = %s\n",i, temp[1]);
-                while (temp[i][j] != '\"' && temp[i][j] != '\0')
-                {
-                    o[k] = temp[i][j];
-                    dprintf(2,"temp[%i] = %c\n",j, temp[1][j]);
-                    j++;
-                    k++;
-                }
-                i++;
-                j = 0;
-            } */
-            
-        }
-        dprintf(2,"o = %s\n", o);
-    if (access(o, F_OK) == 0)
+    char *dir = NULL;
+    if (temp[1] && (temp[1][0] == '"' || temp[1][0] == '\''))
     {
-        if (chdir(o) == -1)
+        char quote = temp[1][0];
+        int start = 1;
+        int end = start;
+        while (temp[end] && temp[end][ft_strlen(temp[end]) - 1] != quote)
+            end++;
+        if (temp[end])
+        {
+            size_t total_len = 0;
+            int k = start;
+            while (k <= end)
+            {
+                total_len += ft_strlen(temp[k]) + 1;
+                k++;
+            }
+            dir = malloc(total_len);
+            if (!dir)
+            {
+                perror("malloc");
+                return;
+            }
+            dir[0] = '\0';
+            k = start;
+            while (k <= end)
+            {
+                ft_strlcat(dir, temp[k], total_len);
+                if (k != end)
+                    ft_strlcat(dir, " ", total_len);
+                k++;
+            }
+            if (dir[0] == quote)
+                ft_memmove(dir, dir + 1, ft_strlen(dir));
+            size_t len = ft_strlen(dir);
+            if (len > 0 && dir[len - 1] == quote)
+                dir[len - 1] = '\0';
+        }
+    }
+    else
+    {
+        dir = temp[1];
+    }
+    if (dir && access(dir, F_OK) == 0)
+    {
+        if (chdir(dir) == -1)
         {
             perror("cd");
-            return ;
+            if (temp[1] && temp[1][0] == '"')
+                free(dir);
+            return;
         }
-        return ;
+        if (temp[1] && temp[1][0] == '"')
+            free(dir);
+        return;
     }
+    if (temp[1] && temp[1][0] == '"')
+        free(dir);
     if (chdir(temp[1]) == -1)
     {
         perror("cd");
-        return ;
+        return;
     }
 }
 

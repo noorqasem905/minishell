@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#          
-/*   Updated: 2025/04/19 18:42:48 by nqasem           ###   ########.fr       */
-/*   Updated: 2025/04/19 15:31:27 by aalquraa         ###   ########.fr       */
+/*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
+/*   Updated: 2025/04/20 19:52:16 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #include "../includes/minishell.h"

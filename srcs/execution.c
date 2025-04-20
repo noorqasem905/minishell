@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/19 18:43:33 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/20 20:12:31 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void print_saved_cmd1(t_list *saved_cmd) {
         current = current->next;
     }
 }
+
 int execution(t_cmd **cmd, char **env)
 {
 	int size;
@@ -90,13 +91,11 @@ int execution(t_cmd **cmd, char **env)
 				errno = ENOENT;
 				perror("Command not found");
 				int k = -1;
-				while (++k < size)
-	        	    kill(pids[k], SIGKILL);
+				// while (++k < size)
+	        	//     kill(pids[k], SIGKILL);
 				exit(EXIT_FAILURE);
 			}
 		}
-		else
-            setpgid(pids[i], pids[0]);// not allowd to use
 		if (i > 0)
 			close(pipe_fd2[i - 1][0]);
 		if (i < size - 1)
@@ -116,14 +115,14 @@ int execution(t_cmd **cmd, char **env)
     {
         int status;
         waitpid(pids[i], &status, 0);
-        if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-        {
-			errno = ENOENT;
-			int k = -1;
-			while (++k < size)
-	            kill(pids[k], SIGKILL);
-            break;
-        }
+        // if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+        // {
+		// 	errno = ENOENT;
+		// 	int k = -1;
+		// 	while (++k < size)
+	    //         kill(pids[k], SIGKILL);
+        //     break;
+        // }
     }
 	return (0);
 }

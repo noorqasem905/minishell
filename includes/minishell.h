@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/19 15:25:48 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/19 19:05:15 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_cmd	t_cmd;
 struct					s_cmd
 {
 	t_list						*word;
+	char **env;
 };
 int						process_input(t_cmd **cmd, int *flag, char ***temp, char **input, char **robo_env);
 int						check_validation(char **paths, char **result, char **m);
@@ -52,7 +53,10 @@ void					frees_list(t_list **head);
 void					frees(t_list **root);
 char					*check_access(char **paths, char **result);
 
-char *expander_input(t_list *input, char **env);
+void	expand_cmds(t_cmd **cmd, char **env);
+char	*expander_input(t_list *input, char **env);
+
+char **my_env(char **env);
 
 void signal_handler(int x);
 

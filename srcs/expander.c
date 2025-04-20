@@ -6,11 +6,24 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/04/19 15:20:07 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/19 19:58:48 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void expand_cmds(t_cmd **cmd, char **env)
+{
+    t_list *current = (*cmd)->word;
+    char *expanded_cmd;
+    while (current != NULL)
+    {
+        expanded_cmd = expander_input(current, env);
+        free(current->content);
+        current->content = expanded_cmd;
+        current = current->next;
+    }
+}
 
 static char *get_env_value(char *name, char **env)
 {
@@ -30,24 +43,31 @@ static char *get_env_value(char *name, char **env)
     return (NULL);
 }
 
-static char *expantions(char *input, int *i, char **env)
+static char *expantions(char *input, int i, char **env)
 {
     char *name;
     char *value;
     int start;
     int end;
 
-    start = *i + 1;
-    while (input[*i] && (ft_isalnum(input[*i]) || input[*i] == '_'))
-        (*i)++;
-    end = *i;
+    start = i + 1;
+
+    if (!input[start] || (!ft_isalnum(input[start]) && input[start] != '_'))
+        return (ft_strdup(""));
+    i = start;
+    while (input[i] && (ft_isalnum(input[i]) || input[i] == '_'))
+        i++;
+    end = i;
     name = ft_substr(input, start, end - start);
     if (!name)
         return (NULL);
     value = get_env_value(name, env);
+    if (!value)
+        value = ft_strdup("");
     free(name);
     return (value);
 }
+
 char *expander_input(t_list *input, char **env)
 
 {
@@ -78,11 +98,14 @@ char *expander_input(t_list *input, char **env)
         }
         else if (content[i] == '$' && !flag_single)
         {
-            expand_var = expantions(content, &i, env);
+            expand_var = expantions(content, i, env);
             temp = ft_strjoin(expanded, expand_var);
             free(expanded);
             free(expand_var);
             expanded = temp;
+            i++;
+            while (content[i] && (ft_isalnum(content[i]) || content[i] == '_'))
+                i++; 
         }
         else 
         {

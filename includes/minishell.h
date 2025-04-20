@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
 /*   Updated: 2025/04/19 19:05:15 by aalquraa         ###   ########.fr       */
@@ -51,6 +51,7 @@ int						read_input(char **input);
 void					free_list(t_list **root);
 void					frees_list(t_list **head);
 void					frees(t_list **root);
+void					robo_cd(char **temp, char **robo_env);
 char					*check_access(char **paths, char **result);
 
 void	expand_cmds(t_cmd **cmd, char **env);

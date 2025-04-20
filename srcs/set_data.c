@@ -14,6 +14,29 @@
 
 #include "../includes/minishell.h"
 
+
+static int is_closed(char *input)
+{
+    int i;
+    int squote;
+    int dquote;
+    
+    squote = 0;
+    dquote = 0;
+    i = 0;
+    while (input[i])
+    {
+        if (input[i] == '\'' && dquote == 0)
+            squote = !squote;
+        else if (input[i] == '"' && squote == 0)
+            dquote = !dquote;
+        i++;
+    }
+    if (squote || dquote)
+        return (-1);
+    return (0);
+}
+
 int	save_data(char **input, t_cmd **cmd, int *flag, char ***temp)
 {
 	int	size;
@@ -51,6 +74,8 @@ void print_saved_cmd(t_list *saved_cmd) {
 
 int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input,  char **robo_env)
 {
+    t_list *current;
+    
     if (*input)
         add_history(*input);
     *temp = ft_split(*input, '|');
@@ -60,6 +85,9 @@ int     process_input(t_cmd **cmd, int *flag, char ***temp, char **input,  char 
             return (-3);
 		return (-1);
     }
+    if (searching_comand(input, *temp) == -1)
+        return (-1);
+    expand_cmds(cmd, robo_env);
     char **split;
     split = ft_split((*temp)[0], ' ');
     if (ft_strncmp(split[0], "cd", 2) == 0)
@@ -86,6 +114,12 @@ int reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
      
     while ((input = readline("Roboshell> ")) != NULL)
     {
+        if (is_closed(input) == -1)
+        {
+            dprintf(2,"Syntax error: Unclosed quotes\n");
+            free(input);
+            continue;
+        }
         ret = process_input(cmd, flag, temp, &input, robo_env);
         if (ret < 0 && ret != -3)
         {

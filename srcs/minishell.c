@@ -19,10 +19,12 @@ int	main(int argc, char *argv[], char **robo_env)
 	char	*input;
 	char	**temp;
 	int		flag;
+	int		i = 0;
 
 	input = NULL;
 	temp = NULL;
 	cmd = malloc(sizeof(t_cmd));
+	cmd->env = NULL;
 
 	if (cmd == NULL)
 	{
@@ -38,6 +40,7 @@ int	main(int argc, char *argv[], char **robo_env)
 		free(cmd);
 		return (1);
 	}
+	cmd->env= my_env(robo_env);                                                      ////noor we must use this env
 	reading_manager(&cmd, &flag, &temp, robo_env);
 	// free_list(&cmd->word); // Free the linked list before freeing cmd
 	free(cmd);

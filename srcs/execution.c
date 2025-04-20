@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/20 20:12:31 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/20 22:00:31 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,13 @@ int execution(t_cmd **cmd, char **env)
             }
 			if (ft_execve(current->content, env) == -1)
 			{
-				errno = ENOENT;
+				// errno = ENOENT;
 				perror("Command not found");
-				int k = -1;
+				// int k = -1;
 				// while (++k < size)
 	        	//     kill(pids[k], SIGKILL);
-				exit(EXIT_FAILURE);
+                return (-1);
+				// exit(EXIT_FAILURE);
 			}
 		}
 		if (i > 0)
@@ -115,14 +116,14 @@ int execution(t_cmd **cmd, char **env)
     {
         int status;
         waitpid(pids[i], &status, 0);
-        // if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-        // {
-		// 	errno = ENOENT;
-		// 	int k = -1;
-		// 	while (++k < size)
-	    //         kill(pids[k], SIGKILL);
-        //     break;
-        // }
+        if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+        {
+			errno = ENOENT;
+			int k = -1;
+			while (++k < size)
+	            kill(pids[k], SIGKILL);
+            break;
+        }
     }
 	return (0);
 }

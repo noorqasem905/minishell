@@ -6,13 +6,15 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/21 12:14:22 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/21 17:37:11 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 
 #include "../includes/minishell.h"
+#define COLOR_CUSTOM "\x1b[38;2;42;161;179m"
+#define COLOR_RESET "\x1b[0m"
 
 
 static int is_closed(char *input)
@@ -114,7 +116,7 @@ int reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
     char *input;
     int ret;
      
-    while ((input = readline("Roboshell> ")) != NULL)
+    while ((input = readline(COLOR_CUSTOM "~/Roboshell> " COLOR_RESET)) != NULL)
     {
         if (is_closed(input) == -1)
         {

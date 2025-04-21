@@ -46,7 +46,6 @@ int	check_validation(char **paths, char **result, char **m)
 			return (1);
 		}
 		*m = ft_strdup(result[0]);
-		// dprintf(2, "result[0] = %s\n", result[0]);
 		return (4);
 	}
 	if (ft_strncmp(result[0], "/", 1) == 0)
@@ -59,7 +58,7 @@ int	check_validation(char **paths, char **result, char **m)
 		else
 		{
 			free_it_now(paths, NULL, 0);
-			return (6);
+			return (-6);
 		}
 	}
 	*m = check_access(paths, result);

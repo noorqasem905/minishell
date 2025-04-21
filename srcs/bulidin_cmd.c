@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/20 22:00:36 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/21 12:41:35 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,7 @@ void robo_cd(char **temp, char **robo_env)
         }
     }
     else
-    {
         dir = temp[1];
-    }
     if (dir && access(dir, F_OK) == 0)
     {
         if (chdir(dir) == -1)

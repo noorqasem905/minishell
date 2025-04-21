@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/20 22:11:45 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/21 12:14:22 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
                 dprintf(2,"No command found\n");
             if (ret == -12)
             {
+                frees_split((*cmd)->env);
                 free(*cmd);
                 exit(EXIT_FAILURE);
             }

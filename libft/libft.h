@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:06:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/06 19:39:23 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/22 20:39:59 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strrchr(const char *s, int c);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strdup(const char *s);
+char				*ft_strfchr(const char *s, int c);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
 char				*ft_strnstr(const char *big, const char *little,
@@ -70,6 +71,7 @@ void				ft_putendl_fd(char *s, int fd);
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
+void				ft_strncpy(char *dest, const char *src, size_t n);
 void				*ft_memmove(void *dest, const void *src, size_t n);
 void				*ft_memcpy(void *dest, const void *src, size_t n);
 #endif

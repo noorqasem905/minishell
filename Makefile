@@ -15,9 +15,10 @@ SRCS = 	srcs/minishell.c 					\
 all: $(NAME)
 
 OBJS = $(SRCS:.c=.o)
+LIBFT = libft
 
 HEADERS = includes/minishell.h
-$(NAME): $(OBJS) $(HEADERS)
+$(NAME): $(OBJS) $(HEADERS) $(LIBFT)
 	make -C libft/printf
 	make -C libft
 	make -C libft bonus

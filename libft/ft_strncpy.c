@@ -1,39 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 20:03:00 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/22 16:59:02 by nqasem           ###   ########.fr       */
+/*   Created: 2025/04/22 20:39:14 by nqasem            #+#    #+#             */
+/*   Updated: 2025/04/22 20:39:32 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+void ft_strncpy(char *dest, const char *src, size_t n)
 {
-	char	cca;
-
-	cca = (char)c;
-	while (*s != '\0' && *s != cca)
-	{
-		s++;
-	}
-	if (*s == cca)
-		return ((char *)s);
-	return (NULL);
+    size_t i = 0;
+    while (i < n && src[i])
+    {
+        dest[i] = src[i];
+        i++;
+    }
+    dest[i] = '\0';
 }
-/* 
-#include <stdio.h>
-int	main(void)
-{
-	//char	j[] = "abc";
-	char	k[] = "abcdcl";
-
-	printf("THE VALUE IS: %s", ft_strfchr(k, 'd'));
-	//printf("THE VALUE IS: %s", strchr(k, 'd'));
-	//      printf("THE VALUE IS: %d \n",++d);
-}
- */

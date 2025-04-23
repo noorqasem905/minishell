@@ -39,7 +39,7 @@ int	check_validation(char **paths, char **result, char **m)
 	}
 	if (ft_strncmp(result[0], "./", 2) == 0)
 	{
-		if (access(result[0], X_OK) == -1) 
+		if (access(result[0], X_OK) == -1)
 		{
 			free_it_now(paths, NULL, 0);
 			perror("Error: File is not executable or doesn't exist");
@@ -50,7 +50,7 @@ int	check_validation(char **paths, char **result, char **m)
 	}
 	if (ft_strncmp(result[0], "/", 1) == 0)
 	{
-		if (access(result[0], F_OK | X_OK) == 0)	
+		if (access(result[0], F_OK | X_OK) == 0)
 		{
 			*m = ft_strdup(result[0]);
 			return (5);
@@ -115,7 +115,7 @@ int	ft_execve(char *file, char **ev)
 {
 	char	**result;
 	char	**paths;
-	int 	flag;
+	int		flag;
 	char	*m;
 
 	result = ft_split(file, ' ');

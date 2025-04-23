@@ -12,100 +12,9 @@
 
 #include "libft.h"
 
-void	frees_mult_split(char **root)
+static char	*skip_delimiter(char *s, char c[], size_t size)
 {
-	int	i;
-
-	i = 0;
-	while (root[i])
-	{
-		free(root[i]);
-		i++;
-	}
-	free(root);
-	root = NULL;
-}
-
-char	*find_break_char(char const *s, char c[], int size)
-{
-	int	j;
-
-	while (*s)
-	{
-		j = 0;
-		while (j < size)
-		{
-			if (*s == c[j])
-				return ((char *)s);
-			j++;
-		}
-		s++;
-	}
-	return ((char *)s);
-}
-
-static int	word_mult_count(char const *s, char c[])
-{
-	int	i;
-	int	size;
-	int	j;
-
-	i = 0;
-	size = ft_strlen(c);
-	while (*s)
-	{
-		j = 0;
-		while (j < size && *s)
-		{
-			if (*s == c[j])
-			{
-				s++;
-				j = 0;
-			}
-			else
-				j++;
-		}
-		if (*s)
-			i++;
-		s = find_break_char(s, c, size);
-	}
-	return (i);
-}
-
-static void	free_mult_it(char **str, size_t i)
-{
-	while (i != 0)
-	{
-		free(str[i]);
-		i--;
-	}
-	free(str[i]);
-	free(str);
-}
-
-static size_t	word_mult_len(char *s, char c[])
-{
-	size_t	i;
 	size_t	j;
-
-	i = 0;
-	while (s[i])
-	{
-		j = 0;
-		while (c[j])
-		{
-			if (s[i] == c[j])
-				return (i);
-			j++;
-		}
-		i++;
-	}
-	return (i);
-}
-
-char	*skip_delimiter(char *s, char c[], size_t size)
-{
-	int	j;
 
 	j = 0;
 	while (j < size && *s)
@@ -121,7 +30,18 @@ char	*skip_delimiter(char *s, char c[], size_t size)
 	return (s);
 }
 
-char	*setup_data(char *s, char c[], char **str, size_t *i)
+static void	free_mult_it(char **str, size_t i)
+{
+	while (i != 0)
+	{
+		free(str[i]);
+		i--;
+	}
+	free(str[i]);
+	free(str);
+}
+
+static char	*setup_data(char *s, char c[], char **str, size_t *i)
 {
 	if (*s)
 	{

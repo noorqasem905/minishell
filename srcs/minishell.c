@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 19:32:33 by nqasem            #+#             		  */
+/*   Created: 2025/04/03 19:32:33 by nqasem            #+#    #+#      		  */
 /*   Updated: 2025/04/06 12:20:41 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -13,19 +13,16 @@
 #include "../includes/minishell.h"
 
 int	main(int argc, char *argv[], char **robo_env)
-
 {
 	t_cmd	*cmd;
 	char	*input;
 	char	**temp;
 	int		flag;
-	int		i = 0;
 
 	input = NULL;
 	temp = NULL;
 	cmd = malloc(sizeof(t_cmd));
 	cmd->env = NULL;
-
 	if (cmd == NULL)
 	{
 		perror("malloc");
@@ -40,7 +37,7 @@ int	main(int argc, char *argv[], char **robo_env)
 		free(cmd);
 		return (1);
 	}
-	cmd->env= my_env(robo_env);                                                      ////noor we must use this env
+	cmd->env = my_env(robo_env);
 	reading_manager(&cmd, &flag, &temp, robo_env);
 	frees_split(cmd->env);
 	free(cmd);

@@ -6,19 +6,21 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 20:39:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/22 20:39:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/23 13:41:55 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void ft_strncpy(char *dest, const char *src, size_t n)
+void	ft_strncpy(char *dest, const char *src, size_t n)
 {
-    size_t i = 0;
-    while (i < n && src[i])
-    {
-        dest[i] = src[i];
-        i++;
-    }
-    dest[i] = '\0';
+	size_t	i;
+
+	i = 0;
+	while (i < n && src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
 }

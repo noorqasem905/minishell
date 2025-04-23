@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:27:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/17 18:43:11 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/23 13:39:48 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ void	insertend(t_list **root, void *new_value, int *flag)
 
 	new_node = malloc(sizeof(t_list));
 	if (new_node == NULL)
-	{
 		*flag = 12;
+	if (*flag == 12)
 		return ;
-	}
 	new_node->content = ft_strdup(new_value);
 	if (new_node->content == NULL)
 	{

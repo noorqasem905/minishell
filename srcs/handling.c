@@ -12,19 +12,20 @@
 
 #include "../includes/minishell.h"
 
-void free_list(t_list **saved_cmd) {
-    t_list *current;
-    t_list *next;
+void	free_list(t_list **saved_cmd)
+{
+	t_list	*current;
+	t_list	*next;
 
-    current = *saved_cmd;
-    while (current != NULL) 
+	current = *saved_cmd;
+	while (current != NULL)
 	{
-        next = current->next;
-        free(current->content);
-        free(current);
-        current = next;
-    }
-    *saved_cmd = NULL;
+		next = current->next;
+		free(current->content);
+		free(current);
+		current = next;
+	}
+	*saved_cmd = NULL;
 }
 
 void	frees(t_list **root)

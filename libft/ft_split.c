@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 22:04:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/17 17:04:44 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/23 12:20:12 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	frees_split(char **root)
 	root = NULL;
 }
 
-int	word_count(char const *s, char c)
+static int	word_count(char const *s, char c)
 {
 	int	i;
 
@@ -43,7 +43,7 @@ int	word_count(char const *s, char c)
 	return (i);
 }
 
-void	free_it(char **str, size_t i)
+static void	free_it(char **str, size_t i)
 {
 	while (i != 0)
 	{
@@ -54,7 +54,7 @@ void	free_it(char **str, size_t i)
 	free(str);
 }
 
-size_t	word_len(char *s, char c)
+static size_t	word_len(char *s, char c)
 {
 	size_t	i;
 

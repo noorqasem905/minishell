@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/23 13:55:09 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/23 20:25:34 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	execution(t_cmd **cmd, char **env)
 	int		size;
 	int		status;
 	t_list	*current;
-	pid_t	pids[size];
-	int		pipe_fd2[size][2];
 
 	size = ft_lstsize((*cmd)->word);
+	pid_t	pids[size];
+	int		pipe_fd2[size][2];
 	current = (*cmd)->word;
 	i = 0;
 	j = 0;
@@ -86,6 +86,10 @@ int	execution(t_cmd **cmd, char **env)
 					exit(EXIT_FAILURE);
 				}
 			}
+			if (ft_strmchr(current->content ,"<>"))
+			{
+				dprintf(2, "redirection\n");
+			}
 			j = 0;
 			while (j < size - 1)
 			{
@@ -121,8 +125,8 @@ int	execution(t_cmd **cmd, char **env)
 		{
 			errno = ENOENT;
 			k = -1;
-			while (++k < size)
-				kill(pids[k], SIGKILL);
+			// while (++k < size)
+			// 	kill(pids[k], SIGKILL);
 			break ;
 		}
 	}

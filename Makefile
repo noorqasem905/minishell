@@ -9,6 +9,7 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/bulidin_cmd.c					\
 		srcs/expander.c						\
 		srcs/setup_execution.c				\
+		srcs/redirection.c					\
 		srcs/execution.c					\
 		srcs/env.c									
 

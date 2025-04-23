@@ -6,11 +6,29 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 20:03:00 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/22 16:59:02 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/23 18:40:10 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+char	*ft_strmchr(const char *s, char c[])
+{
+	int		i;
+
+	while (*s != '\0')
+	{
+		i = 0;
+		while (c[i] != '\0')
+		{
+			if (*s == c[i])
+				return ((char *)s);
+			i++;
+		}
+		s++;
+	}
+	return (NULL);
+}
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -29,11 +47,20 @@ char	*ft_strchr(const char *s, int c)
 #include <stdio.h>
 int	main(void)
 {
-	//char	j[] = "abc";
-	char	k[] = "abcdcl";
+	char	j[] = "<>";
+	char	k[] = "abc<dc>l";
+	char	t[] = "abcdefg";
+	char	*temp;
 
-	printf("THE VALUE IS: %s", ft_strfchr(k, 'd'));
-	//printf("THE VALUE IS: %s", strchr(k, 'd'));
-	//      printf("THE VALUE IS: %d \n",++d);
+	temp = ft_strmchr(k, j); // i could set it as "<>" or "><"
+	printf("THE VALUE IS: %s\n", temp); // output: <dc>l
+
+	temp = ft_strmchr(temp + 1, j);
+	printf("THE VALUE IS: %s\n", temp); // output: >l
+
+	temp = ft_strmchr(temp + 1, j);
+	printf("THE VALUE IS: %s\n", temp);// output: NULL
+
+	printf("THE VALUE IS: %s", ft_strchr(t, 'd'));//output: defg 
 }
  */

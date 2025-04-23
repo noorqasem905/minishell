@@ -6,11 +6,23 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/23 14:50:50 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/23 21:38:39 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	printf_split(char *str, char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		ft_printf("%2%s%s\n",str, split[i]);
+		i++;
+	}
+}
 
 int	check_redirection(char *input)
 {
@@ -115,65 +127,142 @@ int	check_redirection_mult(char *input, int type)
 	return (0);
 }
 
-int	main(void)
+int		setup_redirection(char *input, char **temp, char **temp2)
 {
+	char	state;
+	int		redirection_type;
+	int		mult;
 
-		ft_printf("%2Error: Too many arguments\n");
-/* 	char	*inter;
+	redirection_type = check_redirection(input);
+ 	mult = check_redirection_mult(input, redirection_type);
+	if (mult == -1)
+	{
+		dprintf(2, "Error: Multiple redirections\n");
+		return (-1);
+	}
+	state = ft_strmchr(input, "<>")[0];
+	if (state == '<')
+	{
+		*temp = ft_strfchr(input, '<');
+		*temp2 = ft_strchr(input, '<');
+	}
+	else
+	{
+		*temp = ft_strfchr(input, '>');
+		*temp2 = ft_strchr(input, '>');
+	}
+	return (0);
+}
+
+int		ft_execute_redirection_p1(char **redirection_split, int ccount, int *fd)
+{
+	*fd = open(redirection_split[ccount], O_RDONLY);
+	if (*fd == -1)
+	{
+		perror("open");
+		return (-1);
+	}
+	if (dup2(*fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2");
+		close(*fd);
+		return (-1);
+	}
+	close(*fd);
+	return (0);
+}
+int		ft_execute_redirection_p2(char **redirection_split, int ccount, int *fd)
+{
+	*fd = open(redirection_split[ccount], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (*fd == -1)
+	{
+		perror("open");
+		return (-1);
+	}
+	if (dup2(*fd, STDOUT_FILENO) == -1)
+	{
+		perror("dup2");
+		close(*fd);
+		return (-1);
+	}
+	close(*fd);
+	return (0);
+}
+
+int		ft_execute_redirection(char **redirection_split, int ccount, int *fd, char *temp3, pid_t pid)
+{
+	if (pid == 0)
+	{
+			if (temp3[0] == '>')
+			{
+				ft_execute_redirection_p1(redirection_split, ccount, fd);
+			}
+			else if (temp3[0] == '<')
+			{
+				ft_execute_redirection_p2(redirection_split, ccount, fd);
+			}
+			else
+			{
+				dprintf(2, "Error: Invalid redirection\n");
+				return (-1);
+			}
+			wait(NULL);
+			char *cmd = "/usr/bin/ls";
+			char *ags[] = {cmd, NULL};
+			if (execve(cmd, ags, NULL) == -1)
+			{
+				perror("execve");
+				return (-1);
+			}
+	}
+	return (0);
+}
+
+int		ft_redirection(char *input, char ***redirection_split, char ***redirection_data_split)
+{
+	pid_t	pid;
+	char	*temp;
+	char	*temp2;
+	char	*temp3;
+	int		ccount = -1;
+	int		fd = -1;
+
+	setup_redirection(input, &temp, &temp2);
+	*redirection_data_split = ft_split(temp, ' ');
+	*redirection_split = ft_mult_split(temp2, "<> ");
+	temp3 = ft_strmchr(input, "<>");
+	while (++ccount < ft_2dlen(*redirection_split))
+	{
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("fork");
+			return (-1);
+		}
+		if (ccount != 0)
+			temp3 = ft_strmchr(temp3 + 1, "<>");
+		ft_execute_redirection(*redirection_split, ccount, &fd, temp3, pid);
+	}
+	free(temp);
+	return (0);
+}
+
+/* int	main(void)
+{
+	char	*inter;
 	char	*temp;
 	char	*temp2;
 	char	**redirection_split;
 	char	**redirection_data_split;
 	int		redirection_type;
 	int		mult;
-	char	arr[4];
-
-	inter = "ls here_doc.c s  <a < b > c > d";
-	temp = NULL;
-	temp2 = NULL;
-	arr[0] = '>';
-	arr[1] = '<';
-	arr[2] = ' ';
-	arr[3] = '\0';
-	redirection_type = check_redirection(inter);
-	dprintf(2, "Redirection type: %d\n", redirection_type);
-	mult = check_redirection_mult(inter, redirection_type);
-	if (mult == -1)
-	{
-		dprintf(2, "Error: Multiple redirections\n");
-		return (-1);
-	}
-	if (redirection_type != 2)
-	{
-		temp = ft_strfchr(inter, '<');
-		temp2 = ft_strchr(inter, '<');
-	}
-	else
-	{
-		temp = ft_strfchr(inter, '>');
-		temp2 = ft_strchr(inter, '>');
-	}
-	dprintf(2, "%s\n", temp);
-	dprintf(2, "%s\n", temp2);
-	redirection_data_split = ft_split(temp, ' ');
-	redirection_split = ft_mult_split(temp2, arr);
-	int counter = 0;
-	while (redirection_data_split[counter])
-	{
-		dprintf(2, "Redirection data split: %s\n", redirection_data_split[counter]);
-		counter++;
-	}
-	write(2, "\n", 1);
-	counter = 0;
-	while (redirection_split[counter])
-	{
-		dprintf(2, "Redirection split: %s\n", redirection_split[counter]);
-		counter++;
-	}	
-	free(temp); */
+	char *temp3;
+ 
+	inter = "ls here_doc.c < da < b >a  ";
+	ft_redirection(inter, &redirection_split, &redirection_data_split);
 	return (0);
 }
-	// char *temp = NULL;
+ */	// char *temp = NULL;
 	// char file;
 	// char **split = ft_split(inter, '<');
 	// char **split = ft_split(inter, ' ');

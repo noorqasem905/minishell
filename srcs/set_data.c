@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/23 15:55:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/24 18:41:42 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,14 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	frees_split(split);
 	if (searching_comand(input, *temp) == -13)
 		return (-13);
-	expander_input((*cmd)->word, robo_env);
+	char *t = expander_input((*cmd)->word, robo_env);
  	if (execution(cmd, robo_env) == -1)
 	{
+		free(t);
+		free(*input);
 		return (-12);
 	}
+	free(t);
 	free(*input);
 	return (0);
 }
@@ -137,6 +140,7 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			{
 				frees_split((*cmd)->env);
 				free(*cmd);
+	            kill(getpid(), SIGKILL);// cheak
 				exit(EXIT_FAILURE);
 			}
 			break ;

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/23 20:25:34 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/24 18:26:29 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	execution(t_cmd **cmd, char **env)
 	int		size;
 	int		status;
 	t_list	*current;
+	char	**redirection_split;
 
 	size = ft_lstsize((*cmd)->word);
 	pid_t	pids[size];
@@ -86,16 +87,20 @@ int	execution(t_cmd **cmd, char **env)
 					exit(EXIT_FAILURE);
 				}
 			}
-			if (ft_strmchr(current->content ,"<>"))
-			{
-				dprintf(2, "redirection\n");
-			}
 			j = 0;
 			while (j < size - 1)
 			{
 				close(pipe_fd2[j][0]);
 				close(pipe_fd2[j][1]);
 				j++;
+			}
+			if (ft_strmchr(current->content ,"<>"))
+			{
+				if(ft_redirection(current->content, &redirection_split, env) < 0)
+				{
+					write(2, "Error: Invalid redirection\n\n", 27);
+					return (-1);
+				}
 			}
 			if (ft_execve(current->content, env) == -1)
 			{

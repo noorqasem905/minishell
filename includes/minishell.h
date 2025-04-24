@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/23 14:42:20 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/24 16:16:30 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ int						save_data(char **input, t_cmd **cmd, int *flag,
 							char ***temp);
 int						reading_manager(t_cmd **cmd, int *flag,
 							char ***temp, char **robo_env);
+int						ft_redirection(char *input, char ***redirection_split,
+							char **robo_env);
+int						ft_execute_redirection(char **redirection_split ,int ccount, int *fd,
+							char *temp3, char **robo_env);
 int						read_input(char **input);
 void					free_list(t_list **root);
 void					frees(t_list **root);

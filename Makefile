@@ -21,7 +21,7 @@ OBJS = $(SRCS:srcs/%.c=$(OBJS_DIR)/%.o)
 
 LIBFT = libft
 HEADERS = includes/minishell.h
-HIDE = $(if $(SET),, @)
+HIDE = $(if $(set),, @)
 HIDED = $(if $(DIR),, --no-print-directory)
 
 $(NAME): $(OBJS) $(HEADERS) $(LIBFT)

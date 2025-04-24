@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/23 21:38:39 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/24 18:40:31 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,40 +24,7 @@ void	printf_split(char *str, char **split)
 	}
 }
 
-int	check_redirection(char *input)
-{
-	int	i;
-	int	is_pipe;
-	int	return_value;
-
-	i = 0;
-	is_pipe = 0;
-	return_value = 0;
-	while (input[i])
-	{
-		if (input[i] == '>' && is_pipe == 0)
-		{
-			if (input[i + 1] == '>')
-				return (1);
-			else
-				return (2);
-		}
-		else if (input[i] == '<' || is_pipe == 1)
-		{
-			if (input[i] == '<')
-			{
-				return_value = 3;
-				is_pipe = 1;
-			}
-			else if (input[i] == '>')
-				return (4);
-		}
-		i++;
-	}
-	return (return_value);
-}
-
-int	check_redirection_mult(char *input, int type)
+int	check_redirection_mult(char *input)
 {
 	int	mult;
 	int	mult_2;
@@ -130,11 +97,9 @@ int	check_redirection_mult(char *input, int type)
 int		setup_redirection(char *input, char **temp, char **temp2)
 {
 	char	state;
-	int		redirection_type;
 	int		mult;
 
-	redirection_type = check_redirection(input);
- 	mult = check_redirection_mult(input, redirection_type);
+ 	mult = check_redirection_mult(input);
 	if (mult == -1)
 	{
 		dprintf(2, "Error: Multiple redirections\n");
@@ -189,38 +154,64 @@ int		ft_execute_redirection_p2(char **redirection_split, int ccount, int *fd)
 	return (0);
 }
 
-int		ft_execute_redirection(char **redirection_split, int ccount, int *fd, char *temp3, pid_t pid)
+int		ft_execute_redirection(char **redirection_split ,int ccount, int *fd, char *temp3, char **robo_env)
 {
-	if (pid == 0)
+	if (temp3[0] == '<')
 	{
-			if (temp3[0] == '>')
-			{
-				ft_execute_redirection_p1(redirection_split, ccount, fd);
-			}
-			else if (temp3[0] == '<')
-			{
-				ft_execute_redirection_p2(redirection_split, ccount, fd);
-			}
-			else
-			{
-				dprintf(2, "Error: Invalid redirection\n");
-				return (-1);
-			}
-			wait(NULL);
-			char *cmd = "/usr/bin/ls";
-			char *ags[] = {cmd, NULL};
-			if (execve(cmd, ags, NULL) == -1)
-			{
-				perror("execve");
-				return (-1);
-			}
+		if(ft_execute_redirection_p1(redirection_split, ccount, fd) < 0)
+			return (-1);
+	}
+	else if (temp3[0] == '>')
+	{
+		if(ft_execute_redirection_p2(redirection_split, ccount, fd) < 0)
+			return (-1);
+	}
+	else
+	{
+		dprintf(2, "Error: Invalid redirection\n");
+		return (-1);
 	}
 	return (0);
 }
 
-int		ft_redirection(char *input, char ***redirection_split, char ***redirection_data_split)
+int		ft_redirection(char *input, char ***redirection_split, char **robo_env)
 {
-	pid_t	pid;
+    char	*temp;
+    char	*temp2;
+    char	*temp3;
+    int		ccount = -1;
+    int		fd = -1;
+
+    setup_redirection(input, &temp, &temp2);
+    *redirection_split = ft_mult_split(temp2, "<> ");
+    temp3 = ft_strmchr(input, "<>");
+    while (++ccount < ft_2dlen(*redirection_split))
+    {
+        if (ccount != 0)
+            temp3 = ft_strmchr(temp3 + 1, "<>");
+        if (ft_execute_redirection(*redirection_split, ccount, &fd, temp3, robo_env) < 0)
+        {
+			free(temp);
+			frees_split(*redirection_split);
+            dprintf(2, "Error: Invalid redirection\n");
+            // kill(getpid(), SIGKILL);
+            return (-1);
+        }
+    }
+    frees_split(*redirection_split);
+    wait(NULL);
+    if (ft_execve(temp, robo_env) == -1)
+    {
+        free(temp);
+        perror("Command not found");
+        return (-1);
+    }
+    free(temp);
+    return (0);
+}
+/* 
+int		ft_redirdection(char *input, char ***redirection_split, char **robo_env)
+{
 	char	*temp;
 	char	*temp2;
 	char	*temp3;
@@ -228,41 +219,47 @@ int		ft_redirection(char *input, char ***redirection_split, char ***redirection_
 	int		fd = -1;
 
 	setup_redirection(input, &temp, &temp2);
-	*redirection_data_split = ft_split(temp, ' ');
 	*redirection_split = ft_mult_split(temp2, "<> ");
 	temp3 = ft_strmchr(input, "<>");
 	while (++ccount < ft_2dlen(*redirection_split))
 	{
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("fork");
-			return (-1);
-		}
 		if (ccount != 0)
 			temp3 = ft_strmchr(temp3 + 1, "<>");
-		ft_execute_redirection(*redirection_split, ccount, &fd, temp3, pid);
+		if(ft_execute_redirection(*redirection_split, ccount, &fd, temp3, robo_env) < 0)
+		{
+			// frees_split(*redirection_split);
+			// free(temp);
+			// temp = NULL;
+			// return (-1);
+		}
+	}
+	frees_split(*redirection_split);
+	wait(NULL);
+	if (ft_execve(temp, robo_env) == -1)
+	{
+		free(temp);
+		perror("Command not found");
+		return (-1);
 	}
 	free(temp);
 	return (0);
-}
+} */
 
-/* int	main(void)
+/* int	main(int argc, char *arv[], char **robo_env)
 {
 	char	*inter;
 	char	*temp;
 	char	*temp2;
 	char	**redirection_split;
 	char	**redirection_data_split;
-	int		redirection_type;
 	int		mult;
 	char *temp3;
  
-	inter = "ls here_doc.c < da < b >a  ";
-	ft_redirection(inter, &redirection_split, &redirection_data_split);
+	inter = "ls > t > test";
+	ft_redirection(inter, &redirection_split, robo_env);
 	return (0);
-}
- */	// char *temp = NULL;
+} */
+	// char *temp = NULL;
 	// char file;
 	// char **split = ft_split(inter, '<');
 	// char **split = ft_split(inter, ' ');

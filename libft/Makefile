@@ -16,7 +16,7 @@ OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 OBJSB = $(SRCSB:%.c=$(OBJS_DIR)/%.o)
 #creating the statico librere
 all: $(NAME)
-HIDE = $(if $(SET),, @)
+HIDE = $(if $(set),, @)
 
 #now we compile the source files (build them and turning them into objects)
 #$< means the %.c (requirements) and the $@ means the target which is %.o

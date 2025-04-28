@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/24 18:41:42 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/28 17:59:13 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			{
 				frees_split((*cmd)->env);
 				free(*cmd);
-	            kill(getpid(), SIGKILL);// cheak
 				exit(EXIT_FAILURE);
 			}
 			break ;

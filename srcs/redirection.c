@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/24 18:40:31 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/26 15:56:36 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,12 +194,10 @@ int		ft_redirection(char *input, char ***redirection_split, char **robo_env)
 			free(temp);
 			frees_split(*redirection_split);
             dprintf(2, "Error: Invalid redirection\n");
-            // kill(getpid(), SIGKILL);
             return (-1);
         }
     }
     frees_split(*redirection_split);
-    wait(NULL);
     if (ft_execve(temp, robo_env) == -1)
     {
         free(temp);

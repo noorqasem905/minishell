@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/24 18:26:29 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/28 18:01:14 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	execution(t_cmd **cmd, char **env)
 	{
 		if (pipe(pipe_fd2[i]) == -1)
 		{
+		    dprintf(2, "pipe failed at index %d\n", i);
 			perror("pipe");
 			exit(EXIT_FAILURE);
 		}
@@ -67,7 +68,7 @@ int	execution(t_cmd **cmd, char **env)
 		if (pids[i] < 0)
 		{
 			perror("fork");
-			exit(EXIT_FAILURE);
+			return (-1);
 		}
 		if (pids[i] == 0)
 		{
@@ -75,8 +76,9 @@ int	execution(t_cmd **cmd, char **env)
 			{
 				if (dup2(pipe_fd2[i - 1][0], STDIN_FILENO) == -1)
 				{
+					dprintf(2, "pipe failed at index %d\n", i);
 					perror("dup2");
-					exit(EXIT_FAILURE);
+ 					return (-1);
 				}
 			}
 			if (i != size - 1)
@@ -84,14 +86,14 @@ int	execution(t_cmd **cmd, char **env)
 				if (dup2(pipe_fd2[i][1], STDOUT_FILENO) == -1)
 				{
 					perror("dup2");
-					exit(EXIT_FAILURE);
+					return (-1);
 				}
 			}
 			j = 0;
 			while (j < size - 1)
 			{
-				close(pipe_fd2[j][0]);
-				close(pipe_fd2[j][1]);
+ 					close(pipe_fd2[j][0]);
+ 					close(pipe_fd2[j][1]);
 				j++;
 			}
 			if (ft_strmchr(current->content ,"<>"))
@@ -101,11 +103,11 @@ int	execution(t_cmd **cmd, char **env)
 					write(2, "Error: Invalid redirection\n\n", 27);
 					return (-1);
 				}
-			}
+			}			
 			if (ft_execve(current->content, env) == -1)
 			{
 				perror("Command not found");
-				return (-1);
+ 				return (-1);
 			}
 		}
 		if (i > 0)
@@ -123,17 +125,11 @@ int	execution(t_cmd **cmd, char **env)
 		j++;
 	}
 	i = -1;
-	while (++i < size)
+	while (++i < size && pids[i] && pids[i] != -1)
 	{
 		waitpid(pids[i], &status, 0);
 		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		{
-			errno = ENOENT;
-			k = -1;
-			// while (++k < size)
-			// 	kill(pids[k], SIGKILL);
-			break ;
-		}
+	        fprintf(stderr, "Error: Command failed with status %d\n", WEXITSTATUS(status));
 	}
 	return (0);
 }

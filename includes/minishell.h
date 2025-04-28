@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/24 16:16:30 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/28 17:29:30 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ struct					s_cmd
 {
 	t_list						*word;
 	char						**env;
+	int 					exit_status;
 }		;
 int						process_input(t_cmd **cmd, int *flag, char ***temp,
 							char **input, char **robo_env);

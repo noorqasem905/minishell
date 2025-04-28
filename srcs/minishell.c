@@ -23,6 +23,7 @@ int	main(int argc, char *argv[], char **robo_env)
 	temp = NULL;
 	cmd = malloc(sizeof(t_cmd));
 	cmd->env = NULL;
+	cmd->exit_status = 0;
 	if (cmd == NULL)
 	{
 		perror("malloc");
@@ -38,7 +39,7 @@ int	main(int argc, char *argv[], char **robo_env)
 		return (1);
 	}
 	cmd->env = my_env(robo_env);
-	reading_manager(&cmd, &flag, &temp, robo_env);
+	reading_manager(&cmd, &flag, &temp, cmd->env);
 	frees_split(cmd->env);
 	free(cmd);
 	return (0);

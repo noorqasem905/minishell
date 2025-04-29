@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/28 17:59:13 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/29 20:44:12 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	if (*input)
 		add_history(*input);
 	*temp = ft_split(*input, '|');
+	// should handle |||| more than one pipe with no command or space between them
 	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3)
 	{
 		if (*flag == -3)

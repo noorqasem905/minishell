@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/29 19:10:39 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/29 20:25:59 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,15 @@ int     dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
     int     check_error;
     char	*temp;
 
-    (*fd) = openfile_heredoc(fd, file_loc);
-    if ((*fd) < 0)
-        return (-1);
     temp = ft_strnstr(input, "<<", ft_strlen(input));
     if (!temp)
     {
         ft_printf("%2no here doc\n");
         return (0);
     }
+    (*fd) = openfile_heredoc(fd, file_loc);
+    if ((*fd) < 0)
+        return (-1);
     check_error = handle_here_doc(temp);
     if (check_error < 0 && check_error != -8)
     {
@@ -171,8 +171,8 @@ int     heredoc(char *temp)
         close(fd[1]);
         return (-1);
     }
-    implement_heredoc(&fd[1], input, fd[0]);
-    unlink(file_loc);
+    // implement_heredoc(&fd[1], input, fd[0]);
+    // unlink(file_loc);
     close(fd[1]);
     close(fd[0]);
     frees_split(input);

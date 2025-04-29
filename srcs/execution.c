@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/28 18:01:14 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/29 22:18:48 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,25 @@ void	print_saved_cmd1(t_list *saved_cmd)
 	}
 }
 
+int	set_init(t_cmd **cmd, int size)
+{
+	int		i;
+
+	i = 0;
+	(*cmd)->pryority = malloc(sizeof(int) * (size + 1));
+	if ((*cmd)->pryority == NULL)
+	{
+		perror("malloc");
+		return (-1);
+	}
+	while (i < size)
+	{
+		(*cmd)->pryority[i] = 0;
+		i++;
+	}
+	(*cmd)->pryority[i] = -1;
+	return (0);
+}
 int	execution(t_cmd **cmd, char **env)
 {
 	int		i;
@@ -36,6 +55,12 @@ int	execution(t_cmd **cmd, char **env)
 	char	**redirection_split;
 
 	size = ft_lstsize((*cmd)->word);
+	set_init(cmd, size);
+	// for (k = 0; k < size; k++)
+	// {
+	// 	printf("i = %d: %d\n", k,(*cmd)->pryority[k]);
+	// }
+	
 	pid_t	pids[size];
 	int		pipe_fd2[size][2];
 	current = (*cmd)->word;

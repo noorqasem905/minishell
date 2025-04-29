@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/28 17:29:30 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:55:03 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,6 @@ void					signal_handler(int x);
 char					*check_access(char **paths, char **result);
 char					*expander_input(t_list *input, char **env);
 char					**my_env(char **env);
+char **export(char **var, char **robo_env);
+
 #endif

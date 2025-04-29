@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/04/19 19:58:48 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:51:34 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,16 @@ char	*expander_input(t_list *input, char **env)
 		}
 		else if (content[i] == '$' && !flag_single)
 		{
+			/*if (content[i + 1] == '?')
+			{
+				expand_var = ft_itoa((*cmd)->exit_status);
+				temp = ft_strjoin(expanded, expand_var);
+				free(expanded);
+				free(expand_var);
+				expanded = temp;
+				i += 2;
+				continue;
+			}*/
 			expand_var = expantions(content, i, env);
 			temp = ft_strjoin(expanded, expand_var);
 			free(expanded);

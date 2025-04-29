@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/29 19:02:26 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/29 19:10:39 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,65 +178,66 @@ int     heredoc(char *temp)
     frees_split(input);
     return (0);
 }
-# include <readline/readline.h>
-# include <readline/history.h>
-int main(int argc, char *argv[], char **robo_env)
-{
-    // char    **input;
-    char	*temp = "ls << exit";
-    heredoc(temp);
 
-    // int     fd;
-    // fd = open("/tmp/minishell_heredoc", O_RDWR | O_CREAT | O_TRUNC, 0644);
-    // fd = openfile_heredoc(&fd);
-    // if (fd < 0)
-    //     return (-1);
-    // if(dbg_heredoc(temp, &fd, &input))
-    // {
-    //     printf("error here doc\n");
-    //     return (-1);
-    // }
-    // Done
-    // char *here_doc;
-    // int original_stdout = dup(STDOUT_FILENO);
-    // if (original_stdout == -1)
-    // {
-    //     perror("dup");
-    //     close(fd);
-    //     return (-1);
-    // }
-    // printf("here doc: %d\n", fd);
-    // while ((here_doc = get_next_line(STDIN_FILENO)) != NULL)
-    // {
-    //     size_t len = ft_strlen(here_doc);
-    //     if (len > 0 && here_doc[len - 1] == '\n')
-    //         here_doc[len - 1] = '\0';
-    //     if (ft_strcmp(here_doc, input[0]) == 0)
-    //     {
-    //         free(here_doc);
-    //         break;
-    //     }
-    //     dup2(fd, STDOUT_FILENO);
-    //     printf("%s\n", here_doc);
-    //     dup2(original_stdout, STDOUT_FILENO);
-    //     free(here_doc);
-    // }
-    // while ((here_doc = readline("> ")) != NULL)
-    // {
-    //     if (ft_strcmp(here_doc, input[0]) == 0)
-    //     {
-    //         free(here_doc);
-    //         break;
-    //     }
-    //     dup2(fd, STDOUT_FILENO);
-    //     printf("%s\n", here_doc);
-    //     dup2(original_stdout, STDOUT_FILENO);
-    //     free(here_doc);
-    // }
-    // close(fd);
-    // close(original_stdout);
-    // frees_split(input);
-}
+// # include <readline/readline.h>
+// # include <readline/history.h>
+// int main(int argc, char *argv[], char **robo_env)
+// {
+//     // char    **input;
+//     char	*temp = "ls << exit";
+//     heredoc(temp);
+
+//     // int     fd;
+//     // fd = open("/tmp/minishell_heredoc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+//     // fd = openfile_heredoc(&fd);
+//     // if (fd < 0)
+//     //     return (-1);
+//     // if(dbg_heredoc(temp, &fd, &input))
+//     // {
+//     //     printf("error here doc\n");
+//     //     return (-1);
+//     // }
+//     // Done
+//     // char *here_doc;
+//     // int original_stdout = dup(STDOUT_FILENO);
+//     // if (original_stdout == -1)
+//     // {
+//     //     perror("dup");
+//     //     close(fd);
+//     //     return (-1);
+//     // }
+//     // printf("here doc: %d\n", fd);
+//     // while ((here_doc = get_next_line(STDIN_FILENO)) != NULL)
+//     // {
+//     //     size_t len = ft_strlen(here_doc);
+//     //     if (len > 0 && here_doc[len - 1] == '\n')
+//     //         here_doc[len - 1] = '\0';
+//     //     if (ft_strcmp(here_doc, input[0]) == 0)
+//     //     {
+//     //         free(here_doc);
+//     //         break;
+//     //     }
+//     //     dup2(fd, STDOUT_FILENO);
+//     //     printf("%s\n", here_doc);
+//     //     dup2(original_stdout, STDOUT_FILENO);
+//     //     free(here_doc);
+//     // }
+//     // while ((here_doc = readline("> ")) != NULL)
+//     // {
+//     //     if (ft_strcmp(here_doc, input[0]) == 0)
+//     //     {
+//     //         free(here_doc);
+//     //         break;
+//     //     }
+//     //     dup2(fd, STDOUT_FILENO);
+//     //     printf("%s\n", here_doc);
+//     //     dup2(original_stdout, STDOUT_FILENO);
+//     //     free(here_doc);
+//     // }
+//     // close(fd);
+//     // close(original_stdout);
+//     // frees_split(input);
+// }
 /*
 here doc
 

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/26 15:56:36 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/29 14:16:10 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,17 +182,31 @@ int		ft_redirection(char *input, char ***redirection_split, char **robo_env)
     int		ccount = -1;
     int		fd = -1;
 
-    setup_redirection(input, &temp, &temp2);
-    *redirection_split = ft_mult_split(temp2, "<> ");
-    temp3 = ft_strmchr(input, "<>");
+    if(setup_redirection(input, &temp, &temp2))
+		return (-1);
+	
+	if (temp == NULL || temp2 == NULL)
+		return (-1);	
+	*redirection_split = ft_mult_split(temp2, "<> ");
+	if (*redirection_split == NULL)
+	{
+		free(temp);
+		free(temp2);
+		return (-1);
+	}
+	temp3 = ft_strmchr(input, "<>");
+	if (temp3 == NULL)
+		return (-1);
     while (++ccount < ft_2dlen(*redirection_split))
     {
         if (ccount != 0)
             temp3 = ft_strmchr(temp3 + 1, "<>");
         if (ft_execute_redirection(*redirection_split, ccount, &fd, temp3, robo_env) < 0)
         {
-			free(temp);
-			frees_split(*redirection_split);
+			if (temp != NULL)
+				free(temp);
+			if (*redirection_split)
+				frees_split(*redirection_split);
             dprintf(2, "Error: Invalid redirection\n");
             return (-1);
         }

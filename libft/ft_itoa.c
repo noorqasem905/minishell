@@ -6,12 +6,11 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 21:09:38 by nqasem            #+#    #+#             */
-/*   Updated: 2024/09/03 18:12:35 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/29 14:33:48 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
 char	*checkzero(void)
 {

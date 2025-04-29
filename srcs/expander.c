@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/04/28 18:51:34 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/29 20:05:46 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static char	*expantions(char *input, int i, char **env)
 }
 
 char	*expander_input(t_list *input, char **env)
-
 {
 	char *expanded = ft_strdup("");
 	char *expand_var;

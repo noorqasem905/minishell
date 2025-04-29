@@ -37,7 +37,7 @@ int	check_validation(char **paths, char **result, char **m)
 		free_it_now(paths, NULL, 1);
 		return (-1);
 	}
-	if (ft_strncmp(result[0], "./", 2) == 0)
+	if (result[0] && ft_strncmp(result[0], "./", 2) == 0)
 	{
 		if (access(result[0], X_OK) == -1)
 		{
@@ -48,7 +48,7 @@ int	check_validation(char **paths, char **result, char **m)
 		*m = ft_strdup(result[0]);
 		return (4);
 	}
-	if (ft_strncmp(result[0], "/", 1) == 0)
+	if (result[0] && ft_strncmp(result[0], "/", 1) == 0)
 	{
 		if (access(result[0], F_OK | X_OK) == 0)
 		{

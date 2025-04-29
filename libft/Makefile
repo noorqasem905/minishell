@@ -21,22 +21,22 @@ HIDE = $(if $(set),, @)
 #now we compile the source files (build them and turning them into objects)
 #$< means the %.c (requirements) and the $@ means the target which is %.o
 %.o: %.c
-	$(HIDE)$(CC) $(CFLAGS) -c $< -o $@
+	$(HIDE) $(CC) $(CFLAGS) -c $< -o $@
 $(NAME): $(OBJS)
-	$(HIDE)ar $(ARFLAGS) $@ $^
+	$(HIDE) ar $(ARFLAGS) $@ $^
 
 bonus: $(NAME) $(OBJSB)
-	$(HIDE)ar $(ARFLAGS) $(NAME) $(OBJSB)
+	$(HIDE) ar $(ARFLAGS) $(NAME) $(OBJSB)
 
 $(OBJS_DIR)/%.o: %.c
 	@mkdir -p $(OBJS_DIR)
-	$(HIDE)$(CC) $(CFLAGS) -c $< -o $@
+	$(HIDE) $(CC) $(CFLAGS) -c $< -o $@
 #here we remove the object files (.o) that were created
 clean:
-	$(HIDE)rm -f $(OBJS) $(OBJSB)
+	$(HIDE) rm -f $(OBJS) $(OBJSB)
 #we just remove the library files here
 fclean: clean
-	$(HIDE)rm -f $(NAME)
+	$(HIDE) rm -f $(NAME)
 #here we rebuild everything, by deleting and redoing all of the steps again
 re: fclean all
 #

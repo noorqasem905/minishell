@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/29 20:44:12 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:50:50 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,34 @@ void	print_saved_cmd(t_list *saved_cmd)
 	}
 }
 
+int		check_pipe_input(char *input)
+{
+	int	i;
+	int	pipe_count;
+
+	i = 0;
+	pipe_count = 0;
+	while (input[i] && input[i] == ' ')
+		i++;
+	if (!input)
+		return (-1);
+	if (input[i] && input[i] == '|' || input[ft_strlen(input) - 1] == '|')
+		return (-1);
+	while (input[i])
+	{
+		if (input[i] != '|' && input[i] != ' ')
+				pipe_count = 0;
+		else if (input[i] == '|')
+			pipe_count++;
+		if (pipe_count > 1)
+			return (-1);
+		i++;
+	}
+	if (pipe_count > 0)
+		return (-1);
+	return (0);
+}
+
 int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 		char **robo_env)
 {
@@ -83,6 +111,12 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 
 	if (*input)
 		add_history(*input);
+	if (check_pipe_input(*input) == -1)
+	{
+		dprintf(2, "Syntax error: Invalid pipe usage\n");
+		// free(*input);
+		return (-42);
+	}
 	*temp = ft_split(*input, '|');
 	// should handle |||| more than one pipe with no command or space between them
 	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3)
@@ -131,7 +165,7 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			continue ;
 		}
 		ret = process_input(cmd, flag, temp, &input, robo_env);
-		if (ret < 0 && ret != -3)
+		if (ret < 0 && ret != -3 && ret != -42)
 		{
 			frees_split(*temp);
 			free_list((&(*cmd)->word));
@@ -152,6 +186,8 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			free_list(&(*cmd)->word);
 			continue ;
 		}
+		else if (ret == -42)//important to focse on
+			continue ;
 		frees_split(*temp);
 		free_list(&(*cmd)->word);
 	}

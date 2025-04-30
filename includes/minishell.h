@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/29 22:03:28 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:52:14 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_cmd	t_cmd;
 struct					s_cmd
 {
 	t_list						*word;
+	char 						*input;
 	char						**env;
 	int							*pryority;
 	int 					exit_status;

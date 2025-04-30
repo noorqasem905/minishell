@@ -44,7 +44,3 @@ int	main(int argc, char *argv[], char **robo_env)
 	free(cmd);
 	return (0);
 }
-/*Cases*/
-/*  | |              | a | a */ // have to handle this case
-/* |||||||||||||||| a */
-/* |||||||||| |||||||| |||||||| */

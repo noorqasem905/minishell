@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/29 22:18:48 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:44:20 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	execution(t_cmd **cmd, char **env)
 	char	**redirection_split;
 
 	size = ft_lstsize((*cmd)->word);
-	set_init(cmd, size);
+	// set_init(cmd, size);
 	// for (k = 0; k < size; k++)
 	// {
 	// 	printf("i = %d: %d\n", k,(*cmd)->pryority[k]);

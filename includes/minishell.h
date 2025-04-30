@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/29 19:55:03 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:16:33 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ void					signal_handler(int x);
 char					*check_access(char **paths, char **result);
 char					*expander_input(t_list *input, char **env);
 char					**my_env(char **env);
-char **export(char **var, char **robo_env);
+void					export(char **var, t_cmd *cmd);
+void					env_sorted(char **env);
+void					sort_env(char **env, int len);
+void					swap_strings(char **a, char **b);
+
 
 #endif

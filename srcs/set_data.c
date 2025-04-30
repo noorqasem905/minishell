@@ -6,13 +6,14 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/29 20:04:32 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/04/30 21:31:42 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #define COLOR_CUSTOM "\x1b[38;2;42;161;179m"
 #define COLOR_RESET "\x1b[0m"
+
 
 static int	is_closed(char *input)
 {
@@ -103,11 +104,18 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	}
 	if (ft_strncmp(split[0], "export", 7) == 0)
 	{
-		robo_env= exp(split, &robo_env);
+		export(input, *cmd);
 		free(*input);
 		frees_split(split);
 		return (-3);
 	}
+	/*if (ft_strncmp(split[0], "env", 6) == 0)
+	{
+		env_sorted(robo_env);
+		free(*input);
+		frees_split(split);
+		return (-3);
+	}*/
 	frees_split(split);
 	if (searching_comand(input, *temp) == -13)
 		return (-13);

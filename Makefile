@@ -12,7 +12,9 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/redirection.c					\
 		srcs/execution.c					\
 		srcs/env.c							\
-		srcs/bulidin_export.c						
+		srcs/export.c						\
+		srcs/env_sort.c						\
+		srcs/utils.c					\
 
 all: $(NAME)
 

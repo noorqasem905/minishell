@@ -6,12 +6,12 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/29 20:25:59 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:40:56 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+/* 
 void	printf_split(char *str, char **split)
 {
 	int	i;
@@ -23,7 +23,7 @@ void	printf_split(char *str, char **split)
 		i++;
 	}
 }
-
+ */
 int     handle_here_doc(char *temp)
 {
     int     i;
@@ -113,15 +113,15 @@ int     dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
         ft_printf("%2no here doc\n");
         return (0);
     }
-    (*fd) = openfile_heredoc(fd, file_loc);
-    if ((*fd) < 0)
-        return (-1);
     check_error = handle_here_doc(temp);
-    if (check_error < 0 && check_error != -8)
+    if (check_error < 0)
     {
         printf("error here doc\n");
         return (-1);
     }
+    (*fd) = openfile_heredoc(fd, file_loc);
+    if ((*fd) < 0)
+        return (-2);
     *input_split = ft_mult_split(temp, " <");
     if (!input_split)
         return (-1);
@@ -178,15 +178,15 @@ int     heredoc(char *temp)
     frees_split(input);
     return (0);
 }
-
-// # include <readline/readline.h>
-// # include <readline/history.h>
-// int main(int argc, char *argv[], char **robo_env)
-// {
-//     // char    **input;
-//     char	*temp = "ls << exit";
-//     heredoc(temp);
-
+/* 
+# include <readline/readline.h>
+# include <readline/history.h>
+int main(int argc, char *argv[], char **robo_env)
+{
+    // char    **input;
+    char	*temp = "ls << dfa <afs> ";
+    printf("%d", heredoc(temp));
+} */
 //     // int     fd;
 //     // fd = open("/tmp/minishell_heredoc", O_RDWR | O_CREAT | O_TRUNC, 0644);
 //     // fd = openfile_heredoc(&fd);

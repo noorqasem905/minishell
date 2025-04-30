@@ -11,6 +11,7 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/setup_execution.c				\
 		srcs/redirection.c					\
 		srcs/execution.c					\
+		srcs/here_doc.c						\
 		srcs/env.c									
 
 all: $(NAME)

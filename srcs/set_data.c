@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/30 16:50:50 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:03:18 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,21 @@ void	print_saved_cmd(t_list *saved_cmd)
 	}
 }
 
+int		check_no_pipe(char *input)
+{
+	int	i;
+
+	i = 0;
+	ft_strchr(input, '|');
+	while (input[i])
+	{
+		if (input[i] == '|')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int		check_pipe_input(char *input)
 {
 	int	i;
@@ -111,15 +126,13 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 
 	if (*input)
 		add_history(*input);
-	if (check_pipe_input(*input) == -1)
+	if (check_no_pipe(*input) && check_pipe_input(*input) == -1)
 	{
 		dprintf(2, "Syntax error: Invalid pipe usage\n");
-		// free(*input);
-		return (-42);
+ 		return (-42);
 	}
 	*temp = ft_split(*input, '|');
-	// should handle |||| more than one pipe with no command or space between them
-	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3)
+ 	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3)
 	{
 		if (*flag == -3)
 			return (-3);
@@ -144,10 +157,15 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	{
 		free(t);
 		free(*input);
+		if ((*cmd)->pryority)
+			free((*cmd)->pryority);
+		if ((*cmd)->exit_status == -13)
+			return (-14);
 		return (-12);
 	}
 	free(t);
 	free(*input);
+	free((*cmd)->pryority);
 	return (0);
 }
 
@@ -179,9 +197,9 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			}
 			break ;
 		}
-		else if (ret == -3)
+		else if (ret == -3 || ret == -14)
 		{
-			*flag = 0;
+ 			*flag = 0;
 			frees_split(*temp);
 			free_list(&(*cmd)->word);
 			continue ;

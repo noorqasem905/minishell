@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/21 12:50:41 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:02:28 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	robo_cd(char **temp, char **robo_env)
 
 int	searching_comand(char **input, char **temp)
 {
-	if (ft_strcmp(temp[0], "exit") == 0)
+ 	if (ft_strcmp(temp[0], "exit") == 0)
 		return (-13);
 	if (!ft_strncmp(temp[0], "cd", 3))
 		return (1);

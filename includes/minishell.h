@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/30 16:52:14 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:55:30 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,32 @@
 # include <unistd.h>
 
 typedef struct s_cmd	t_cmd;
+typedef struct s_here_doc	t_here_doc;
 struct					s_cmd
 {
 	t_list						*word;
 	char 						*input;
 	char						**env;
 	int							*pryority;
-	int 					exit_status;
+	int 						who_am_i;
+	int 						exit_status;
 }		;
+
+struct s_here_doc
+{
+	int		fd;
+	int		*pryority;
+	char	*input;
+	char	*temp;
+}		;
+
+int						heredoc(char *temp);
+int						handle_here_doc(char *temp);
 int						process_input(t_cmd **cmd, int *flag, char ***temp,
 							char **input, char **robo_env);
 int						check_validation(char **paths, char **result, char **m);
 int						get_path(char **ev);
+int						ft_strfind(char *str, char *c);
 int						execution(t_cmd **cmd, char **env);
 int						ft_execve(char *file, char **ev);
 int						searching_comand(char **input, char **temp);

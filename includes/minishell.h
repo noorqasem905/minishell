@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/30 18:55:30 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/01 22:09:23 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 typedef struct s_cmd	t_cmd;
 typedef struct s_here_doc	t_here_doc;
+typedef struct s_exp	t_exp;
 struct					s_cmd
 {
 	t_list						*word;
@@ -50,6 +51,13 @@ struct s_here_doc
 
 int						heredoc(char *temp);
 int						handle_here_doc(char *temp);
+struct		s_exp
+{
+	char						**name;
+	char						**value;
+	int							flag;
+}		;
+
 int						process_input(t_cmd **cmd, int *flag, char ***temp,
 							char **input, char **robo_env);
 int						check_validation(char **paths, char **result, char **m);
@@ -75,5 +83,11 @@ void					expand_cmds(t_cmd **cmd, char **env);
 void					signal_handler(int x);
 char					*check_access(char **paths, char **result);
 char					*expander_input(t_list *input, char **env);
-char					**my_env(char **env);
+//char					**my_env(char **env);
+void					export(char **var, t_cmd *cmd);
+void					env_sorted(char **env);
+void					sort_env(char **env, int len);
+void					swap_strings(char **a, char **b);
+
+
 #endif

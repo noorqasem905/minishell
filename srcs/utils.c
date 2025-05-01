@@ -1,43 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   utils.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/19 18:26:29 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/04/29 20:42:26 by aalquraa         ###   ########.fr       */
+/*   Created: 2025/04/30 19:14:40 by aalquraa          #+#    #+#             */
+/*   Updated: 2025/04/30 19:18:33 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	**my_env(char **env)
+
+void	swap_strings(char **a, char **b)
 {
-	int		i;
-	char	**my_env;
+	char	*temp;
+    
+    temp = *a;
+	*a = *b;
+	*b = temp;
+}
+void	sort_env(char **env, int len)
+{
+	int	i;
+	int	j;
 
 	i = 0;
-	while (env[i])
-		i++;
-	my_env = malloc(sizeof(char *) * (i + 1));
-	if (!my_env)
-		return (NULL);
-	i = 0;
-	while (env[i])
+	while (i < len - 1)
 	{
-		my_env[i] = ft_strdup(env[i]);
-		if (!my_env[i])
+		j = 0;
+		while (j < len - i - 1)
 		{
-			while (--i >= 0)
-				free(my_env[i]);
-			free(my_env);
-			return (NULL);
+			if (ft_strcmp(env[j], env[j + 1]) > 0)
+				swap_strings(&env[j], &env[j + 1]);
+			j++;
 		}
 		i++;
 	}
-	my_env[i] = NULL;
-	return (my_env);
 }
-
 

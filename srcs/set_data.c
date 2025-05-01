@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/30 18:03:18 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/01 20:30:41 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			free_list(&(*cmd)->word);
 			continue ;
 		}
-		else if (ret == -42)//important to focse on
+		else if (ret == -42)
 			continue ;
 		frees_split(*temp);
 		free_list(&(*cmd)->word);

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:20:17 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/04/30 21:31:57 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:51:09 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void    export(char **var, t_cmd *cmd)
         value = ft_substr(var[i], key_len, ft_strlen(var[i]) - key_len);
         printf("%s\n", key);
         printf("%s\n", value);
-        /*f (!is_valid_var(key))
+        /*if (!is_valid_var(key))
         {
             ft_printf("export: '%s': not a valid identifier\n", var[i]);
             free(key);

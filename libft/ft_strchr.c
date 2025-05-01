@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 20:03:00 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/23 18:40:10 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/04/30 22:04:29 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ char	*ft_strchr(const char *s, int c)
 
 	cca = (char)c;
 	while (*s != '\0' && *s != cca)
-	{
 		s++;
-	}
 	if (*s == cca)
 		return ((char *)s);
 	return (NULL);

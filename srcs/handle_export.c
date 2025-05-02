@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/01 20:30:36 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:23:51 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,10 +195,20 @@ static void add_fuc(t_cmd *cmd, char *name, char *value)
 	int name_len;
 	char *new_var;
 	int j;
+	char *temp;
 
 	i = 0;
 	name_len = ft_strlen(name);
-	new_var= ft_strjoin(ft_strjoin(name, "="), value);
+	if (!value || value[0] == '\0')
+		new_var= ft_strdup(name);
+	else
+	{
+		temp = ft_strjoin(name, "=");
+		new_var = ft_strjoin(temp, value);
+		free (temp);
+	}
+	if (!new_var)
+		return ;
 	while (cmd->env[i])
 	{
 		if (!ft_strncmp(cmd->env[i], name, name_len) && cmd->env[i][name_len] == '=')
@@ -216,7 +226,7 @@ static void add_fuc(t_cmd *cmd, char *name, char *value)
 	while (j < i)
 	{
 		new_env[j] = cmd->env[j];
-		i++;
+		j++;
 	}
 	new_env[i] = new_var;
 	new_env[i + 1] = NULL;
@@ -236,13 +246,13 @@ static void robo_export(t_cmd *cmd, t_exp *export)
 	}
 	while (export->name[i])
 	{
-		fuc_add(cmd, export->name[i], export->value[i]);
+		add_fuc(cmd, export->name[i], export->value[i]);
 		i++;
 	}
 	
 }
 
-int	main(int argc, char **argv, char **env)
+int	main(int argc , char **argv, char **env)
 {
 	char *str = "	export x1 =\"123\" ttt=dfdfd x2 x3=\"wdd\" ";
     char *e = "export";
@@ -250,9 +260,10 @@ int	main(int argc, char **argv, char **env)
 	char **result;
 	t_exp *export;
 	int i;
-	int len; 
+	int len;
 	t_cmd *cmd;
-	
+
+	cmd = malloc(sizeof(t_cmd));
 	cmd->env = my_env(env);
 	len = 0;
 	if (!ft_strmchr(str, "export"))
@@ -333,15 +344,19 @@ int	main(int argc, char **argv, char **env)
 		x++;
 		j++;
 	}
-	export->name[x - 1] = NULL;
-	export->value[x - 1] = NULL;
+	export->name[j]= NULL;
+	export->value[j] = NULL;
 	
 	robo_export(cmd, export);
 	printf_split("NAME: ", export->name);
 	printf_split("VALUE: ", export->value);
+	printf("*****export*********\n");
+	print_export(cmd);
 	frees_split(export->name);
 	frees_split(export->value);
 	frees_split(result);
 	free(export);
+	frees_split(cmd->env);
+	free(cmd);
 	return (0);
 }

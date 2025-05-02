@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/02 18:23:51 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:33:13 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	**my_env(char **env)
 	my_env[i] = NULL;
 	return (my_env);
 }
-
+/*sdsa*/
 static int	word_count_custuom(char const *s, char c)
 {
 	int	i;

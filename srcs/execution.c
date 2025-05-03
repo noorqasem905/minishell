@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/03 18:03:40 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/03 19:55:37 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int searching_here_doc(t_cmd **cmd)
 	(*cmd)->pryority[i] = '\0';
 	return (0);
 }
+
 int	execution(t_cmd **cmd, char **env)
 {
 	int		i;

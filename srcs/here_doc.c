@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/30 18:40:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/03 22:08:58 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,6 @@ int     openfile_heredoc(int *fd, char **file_loc)
         free(*file_loc);
         return (-1);
     }
-    if (*file_loc)
-    {
-        free(*file_loc);
-        *file_loc = NULL;
-    }
     return (*fd);
 }
 
@@ -144,7 +139,8 @@ int     implement_heredoc(int *fd, char **input, int original_stdout)
             break;
         }
         dup2((*fd), STDOUT_FILENO);
-        printf("%s\n", here_doc);
+        write(*fd, here_doc, len);
+        write(*fd, "\n", 1);
         dup2(original_stdout, STDOUT_FILENO);
         free(here_doc);
     }
@@ -171,21 +167,27 @@ int     heredoc(char *temp)
         close(fd[1]);
         return (-1);
     }
-    // implement_heredoc(&fd[1], input, fd[0]);
-    // unlink(file_loc);
+    implement_heredoc(&fd[1], input, fd[0]);
+    implement_heredoc(&fd[1], input, fd[0]);
+    unlink(file_loc);
+    if (file_loc)
+    {
+        free(file_loc);
+        file_loc = NULL;
+    }
     close(fd[1]);
     close(fd[0]);
     frees_split(input);
     return (0);
 }
-/* 
-# include <readline/readline.h>
+
+/* # include <readline/readline.h>
 # include <readline/history.h>
 int main(int argc, char *argv[], char **robo_env)
 {
     // char    **input;
-    char	*temp = "ls << dfa <afs> ";
-    printf("%d", heredoc(temp));
+    char	*temp = "cat << end ";
+    dprintf(2,"%d", heredoc(temp));
 } */
 //     // int     fd;
 //     // fd = open("/tmp/minishell_heredoc", O_RDWR | O_CREAT | O_TRUNC, 0644);

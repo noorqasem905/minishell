@@ -38,6 +38,7 @@ int	main(int argc, char *argv[], char **robo_env)
 		free(cmd);
 		return (1);
 	}
+	init_data(&cmd);
 	cmd->env = my_env(robo_env);
 	reading_manager(&cmd, &flag, &temp, cmd->env);
 	frees_split(cmd->env);

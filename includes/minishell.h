@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/01 22:09:23 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/03 17:11:43 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,16 @@ int						ft_execute_redirection(char **redirection_split ,int ccount, int *fd,
 int						read_input(char **input);
 void					free_list(t_list **root);
 void					frees(t_list **root);
+void					printf_split(char *str, char **split);
 void					robo_cd(char **temp, char **robo_env);
 void					free_it_now(char **s, char *s2, int emassage);
 void					expand_cmds(t_cmd **cmd, char **env);
 void					signal_handler(int x);
 char					*check_access(char **paths, char **result);
 char					*expander_input(t_list *input, char **env);
-//char					**my_env(char **env);
-void					export(char **var, t_cmd *cmd);
+char					**my_env(char **env);
+void					init_data(t_cmd **cmd);
+void					export_t(char **var, t_cmd *cmd);
 void					env_sorted(char **env);
 void					sort_env(char **env, int len);
 void					swap_strings(char **a, char **b);

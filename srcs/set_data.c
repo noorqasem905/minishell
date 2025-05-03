@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/01 22:09:49 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/03 17:14:50 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ void	print_saved_cmd(t_list *saved_cmd)
 		ft_printf("Command: %s\n", (char *)current->content);
 		current = current->next;
 	}
+}
+
+void init_data(t_cmd **cmd)
+{
+	(*cmd)->word = NULL;
+	(*cmd)->env = NULL;
+	(*cmd)->pryority = NULL;
+	(*cmd)->who_am_i = 0;
+	(*cmd)->exit_status = 0;
 }
 
 int		check_no_pipe(char *input)
@@ -152,7 +161,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	}
 	if (ft_strncmp(split[0], "export", 7) == 0)
 	{
-		export(input, *cmd);
+		export_t(input, *cmd);
 		free(*input);
 		frees_split(split);
 		return (-3);

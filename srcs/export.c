@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:20:17 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/01 18:51:09 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/03 17:01:03 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ static int find_env(char *key, char **env)
     }
     return (-1);
 }
-void    export(char **var, t_cmd *cmd)
+void    export_t(char **var, t_cmd *cmd)
 {
     int i = 1;
     int index;

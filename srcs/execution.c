@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/30 19:07:26 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/03 18:03:40 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ int searching_here_doc(t_cmd **cmd)
 	char	*temp;
 	int		i;
 
+	i = -1;
 	current = (*cmd)->word;
-	i = 0;
-	while (current != NULL)
+	while (-1 < ++i && current != NULL)
 	{
 		if (ft_strfind(current->content, "<<"))
 		{
@@ -88,9 +88,13 @@ int searching_here_doc(t_cmd **cmd)
 				(*cmd)->exit_status = -14;
 				return (-1);
 			}
+			(*cmd)->pryority[i] = 1;
 		}
+		else
+			(*cmd)->pryority[i] = 2;
 		current = current->next;
 	}
+	(*cmd)->pryority[i] = '\0';
 	return (0);
 }
 int	execution(t_cmd **cmd, char **env)
@@ -104,15 +108,22 @@ int	execution(t_cmd **cmd, char **env)
 	char	**redirection_split;
 
 	size = ft_lstsize((*cmd)->word);
-	(*cmd)->pryority = NULL;
+	(*cmd)->pryority = malloc(sizeof(int) * (size + 1));
 	(*cmd)->who_am_i = 0;
 	// (*cmd)->exit_status = 0;
+	
 	if (searching_here_doc(cmd) == -1)
 	{
 		perror("Error in here doc");
 		return (-13);
 	}
-	set_init(cmd, size);
+	// set_init(cmd, size);
+	int p = 0;
+	while ((*cmd)->pryority[p] != '\0')
+	{
+		printf("Command: %d\n", (*cmd)->pryority[p]);
+		p++;
+	}
 	pid_t	pids[size];
 	int		pipe_fd2[size][2];
 	current = (*cmd)->word;

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/03 19:55:37 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/03 22:10:15 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,12 @@ int	execution(t_cmd **cmd, char **env)
 		perror("Error in here doc");
 		return (-13);
 	}
-	// set_init(cmd, size);
-	int p = 0;
-	while ((*cmd)->pryority[p] != '\0')
-	{
-		printf("Command: %d\n", (*cmd)->pryority[p]);
-		p++;
-	}
+ 	// int p = 0;
+	// while ((*cmd)->pryority[p] != '\0')
+	// {
+	// 	printf("Command: %d\n", (*cmd)->pryority[p]);
+	// 	p++;
+	// }
 	pid_t	pids[size];
 	int		pipe_fd2[size][2];
 	current = (*cmd)->word;

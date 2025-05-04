@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/03 19:22:14 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/04 21:59:41 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void init_data(t_cmd **cmd)
 	(*cmd)->env = NULL;
 	(*cmd)->pryority = NULL;
 	(*cmd)->who_am_i = 0;
+	(*cmd)->counter = 0;
+	(*cmd)->index = 0;
 	(*cmd)->exit_status = 0;
 }
 

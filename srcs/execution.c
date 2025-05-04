@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/03 22:10:15 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/04 22:14:48 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int searching_here_doc(t_cmd **cmd)
 				return (-1);
 			}
 			(*cmd)->pryority[i] = 1;
+			(*cmd)->counter++;
 		}
 		else
 			(*cmd)->pryority[i] = 2;
@@ -98,32 +99,70 @@ int searching_here_doc(t_cmd **cmd)
 	return (0);
 }
 
-int	execution(t_cmd **cmd, char **env)
+void pprintf(char **str)
 {
+	int no = 0;
+	while (str[no])
+	{
+		dprintf(2,"out: %s\n", str[no]);
+		no++;
+	}
+}
+int		here_doc_manger(t_cmd **cmd, char **file_loc)
+{
+	t_list	*current;
 	int		i;
 	int		j;
-	int		k;
-	int		size;
-	int		status;
-	t_list	*current;
-	char	**redirection_split;
 
-	size = ft_lstsize((*cmd)->word);
-	(*cmd)->pryority = malloc(sizeof(int) * (size + 1));
-	(*cmd)->who_am_i = 0;
-	// (*cmd)->exit_status = 0;
-	
-	if (searching_here_doc(cmd) == -1)
+	i = 0;
+	j = 0;
+	current = (*cmd)->word;
+	while ((*cmd)->pryority[i] != '\0')
 	{
-		perror("Error in here doc");
-		return (-13);
+		if ((*cmd)->pryority[i] == 1)
+		{
+				if (heredoc(current->content, &(file_loc[j])))
+				{
+					perror("heredoc");
+					return (-1);
+				}
+				j++;
+		}
+		current = current->next;
+		i++;
 	}
+
+	return (0);
+}
  	// int p = 0;
 	// while ((*cmd)->pryority[p] != '\0')
 	// {
 	// 	printf("Command: %d\n", (*cmd)->pryority[p]);
 	// 	p++;
 	// }
+int	execution(t_cmd **cmd, char **env)
+{
+	int		i;
+	int		j;
+	int		k;
+	int		size;
+	t_list	*current;
+
+	size = ft_lstsize((*cmd)->word);
+	(*cmd)->pryority = malloc(sizeof(int) * (size + 1));
+	(*cmd)->who_am_i = 0;	
+	(*cmd)->index = 0;	
+	if (searching_here_doc(cmd) == -1)
+	{
+		perror("Error in here doc");
+		return (-13);
+	}
+	// char *file_loc[((*cmd)->counter) + 1];
+	// ft_memset(file_loc, 0, sizeof(file_loc));
+	// if(here_doc_manger(cmd, file_loc))
+	// 	return (-1);
+	// file_loc [((*cmd)->counter)] = NULL;
+	// pprintf(file_loc);
 	pid_t	pids[size];
 	int		pipe_fd2[size][2];
 	current = (*cmd)->word;
@@ -149,69 +188,145 @@ int	execution(t_cmd **cmd, char **env)
 		}
 		i++;
 	}
+	// if(child_process(cmd, &current, pipe_fd2, (pids), file_loc))
+	if(child_process(cmd, &current, pipe_fd2, (pids), NULL))
+		return (-1);
+	close_wait(pids, size, pipe_fd2);
+	// int no = 0;
+	// while (file_loc[no] && no < (*cmd)->counter)
+	// {
+	// 	// (*cmd)->counter = 0;
+	// 	unlink(file_loc[no]);
+	// 	free(file_loc[no]);
+	// 	no++;
+	// }
+	return (0);
+}
+
+int		child_process(t_cmd **cmd, t_list	**current,  int pipe_fd2[][2], pid_t pids[], char **file_loc)
+{
+	int		size;
+	int		i;
+	
 	i = 0;
+	size = ft_lstsize((*cmd)->word);
 	while (i < size)
 	{
-		pids[i] = fork();
-		if (pids[i] < 0)
+		(pids)[i] = fork();
+		if ((pids)[i] < 0)
 		{
 			perror("fork");
 			return (-1);
 		}
-		if (pids[i] == 0)
+		if ((pids)[i] == 0)
 		{
-			if (i != 0)
-			{
-				if (dup2(pipe_fd2[i - 1][0], STDIN_FILENO) == -1)
-				{
-					dprintf(2, "pipe failed at index %d\n", i);
-					perror("dup2");
- 					return (-1);
-				}
-			}
-			if (i != size - 1)
-			{
-				if (dup2(pipe_fd2[i][1], STDOUT_FILENO) == -1)
-				{
-					perror("dup2");
-					return (-1);
-				}
-			}
-			j = 0;
-			while (j < size - 1)
-			{
- 					close(pipe_fd2[j][0]);
- 					close(pipe_fd2[j][1]);
-				j++;
-			}
-			if (ft_strmchr(current->content ,"<>") && (*cmd)->who_am_i != 13)
-			{
-				if(ft_redirection(current->content, &redirection_split, env) < 0)
-				{
-					write(2, "Error: Invalid redirection\n\n", 27);
-					return (-1);
-				}
-			}
-			if ((*cmd)->who_am_i == 13)
-			{
-				{
-					write(2, "here doc\n", 9);
-					return (-1);
-				}
-			}
-			if (ft_execve(current->content, env) == -1)
-			{
-				perror("Command not found");
- 				return (-1);
-			}
+			if(dup_process(&i, size, pipe_fd2) == -1)
+				return (-1);
+			if(dup_process_2(cmd, (current), file_loc, i) == -1)
+				return (-1);
 		}
 		if (i > 0)
 			close(pipe_fd2[i - 1][0]);
 		if (i < size - 1)
 			close(pipe_fd2[i][1]);
-		current = current->next;
+		(*current) = (*current)->next;
 		i++;
 	}
+	return (0);
+}
+
+int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
+{
+    if (!file_loc[i]) {
+        dprintf(2, "Error: file_loc[%d] is NULL in execute_heredoc\n", i);
+        return (-1);
+    }
+    int fd = open(file_loc[i], O_RDONLY);
+    if (fd < 0) {
+        perror("open heredoc file");
+        return (-1);
+    }
+	// free(file_loc[i]);
+    int org = dup(STDIN_FILENO);
+    dup2(fd, STDIN_FILENO);
+	char *temp = ft_strfchr(file, '<');
+	if (ft_strlen(temp) <= 1)
+		return (0);
+    ft_execve(temp, ev);
+    return (0);
+}
+
+int		dup_process_2(t_cmd **cmd, t_list	**current, char **file_loc, int i)
+{
+	char	**redirection_split;
+	char	**env;
+
+	env = (*cmd)->env;
+	// if ((*cmd)->pryority[i] == 1)
+	// {
+	// 	if(execute_heredoc((*current)->content, env, (*cmd)->index++, file_loc) == -1)
+	// 		return (-1);
+	// }
+	if (ft_strmchr((*current)->content ,"<>") && (*cmd)->who_am_i != 13)
+	{
+		if(ft_redirection((*current)->content, &redirection_split, env) < 0)
+		{
+			write(2, "Error: Invalid redirection\n\n", 27);
+			return (-1);
+		}
+	}
+	if ((*cmd)->who_am_i == 13)
+	{
+		{
+			write(2, "here doc\n", 9);
+			return (-1);
+		}
+	}
+	if (ft_execve((*current)->content, env) == -1)
+	{
+		perror("Command not found");
+		return (-1);
+	}
+	return (0);
+}
+
+int		dup_process(int *i, int size, int pipe_fd2[][2])
+{
+	int		j;
+
+	if ((*i) != 0)
+	{
+		if (dup2(pipe_fd2[(*i) - 1][0], STDIN_FILENO) == -1)
+		{
+			dprintf(2, "pipe failed at index %d\n", (*i));
+			perror("dup2");
+			 return (-1);
+		}
+	}
+	if ((*i) != size - 1)
+	{
+		if (dup2(pipe_fd2[(*i)][1], STDOUT_FILENO) == -1)
+		{
+			perror("dup2");
+			return (-1);
+		}
+	}
+	j = 0;
+	while (j < size - 1)
+	{
+		close(pipe_fd2[j][0]);
+		close(pipe_fd2[j][1]);
+		j++;
+	}
+	return (0);
+}
+
+void	close_wait(pid_t	pids[], int size, int pipe_fd2[][2])
+{
+	int 	i;
+	int 	j;
+	int		status;
+
 	j = 0;
 	while (j < size - 1)
 	{
@@ -226,5 +341,4 @@ int	execution(t_cmd **cmd, char **env)
 		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 	        fprintf(stderr, "Error: Command failed with status %d\n", WEXITSTATUS(status));
 	}
-	return (0);
 }

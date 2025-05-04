@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/03 17:11:43 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/04 21:59:15 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ struct					s_cmd
 	char						**env;
 	int							*pryority;
 	int 						who_am_i;
+	int 						counter;
+	int 						index;
 	int 						exit_status;
 }		;
 
@@ -49,7 +51,7 @@ struct s_here_doc
 	char	*temp;
 }		;
 
-int						heredoc(char *temp);
+int						heredoc(char *temp, char **file_loc);
 int						handle_here_doc(char *temp);
 struct		s_exp
 {
@@ -61,6 +63,9 @@ struct		s_exp
 int						process_input(t_cmd **cmd, int *flag, char ***temp,
 							char **input, char **robo_env);
 int						check_validation(char **paths, char **result, char **m);
+int						child_process(t_cmd **cmd, t_list **current,  int pipe_fd2[][2], pid_t pids[], char **file_loc);
+int						dup_process(int *i, int size, int pipe_fd2[][2]);
+int						dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i);
 int						get_path(char **ev);
 int						ft_strfind(char *str, char *c);
 int						execution(t_cmd **cmd, char **env);
@@ -75,6 +80,7 @@ int						ft_redirection(char *input, char ***redirection_split,
 int						ft_execute_redirection(char **redirection_split ,int ccount, int *fd,
 							char *temp3, char **robo_env);
 int						read_input(char **input);
+void					close_wait(pid_t	pids[], int size, int pipe_fd2[][2]);
 void					free_list(t_list **root);
 void					frees(t_list **root);
 void					printf_split(char *str, char **split);

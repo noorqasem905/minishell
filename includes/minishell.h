@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/04 21:59:15 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/05 18:11:47 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,19 @@
 typedef struct s_cmd	t_cmd;
 typedef struct s_here_doc	t_here_doc;
 typedef struct s_exp	t_exp;
+struct s_here_doc
+{
+	int							fd;
+	char						**file_loc;
+	int							*pryority;
+	int 						counter;
+	int 						index;
+	char						*input;
+	char						*temp;
+}		;
 struct					s_cmd
 {
+	t_here_doc					*here_doc;
 	t_list						*word;
 	char 						*input;
 	char						**env;
@@ -43,13 +54,6 @@ struct					s_cmd
 	int 						exit_status;
 }		;
 
-struct s_here_doc
-{
-	int		fd;
-	int		*pryority;
-	char	*input;
-	char	*temp;
-}		;
 
 int						heredoc(char *temp, char **file_loc);
 int						handle_here_doc(char *temp);

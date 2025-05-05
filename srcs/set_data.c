@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/04 21:59:41 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/05 20:24:58 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	print_saved_cmd(t_list *saved_cmd)
 
 void init_data(t_cmd **cmd)
 {
+	t_here_doc		*here_doc = (*cmd)->here_doc;
 	(*cmd)->word = NULL;
 	(*cmd)->env = NULL;
 	(*cmd)->pryority = NULL;
@@ -85,8 +86,12 @@ void init_data(t_cmd **cmd)
 	(*cmd)->counter = 0;
 	(*cmd)->index = 0;
 	(*cmd)->exit_status = 0;
+	here_doc->counter = 0;
+	here_doc->index = 0;
+	here_doc->pryority = NULL;
+	here_doc->temp = NULL;
+	here_doc->fd = 0;
 }
-
 int		check_no_pipe(char *input)
 {
 	int	i;
@@ -169,15 +174,19 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	{
 		free(t);
 		free(*input);
-		if ((*cmd)->pryority)
-			free((*cmd)->pryority);
+		if ((*cmd)->here_doc->file_loc)
+			free((*cmd)->here_doc->file_loc);
+		if ((*cmd)->here_doc->pryority)
+			free((*cmd)->here_doc->pryority);
 		if ((*cmd)->exit_status == -13)
 			return (-14);
 		return (-12);
 	}
 	free(t);
 	free(*input);
-	free((*cmd)->pryority);
+	if ((*cmd)->here_doc->file_loc)
+		free((*cmd)->here_doc->file_loc);
+	free((*cmd)->here_doc->pryority);
 	return (0);
 }
 
@@ -204,6 +213,7 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			if (ret == -12)
 			{
 				frees_split((*cmd)->env);
+				free((*cmd)->here_doc);
 				free(*cmd);
 				exit(EXIT_FAILURE);
 			}

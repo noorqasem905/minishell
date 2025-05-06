@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/05 17:28:19 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/06 18:10:37 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,39 +52,34 @@ int get_free_filename(char **file_loc, char *new_fullpath)
 {
     char    *new_file_loc;
     char    *temp;
-    int     i;
+    int     i = 0;
 
-    i = 0;
-    *file_loc = ft_strdup(new_fullpath);
-    while (access(*file_loc, F_OK) == 0)
+    new_file_loc = ft_strdup(new_fullpath);
+    if (!new_file_loc)
+        return (-1);
+    while (access(new_file_loc, F_OK) == 0)
     {
+        free(new_file_loc);
         temp = ft_itoa(i);
-        if (temp == NULL)
+        if (!temp)
             return (-1);
-        new_file_loc = ft_strjoin(*file_loc, temp);
-        if (!new_file_loc)
-        {
-            free(temp);
-            free(*file_loc);
-            return (-1);
-        }
+        new_file_loc = ft_strjoin(new_fullpath, temp);
         free(temp);
-        free(*file_loc);
-        *file_loc = new_file_loc;
+        if (!new_file_loc)
+            return (-1);
         i++;
     }
+    *file_loc = new_file_loc;
     return (0);
 }
 
 int     openfile_heredoc(int *fd, char **file_loc)
 {
-    char    *new_file_loc;
-    char    *temp;
-    int     i;
-    
     if(get_free_filename(file_loc, "/tmp/minishell_heredoc"))
     {
         perror("malloc");
+        if (*file_loc)
+            free(*file_loc);
         return (-1);
     }
     *fd = open(*file_loc, O_RDWR | O_CREAT | O_TRUNC, 0644);
@@ -115,11 +110,17 @@ int     dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
         return (-1);
     }
     (*fd) = openfile_heredoc(fd, file_loc);
-    if ((*fd) < 0)
+    if ((*fd) < 0) {
+        if (*file_loc) free(*file_loc);
         return (-2);
+    }
     *input_split = ft_mult_split(temp, " <");
-    if (!input_split)
+    if (!*input_split)
+    {
+        if (*file_loc)
+            free(*file_loc);
         return (-1);
+    }
     return (0);
 }
 
@@ -157,6 +158,8 @@ int     heredoc(char *temp, char **file_loc)
     if(dbg_heredoc(temp, &fd[1], &input, file_loc))
     {
         printf("error here doc\n");
+        if (*file_loc)
+            free(*file_loc);
         return (-1);
     }
     fd[0] = dup(STDOUT_FILENO);

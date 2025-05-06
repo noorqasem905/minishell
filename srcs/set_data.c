@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/05 20:24:58 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/06 21:45:04 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	save_data(char **input, t_cmd **cmd, int *flag, char ***temp)
 	int	iterator;
 
 	*flag = 0;
+	
 	if (*temp == NULL)
 	{
 		perror("ft_split");
@@ -85,6 +86,7 @@ void init_data(t_cmd **cmd)
 	(*cmd)->who_am_i = 0;
 	(*cmd)->counter = 0;
 	(*cmd)->index = 0;
+	(*cmd)->here_doc->file_loc = NULL;
 	(*cmd)->exit_status = 0;
 	here_doc->counter = 0;
 	here_doc->index = 0;
@@ -149,7 +151,14 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
  		return (-42);
 	}
 	*temp = ft_split(*input, '|');
- 	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3)
+	if (!*temp)
+		return (-1);
+	if (!*temp[0])
+	{
+		free(*temp);
+		return (-42);
+	}
+	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3)
 	{
 		if (*flag == -3)
 			return (-3);
@@ -204,7 +213,7 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			continue ;
 		}
 		ret = process_input(cmd, flag, temp, &input, robo_env);
-		if (ret < 0 && ret != -3 && ret != -42)
+		if (ret < 0 && ret != -3 && ret != -42 && ret != -55)
 		{
 			frees_split(*temp);
 			free_list((&(*cmd)->word));

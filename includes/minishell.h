@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/08 21:14:13 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/08 23:45:50 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,11 @@ char					*check_access(char **paths, char **result);
 char					*expander_input(t_list *input, char **env);
 char					**my_env(char **env);
 void					init_data(t_cmd **cmd);
-void 	robo_export(t_cmd *cmd, t_exp *export);
+void 					robo_export(t_cmd *cmd, t_exp *export);
 int						export(char *str, t_cmd *cmd);
+int						is_valid(char *name);
+void					unset(char *name, t_cmd *cmd);
+void					env(t_cmd *cmd);
 /* void					env_sorted(char **env);
 void					sort_env(char **env, int len);
 void					swap_strings(char **a, char **b); */

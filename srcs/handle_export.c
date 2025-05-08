@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/08 22:06:56 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/09 01:35:02 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,11 +238,11 @@ int export(char *str, t_cmd *cmd)
 	}
 	export->name[j]= NULL;
 	export->value[j] = NULL;
-	printf_split("NAME: ", export->name);
-	printf_split("VALUE: ", export->value);
-	printf("%d\n", j);
-	printf("%s", export->name[0]);
-	printf("*****export*********\n");
+	// printf_split("NAME: ", export->name);
+	// printf_split("VALUE: ", export->value);
+	// printf("%d\n", j);
+	// printf("%s", export->name[0]);
+	// printf("*****export*********\n");
 	robo_export(cmd, export);
 	//print_export(cmd);
 	frees_split(export->name);

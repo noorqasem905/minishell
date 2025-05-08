@@ -24,8 +24,7 @@ static char *trim_quotes(char *str)
     return (ft_strdup(str));
 }
 
-
-static int is_valid(char *name)
+int is_valid(char *name)
 {
     int i;
 
@@ -138,7 +137,6 @@ static char **add_env(char **env, char *name, char *value)
 	free(env);
 	return (new_env);
 }
-
 
 void robo_export(t_cmd *cmd, t_exp *export)
 {

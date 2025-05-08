@@ -14,7 +14,10 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/here_doc.c						\
  		srcs/env.c							\
 		srcs/export.c						\
-		srcs/handle_export.c
+		srcs/handle_export.c				\
+		srcs/unset.c						\
+		srcs/robo_env.c
+		
 all: $(NAME)
 
 OBJS_DIR =includes/build

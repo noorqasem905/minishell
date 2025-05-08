@@ -14,7 +14,6 @@
 #define COLOR_CUSTOM "\x1b[38;2;42;161;179m"
 #define COLOR_RESET "\x1b[0m"
 
-
 static int	is_closed(char *input)
 {
 	int	i;
@@ -43,7 +42,6 @@ int	save_data(char **input, t_cmd **cmd, int *flag, char ***temp)
 	int	iterator;
 
 	*flag = 0;
-	
 	if (*temp == NULL)
 	{
 		perror("ft_split");
@@ -77,9 +75,11 @@ void	print_saved_cmd(t_list *saved_cmd)
 	}
 }
 
-void init_data(t_cmd **cmd)
+void	init_data(t_cmd **cmd)
 {
-	t_here_doc		*here_doc = (*cmd)->here_doc;
+	t_here_doc	*here_doc;
+
+	here_doc = (*cmd)->here_doc;
 	(*cmd)->word = NULL;
 	(*cmd)->env = NULL;
 	(*cmd)->pryority = NULL;
@@ -94,7 +94,7 @@ void init_data(t_cmd **cmd)
 	here_doc->temp = NULL;
 	here_doc->fd = 0;
 }
-int		check_no_pipe(char *input)
+int	check_no_pipe(char *input)
 {
 	int	i;
 
@@ -109,7 +109,7 @@ int		check_no_pipe(char *input)
 	return (0);
 }
 
-int		check_pipe_input(char *input)
+int	check_pipe_input(char *input)
 {
 	int	i;
 	int	pipe_count;
@@ -125,7 +125,7 @@ int		check_pipe_input(char *input)
 	while (input[i])
 	{
 		if (input[i] != '|' && input[i] != ' ')
-				pipe_count = 0;
+			pipe_count = 0;
 		else if (input[i] == '|')
 			pipe_count++;
 		if (pipe_count > 1)
@@ -142,13 +142,14 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 {
 	t_list	*current;
 	char	**split;
+	char	*t;
 
 	if (*input)
 		add_history(*input);
 	if (check_no_pipe(*input) && check_pipe_input(*input) == -1)
 	{
 		dprintf(2, "Syntax error: Invalid pipe usage\n");
- 		return (-42);
+		return (-42);
 	}
 	*temp = ft_split(*input, '|');
 	if (!*temp)
@@ -178,8 +179,8 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	frees_split(split);
 	if (searching_comand(input, *temp) == -13)
 		return (-13);
-	char *t = expander_input((*cmd)->word, robo_env);
- 	if (execution(cmd, robo_env) == -1)
+	t = expander_input((*cmd)->word, robo_env);
+	if (execution(cmd, robo_env) == -1)
 	{
 		free(t);
 		free(*input);
@@ -230,7 +231,7 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 		}
 		else if (ret == -3 || ret == -14)
 		{
- 			*flag = 0;
+			*flag = 0;
 			frees_split(*temp);
 			free_list(&(*cmd)->word);
 			continue ;

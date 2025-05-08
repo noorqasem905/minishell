@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int		handle_cd_slash(char *temp)
+int	handle_cd_slash(char *temp)
 {
 	if (temp == NULL)
 	{
@@ -31,7 +31,7 @@ int		handle_cd_slash(char *temp)
 	return (0);
 }
 
-int		handle_cd_dup_dot(char *temp)
+int	handle_cd_dup_dot(char *temp)
 {
 	char	*parent;
 	char	*cwd;
@@ -59,11 +59,11 @@ int		handle_cd_dup_dot(char *temp)
 	return (0);
 }
 
-int		build_quoted_string(char **dir, char ***temp, int total_len, int *end)
+int	build_quoted_string(char **dir, char ***temp, int total_len, int *end)
 {
-    char		quote;
-    size_t		len;
-	int			k;
+	char	quote;
+	size_t	len;
+	int		k;
 
 	quote = (*temp)[1][0];
 	*dir = malloc(total_len);
@@ -89,15 +89,16 @@ int		build_quoted_string(char **dir, char ***temp, int total_len, int *end)
 	return (0);
 }
 
-int		merge_quoted_tokens(char ***temp, char **dir, int start, int *end)
+int	merge_quoted_tokens(char ***temp, char **dir, int start, int *end)
 {
-    size_t		total_len;
-    size_t		len;
-    char		quote;
-    int			k;
+	size_t	total_len;
+	size_t	len;
+	char	quote;
+	int		k;
 
 	quote = (*temp)[1][0];
-	while ((*temp)[(*end)] && (*temp)[(*end)][ft_strlen((*temp)[(*end)]) - 1] != quote)
+	while ((*temp)[(*end)] && (*temp)[(*end)][ft_strlen((*temp)[(*end)])
+		- 1] != quote)
 		(*end)++;
 	if ((*temp)[(*end)])
 	{
@@ -114,73 +115,73 @@ int		merge_quoted_tokens(char ***temp, char **dir, int start, int *end)
 	return (0);
 }
 
-int		handle_space_infile(char ***temp, char **dir)
+int	handle_space_infile(char ***temp, char **dir)
 {
-    size_t		total_len;
-    size_t		len;
-    char		quote;
-    int			start;
-    int			end;
-    int			k;
+	size_t	total_len;
+	size_t	len;
+	char	quote;
+	int		start;
+	int		end;
+	int		k;
 
 	*dir = NULL;
-    if ((*temp)[1] && ((*temp)[1][0] == '"' || (*temp)[1][0] == '\''))
-    {
-        quote = (*temp)[1][0];
-        start = 1;
-        end = start;
-		if(merge_quoted_tokens(temp, dir, start, &end))
+	if ((*temp)[1] && ((*temp)[1][0] == '"' || (*temp)[1][0] == '\''))
+	{
+		quote = (*temp)[1][0];
+		start = 1;
+		end = start;
+		if (merge_quoted_tokens(temp, dir, start, &end))
 			return (-1);
-    }
-    else if ((*temp)[1])
-        *dir = (*temp)[1];
-    else
-        *dir = NULL;
-    return (0);
+	}
+	else if ((*temp)[1])
+		*dir = (*temp)[1];
+	else
+		*dir = NULL;
+	return (0);
 }
 
-int		robo_cd_access(char **dir, char **temp)
+int	robo_cd_access(char **dir, char **temp)
 {
 	if ((*dir) && access((*dir), F_OK) == 0)
-    {
-        if (chdir((*dir)) == -1)
-        {
-			write(1,"No file named this\n" ,20);
-            if ((*dir) != temp[1])
-                free((*dir));
-            return (-1);
-        }
-        if ((*dir) != temp[1])
+	{
+		if (chdir((*dir)) == -1)
 		{
-			write(1,"No file named this\n" ,20);
-            free((*dir));
+			write(1, "No file named this\n", 20);
+			if ((*dir) != temp[1])
+				free((*dir));
+			return (-1);
+		}
+		if ((*dir) != temp[1])
+		{
+			write(1, "No file named this\n", 20);
+			free((*dir));
 		}
 		return (-1);
-    }
+	}
 	else
-		write(1,"No file named this\n" ,20);
+		write(1, "No file named this\n", 20);
 	return (0);
 }
 
 void	robo_cd(char **temp, char **robo_env)
 {
-    char	*dir;
+	char	*dir;
 
-    if(handle_cd_slash(temp[1]) == -1)
-        return ;
-    if(handle_cd_dup_dot(temp[1]) == -1)
-        return ;
-    if(handle_space_infile(&temp, &dir) == -1)
-        return ;
-	if(robo_cd_access(&dir, temp))
+	if (handle_cd_slash(temp[1]) == -1)
 		return ;
-    if (dir != temp[1] && dir != NULL)
+	if (handle_cd_dup_dot(temp[1]) == -1)
+		return ;
+	if (handle_space_infile(&temp, &dir) == -1)
+		return ;
+	if (robo_cd_access(&dir, temp))
+		return ;
+	if (dir != temp[1] && dir != NULL)
 	{
-		write(1,"No file named this\n" ,20);
+		write(1, "No file named this\n", 20);
 		free(dir);
 	}
 	if (chdir(temp[1]) == -1)
-    return ;
+		return ;
 }
 
 int	searching_comand(char **input, char **temp)

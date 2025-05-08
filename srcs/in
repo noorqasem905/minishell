@@ -1,6 +1,2 @@
-/* handle 
---------------
-redirection < in ls
-here doc << in ls
-norm
-handle amer $USER in here doc */
+env.c
+execution.c

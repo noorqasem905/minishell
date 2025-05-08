@@ -12,7 +12,6 @@
 
 #include "../includes/minishell.h"
 
-
 static char	**my_env(char **env)
 {
 	int		i;
@@ -44,38 +43,39 @@ static char	**my_env(char **env)
 static int	word_count_custuom(char const *s, char c)
 {
 	int	i;
-    int flag = 0;
+	int	flag;
 
+	flag = 0;
 	i = 0;
 	while (*s)
 	{
 		while (*s == c && *s && *s != '\"')
-		{	
-            if (*s == '\"')
-            {
-                flag = 1;
-                s++;
-            }
-            s++;
-        }
-            if (*s)
+		{
+			if (*s == '\"')
+			{
+				flag = 1;
+				s++;
+			}
+			s++;
+		}
+		if (*s)
 			i++;
 		while (*s && (*s != c || flag == 1))
-        {
-            if (*s == '\"')
-            {
-                flag = 0;
-            }
+		{
+			if (*s == '\"')
+			{
+				flag = 0;
+			}
 			s++;
-        }
-    }
+		}
+	}
 	return (i);
 }
 
-int ft_isspace(char c)
+int	ft_isspace(char c)
 {
-    return (c == ' ' || c == '\t' || c == '\n' || c == '\v' 
-		|| c == '\f' || c == '\r');
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r');
 }
 
 static void	free_it(char **str, size_t i)
@@ -100,7 +100,7 @@ static size_t	word_len_custuom(char *s, char c, int *flag)
 		{
 			*flag = !(*flag);
 			i++;
-			continue;
+			continue ;
 		}
 		i++;
 	}
@@ -111,8 +111,9 @@ char	**ft_split_custom_exp(char const *s, char c)
 {
 	char	**str;
 	size_t	i;
-    int flag = 0;
+	int		flag;
 
+	flag = 0;
 	i = 0;
 	str = malloc(sizeof(char *) * (word_count_custuom(s, c) + 1));
 	if (!s || !str)
@@ -153,7 +154,6 @@ static int	word_count(char const *s, char c)
 	return (i);
 }
 
-
 static size_t	word_len(char *s, char c)
 {
 	size_t	i;
@@ -172,15 +172,14 @@ void	printf_split(char *str, char **split)
 	i = 0;
 	while (split[i])
 	{
-		ft_printf("%2%s%s\n",str, split[i]);
+		ft_printf("%2%s%s\n", str, split[i]);
 		i++;
 	}
 }
 
-
-static void print_export(t_cmd *cmd)
+static void	print_export(t_cmd *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (cmd->env[i])
@@ -189,39 +188,41 @@ static void print_export(t_cmd *cmd)
 		i++;
 	}
 }
-static void add_fuc(t_cmd *cmd, char *name, char *value)
+static void	add_fuc(t_cmd *cmd, char *name, char *value)
 {
-	int i;
-	int name_len;
-	char *new_var;
-	int j;
-	char *temp;
+	int		i;
+	int		name_len;
+	char	*new_var;
+	int		j;
+	char	*temp;
+	char	**new_env;
 
 	i = 0;
 	name_len = ft_strlen(name);
 	if (!value || value[0] == '\0')
-		new_var= ft_strdup(name);
+		new_var = ft_strdup(name);
 	else
 	{
 		temp = ft_strjoin(name, "=");
 		new_var = ft_strjoin(temp, value);
-		free (temp);
+		free(temp);
 	}
 	if (!new_var)
 		return ;
 	while (cmd->env[i])
 	{
-		if (!ft_strncmp(cmd->env[i], name, name_len) && cmd->env[i][name_len] == '=')
+		if (!ft_strncmp(cmd->env[i], name, name_len)
+			&& cmd->env[i][name_len] == '=')
 		{
 			free(cmd->env[i]);
 			cmd->env[i] = new_var;
-			return;
+			return ;
 		}
 		i++;
 	}
-	char **new_env = malloc(sizeof(char *) * (i + 2));
+	new_env = malloc(sizeof(char *) * (i + 2));
 	if (!new_env)
-		return;
+		return ;
 	j = 0;
 	while (j < i)
 	{
@@ -234,10 +235,10 @@ static void add_fuc(t_cmd *cmd, char *name, char *value)
 	cmd->env = new_env;
 }
 
-static void robo_export(t_cmd *cmd, t_exp *export)
+static void	robo_export(t_cmd *cmd, t_exp *export)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if (!export->name[0])
 	{
@@ -249,55 +250,62 @@ static void robo_export(t_cmd *cmd, t_exp *export)
 		add_fuc(cmd, export->name[i], export->value[i]);
 		i++;
 	}
-	
 }
 
-int	main(int argc , char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	char *str = "	export x1 =\"123\" ttt=dfdfd x2 x3=\"wdd\" ";
-    char *e = "export";
-	char delimiter = ' ';
-	char **result;
-	t_exp *export;
-	int i;
-	int len;
-	t_cmd *cmd;
+	char	*str;
+	char	*e;
+	char	delimiter;
+	char	**result;
+	t_exp	*export;
+	int		i;
+	int		len;
+	t_cmd	*cmd;
+	int		m;
+	char	*tmp;
+	int		kk;
+	int		x;
+	int		y;
+	int		j;
 
+	str = "	export x1 =\"123\" ttt=dfdfd x2 x3=\"wdd\" ";
+	e = "export";
+	delimiter = ' ';
 	cmd = malloc(sizeof(t_cmd));
 	cmd->env = my_env(env);
 	len = 0;
 	if (!ft_strmchr(str, "export"))
 		return (1);
 	result = ft_split_custom_exp(str, delimiter);
- 	if (result == NULL)
+	if (result == NULL)
 	{
 		ft_printf("%2Error: ft_split failed\n");
 		return (1);
 	}
-
-	int m = 0;
-    while (result[0] && result[0][m] == '\t')
-        m++;
-    if (m > 0)
-    {
-        char *tmp = malloc(ft_strlen(result[0]) - m + 1);
-        if (!tmp)
-        {
-            ft_printf("%2Error: Memory allocation failed for tmp\n");
-            frees_split(result);
-            return (1);
-        }
-        int kk = 0;
-        while (result[0][m])
-        {
-            tmp[kk] = result[0][m];
-            kk++;
-            m++;
-        }
-        tmp[kk] = '\0';
-        free(result[0]);
-        result[0] = tmp;
-    }
+	m = 0;
+	while (result[0] && result[0][m] == '\t')
+		m++;
+	if (m > 0)
+	{
+		tmp = malloc(ft_strlen(result[0]) - m + 1);
+		if (!tmp)
+		{
+			ft_printf("%2Error: Memory allocation failed for tmp\n");
+			frees_split(result);
+			return (1);
+		}
+		kk = 0;
+		while (result[0][m])
+		{
+			tmp[kk] = result[0][m];
+			kk++;
+			m++;
+		}
+		tmp[kk] = '\0';
+		free(result[0]);
+		result[0] = tmp;
+	}
 	if (ft_strcmp(result[0], "export"))
 	{
 		printf("Error");
@@ -307,22 +315,22 @@ int	main(int argc , char **argv, char **env)
 	i = 0;
 	while (result[i])
 		i++;
-	export =  malloc(sizeof(t_exp));
- 	export->name = ft_calloc(i, sizeof(char *));
+	export = malloc(sizeof(t_exp));
+	export->name = ft_calloc(i, sizeof(char *));
 	export->value = ft_calloc(i, sizeof(char *));
 	if (!export->name || !export->value)
-    {
-        ft_printf("%2Error: Memory allocation failed for export->name or export->value\n");
-        free(export->name);
-        free(export->value);
-        free(export);
-        frees_split(result);
-        return (-60);
-    }
-	int x = 1;
-	int y = 0;
-	int j = 0;
- 	while (result[x])
+	{
+		ft_printf("%2Error: Memory allocation failed for export->name or export->value\n");
+		free(export->name);
+		free(export->value);
+		free(export);
+		frees_split(result);
+		return (-60);
+	}
+	x = 1;
+	y = 0;
+	j = 0;
+	while (result[x])
 	{
 		if (result[x + 1] && result[x + 1][0] == '=')
 		{
@@ -344,9 +352,8 @@ int	main(int argc , char **argv, char **env)
 		x++;
 		j++;
 	}
-	export->name[j]= NULL;
+	export->name[j] = NULL;
 	export->value[j] = NULL;
-	
 	robo_export(cmd, export);
 	printf_split("NAME: ", export->name);
 	printf_split("VALUE: ", export->value);

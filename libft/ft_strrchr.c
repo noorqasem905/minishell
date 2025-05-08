@@ -3,13 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:59:07 by nqasem            #+#    #+#             */
-/*   Updated: 2024/08/29 16:59:52 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/07 17:45:33 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
+
+char	*ft_strrmchr(const char *s, const char *set)
+{
+	int	i;
+	int	j;
+
+	if (!s || !set)
+		return (NULL);
+	i = ft_strlen(s);
+	while (i--)
+	{
+		j = 0;
+		while (set[j])
+		{
+			if (s[i] == set[j])
+				return ((char *)(s + i));
+			j++;
+		}
+	}
+	return (NULL);
+}
 
 char	*ft_strrchr(const char *s, int c)
 {
@@ -39,6 +61,7 @@ char	*ft_strrchr(const char *s, int c)
 /*
 #include <stdio.h>
 #include <string.h>
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;

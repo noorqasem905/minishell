@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:57:04 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/06 21:48:35 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/07 15:08:52 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,20 @@ char	*ft_strfchr(const char *s, int c)
 	char	cca;
 	char	*temp;
 	char	*copy;
+	int		i;
 
 	cca = (char)c;
-	copy = strdup(s);
+	i = 0;
+	copy = ft_strdup(s);
 	if (!copy)
 		return (NULL);
 	temp = copy;
 	while (*temp != '\0' && *temp != cca)
 	{
 		temp++;
+		i++;
 	}
-	if (*temp != '\0' && *temp == cca)
+	if (*temp != '\0' && *temp == cca && i > 0)
 	{
 		*temp = '\0';
 		return (copy);

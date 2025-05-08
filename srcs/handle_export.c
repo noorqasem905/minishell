@@ -6,41 +6,13 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/02 18:33:13 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/08 22:06:56 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 
-static char	**my_env(char **env)
-{
-	int		i;
-	char	**my_env;
-
-	i = 0;
-	while (env[i])
-		i++;
-	my_env = malloc(sizeof(char *) * (i + 1));
-	if (!my_env)
-		return (NULL);
-	i = 0;
-	while (env[i])
-	{
-		my_env[i] = ft_strdup(env[i]);
-		if (!my_env[i])
-		{
-			while (--i >= 0)
-				free(my_env[i]);
-			free(my_env);
-			return (NULL);
-		}
-		i++;
-	}
-	my_env[i] = NULL;
-	return (my_env);
-}
-/*sdsa*/
 static int	word_count_custuom(char const *s, char c)
 {
 	int	i;
@@ -165,7 +137,7 @@ static size_t	word_len(char *s, char c)
 	}
 	return (i);
 }
-void	printf_split(char *str, char **split)
+static void	printf_splitt(char *str, char **split)
 {
 	int	i;
 
@@ -177,104 +149,24 @@ void	printf_split(char *str, char **split)
 	}
 }
 
-
-static void print_export(t_cmd *cmd)
+int export(char *str, t_cmd *cmd)
 {
-	int i;
-
-	i = 0;
-	while (cmd->env[i])
-	{
-		ft_printf("declare -x %s\n", cmd->env[i]);
-		i++;
-	}
-}
-static void add_fuc(t_cmd *cmd, char *name, char *value)
-{
-	int i;
-	int name_len;
-	char *new_var;
-	int j;
-	char *temp;
-
-	i = 0;
-	name_len = ft_strlen(name);
-	if (!value || value[0] == '\0')
-		new_var= ft_strdup(name);
-	else
-	{
-		temp = ft_strjoin(name, "=");
-		new_var = ft_strjoin(temp, value);
-		free (temp);
-	}
-	if (!new_var)
-		return ;
-	while (cmd->env[i])
-	{
-		if (!ft_strncmp(cmd->env[i], name, name_len) && cmd->env[i][name_len] == '=')
-		{
-			free(cmd->env[i]);
-			cmd->env[i] = new_var;
-			return;
-		}
-		i++;
-	}
-	char **new_env = malloc(sizeof(char *) * (i + 2));
-	if (!new_env)
-		return;
-	j = 0;
-	while (j < i)
-	{
-		new_env[j] = cmd->env[j];
-		j++;
-	}
-	new_env[i] = new_var;
-	new_env[i + 1] = NULL;
-	free(cmd->env);
-	cmd->env = new_env;
-}
-
-static void robo_export(t_cmd *cmd, t_exp *export)
-{
-	int i;
-	
-	i = 0;
-	if (!export->name[0])
-	{
-		print_export(cmd);
-		return ;
-	}
-	while (export->name[i])
-	{
-		add_fuc(cmd, export->name[i], export->value[i]);
-		i++;
-	}
-	
-}
-
-int	main(int argc , char **argv, char **env)
-{
-	char *str = "	export x1 =\"123\" ttt=dfdfd x2 x3=\"wdd\" ";
-    char *e = "export";
 	char delimiter = ' ';
 	char **result;
 	t_exp *export;
 	int i;
 	int len;
-	t_cmd *cmd;
-
-	cmd = malloc(sizeof(t_cmd));
-	cmd->env = my_env(env);
+	
 	len = 0;
-	if (!ft_strmchr(str, "export"))
-		return (1);
+	
+	/*if (!ft_strmchr(str, "export"))
+		return (1);*/
 	result = ft_split_custom_exp(str, delimiter);
  	if (result == NULL)
 	{
 		ft_printf("%2Error: ft_split failed\n");
 		return (1);
 	}
-
 	int m = 0;
     while (result[0] && result[0][m] == '\t')
         m++;
@@ -298,18 +190,18 @@ int	main(int argc , char **argv, char **env)
         free(result[0]);
         result[0] = tmp;
     }
-	if (ft_strcmp(result[0], "export"))
-	{
-		printf("Error");
-		frees_split(result);
-		return (-60);
-	}
+	// if (ft_strcmp(result[0], "export"))
+	// {
+	// 	printf("Error");
+	// 	frees_split(result);
+	// 	return (-60);
+	// }
 	i = 0;
 	while (result[i])
 		i++;
 	export =  malloc(sizeof(t_exp));
- 	export->name = ft_calloc(i, sizeof(char *));
-	export->value = ft_calloc(i, sizeof(char *));
+ 	export->name = ft_calloc(i + 1, sizeof(char *));
+	export->value = ft_calloc(i + 1, sizeof(char *));
 	if (!export->name || !export->value)
     {
         ft_printf("%2Error: Memory allocation failed for export->name or export->value\n");
@@ -346,17 +238,16 @@ int	main(int argc , char **argv, char **env)
 	}
 	export->name[j]= NULL;
 	export->value[j] = NULL;
-	
-	robo_export(cmd, export);
 	printf_split("NAME: ", export->name);
 	printf_split("VALUE: ", export->value);
+	printf("%d\n", j);
+	printf("%s", export->name[0]);
 	printf("*****export*********\n");
-	print_export(cmd);
+	robo_export(cmd, export);
+	//print_export(cmd);
 	frees_split(export->name);
-	frees_split(export->value);
-	frees_split(result);
-	free(export);
-	frees_split(cmd->env);
-	free(cmd);
-	return (0);
+    frees_split(export->value);
+    free(export);
+    frees_split(result);
+    return (0);
 }

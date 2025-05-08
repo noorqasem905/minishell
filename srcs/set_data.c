@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/03 19:22:14 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/08 21:17:01 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,12 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 		free(*input);
 		frees_split(split);
 		return (-3);
+	}
+	if (strcmp(split[0], "export") == 0)
+	{
+		export((*temp)[0], *cmd);
+		frees_split(split);
+		return(-3);
 	}
 	frees_split(split);
 	if (searching_comand(input, *temp) == -13)

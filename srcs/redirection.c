@@ -6,13 +6,13 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/08 21:39:38 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/10 19:13:53 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	free_it_now(char **s, char *s2, int emassage)
+/* static void	free_it_now(char **s, char *s2, int emassage)
 {
 	int	n;
 
@@ -29,7 +29,7 @@ void	free_it_now(char **s, char *s2, int emassage)
 		perror("Error");
 }
 
-int	handle_ecv_slash(char *result, char **m, char **paths)
+static int	handle_ecv_slash(char *result, char **m, char **paths)
 {
 	if (result && ft_strncmp(result, "/", 1) == 0)
 	{
@@ -47,7 +47,7 @@ int	handle_ecv_slash(char *result, char **m, char **paths)
 	return (0);
 }
 
-int	check_validation(char **paths, char **result, char **m)
+static int	check_validation(char **paths, char **result, char **m)
 {
 	int	ret;
 
@@ -75,7 +75,7 @@ int	check_validation(char **paths, char **result, char **m)
 	return (0);
 }
 
-int	get_path(char **ev)
+static int	get_path(char **ev)
 {
 	int	i;
 
@@ -96,7 +96,7 @@ static void	no_space(int *l, char **m, char **o)
 	*m = NULL;
 }
 
-char	*check_access(char **paths, char **result)
+static char	*check_access(char **paths, char **result)
 {
 	int		l;
 	char	*full_path;
@@ -121,7 +121,7 @@ char	*check_access(char **paths, char **result)
 	return (m);
 }
 
-int	ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
+static int	ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 {
 	*result = ft_split(file, ' ');
 	if (!*result)
@@ -138,7 +138,7 @@ int	ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 	return (0);
 }
 
-int	ft_execve(char *file, char **ev)
+static int	ft_execve(char *file, char **ev)
 {
 	char	**result;
 	char	**paths;
@@ -155,7 +155,6 @@ int	ft_execve(char *file, char **ev)
 			free(m);
 		return (-1);
 	}
-	free(file);
 	if (execve(m, result, ev) == -1)
 	{
 		perror("Error executing command");
@@ -166,7 +165,7 @@ int	ft_execve(char *file, char **ev)
 	return (0);
 }
 
-void	printf_split(char *str, char **split)
+static void	printf_split(char *str, char **split)
 {
 	int	i;
 
@@ -176,7 +175,7 @@ void	printf_split(char *str, char **split)
 		ft_printf("%2%s%s\n", str, split[i]);
 		i++;
 	}
-}
+} */
 
 int	check_redirection_mult(char *input)
 {
@@ -352,7 +351,7 @@ int		handle_mult_redirection(char *temp3, char *temp2, char **temp, char ***redi
 		tmp = ft_strrmchr(temp2, "<>");
 		p = word_mult_count((tmp + 1), " <>");
 		px = word_mult_count((temp2), " <>");
-		printf_split("OUT: ", *redirection_split);
+		// printf_split("OUT: ", *redirection_split);
 		if ((element_size((*redirection_split)) == 2 || p == 2) && !*temp)
 		{
 			*temp = ft_strdup((*redirection_split)[px - 1]);
@@ -360,7 +359,7 @@ int		handle_mult_redirection(char *temp3, char *temp2, char **temp, char ***redi
 		}
 		if (*temp != NULL)
 			free(*temp);
-		printf_split("out:", *redirection_split);
+		// printf_split("out:", *redirection_split);
 		if (*redirection_split)
 			frees_split(*redirection_split);
 		printf("%s", tmp);
@@ -395,6 +394,16 @@ int		redirection_check2free(char **temp, char ***redirection_split)
 }
 // size_t	size_spacestring(void){}
 
+int		which_redirection_char(char *temp)
+{
+	temp = ft_strmchr(temp, "<>");
+	if (temp[0] == '<')
+		return ('<');
+	else if(temp[0] == '>')
+		return ('>');
+	return (0);
+}
+
 char		*get_redirection_command(char *temp, char **redirection_split, int iteritor)
 {
 	int		i;
@@ -423,11 +432,17 @@ char		*get_redirection_command(char *temp, char **redirection_split, int iterito
 	return(NULL);
 }
 
-int		ft_redirection(char *input, char ***redirection_split, char **robo_env)
+// int		ft_setup_command()
+// {
+
+// }
+
+int			ft_redirection(char *input, char ***redirection_split, char **robo_env)
 {
     char	*temp;
     char	*temp2;
     char	*temp3;
+    char	*temp4;
     int		ccount = -1;
     int		fd = -1;
 
@@ -436,6 +451,7 @@ int		ft_redirection(char *input, char ***redirection_split, char **robo_env)
 	if (temp2 == NULL)
 		return (-1);
 	*redirection_split = ft_mult_split(temp2, "<> ");
+	// printf_split("out: ", *redirection_split);
 	if (*redirection_split == NULL)
 	{
 		free(temp);
@@ -445,10 +461,19 @@ int		ft_redirection(char *input, char ***redirection_split, char **robo_env)
 	temp3 = ft_strmchr(input, "<>");
 	if (temp3 == NULL)
 		return (-1);
+	int which = which_redirection_char(temp2 + 1);
+	printf("OOUT: %d\n", which);
+	// temp2 = ft_strmchr(temp2, "<>");
+	temp4 = ft_strfchr(temp2 + 1, which);
+	printf("T1: %s\n", temp);
+	printf("T2: %s\n", temp2);
+	printf("T3: %s\n", temp4);
+
+	
 	if (!temp)
 	{
-		temp = get_redirection_command(temp2, *redirection_split, 0);
-		if (ft_execute_redirection(*redirection_split, 0, &fd, temp3, robo_env) < 0)
+		temp = get_redirection_command(temp3, *redirection_split, 0);
+		if (ft_execute_redirection(*redirection_split, 0, &fd, temp2, robo_env) < 0)
         {
 			if (temp != NULL)
 				free(temp);
@@ -457,8 +482,48 @@ int		ft_redirection(char *input, char ***redirection_split, char **robo_env)
             dprintf(2, "Error: Invalid redirection\n");
             return (-1);
         }
-		// printf("%s\n", temp);
 	}
+	else
+	{
+		char **cut = ft_mult_split(temp3, " <>");
+		// printf_split("output:", cut);
+		int		i;
+
+		i = 1;
+		char *join = ft_strjoin(temp, " ");
+		char *tmp;
+		while (i < element_size(cut))
+		{
+			// if (cut[i] != ft_strcmp(cut[i], <))
+			tmp = ft_strdup(join);
+			free(join);
+			join = ft_strjoin(tmp, cut[i]);
+			free(tmp);
+			tmp = ft_strdup(join);
+			free(join);
+			join = ft_strjoin(tmp, " ");
+			free(tmp);
+			i++;
+		}
+		frees_split(*redirection_split);
+		frees_split(cut);
+		dprintf(2, "oo:%s\n", join);
+		pid_t a = fork();
+		if (a == 0)
+		{
+			free(temp);
+			if (ft_execve(join, robo_env) == -1)
+			{
+				perror("Command not found");
+				free(join);
+				return (-1);
+			}
+		}
+		free(temp);
+		free(join);
+		return (0);
+	}
+	
     // while (++ccount < ft_2dlen(*redirection_split))
     // {
     //     if (ccount != 0)
@@ -474,6 +539,8 @@ int		ft_redirection(char *input, char ***redirection_split, char **robo_env)
     //     }
     // }
     frees_split(*redirection_split);
+	dprintf(2, "oo:%s\n", temp);
+
 	pid_t a = fork();
 	if (a == 0)
 	{
@@ -488,7 +555,7 @@ int		ft_redirection(char *input, char ***redirection_split, char **robo_env)
     return (0);
 }
 
-int	main(int argc, char *arv[], char **robo_env)
+/* int	main(int argc, char *arv[], char **robo_env)
 {
 	char	*inter;
 	char	*temp;
@@ -498,10 +565,10 @@ int	main(int argc, char *arv[], char **robo_env)
 	int		mult;
 	char *temp3;
 
-	inter = "< in ls in in in in";
+	inter = "< in ls in in in < batata";
 	ft_redirection(inter, &redirection_split, robo_env);
 	return (0);
-}
+} */
 
 /*
 int	ft_redirdection(char *input, char ***redirection_split, char **robo_env)

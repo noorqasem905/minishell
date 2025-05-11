@@ -1,0 +1,20 @@
+<in ls -la < in > fintotal 128
+drwxrwxr-x 2 nqasem nqasem  4096 May 11 18:41 .
+drwxrwxr-x 7 nqasem nqasem  4096 May 11 16:11 ..
+-rwxrwxr-x 1 nqasem nqasem 27304 May 11 18:41 a.out
+-rw-rw-r-- 1 nqasem nqasem  4270 May 11 16:11 bulidin_cmd.c
+-rw-rw-r-- 1 nqasem nqasem  1299 May 11 16:11 env.c
+-rw-rw-r-- 1 nqasem nqasem  1595 May 11 16:11 env_sort.c
+-rw-rw-r-- 1 nqasem nqasem  7526 May 11 16:11 execution.c
+-rw-rw-r-- 1 nqasem nqasem  3108 May 11 16:11 expander.c
+-rw-rw-r-- 1 nqasem nqasem    21 May 11 18:42 fin
+-rw-rw-r-- 1 nqasem nqasem  6443 May 11 16:11 handle_export.c
+-rw-rw-r-- 1 nqasem nqasem  1336 May 11 16:11 handling.c
+-rw-rw-r-- 1 nqasem nqasem  5957 May 11 16:11 here_doc.c
+-rw-rw-r-- 1 nqasem nqasem   608 May 11 18:19 in
+-rw-rw-r-- 1 nqasem nqasem  1572 May 11 16:11 minishell.c
+-rw-rw-r-- 1 nqasem nqasem 11739 May 11 18:41 redirection.c
+-rw-rw-r-- 1 nqasem nqasem  5260 May 11 16:11 set_data.c
+-rw-rw-r-- 1 nqasem nqasem  3379 May 11 16:11 setup_execution.c
+-rw-rw-r-- 1 nqasem nqasem  1048 May 11 16:11 signal.c
+-rw-rw-r-- 1 nqasem nqasem  1257 May 11 16:11 utils.c

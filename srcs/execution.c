@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/03 22:10:15 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/12 20:16:01 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int	execution(t_cmd **cmd, char **env)
 	// 	printf("Command: %d\n", (*cmd)->pryority[p]);
 	// 	p++;
 	// }
+
 	pid_t	pids[size];
 	int		pipe_fd2[size][2];
 	current = (*cmd)->word;
@@ -199,7 +200,7 @@ int	execution(t_cmd **cmd, char **env)
 					return (-1);
 				}
 			}
-			if (ft_execve(current->content, env) == -1)
+			if (ft_execve(current->content, env) == -1 || (*cmd)->flag)
 			{
 				perror("Command not found");
  				return (-1);

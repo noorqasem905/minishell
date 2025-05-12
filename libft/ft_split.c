@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 22:04:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/23 15:57:40 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/12 17:45:05 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ void	frees_split(char **root)
 	int	i;
 
 	i = 0;
+	if (!root || !*root)
+		return ;
 	while (root[i])
 	{
 		free(root[i]);
+		root[i] = NULL;
 		i++;
 	}
 	free(root);

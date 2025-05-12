@@ -16,7 +16,8 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/export.c						\
 		srcs/handle_export.c				\
 		srcs/unset.c						\
-		srcs/robo_env.c
+		srcs/robo_env.c						\
+		srcs/robo_pwd.c
 		
 all: $(NAME)
 

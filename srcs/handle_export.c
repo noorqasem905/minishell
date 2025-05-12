@@ -6,11 +6,20 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/09 01:35:02 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:40:46 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+
+
+
+
+static char *trim_quotes(char *str)
+{
+	return ft_strtrim(str, "\"");
+}
 
 
 static int	word_count_custuom(char const *s, char c)
@@ -149,7 +158,7 @@ static void	printf_splitt(char *str, char **split)
 	}
 }
 
-int export(char *str, t_cmd *cmd)
+int export(char *str, t_cmd **cmd)
 {
 	char delimiter = ' ';
 	char **result;
@@ -205,8 +214,10 @@ int export(char *str, t_cmd *cmd)
 	if (!export->name || !export->value)
     {
         ft_printf("%2Error: Memory allocation failed for export->name or export->value\n");
-        free(export->name);
-        free(export->value);
+        if (export->name)
+			free(export->name);
+		if (export->value)
+			free(export->value);
         free(export);
         frees_split(result);
         return (-60);
@@ -219,14 +230,14 @@ int export(char *str, t_cmd *cmd)
 		if (result[x + 1] && result[x + 1][0] == '=')
 		{
 			export->name[j] = ft_strdup(result[x]);
-			export->value[j] = ft_strdup(result[x + 1] + 1);
+			export->value[j] = trim_quotes(result[x + 1] + 1);
 			x++;
 		}
 		else if (ft_strchr(result[x], '='))
 		{
 			len = word_len(result[x], '=');
 			export->name[j] = ft_substr(result[x], 0, len);
-			export->value[j] = ft_strdup(result[x] + len + 1);
+			export->value[j] = trim_quotes(result[x] + len + 1);
 		}
 		else
 		{

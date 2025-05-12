@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/08 23:41:52 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:22:31 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,18 +151,18 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	}
 	if (searching_comand(input, *temp) == -1)
 		return (-1);
-	expand_cmds(cmd, robo_env);
+	expand_cmds(cmd, (*cmd)->env);
 	split = ft_split((*temp)[0], ' ');
 	if (ft_strncmp(split[0], "cd", 2) == 0)
 	{
-		robo_cd(split, robo_env);
+		robo_cd(split, (*cmd)->env);
 		free(*input);
 		frees_split(split);
 		return (-3);
 	}
 	if (ft_strcmp(split[0], "export") == 0)
 	{
-		export((*temp)[0], *cmd);
+		export((*temp)[0], cmd);
 		frees_split(split);
 		return(-3);
 	}
@@ -183,11 +183,15 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 		frees_split(split);
 		return (-3);
 	}
+	if (ft_strcmp(split[0], "pwd") == 0)
+	{
+		robo_pwd();
+	}
 	frees_split(split);
 	if (searching_comand(input, *temp) == -13)
 		return (-13);
-	char *t = expander_input((*cmd)->word, robo_env);
- 	if (execution(cmd, robo_env) == -1)
+	char *t = expander_input((*cmd)->word, (*cmd)->env, *cmd);
+ 	if (execution(cmd, (*cmd)->env) == -1 && !(*cmd)->flag)
 	{
 		free(t);
 		free(*input);
@@ -216,30 +220,44 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			free(input);
 			continue ;
 		}
-		ret = process_input(cmd, flag, temp, &input, robo_env);
+		ret = process_input(cmd, flag, temp, &input, (*cmd)->env);
 		if (ret < 0 && ret != -3 && ret != -42)
 		{
-			frees_split(*temp);
+			if (*temp)
+			{
+				frees_split(*temp);
+				*temp = NULL;
+			}
 			free_list((&(*cmd)->word));
 			if (ret == -1)
 				dprintf(2, "No command found\n");
 			if (ret == -12)
 			{
-				frees_split((*cmd)->env);
-				free(*cmd);
-				exit(EXIT_FAILURE);
+				// frees_split((*cmd)->env);
+				// free(*cmd);
+				return(1);
+				//exit(EXIT_FAILURE);
 			}
 			break ;
 		}
 		else if (ret == -3 || ret == -14)
 		{
  			*flag = 0;
-			frees_split(*temp);
+			if (*temp)
+			{
+				frees_split(*temp);
+				*temp = NULL;
+			}
 			free_list(&(*cmd)->word);
 			continue ;
 		}
 		else if (ret == -42)
 			continue ;
+		if (*temp)
+		{
+			frees_split(*temp);
+			*temp = NULL;
+		}
 		frees_split(*temp);
 		free_list(&(*cmd)->word);
 	}

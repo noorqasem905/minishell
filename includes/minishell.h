@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/08 23:45:50 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:22:17 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ struct					s_cmd
 	int							*pryority;
 	int 						who_am_i;
 	int 						exit_status;
+	int flag;
 }		;
 
 struct s_here_doc
@@ -83,14 +84,15 @@ void					free_it_now(char **s, char *s2, int emassage);
 void					expand_cmds(t_cmd **cmd, char **env);
 void					signal_handler(int x);
 char					*check_access(char **paths, char **result);
-char					*expander_input(t_list *input, char **env);
+char	*expander_input(t_list *input, char **env, t_cmd *cmd);
 char					**my_env(char **env);
 void					init_data(t_cmd **cmd);
-void 					robo_export(t_cmd *cmd, t_exp *export);
-int						export(char *str, t_cmd *cmd);
+void 					robo_export(t_cmd **cmd, t_exp *export);
+int						export(char *str, t_cmd **cmd);
 int						is_valid(char *name);
 void					unset(char *name, t_cmd *cmd);
 void					env(t_cmd *cmd);
+void robo_pwd(void);
 /* void					env_sorted(char **env);
 void					sort_env(char **env, int len);
 void					swap_strings(char **a, char **b); */

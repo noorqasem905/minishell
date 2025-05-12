@@ -25,7 +25,7 @@ void	free_it_now(char **s, char *s2, int emassage)
 		n++;
 	}
 	free(s);
-	if (emassage || emassage == -1)
+	if (emassage /*|| emassage == -1*/)
 		perror("Error");
 }
 
@@ -68,14 +68,21 @@ int	check_validation(char **paths, char **result, char **m)
 int	get_path(char **ev)
 {
 	int	i;
+	int flag;
 
 	i = 0;
+	flag = 0;
 	while (ev[i])
 	{
 		if (ft_strncmp(ev[i], "PATH=/", 6) == 0)
+		{
+			flag = 1;
 			break ;
+		}
 		i++;
 	}
+	if (flag == 0)
+		return (-1);
 	return (i);
 }
 
@@ -117,6 +124,7 @@ int	ft_execve(char *file, char **ev)
 	char	**paths;
 	int		flag;
 	char	*m;
+	int value;
 
 	result = ft_split(file, ' ');
 	if (!result)
@@ -125,7 +133,13 @@ int	ft_execve(char *file, char **ev)
 		free(result);
 		return (-1);
 	}
-	paths = ft_split(ev[get_path(ev)] + 5, ':');
+	value = get_path(ev);
+	if (value == -1)
+	{
+		free_it_now(result, NULL, 1);
+		return (-1);
+	}
+	paths = ft_split(ev[value] + 5, ':');
 	if (!paths)
 	{
 		free_it_now(result, NULL, 1);
@@ -143,8 +157,10 @@ int	ft_execve(char *file, char **ev)
 	{
 		perror("Error executing command");
 		free_it_now(result, m, 1);
+		free_it_now(paths, NULL, 0);
 		return (-1);
 	}
 	free_it_now(result, m, 0);
+	free_it_now(paths, NULL, 0);
 	return (0);
 }

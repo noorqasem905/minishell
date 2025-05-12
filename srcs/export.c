@@ -126,7 +126,7 @@ static char **add_env(char **env, char *name, char *value)
         return (NULL);
     while (j < i)
     {
-        new_env[j] = env[j];
+        new_env[j] = ft_strdup(env[j]);
         j++;
     }
     temp = ft_strjoin(name , "=");
@@ -134,24 +134,24 @@ static char **add_env(char **env, char *name, char *value)
     free(temp);
     new_env[i] = new_name;
 	new_env[i + 1] = NULL;
-	free(env);
 	return (new_env);
 }
 
-void robo_export(t_cmd *cmd, t_exp *export)
+void robo_export(t_cmd **cmd, t_exp *export)
 {
+    char **tmp;
 	int i;
     int j;
 	
 	i = 0;
     if (export->name[0] == NULL)
     {
-        if (!cmd->env)
+        if (!(*cmd)->env)
         {
             ft_printf("%2ERROoRR");
             return;
         }
-        print_export(cmd);
+        print_export((*cmd));
     }
 	while (export->name[i])
 	{
@@ -161,11 +161,16 @@ void robo_export(t_cmd *cmd, t_exp *export)
             i++;
             continue;
         }
-        j = get_env_j(cmd->env, export->name[i]);
+        j = get_env_j((*cmd)->env, export->name[i]);
         if (j != -1)
-            update_env(cmd->env, j, export->name[i], export->value[i]);
+            update_env((*cmd)->env, j, export->name[i], export->value[i]);
         else
-            cmd->env = add_env(cmd->env, export->name[i], export->value[i]);
+        {
+            tmp = add_env((*cmd)->env, export->name[i], export->value[i]);
+            frees_split((*cmd)->env);
+            (*cmd)->env = NULL;
+            (*cmd)->env = tmp;
+        }
         i++;
 	}
 }

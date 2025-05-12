@@ -6,13 +6,13 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/11 22:24:09 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/12 21:49:56 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*  void	free_it_now(char **s, char *s2, int emassage)
+/* 
+ void	free_it_now(char **s, char *s2, int emassage)
 {
 	int	n;
 
@@ -175,8 +175,8 @@
 		ft_printf("%2%s%s\n", str, split[i]);
 		i++;
 	}
-}
- */
+} */
+
 int	check_redirection_mult(char *input)
 {
 	int	mult;
@@ -272,9 +272,36 @@ int	setup_redirection(char *input, char **temp, char **temp2)
 	return (0);
 }
 
+char		*extract_filename(char **redirection_split, int ccount)
+{
+	char	*tmp;
+	char	*filename;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = -1;
+	tmp = redirection_split[ccount];
+	while (isspace(*tmp))
+		tmp++;
+	while (tmp[i] && !isspace(tmp[i]))
+		i++;
+	filename = malloc(i + 1);
+	if (!filename)
+		return (NULL);
+	while (++j < i)
+		filename[j] = tmp[j];
+	filename[j] = '\0';
+	return (filename);
+}
+
 int	ft_execute_redirection_p1(char **redirection_split, int ccount, int *fd)
 {
-	*fd = open(redirection_split[ccount], O_RDONLY);
+	char	*tmp2;
+
+	tmp2 = extract_filename(redirection_split, ccount);
+	*fd = open(tmp2, O_RDONLY);
+	free(tmp2);
 	if (*fd == -1)
 	{
 		perror("open");
@@ -291,7 +318,11 @@ int	ft_execute_redirection_p1(char **redirection_split, int ccount, int *fd)
 }
 int	ft_execute_redirection_p2(char **redirection_split, int ccount, int *fd)
 {
-	*fd = open(redirection_split[ccount], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	char	*tmp2;
+
+	tmp2 = extract_filename(redirection_split, ccount);
+	*fd = open(tmp2, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	free(tmp2);
 	if (*fd == -1)
 	{
 		perror("open");
@@ -317,6 +348,8 @@ int	ft_execute_redirection(char **redirection_split, int ccount, int *fd,
 	}
 	else if (temp3[0] == '>')
 	{
+		ft_printf("%2%c", temp3[0]);
+
 		if (ft_execute_redirection_p2(redirection_split, ccount, fd) < 0)
 			return (-1);
 	}
@@ -436,12 +469,6 @@ char		*get_redirection_command(char *temp, char **redirection_split, int iterito
 	return(NULL);
 }
 
-// int		ft_setup_command()
-// {
-
-// }
-
-
 int ft_redirection(char *input, char ***redirection_split, char **robo_env)
 {
     char *temp = NULL;
@@ -449,68 +476,108 @@ int ft_redirection(char *input, char ***redirection_split, char **robo_env)
     char *temp3 = NULL;
     char *temp4 = NULL;
     char *command = NULL;
+	int fd = -1;
+	char **tty;
     int which;
+	char *tmp;
 
-    if (!input || !robo_env) // Fix: Added null pointer checks
+    if (!input || !robo_env)
         return (-1);
-
     if (setup_redirection(input, &temp, &temp2))
         return (-1);
-    if (!temp2) // Fix: Check if temp2 is NULL
+    if (!temp2)
     {
         free(temp);
         return (-1);
     }
-
     *redirection_split = ft_mult_split(temp2, "<> ");
-    if (!*redirection_split) // Fix: Check if ft_mult_split fails
+    if (!*redirection_split)
     {
         free(temp);
         free(temp2);
         return (-1);
     }
-
     temp3 = ft_strmchr(input, "<>");
-    if (!temp3) // Fix: Check if ft_strmchr fails
+    if (!temp3)
     {
         redirection_check2free(&temp, redirection_split);
         return (-1);
     }
-
     which = which_redirection_char(temp2 + 1);
-    if (which > 0)
-    {
-        temp4 = ft_strfchr(temp2 + 1, which);
-        if (!temp4) // Fix: Check if ft_strfchr fails
-        {
-            redirection_check2free(&temp, redirection_split);
-            return (-1);
-        }
-        temp4 = get_redirection_command(temp4, *redirection_split, 0);
-        if (!temp4) // Fix: Check if get_redirection_command fails
-        {
-            redirection_check2free(&temp, redirection_split);
-            return (-1);
-        }
-        command = ft_strjoin(temp, temp4);
-        if (!command) // Fix: Check if ft_strjoin fails
-        {
-            redirection_check2free(&temp, redirection_split);
-            return (-1);
-        }
-    }
+	char *temp4_raw = ft_strmchr(temp2, "<>");
+	temp4 = get_redirection_command(temp4_raw, *redirection_split, 0);
 
-    printf("The full command: %s\n", command);
+	if (which > 0)
+	{
+		        char *th = ft_strfchr(temp2 + 1, which);
+		if (!temp4)
+		{
+		    redirection_check2free(&temp, redirection_split);
+		    return (-1);
+		}
+		temp4 = get_redirection_command(th, *redirection_split, 0);
+		if (!temp4)
+		{
+		    free(th);
+		    redirection_check2free(&temp, redirection_split);
+		    return (-1);
+		}
+		char *temp4_copy = ft_strdup(temp4);
+		free(th);
 
-    frees_split(*redirection_split);
-    *redirection_split = ft_mult_split(temp2, "<> ");
-    if (!*redirection_split) // Fix: Check if ft_mult_split fails
-    {
-        free(command);
-        free(temp);
-        free(temp2);
-        return (-1);
-    }
+		if (!temp4_copy)
+		{
+		    redirection_check2free(&temp, redirection_split);
+		    return (-1);
+		}
+
+		tmp = ft_strjoin(temp, " ");
+		command = ft_strjoin(tmp, temp4_copy);
+		free(tmp);
+		free(temp4_copy);
+
+			if (!command)
+			{
+				redirection_check2free(&temp, redirection_split);
+				return (-1);
+			}
+		}
+		else
+		{
+			tmp = ft_strjoin(temp, " ");
+			command = ft_strjoin(tmp, temp4);
+			free(tmp);
+		}
+		int ccount=-1;
+		tty = ft_mult_split(temp3, "<>");
+		while (++ccount < ft_2dlen(*redirection_split))
+		{
+			temp3 = ft_strmchr(temp3, "<>");
+			if (!temp3)
+				return (0);
+			
+			if (ft_execute_redirection(tty, ccount, &fd, temp3, robo_env) < 0)
+			{
+				if (temp != NULL)
+					free(temp);
+				if (*redirection_split)
+					frees_split(*redirection_split);
+				if (tty)
+					frees_split(tty);
+				dprintf(2, "Error: Invalid redirection\n");
+				return (-1);
+			}
+			temp3++;
+		}
+		frees_split(tty);
+		frees_split(*redirection_split);
+		if (!*redirection_split)
+		{
+			free(command);
+			free(temp);
+       		free(temp2);
+        	return (-1);
+    	}
 
     pid_t a = fork();
     if (a == 0)
@@ -520,95 +587,22 @@ int ft_redirection(char *input, char ***redirection_split, char **robo_env)
             free(command);
             free(temp);
             perror("Command not found");
-            exit(EXIT_FAILURE); // Fix: Use exit to terminate child process
+            exit(EXIT_FAILURE);
         }
     }
-    else if (a < 0) // Fix: Check if fork fails
+    else if (a < 0)
     {
         perror("Fork failed");
         free(command);
         free(temp);
         return (-1);
     }
-
+	wait(NULL);
     free(command);
     free(temp);
     return (0);
 }
-int			ft_red4irection(char *input, char ***redirection_split, char **robo_env)
-{
-    char	*temp;
-    char	*temp2;
-    char	*temp3;
-    char	*temp4;
-    int		ccount = -1;
-    int		fd = -1;
 
-    if(setup_redirection(input, &temp, &temp2))
-		return (-1);
-	if (temp2 == NULL)
-		return (-1);
-	*redirection_split = ft_mult_split(temp2, "<> ");
-	if (*redirection_split == NULL)
-	{
-		free(temp);
-		free(temp2);
-		return (-1);
-	}
-	temp3 = ft_strmchr(input, "<>");
-	if (temp3 == NULL)
-		return (-1);
-	int which = which_redirection_char(temp2 + 1);
-	printf("OOUT: %d\n", which);
-	temp2 = ft_strmchr(temp2, "<>");
-	if (which > 0)
-		temp4 = ft_strfchr(temp2 + 1, which);
-	temp2 = ft_strmchr(temp2 + 1, "<>");
-	printf("T1: %s\n", temp);
-	printf("T2: %s\n", temp2);
-	printf("T3: %s\n", temp4);
-
-	char *command;
-	if (which > 0)
-	{
-		temp4 = get_redirection_command(temp4, *redirection_split, 0);
-		command = ft_strjoin(temp, temp4);
-	}
-	printf("The full command: %s\n", command);
-	frees_split(*redirection_split);
-	*redirection_split = ft_mult_split(temp2, "<> ");
-	printf_split("out: ", *redirection_split);
-	// printf("%s", temp3);
-    // while (++ccount < ft_2dlen(*redirection_split))
-    // {
-    //     temp3 = ft_strmchr(temp3, "<>");
-	// 	if (!temp3)
-	// 		return (0);
-    //     if (ft_execute_redirection(*redirection_split, ccount, &fd, temp3, robo_env) < 0)
-    //     {
-	// 		if (temp != NULL)
-	// 			free(temp);
-	// 		if (*redirection_split)
-	// 			frees_split(*redirection_split);
-    //         dprintf(2, "Error: Invalid redirection\n");
-    //         return (-1);
-    //     }
-    // }
-	dprintf(2, "oo:%s\n", temp);
-
-	pid_t a = fork();
-	if (a == 0)
-	{
-    	if (ft_execve(command, robo_env) == -1)
-    	{
-    	    free(temp);
-    	    perror("Command not found");
-    	    return (-1);
-    	}
-	}
-    // free(temp);
-    return (0);
-}
 /* 
 int	main(int argc, char *arv[], char **robo_env)
 {
@@ -620,99 +614,7 @@ int	main(int argc, char *arv[], char **robo_env)
 	int		mult;
 	char *temp3;
 
-	inter = "ls -L <in in";
+	inter = "ls -l <fin<in < in > fin";
 	ft_redirection(inter, &redirection_split, robo_env);
 	return (0);
-}
- */
-/*
-int	ft_redirdection(char *input, char ***redirection_split, char **robo_env)
-{
-	char	*temp;
-	char	*temp2;
-	char	*temp3;
-	int		ccount = -1;
-	int		fd = -1;
-
-	setup_redirection(input, &temp, &temp2);
-	*redirection_split = ft_mult_split(temp2, "<> ");
-	temp3 = ft_strmchr(input, "<>");
-	while (++ccount < ft_2dlen(*redirection_split))
-	{
-		if (ccount != 0)
-			temp3 = ft_strmchr(temp3 + 1, "<>");
-		if(ft_execute_redirection(*redirection_split, ccount, &fd, temp3,
-				robo_env) < 0)
-		{
-			// frees_split(*redirection_split);
-			// free(temp);
-			// temp = NULL;
-			// return (-1);
-		}
-	}
-	frees_split(*redirection_split);
-	wait(NULL);
-	if (ft_execve(temp, robo_env) == -1)
-	{
-		free(temp);
-		perror("Command not found");
-		return (-1);
-	}
-	free(temp);
-	return (0);
 } */
-
-// char *temp = NULL;
-// char file;
-// char **split = ft_split(inter, '<');
-// char **split = ft_split(inter, ' ');
-// int fd = open(split[3], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// int fd_read = open(split[1], O_RDONLY);
-// if (fd == -1)
-// {
-//     perror("open");
-//     return (-1);
-// }
-// if (dup2(fd, STDOUT_FILENO) == -1)
-// {
-//     perror("dup2");
-//     close(fd);
-//     return (-1);
-// }
-// if (dup2(fd_read, STDIN_FILENO) == -1)
-// {
-//     perror("dup2");
-//     close(fd);
-//     return (-1);
-// }
-// char *cmd = "/usr/bin/ls";
-// char *ags[] = {cmd, NULL};
-// dprintf(2, "Executing command: %s\n", split[0]);
-// if (execve(cmd,ags , NULL) == -1)
-// {
-//     perror("execve");
-//     return (-1);
-// }
-// close(fd);
-/* Note */
-/*
-// i have to handle all cases of pipe <> else if eveything is ok
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- */

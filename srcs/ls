@@ -1,5 +1,5 @@
-total 136
--rwxr-xr-x 1 nqasem 2024_42campus 38824 May 12 21:49 a.out
+total 132
+-rwxr-xr-x 1 nqasem 2024_42campus 38832 May 12 21:47 a.out
 -rw-r--r-- 1 nqasem 2024_42campus  4270 May  7 17:42 bulidin_cmd.c
 -rw-r--r-- 1 nqasem 2024_42campus  1299 May  7 17:42 env.c
 -rw-r--r-- 1 nqasem 2024_42campus  1595 May  5 11:54 env_sort.c
@@ -7,14 +7,14 @@ total 136
 -rw-r--r-- 1 nqasem 2024_42campus  3108 May  5 11:54 expander.c
 -rw-r--r-- 1 nqasem 2024_42campus     0 May 12 19:54  fin
 -rw-r--r-- 1 nqasem 2024_42campus     0 May 12 19:56 !fin
--rw-r--r-- 1 nqasem 2024_42campus     0 May 12 21:49 fin
+-rw-r--r-- 1 nqasem 2024_42campus     0 May 12 21:30 fin
 -rw-r--r-- 1 nqasem 2024_42campus  6443 May  7 17:42 handle_export.c
 -rw-r--r-- 1 nqasem 2024_42campus  1336 May  7 17:42 handling.c
 -rw-r--r-- 1 nqasem 2024_42campus  5957 May  7 17:42 here_doc.c
 -rw-r--r-- 1 nqasem 2024_42campus   645 May 12 16:50 in
--rw-r--r-- 1 nqasem 2024_42campus  1260 May 12 21:47 ls
+-rw-r--r-- 1 nqasem 2024_42campus     0 May 12 21:47 ls
 -rw-r--r-- 1 nqasem 2024_42campus  1572 May  7 17:42 minishell.c
--rw-r--r-- 1 nqasem 2024_42campus 13459 May 12 21:49 redirection.c
+-rw-r--r-- 1 nqasem 2024_42campus 13471 May 12 21:47 redirection.c
 -rw-r--r-- 1 nqasem 2024_42campus  5260 May  7 17:42 set_data.c
 -rw-r--r-- 1 nqasem 2024_42campus  3379 May  7 15:59 setup_execution.c
 -rw-r--r-- 1 nqasem 2024_42campus  1048 May  7 17:42 signal.c

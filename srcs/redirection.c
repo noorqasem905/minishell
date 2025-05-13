@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/12 21:49:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/13 22:06:55 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -425,7 +425,6 @@ int		redirection_check2free(char **temp, char ***redirection_split)
 		frees_split(*redirection_split);
 	return (-1);
 }
-// size_t	size_spacestring(void){}
 
 int		which_redirection_char(char *temp)
 {
@@ -469,6 +468,110 @@ char		*get_redirection_command(char *temp, char **redirection_split, int iterito
 	return(NULL);
 }
 
+int		handle_redirection_segment(char ***redirection_split, char **temp, char **temp4, char *th)
+{
+	if (!temp4)
+	{
+		redirection_check2free(temp, redirection_split);
+		return (-1);
+	}
+	*temp4 = get_redirection_command(th, *redirection_split, 0);
+	if (!(*temp4))
+	{
+		free(th);
+		redirection_check2free(temp, redirection_split);
+		return (-1);
+	}
+	return (0);
+}
+
+int		extract_apply_short(char **temp, char **tmp, char ***redirection_split, char *temp4_copy)
+{
+	if (!temp4_copy)
+	{
+		redirection_check2free(temp, redirection_split);
+		return (-1);
+	}
+	*tmp = ft_strjoin(*temp, " ");
+	return (0);
+}
+
+int		extract_apply_short_2(char *tmp, char *temp4_copy, char **command)
+{
+	(*command) = ft_strjoin(tmp, temp4_copy);
+	free(tmp);
+	free(temp4_copy);
+	if (!(*command))
+		return (-1);
+	return (0);
+}
+
+void	extract_apply_short_3(char **tmp, char **temp, char *temp4, char **command)
+{
+	(*tmp) = ft_strjoin(*temp, " ");
+	(*command) = ft_strjoin((*tmp), temp4);
+	free(*tmp);
+}
+
+int		extract_and_apply_redirection(char **temp, char *temp2, char ***redirection_split, char **command)
+{
+	char	*temp4_raw;
+	char	*temp4_copy;
+    char	*temp4;
+	char	*tmp;
+	char	*th;
+    int		which;
+
+	which = which_redirection_char(temp2 + 1);
+	temp4_raw = ft_strmchr(temp2, "<>");
+	temp4 = get_redirection_command(temp4_raw, *redirection_split, 0);
+	if (which > 0)
+	{
+		th = ft_strfchr(temp2 + 1, which);
+		if(handle_redirection_segment(redirection_split, temp, &temp4, th) < 0)
+			return (-1);
+		temp4_copy = ft_strdup(temp4);
+		free(th);
+		if(extract_apply_short(temp, &tmp, redirection_split, temp4_copy) < 0)
+			return (-1);
+		if(extract_apply_short_2(tmp, temp4_copy, command) < 0)
+			return (redirection_check2free(temp, redirection_split));
+	}
+	else
+		extract_apply_short_3(&tmp, temp, temp4, command);
+	return (0);
+}
+
+int		process_redirections(char ***redirection_split, char **robo_env, char **temp3)
+{
+	char	**tty;
+	int		ccount;
+	int 	fd;
+
+	ccount = -1;
+	fd = -1;
+	tty = ft_mult_split((*temp3), "<>");
+	while (++ccount < ft_2dlen(*redirection_split))
+	{
+		(*temp3) = ft_strmchr((*temp3), "<>");
+		if (!(*temp3))
+			break;
+		if (ft_execute_redirection(tty, ccount, &fd, (*temp3), robo_env) < 0)
+		{
+			if (*redirection_split)
+				frees_split(*redirection_split);
+			if (tty)
+				frees_split(tty);
+			dprintf(2, "Error: Invalid redirection\n");
+			return (-1);
+		}
+		(*temp3)++;
+	}
+	frees_split(tty);
+	frees_split(*redirection_split);
+	return (0);
+}
+
 int ft_redirection(char *input, char ***redirection_split, char **robo_env)
 {
     char *temp = NULL;
@@ -476,8 +579,6 @@ int ft_redirection(char *input, char ***redirection_split, char **robo_env)
     char *temp3 = NULL;
     char *temp4 = NULL;
     char *command = NULL;
-	int fd = -1;
-	char **tty;
     int which;
 	char *tmp;
 
@@ -503,103 +604,32 @@ int ft_redirection(char *input, char ***redirection_split, char **robo_env)
         redirection_check2free(&temp, redirection_split);
         return (-1);
     }
-    which = which_redirection_char(temp2 + 1);
-	char *temp4_raw = ft_strmchr(temp2, "<>");
-	temp4 = get_redirection_command(temp4_raw, *redirection_split, 0);
-
-	if (which > 0)
+	if (extract_and_apply_redirection(&temp, temp2, redirection_split, &command) < 0)
+		return (-1);
+	if (process_redirections(redirection_split, robo_env, &temp3) < 0)
 	{
-		        char *th = ft_strfchr(temp2 + 1, which);
-		if (!temp4)
-		{
-		    redirection_check2free(&temp, redirection_split);
-		    return (-1);
-		}
-		temp4 = get_redirection_command(th, *redirection_split, 0);
-		if (!temp4)
-		{
-		    free(th);
-		    redirection_check2free(&temp, redirection_split);
-		    return (-1);
-		}
-		char *temp4_copy = ft_strdup(temp4);
-		free(th);
-
-		if (!temp4_copy)
-		{
-		    redirection_check2free(&temp, redirection_split);
-		    return (-1);
-		}
-
-		tmp = ft_strjoin(temp, " ");
-		command = ft_strjoin(tmp, temp4_copy);
-		free(tmp);
-		free(temp4_copy);
-
-			if (!command)
-			{
-				redirection_check2free(&temp, redirection_split);
-				return (-1);
-			}
-		}
-		else
-		{
-			tmp = ft_strjoin(temp, " ");
-			command = ft_strjoin(tmp, temp4);
-			free(tmp);
-		}
-		int ccount=-1;
-		tty = ft_mult_split(temp3, "<>");
-		while (++ccount < ft_2dlen(*redirection_split))
-		{
-			temp3 = ft_strmchr(temp3, "<>");
-			if (!temp3)
-				return (0);
-			
-			if (ft_execute_redirection(tty, ccount, &fd, temp3, robo_env) < 0)
-			{
-				if (temp != NULL)
-					free(temp);
-				if (*redirection_split)
-					frees_split(*redirection_split);
-				if (tty)
-					frees_split(tty);
-				dprintf(2, "Error: Invalid redirection\n");
-				return (-1);
-			}
-			temp3++;
-		}
-		frees_split(tty);
-		frees_split(*redirection_split);
-		if (!*redirection_split)
-		{
-			free(command);
+		if (temp)
 			free(temp);
-       		free(temp2);
-        	return (-1);
-    	}
-
-    pid_t a = fork();
-    if (a == 0)
+		if (command)
+			free(command);
+		return (-1);
+	}
+	if (!*redirection_split)
+	{
+		free(command);
+		free(temp);
+   		free(temp2);
+    	return (-1);
+	}
+    if (ft_execve(command, robo_env) == -1)
     {
-        if (ft_execve(command, robo_env) == -1)
-        {
-            free(command);
-            free(temp);
-            perror("Command not found");
-            exit(EXIT_FAILURE);
-        }
-    }
-    else if (a < 0)
-    {
-        perror("Fork failed");
         free(command);
         free(temp);
+        perror("Command not found");
         return (-1);
     }
-	wait(NULL);
-    free(command);
-    free(temp);
+	free(command);
+	free(temp);
     return (0);
 }
 

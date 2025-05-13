@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/07 15:57:01 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:37:20 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,23 @@ int		child_process(t_cmd **cmd, t_list	**current,  int pipe_fd2[][2], pid_t pids
 	return (0);
 }
 
+int	str_size_element(char const *s, char c)
+{
+	int	i;
+
+	i = 0;
+	while (*s)
+	{
+		while (*s == c)
+			s++;
+		if (*s)
+			i++;
+		while (*s && *s != c)
+			s++;
+	}
+	return (i);
+}
+
 int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
 {
     if (!file_loc[i])
@@ -257,6 +274,7 @@ int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
         return (-1);
     }
     int fd = open(file_loc[i], O_RDONLY);
+	free(file_loc[i]);
     if (fd < 0)
     {
         perror("open heredoc file");
@@ -264,8 +282,9 @@ int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
     }
     dup2(fd, STDIN_FILENO);
     char *temp = ft_strfchr(file, '<');
+	ft_printf("%2%s", temp);
     close(fd);
-    if (ft_strlen(temp) <= 1)
+    if (temp != NULL && (str_size_element(temp, ' ') <= 1))
 	{
         free(temp);
         return (-1);
@@ -284,19 +303,18 @@ int		dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 	env = (*cmd)->env;
 	if ((*cmd)->here_doc->pryority[i] >= 2)
 	{
-		write(1,"abdullah and cut\n",18);
         heredoc_idx = (*cmd)->here_doc->pryority[i] - 2;
         if (execute_heredoc((*current)->content, env, heredoc_idx, file_loc) == -1)
 		{
-			int no = 0;
-			while (no < (*cmd)->here_doc->counter)
-			{
-				if ((*cmd)->here_doc->file_loc[no]) 
-				{
-					free((*cmd)->here_doc->file_loc[no]);
-				}
-				no++;
-			}
+			// int no = 0;
+			// while (no < (*cmd)->here_doc->counter)
+			// {
+			// 	if ((*cmd)->here_doc->file_loc[no]) 
+			// 	{
+			// 		free((*cmd)->here_doc->file_loc[no]);
+			// 	}
+			// 	no++;
+			// }
             return (-1);
 		}
 	}

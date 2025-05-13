@@ -123,6 +123,8 @@ char	*check_access(char **paths, char **result)
 
 int		ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 {
+	if (!file)
+		return (-1);
 	*result = ft_split(file, ' ');
 	if (!*result)
 	{

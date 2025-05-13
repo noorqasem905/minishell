@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/06 21:45:04 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/13 19:00:17 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,17 @@ int	check_pipe_input(char *input)
 		return (-1);
 	return (0);
 }
+void	printf_split(char *str, char **split)
+{
+	int	i;
 
+	i = 0;
+	while (split[i])
+	{
+		ft_printf("%2%s%s\n", str, split[i]);
+		i++;
+	}
+}
 int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 		char **robo_env)
 {
@@ -169,6 +179,13 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 		return (-1);
 	expand_cmds(cmd, robo_env);
 	split = ft_split((*temp)[0], ' ');
+	if (!split || !*split)
+	{
+		if (split)
+			free(split);
+		free(*input);
+		return (-3);
+	}
 	if (ft_strncmp(split[0], "cd", 2) == 0)
 	{
 		robo_cd(split, robo_env);

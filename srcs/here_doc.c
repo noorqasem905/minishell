@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/06 18:10:37 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:33:56 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,4 +260,4 @@ step 1: find the here doc formula
 step 2: find the exit if no error and no here doc
 step 3: find the here doc are correct
 step 4: do the here doc
-*/
+*/	

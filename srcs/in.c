@@ -34,12 +34,14 @@ implement:
 
 
 
-command: ls < in in < in
+command1: ls < in in < in
+command2: ls << end > kk
 
 
 
 
 
+till one case should handle, which is command 2, should include all cases like it ;> good luck...
 
 
 ... continue after pray in mosque (لا اله الا الله محمد رسول الله)

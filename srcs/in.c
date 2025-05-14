@@ -44,5 +44,29 @@ command2: ls << end > kk
 till one case should handle, which is command 2, should include all cases like it ;> good luck...
 
 
+
+
+
+
+<- here doc part ->
+
+you have to re handle here doc  
+KO -- > << end <<
+KO -- > << end <
+KO -- > ls << end ls (no switch file named ls)
+------------------------------
+OK -- > << end < in
+OK -- > ls << end  in< in
+------------------------------
+
+
+
+
+
+
+
+
+
+
 ... continue after pray in mosque (لا اله الا الله محمد رسول الله)
 */

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/13 18:37:20 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/14 19:11:51 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,18 +273,20 @@ int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
         dprintf(2, "Error: file_loc[%d] is NULL in execute_heredoc\n", i);
         return (-1);
     }
+	
     int fd = open(file_loc[i], O_RDONLY);
 	free(file_loc[i]);
     if (fd < 0)
     {
-        perror("open heredoc file");
+		perror("open heredoc file");
         return (-1);
     }
     dup2(fd, STDIN_FILENO);
     char *temp = ft_strfchr(file, '<');
-	ft_printf("%2%s", temp);
+	ft_printf("%2 please try again: %s\n", file);
+	// ft_printf("%2%s", temp);
     close(fd);
-    if (temp != NULL && (str_size_element(temp, ' ') <= 1))
+    if (temp != NULL && (str_size_element(temp, ' ') < 1))
 	{
         free(temp);
         return (-1);
@@ -306,15 +308,6 @@ int		dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
         heredoc_idx = (*cmd)->here_doc->pryority[i] - 2;
         if (execute_heredoc((*current)->content, env, heredoc_idx, file_loc) == -1)
 		{
-			// int no = 0;
-			// while (no < (*cmd)->here_doc->counter)
-			// {
-			// 	if ((*cmd)->here_doc->file_loc[no]) 
-			// 	{
-			// 		free((*cmd)->here_doc->file_loc[no]);
-			// 	}
-			// 	no++;
-			// }
             return (-1);
 		}
 	}

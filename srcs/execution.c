@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/14 19:11:51 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/15 22:08:12 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,30 @@ void pprintf(char **str)
 		no++;
 	}
 }
+
+int		sizeof_heredoc(char *str)
+{
+	int		i;
+	size_t	size;
+
+	i = 0;
+	size = 0;
+	while (str[i])
+	{
+		if (str[i + 1] && str[i] == '<' && str[i + 1] == '<')
+		{
+			size++;
+			i++;
+		}
+		i++;
+	}
+	return (size);
+}
+
 int		here_doc_manger(t_cmd **cmd, char **file_loc)
 {
 	t_list	*current;
+	int		num_here_doc;
 	int		i;
 	int		j;
 
@@ -125,7 +146,7 @@ int		here_doc_manger(t_cmd **cmd, char **file_loc)
 	{
 		if ((*cmd)->here_doc->pryority[i] >= 2)
 		{
-				if (heredoc(current->content, &(file_loc[j])))
+				if (heredoc(current->content, &(file_loc[j]), sizeof_heredoc(current->content)) < 0)
 				{
 					perror("heredoc");
 					return (-1);
@@ -266,15 +287,129 @@ int	str_size_element(char const *s, char c)
 	return (i);
 }
 
+void	setup_extra_command_h_2(char **split_2, char **command)
+{
+	char	*tmp;
+    char	*tmp2;
+	int		j;
+	
+	j = 1;
+	tmp = ft_strjoin(*command, " ");
+	free(*command);
+	*command = tmp;
+	while (j < (int)element_size(split_2))
+    {
+        tmp = ft_strjoin(split_2[j], " ");
+        if (tmp)
+        {
+			tmp2 = ft_strjoin(*command, tmp);
+            free(tmp);
+            if (*command)
+				free(*command);
+            *command = tmp2;
+        }
+        j++;
+    }
+    frees_split(split_2);
+}
+
+int		setup_extra_command_h(char *temp5, char **command)
+{
+    char	**split;
+    char	**split_2;
+    int		i;
+
+    split = ft_mult_split(temp5, "<>");
+    if (!split)
+        return (-1);
+    i = 0;
+    while (i < (int)element_size(split))
+    {
+        split_2 = ft_split(split[i], ' ');
+		if (!split_2)
+		{
+			frees_split(split);
+        	return (-1);
+		}
+		if (split_2)
+			setup_extra_command_h_2(split_2, command);		
+        i++;
+    }
+    frees_split(split);
+	return (0);
+}
+
+int manager_execution_heredoc(char *file, char **temp)
+{
+	char	*command;
+	int		which;
+
+	which = which_redirection_char(file);
+	command = ft_strfchr(file, which);
+	// command = ft_strdup(" ");
+	// ft_printf("%2-->OUT: %s\n", file);
+	if (setup_extra_command_h(file, &command))
+	{
+		free(command);
+		return (-1);
+	}
+
+	ft_printf("%2Final command: %s\n", command);
+	*temp = command;
+	return (0);
+}
+
+int		ft_heredoc_redirection_process(char **str, char *temp)
+{
+	char	*tmp;
+	int		i;
+
+	i = 1;//<       in    <
+	while (isspace(temp[i]))
+		i++;
+	if(temp[i] == '\0' || temp[i] == '<' || temp[i] == '>')
+		return (-1);
+	*str = ft_strmfchr(temp + i, " <>");
+	tmp = ft_strjoin(temp[0], *str);
+	free(*str);
+	*str = tmp;
+	return (0);
+}
+int		ft_heredoc_redirection_manager(char *file)
+{
+	char	*str;
+	char	*tmp;
+	char	*tmp2;
+	while (tmp)
+	{
+		tmp = ft_strmchr(file, "<>");
+		if (tmp[1] != '<' && (tmp[0]=='<' || tmp[0] == '>'))
+		{
+			tmp2 = ft_strmchr(tmp + 1, "<>");
+			free(tmp);
+			tmp = tmp2;
+		}
+		else
+		{
+			tmp2 = ft_strmchr(tmp + 2, "<>");
+			free(tmp);
+			tmp = tmp2;
+		}
+	}
+	
+}
+
 int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
 {
-    if (!file_loc[i])
+	char	*temp;
+    int		fd;
+
+	if (!file_loc[i])
     {
         dprintf(2, "Error: file_loc[%d] is NULL in execute_heredoc\n", i);
         return (-1);
     }
-	
-    int fd = open(file_loc[i], O_RDONLY);
+    fd = open(file_loc[i], O_RDONLY);
 	free(file_loc[i]);
     if (fd < 0)
     {
@@ -282,15 +417,15 @@ int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
         return (-1);
     }
     dup2(fd, STDIN_FILENO);
-    char *temp = ft_strfchr(file, '<');
-	ft_printf("%2 please try again: %s\n", file);
-	// ft_printf("%2%s", temp);
+	if(manager_execution_heredoc(file, &temp) < 0)
+		return (-1);
     close(fd);
     if (temp != NULL && (str_size_element(temp, ' ') < 1))
 	{
         free(temp);
         return (-1);
     }
+
     ft_execve(temp, ev);
     free(temp);
     return (0);
@@ -307,9 +442,7 @@ int		dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 	{
         heredoc_idx = (*cmd)->here_doc->pryority[i] - 2;
         if (execute_heredoc((*current)->content, env, heredoc_idx, file_loc) == -1)
-		{
             return (-1);
-		}
 	}
 	if (ft_strmchr((*current)->content ,"<>") && (*cmd)->who_am_i != 13)
 	{

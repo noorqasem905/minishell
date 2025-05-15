@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/05 18:11:47 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/15 19:18:35 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ struct						s_cmd
 	int						exit_status;
 };
 
-int							heredoc(char *temp, char **file_loc);
+int							heredoc(char *temp, char **file_loc, size_t size);
 int							handle_here_doc(char *temp);
 struct						s_exp
 {
@@ -80,6 +80,7 @@ int							ft_execve(char *file, char **ev);
 int							searching_comand(char **input, char **temp);
 int							save_data(char **input, t_cmd **cmd, int *flag,
 								char ***temp);
+int							which_redirection_char(char *temp);
 int							reading_manager(t_cmd **cmd, int *flag,
 								char ***temp, char **robo_env);
 int							ft_redirection(char *input,
@@ -88,6 +89,7 @@ int							ft_execute_redirection(char **redirection_split,
 								int ccount, int *fd, char *temp3,
 								char **robo_env);
 int							read_input(char **input);
+size_t						element_size(char **str);
 void						close_wait(pid_t pids[], int size,
 								int pipe_fd2[][2]);
 void						free_list(t_list **root);

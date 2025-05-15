@@ -59,6 +59,18 @@ OK -- > << end < in
 OK -- > ls << end  in< in
 ------------------------------
 
+--> start execute redirection with heredoc <--
+command: ls << end file file < in file << end file > set_here
+
+V   -- > execute heredoc 
+VI  -- > save command 
+VII -- > execute redirection 
+file execute: execute here doc...
+command: ls file file file file
+VIII --> save redirection command 
+command: < in > set_here
+VIIII --> join command to redirection
+command:  ls file file file file < in > set_here
 
 
 

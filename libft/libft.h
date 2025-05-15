@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:06:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/07 17:34:30 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/15 21:58:11 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char				**ft_split(char const *s, char c);
 char				*ft_strmchr(const char *s, char c[]);
 char				**ft_mult_split(char const *s, char c[]);
 char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strmfchr(const char *s, const char *set);
 char				*ft_strrmchr(const char *s, const char *set);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_strnstr(const char *big, const char *little,

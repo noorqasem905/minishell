@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/12 20:22:31 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/14 20:03:50 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void init_data(t_cmd **cmd)
 	(*cmd)->pryority = NULL;
 	(*cmd)->who_am_i = 0;
 	(*cmd)->exit_status = 0;
+	(*cmd)->shlvl = 1;
 }
 
 int		check_no_pipe(char *input)
@@ -152,6 +153,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	if (searching_comand(input, *temp) == -1)
 		return (-1);
 	expand_cmds(cmd, (*cmd)->env);
+	char *t = expander_input((*cmd)->word, (*cmd)->env, *cmd);
 	split = ft_split((*temp)[0], ' ');
 	if (ft_strncmp(split[0], "cd", 2) == 0)
 	{
@@ -162,7 +164,8 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	}
 	if (ft_strcmp(split[0], "export") == 0)
 	{
-		export((*temp)[0], cmd);
+		ft_export(t, cmd);
+		//check_shlvl((*cmd));
 		frees_split(split);
 		return(-3);
 	}
@@ -187,20 +190,25 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	{
 		robo_pwd();
 	}
-	frees_split(split);
+	if (ft_strcmp(split[0], "exit") == 0)
+	{
+		robo_exit(split, *cmd);
+	}
 	if (searching_comand(input, *temp) == -13)
-		return (-13);
-	char *t = expander_input((*cmd)->word, (*cmd)->env, *cmd);
- 	if (execution(cmd, (*cmd)->env) == -1 && !(*cmd)->flag)
+	return (-13);
+	
+	if (execution(cmd, (*cmd)->env) == -1 && !(*cmd)->flag)
 	{
 		free(t);
 		free(*input);
 		if ((*cmd)->pryority)
-			free((*cmd)->pryority);
+		free((*cmd)->pryority);
 		if ((*cmd)->exit_status == -13)
-			return (-14);
+		return (-14);
 		return (-12);
 	}
+	frees_split(split);
+	//check_shlvl((*cmd));
 	free(t);
 	free(*input);
 	free((*cmd)->pryority);
@@ -236,7 +244,6 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 				// frees_split((*cmd)->env);
 				// free(*cmd);
 				return(1);
-				//exit(EXIT_FAILURE);
 			}
 			break ;
 		}

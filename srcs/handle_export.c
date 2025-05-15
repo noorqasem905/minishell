@@ -6,60 +6,32 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/12 20:40:46 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:04:53 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 
-
-
-
-static char *trim_quotes(char *str)
+static size_t	word_lenn(char *s, char c)
 {
+    size_t	i;
+    
+	i = 0;
+	while (s[i] && s[i] != c)
+	{
+        i++;
+	}
+	return (i);
+}
+static char *trim_quotess(char *str)
+{
+
 	return ft_strtrim(str, "\"");
 }
 
 
-static int	word_count_custuom(char const *s, char c)
-{
-	int	i;
-    int flag = 0;
-
-	i = 0;
-	while (*s)
-	{
-		while (*s == c && *s && *s != '\"')
-		{	
-            if (*s == '\"')
-            {
-                flag = 1;
-                s++;
-            }
-            s++;
-        }
-            if (*s)
-			i++;
-		while (*s && (*s != c || flag == 1))
-        {
-            if (*s == '\"')
-            {
-                flag = 0;
-            }
-			s++;
-        }
-    }
-	return (i);
-}
-
-int ft_isspace(char c)
-{
-    return (c == ' ' || c == '\t' || c == '\n' || c == '\v' 
-		|| c == '\f' || c == '\r');
-}
-
-static void	free_it(char **str, size_t i)
+void	free_it(char **str, size_t i)
 {
 	while (i != 0)
 	{
@@ -70,110 +42,19 @@ static void	free_it(char **str, size_t i)
 	free(str);
 }
 
-static size_t	word_len_custuom(char *s, char c, int *flag)
+int ft_export(char *str, t_cmd **cmd)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i] && (s[i] != c || *flag))
-	{
-		if (s[i] == '\"')
-		{
-			*flag = !(*flag);
-			i++;
-			continue;
-		}
-		i++;
-	}
-	return (i);
-}
-
-char	**ft_split_custom_exp(char const *s, char c)
-{
-	char	**str;
-	size_t	i;
-    int flag = 0;
-
-	i = 0;
-	str = malloc(sizeof(char *) * (word_count_custuom(s, c) + 1));
-	if (!s || !str)
-		return (NULL);
-	while (*s)
-	{
-		while (*s == c && *s)
-			s++;
-		if (*s)
-		{
-			str[i] = ft_substr(s, 0, word_len_custuom((char *)s, c, &flag));
-			if (!str[i++])
-			{
-				free_it(str, i - 1);
-				return (NULL);
-			}
-			s += word_len_custuom((char *)s, c, &flag);
-		}
-	}
-	str[i] = NULL;
-	return (str);
-}
-
-static int	word_count(char const *s, char c)
-{
-	int	i;
-
-	i = 0;
-	while (*s)
-	{
-		while (*s == c)
-			s++;
-		if (*s)
-			i++;
-		while (*s && *s != c)
-			s++;
-	}
-	return (i);
-}
-
-
-static size_t	word_len(char *s, char c)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] && s[i] != c)
-	{
-		i++;
-	}
-	return (i);
-}
-static void	printf_splitt(char *str, char **split)
-{
-	int	i;
-
-	i = 0;
-	while (split[i])
-	{
-		ft_printf("%2%s%s\n",str, split[i]);
-		i++;
-	}
-}
-
-int export(char *str, t_cmd **cmd)
-{
-	char delimiter = ' ';
 	char **result;
 	t_exp *export;
 	int i;
 	int len;
 	
 	len = 0;
-	
-	/*if (!ft_strmchr(str, "export"))
-		return (1);*/
-	result = ft_split_custom_exp(str, delimiter);
+	result = ft_split_custom_exp(str, ' ');
  	if (result == NULL)
 	{
 		ft_printf("%2Error: ft_split failed\n");
+		(*cmd)->exit_status = 2;
 		return (1);
 	}
 	int m = 0;
@@ -199,12 +80,6 @@ int export(char *str, t_cmd **cmd)
         free(result[0]);
         result[0] = tmp;
     }
-	// if (ft_strcmp(result[0], "export"))
-	// {
-	// 	printf("Error");
-	// 	frees_split(result);
-	// 	return (-60);
-	// }
 	i = 0;
 	while (result[i])
 		i++;
@@ -230,14 +105,14 @@ int export(char *str, t_cmd **cmd)
 		if (result[x + 1] && result[x + 1][0] == '=')
 		{
 			export->name[j] = ft_strdup(result[x]);
-			export->value[j] = trim_quotes(result[x + 1] + 1);
+			export->value[j] = trim_quotess(result[x + 1] + 1);
 			x++;
 		}
 		else if (ft_strchr(result[x], '='))
 		{
-			len = word_len(result[x], '=');
+			len = word_lenn(result[x], '=');
 			export->name[j] = ft_substr(result[x], 0, len);
-			export->value[j] = trim_quotes(result[x] + len + 1);
+			export->value[j] = trim_quotess(result[x] + len + 1);
 		}
 		else
 		{
@@ -255,7 +130,6 @@ int export(char *str, t_cmd **cmd)
 	// printf("%s", export->name[0]);
 	// printf("*****export*********\n");
 	robo_export(cmd, export);
-	//print_export(cmd);
 	frees_split(export->name);
     frees_split(export->value);
     free(export);

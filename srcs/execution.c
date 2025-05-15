@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/12 20:16:01 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/13 21:07:02 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ int	execution(t_cmd **cmd, char **env)
 			}
 			if (ft_strmchr(current->content ,"<>") && (*cmd)->who_am_i != 13)
 			{
-				if(ft_redirection(current->content, &redirection_split, env) < 0)
+				if(ft_redirection(current->content, &redirection_split, env, cmd) < 0)
 				{
 					write(2, "Error: Invalid redirection\n\n", 27);
 					return (-1);
@@ -200,7 +200,7 @@ int	execution(t_cmd **cmd, char **env)
 					return (-1);
 				}
 			}
-			if (ft_execve(current->content, env) == -1 || (*cmd)->flag)
+			if (ft_execve(current->content, env, cmd) == -1 || (*cmd)->flag)
 			{
 				perror("Command not found");
  				return (-1);

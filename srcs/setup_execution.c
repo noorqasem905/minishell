@@ -29,7 +29,7 @@ void	free_it_now(char **s, char *s2, int emassage)
 		perror("Error");
 }
 
-int	check_validation(char **paths, char **result, char **m)
+int	check_validation(char **paths, char **result, char **m, t_cmd **cmd)
 {
 	*m = NULL;
 	if (!paths)
@@ -45,6 +45,8 @@ int	check_validation(char **paths, char **result, char **m)
 			perror("Error: File is not executable or doesn't exist");
 			return (1);
 		}
+		if (ft_strcmp(result[0], "./minishell") == 0)
+			(*cmd)->shlvl++;
 		*m = ft_strdup(result[0]);
 		return (4);
 	}
@@ -118,7 +120,7 @@ char	*check_access(char **paths, char **result)
 	return (m);
 }
 
-int	ft_execve(char *file, char **ev)
+int	ft_execve(char *file, char **ev, t_cmd **cmd)
 {
 	char	**result;
 	char	**paths;
@@ -145,7 +147,7 @@ int	ft_execve(char *file, char **ev)
 		free_it_now(result, NULL, 1);
 		return (-1);
 	}
-	flag = check_validation(paths, result, &m);
+	flag = check_validation(paths, result, &m, cmd);
 	if (m == NULL || flag < 0)
 	{
 		free_it_now(result, NULL, 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/29 14:16:10 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/13 21:04:46 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int		ft_execute_redirection(char **redirection_split ,int ccount, int *fd, char 
 	return (0);
 }
 
-int		ft_redirection(char *input, char ***redirection_split, char **robo_env)
+int		ft_redirection(char *input, char ***redirection_split, char **robo_env, t_cmd **cmd)
 {
     char	*temp;
     char	*temp2;
@@ -212,7 +212,7 @@ int		ft_redirection(char *input, char ***redirection_split, char **robo_env)
         }
     }
     frees_split(*redirection_split);
-    if (ft_execve(temp, robo_env) == -1)
+    if (ft_execve(temp, robo_env, cmd) == -1)
     {
         free(temp);
         perror("Command not found");

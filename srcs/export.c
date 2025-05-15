@@ -14,90 +14,48 @@
 
 
 
-static char *trim_quotes(char *str)
+static void	print_env_var(char *env_var)
 {
-    int len;
+	char	*eq;
+	int		name_len;
+	char	*name;
+	char	*value;
 
-    len = ft_strlen(str);
-    if (len >= 2 && str[0] == '"' && str[len - 1] == '"')
-        return (ft_substr(str, 1, len - 2));
-    return (ft_strdup(str));
+	eq = ft_strchr(env_var, '=');
+	if (!eq)
+	{
+		ft_printf("declare -x %s\n", env_var);
+		return;
+	}
+	name_len = eq - env_var;
+	name = ft_substr(env_var, 0, name_len);
+	value = ft_strdup(eq + 1);
+	if (!name || !value)
+		return ;
+	print_with_value(name, value);
+	free(name);
+	free(value);
 }
 
-int is_valid(char *name)
+static void	print_export(t_cmd *cmd)
 {
-    int i;
+	int	i;
 
-    if (!name || (!ft_isalpha(name[0]) && name[0] != '_'))
-        return (0);
-    i = 1;
-    while (name[i] && name[i] != '=')
-    {
-        if (!ft_isalnum(name[i]) && name[i] != '_')
-            return (0);
-        i++;
-    }
-    return (1);
+	if (!cmd->env)
+	{
+		ft_printf("%2Error: Environment is not initialized.\n");
+		cmd->exit_status = 1;
+		return ;
+	}
+	i = 0;
+	while (cmd->env[i])
+	{
+		print_env_var(cmd->env[i]);
+		i++;
+	}
 }
 
-static int get_env_j(char **env, char *name)
-{
-    int i;
-    int len;
-
-    i = 0;
-
-    len = ft_strlen(name);
-
-    while (env && env[i])
-    {
-        if (ft_strncmp(env[i], name, len) == 0  && env[i][len] == '=')
-            return (i);
-        i++;
-    }
-    return (-1);
-}
-
-static void print_export(t_cmd *cmd)
-{
-    int i = 0;
-    char *eq;
-    char *delete;
-    int name_len;
-    char *name;
-    char *value;
-
-    if (!cmd->env)
-    {
-        ft_printf("Error: Environment is not initialized.\n");
-        return;
-    }
-    while (cmd->env[i])
-    {
-        eq = ft_strchr(cmd->env[i], '=');
-        if (eq)
-        {
-            name_len = eq - cmd->env[i];
-            name = ft_substr(cmd->env[i], 0, name_len);
-            value = ft_strdup(eq + 1);
-            if (value[0] == '\0')
-                ft_printf("declare -x %s\n", name);
-            else
-            {
-                delete = trim_quotes(value);
-                ft_printf("declare -x %s=\"%s\"\n", name, delete);
-                free(delete);
-            }
-            free(name);
-            free(value);
-        }
-        else
-            ft_printf("declare -x %s\n", cmd->env[i]);
-        i++;
-    }
-}
-
-static void update_env(char **env, int j, char *name, char *value)
+void update_env(char **env, int j, char *name, char *value)
 {
     char *new_name;
     char *temp;
@@ -109,7 +67,7 @@ static void update_env(char **env, int j, char *name, char *value)
     env[j] = new_name;
 }
 
-static char **add_env(char **env, char *name, char *value)
+char **add_env(char **env, char *name, char *value)
 {
     int i;
     int j;
@@ -142,35 +100,28 @@ void robo_export(t_cmd **cmd, t_exp *export)
     char **tmp;
 	int i;
     int j;
-	
+
 	i = 0;
     if (export->name[0] == NULL)
     {
         if (!(*cmd)->env)
         {
-            ft_printf("%2ERROoRR");
+            error_export(cmd);
             return;
         }
         print_export((*cmd));
     }
 	while (export->name[i])
 	{
-        if (!is_valid(export->name[i]))
-        {
-            ft_printf("%2export: `%s`: not a valid identifier\n", export->name[i]);
-            i++;
-            continue;
-        }
-        j = get_env_j((*cmd)->env, export->name[i]);
-        if (j != -1)
-            update_env((*cmd)->env, j, export->name[i], export->value[i]);
-        else
-        {
-            tmp = add_env((*cmd)->env, export->name[i], export->value[i]);
-            frees_split((*cmd)->env);
-            (*cmd)->env = NULL;
-            (*cmd)->env = tmp;
-        }
-        i++;
+		if (!is_valid(export->name[i]))
+			handle_invalid(export->name[i]);
+		else
+		{
+			j = get_env_j((*cmd)->env, export->name[i]);
+			handle_added(cmd, export, i, j);
+		}
+		i++;
 	}
 }
+
+

@@ -149,6 +149,11 @@ int		ft_execve(char *file, char **ev)
 
 	if(ft_setup_execve(file, &result, ev, &paths) == -1)
 		return (-1);
+    if (!result || !result[0] || !*result[0]) 
+	{
+        free_it_now(result, NULL, 1);
+        return (-1);
+    }
 	flag = check_validation(paths, result, &m);
 	if (m == NULL || flag < 0)
 	{

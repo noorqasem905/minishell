@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/17 00:31:09 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/17 07:06:12 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -437,27 +437,32 @@ int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
 		return (-1);
 	}
 	close(fd);
-    // if (temp != NULL && (str_size_element(temp, ' ') < 1))
-	// {
-	// 	free(temp);
-    //     return (-1);
-    // }
-	ft_printf("%2%s\n", file);
 	if(ft_heredoc_redirection_manager(file, &str) < 0)
 	{
 		free(temp);
+		free(str);
 		return (-1);
+	}
+	if (!str)
+	{
+		if(ft_execve(temp, ev))
+		{
+			if (temp)
+				free(temp);
+			return (-1);
+		}
 	}
 	st = ft_strjoin(temp, str);
 	if(ft_redirection(st, &redirection_split, ev) < 0)
 	{
 		if (temp)
 			free(temp);
+		if (str)
+			free(str);
 		if (st)
 			free(st);
 		return (-1);
 	}
-	// ft_execve(temp, ev);
     free(temp);
 	if (str)
 		free(str);

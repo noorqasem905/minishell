@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/17 00:06:53 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/17 07:01:50 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -401,8 +401,6 @@ void	extract_apply_short_3(char **tmp, char **temp, char *temp4,
 	free(*tmp);
 }
 
-
-
 int	extract_and_apply_redirection(char **temp, char *temp2,
 		char ***redirection_split, char **command)
 {
@@ -442,7 +440,7 @@ int	extract_and_apply_redirection(char **temp, char *temp2,
 	return (0);
 }
 
-int	process_redirections(char ***redirection_split, char **robo_env,
+int		process_redirections(char ***redirection_split, char **robo_env,
 		char **temp3)
 {
 	char	**tty;
@@ -523,8 +521,10 @@ int		error_ft_execute_redirection(char *temp, char *command, char **robo_env)
 {
 	if (ft_execve(command, robo_env) == -1)
 	{
-		free(command);
-		free(temp);
+		if (command)
+			free(command);
+		if (temp)
+			free(temp);
 		perror("Command not found");
 		return (-1);
 	}

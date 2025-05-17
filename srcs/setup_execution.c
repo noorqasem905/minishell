@@ -18,13 +18,20 @@ void	free_it_now(char **s, char *s2, int emassage)
 
 	n = 0;
 	if (s2 != NULL)
+	{
 		free(s2);
+		s2 = NULL;
+	}
 	while (s[n])
 	{
 		free(s[n]);
 		n++;
 	}
-	free(s);
+	if (s)
+	{
+		free(s);
+		s = NULL;
+	}
 	if (emassage || emassage == -1)
 		perror("Error");
 }
@@ -140,6 +147,18 @@ int		ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 	return (0);
 }
 
+int		check_validation_handle(int flag, char *m, char **result)
+{
+	if (m == NULL || flag < 0)
+	{
+		free_it_now(result, NULL, 1);
+		if (m != NULL)
+			free(m);
+		return (-1);
+	}
+	return (0);
+}
+
 int		ft_execve(char *file, char **ev)
 {
 	char	**result;
@@ -151,17 +170,14 @@ int		ft_execve(char *file, char **ev)
 		return (-1);
     if (!result || !result[0] || !*result[0]) 
 	{
+		if (paths)
+			frees_split(paths);
         free_it_now(result, NULL, 1);
         return (-1);
     }
 	flag = check_validation(paths, result, &m);
-	if (m == NULL || flag < 0)
-	{
-		free_it_now(result, NULL, 1);
-		if (m != NULL)
-			free(m);
+	if (check_validation_handle(flag, m	, result) < 0)
 		return (-1);
-	}
 	if (execve(m, result, ev) == -1)
 	{
 		perror("Error executing command");

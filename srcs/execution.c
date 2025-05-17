@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/17 07:06:12 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/17 07:41:20 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -471,6 +471,34 @@ int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
     return (0);
 }
 
+void	run_export_execution(char **run)
+{
+	int	i;
+
+	i = 0;
+	while (run[i])
+	{
+		ft_printf("%2%s\n", run[i]);
+		i++;
+	}
+}
+
+int		run_buildin_execution(t_cmd	*cmd, t_list *current)
+{
+	char	*tmp;
+
+	ft_printf("%2 --------------------------------------------------------> im here");
+	tmp = ft_strtrim(current->content , " ");
+	if (!tmp)
+		return (-1);
+	if (ft_strcmp(tmp, "export") || ft_strcmp(tmp, "env"))
+	{
+		run_export_execution(cmd->env);
+		return (-1);
+	}
+	return (0);
+}
+
 int		dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 {
 	char	**redirection_split;
@@ -492,6 +520,8 @@ int		dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 			return (-1);
 		}
 	}
+	if (run_buildin_execution(*cmd, *current) < 0)
+		return (-1);
 	if (ft_execve((*current)->content, env) == -1)
 	{
 		perror("Command not found");

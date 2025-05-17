@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/13 19:00:17 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/17 09:43:38 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	t_list	*current;
 	char	**split;
 	char	*t;
+	int		ret;
 
 	if (*input)
 		add_history(*input);
@@ -197,7 +198,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	if (searching_comand(input, *temp) == -13)
 		return (-13);
 	t = expander_input((*cmd)->word, robo_env);
-	if (execution(cmd, robo_env) == -1)
+	if ((ret = execution(cmd, robo_env)) == -1)
 	{
 		free(t);
 		free(*input);
@@ -209,11 +210,25 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 			return (-14);
 		return (-12);
 	}
+	if (ret == 65)
+	{
+		if ((*cmd)->here_doc->file_loc)
+			free((*cmd)->here_doc->file_loc);
+		if ((*cmd)->here_doc->pryority)
+			free((*cmd)->here_doc->pryority);
+		if (t)
+			free (t);
+		t = NULL;
+		(*cmd)->here_doc->pryority = NULL;
+		(*cmd)->here_doc->file_loc = NULL;
+		return (0);
+	}
 	free(t);
 	free(*input);
 	if ((*cmd)->here_doc->file_loc)
 		free((*cmd)->here_doc->file_loc);
-	free((*cmd)->here_doc->pryority);
+	if ((*cmd)->here_doc->pryority)
+			free((*cmd)->here_doc->pryority);
 	return (0);
 }
 

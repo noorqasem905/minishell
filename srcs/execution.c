@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/17 08:03:14 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/17 09:44:39 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int searching_here_doc(t_cmd **cmd, t_here_doc **here_doc)
 			(*here_doc)->pryority[i] = 1;
 		current = current->next;
 	}
- 		(*here_doc)->pryority[i] = '\0';
+ 	(*here_doc)->pryority[i] = '\0';
 	return (0);
 }
 
@@ -136,6 +136,7 @@ int		here_doc_manger(t_cmd **cmd, char **file_loc)
 {
 	t_list	*current;
 	int		num_here_doc;
+	int		size;
 	int		i;
 	int		j;
 
@@ -146,7 +147,8 @@ int		here_doc_manger(t_cmd **cmd, char **file_loc)
 	{
 		if ((*cmd)->here_doc->pryority[i] >= 2)
 		{
-				if (heredoc(current->content, &(file_loc[j]), sizeof_heredoc(current->content)) < 0)
+				size = sizeof_heredoc(current->content);
+				if (size > 1023 || heredoc(current->content, &(file_loc[j]), size) < 0)
 				{
 					perror("heredoc");
 					return (-1);
@@ -156,7 +158,7 @@ int		here_doc_manger(t_cmd **cmd, char **file_loc)
 		current = current->next;
 		i++;
 	}
-
+	
 	return (0);
 }
 
@@ -170,6 +172,9 @@ int	execution(t_cmd **cmd, char **env)
 	char **file_loc;
 
 	size = ft_lstsize((*cmd)->word);
+	(*cmd)->here_doc->pryority = NULL;
+	if (size > 300)
+		return (65);
 	(*cmd)->here_doc->pryority = malloc(sizeof(int) * (size + 1));
 	(*cmd)->here_doc->pryority[size] = '\0';
 	(*cmd)->who_am_i = 0;	
@@ -190,7 +195,7 @@ int	execution(t_cmd **cmd, char **env)
 		}
 		(*cmd)->here_doc->file_loc = file_loc;
 		if(here_doc_manger(cmd, (*cmd)->here_doc->file_loc))
-			return (-1);
+			return (65);
 	}
 	pid_t	pids[size];
 	int		pipe_fd2[size][2];

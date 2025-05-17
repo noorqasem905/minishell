@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/17 07:06:12 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/17 08:03:14 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,33 @@ int	execution(t_cmd **cmd, char **env)
 	return (0);
 }
 
+void	run_export_execution(char **run)
+{
+	int	i;
+
+	i = 0;
+	while (run[i])
+	{
+		ft_printf("%s\n", run[i]);
+		i++;
+	}
+}
+int		run_buildin_execution(t_cmd	*cmd, t_list *current)
+{
+	char	*tmp;
+
+	tmp = ft_strtrim(current->content , " ");
+	if (!tmp)
+		return (-1);
+	if (ft_strcmp(tmp, "export") == 0 || ft_strcmp(tmp, "env") == 0)
+	{
+		free(tmp);
+		run_export_execution(cmd->env);
+		return (-1);
+	}
+	free(tmp);
+	return (0);
+}
 int		child_process(t_cmd **cmd, t_list	**current,  int pipe_fd2[][2], pid_t pids[], char **file_loc)
 {
 	int		size;
@@ -471,6 +498,8 @@ int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
     return (0);
 }
 
+
+
 int		dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 {
 	char	**redirection_split;
@@ -492,6 +521,8 @@ int		dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 			return (-1);
 		}
 	}
+	if (run_buildin_execution(*cmd, *current) < 0)
+		return (-1);
 	if (ft_execve((*current)->content, env) == -1)
 	{
 		perror("Command not found");

@@ -38,13 +38,17 @@ $(OBJS_DIR)/%.o: srcs/%.c $(HEADERS)
 clean:
 	$(HIDE)make $(HIDED) -C libft/printf clean
 	$(HIDE)make $(HIDED) -C libft clean
-	$(HIDE)make $(HIDED) -C libft bonus clean
 	$(HIDE)rm -f $(OBJS)
-fclean: clean
+	$(HIDE)rm -f $(HEADERS)
+	$(HIDE)rm -f $(HEADERS)
+
+fclean:
 	$(HIDE)make $(HIDED) -C libft/printf fclean
 	$(HIDE)make $(HIDED) -C libft fclean
-	$(HIDE)make $(HIDED) -C libft bonus fclean
+	$(HIDE)rm -f $(OBJS)
 	$(HIDE)rm -f $(NAME)
+	$(HIDE)rm -df $(OBJS_DIR)
+
 re: fclean all
 
 .PHONY: all clean fclean re

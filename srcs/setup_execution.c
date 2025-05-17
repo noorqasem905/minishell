@@ -18,19 +18,46 @@ void	free_it_now(char **s, char *s2, int emassage)
 
 	n = 0;
 	if (s2 != NULL)
+	{
 		free(s2);
+		s2 = NULL;
+	}
 	while (s[n])
 	{
 		free(s[n]);
 		n++;
 	}
-	free(s);
+	if (s)
+	{
+		free(s);
+		s = NULL;
+	}
 	if (emassage || emassage == -1)
 		perror("Error");
 }
 
+int		handle_ecv_slash(char *result, char **m, char **paths)
+{
+	if (result && ft_strncmp(result, "/", 1) == 0)
+	{
+		if (access(result, F_OK | X_OK) == 0)
+		{
+			*m = ft_strdup(result);
+			return (5);
+		}
+		else
+		{
+			free_it_now(paths, NULL, 0);
+			return (-6);
+		}
+	}
+	return (0);
+}
+
 int	check_validation(char **paths, char **result, char **m)
 {
+	int ret;
+
 	*m = NULL;
 	if (!paths)
 	{
@@ -48,19 +75,9 @@ int	check_validation(char **paths, char **result, char **m)
 		*m = ft_strdup(result[0]);
 		return (4);
 	}
-	if (result[0] && ft_strncmp(result[0], "/", 1) == 0)
-	{
-		if (access(result[0], F_OK | X_OK) == 0)
-		{
-			*m = ft_strdup(result[0]);
-			return (5);
-		}
-		else
-		{
-			free_it_now(paths, NULL, 0);
-			return (-6);
-		}
-	}
+	ret = handle_ecv_slash(result[0], m, paths);
+	if(ret == 5 || ret == -6)
+		return (ret);
 	*m = check_access(paths, result);
 	return (0);
 }
@@ -111,27 +128,27 @@ char	*check_access(char **paths, char **result)
 	return (m);
 }
 
-int	ft_execve(char *file, char **ev)
+int		ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 {
-	char	**result;
-	char	**paths;
-	int		flag;
-	char	*m;
-
-	result = ft_split(file, ' ');
-	if (!result)
+	if (!file)
+		return (-1);
+	*result = ft_split(file, ' ');
+	if (!*result)
 	{
 		perror("Error splitting file");
-		free(result);
-		return (-1);
+ 		return (-1);
 	}
-	paths = ft_split(ev[get_path(ev)] + 5, ':');
-	if (!paths)
+	*paths = ft_split(ev[get_path(ev)] + 5, ':');
+	if (!*paths)
 	{
-		free_it_now(result, NULL, 1);
+		free_it_now(*result, NULL, 1);
 		return (-1);
 	}
-	flag = check_validation(paths, result, &m);
+	return (0);
+}
+
+int		check_validation_handle(int flag, char *m, char **result)
+{
 	if (m == NULL || flag < 0)
 	{
 		free_it_now(result, NULL, 1);
@@ -139,6 +156,28 @@ int	ft_execve(char *file, char **ev)
 			free(m);
 		return (-1);
 	}
+	return (0);
+}
+
+int		ft_execve(char *file, char **ev)
+{
+	char	**result;
+	char	**paths;
+	int		flag;
+	char	*m;
+
+	if(ft_setup_execve(file, &result, ev, &paths) == -1)
+		return (-1);
+    if (!result || !result[0] || !*result[0]) 
+	{
+		if (paths)
+			frees_split(paths);
+        free_it_now(result, NULL, 1);
+        return (-1);
+    }
+	flag = check_validation(paths, result, &m);
+	if (check_validation_handle(flag, m	, result) < 0)
+		return (-1);
 	if (execve(m, result, ev) == -1)
 	{
 		perror("Error executing command");

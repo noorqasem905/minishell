@@ -85,14 +85,21 @@ int	check_validation(char **paths, char **result, char **m)
 int	get_path(char **ev)
 {
 	int	i;
+	int flag;
 
 	i = 0;
+	flag = 0;
 	while (ev[i])
 	{
 		if (ft_strncmp(ev[i], "PATH=/", 6) == 0)
+		{
+			flag = 1;
 			break ;
+		}
 		i++;
 	}
+	if (flag == 0)
+		return (-1);
 	return (i);
 }
 

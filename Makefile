@@ -19,7 +19,6 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/robo_env.c						\
 		srcs/robo_pwd.c						\
 		srcs/robo_exit.c					\
-		srcs/expand_cmd.c					\
 		srcs/utils.c						\
 		srcs/utils_export.c					\
 		srcs/helper_export.c		

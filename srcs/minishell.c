@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 19:32:33 by nqasem            #+#    #+#      		  */
+/*   Created: 2025/04/03 19:32:33 by nqasem            #+#    #+#      			*/
 /*   Updated: 2025/04/06 12:20:41 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -22,6 +22,7 @@ int	main(int argc, char *argv[], char **robo_env)
 	input = NULL;
 	temp = NULL;
 	cmd = malloc(sizeof(t_cmd));
+	cmd->here_doc = malloc(sizeof(t_here_doc));
 	cmd->env = NULL;
 	if (cmd == NULL)
 	{
@@ -41,6 +42,7 @@ int	main(int argc, char *argv[], char **robo_env)
 	cmd->env = my_env(robo_env);
 	reading_manager(&cmd, &flag, &temp, cmd->env);
 	frees_split(cmd->env);
+	free(cmd->here_doc);
 	free(cmd);
 	return (0);
 }

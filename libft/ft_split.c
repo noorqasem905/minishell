@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 22:04:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/12 17:45:05 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:43:58 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	frees_split(char **root)
 	int	i;
 
 	i = 0;
-	if (!root || !*root)
+	if (!*root | !root)
 		return ;
 	while (root[i])
 	{

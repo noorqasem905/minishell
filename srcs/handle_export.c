@@ -12,7 +12,6 @@
 
 #include "../includes/minishell.h"
 
-
 static size_t	word_lenn(char *s, char c)
 {
     size_t	i;
@@ -26,11 +25,8 @@ static size_t	word_lenn(char *s, char c)
 }
 static char *trim_quotess(char *str)
 {
-
 	return ft_strtrim(str, "\"");
 }
-
-
 void	free_it(char **str, size_t i)
 {
 	while (i != 0)
@@ -41,7 +37,6 @@ void	free_it(char **str, size_t i)
 	free(str[i]);
 	free(str);
 }
-
 int ft_export(char *str, t_cmd **cmd)
 {
 	char **result;
@@ -122,7 +117,7 @@ int ft_export(char *str, t_cmd **cmd)
 		x++;
 		j++;
 	}
-	export->name[j]= NULL;
+	export->name[j] = NULL;
 	export->value[j] = NULL;
 	// printf_split("NAME: ", export->name);
 	// printf_split("VALUE: ", export->value);

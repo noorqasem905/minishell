@@ -16,9 +16,9 @@
 # include "../libft/libft.h"
 # include "../libft/printf/ft_printf.h"
 # include <errno.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -28,32 +28,35 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef struct s_cmd	t_cmd;
+typedef struct s_cmd		t_cmd;
 typedef struct s_here_doc	t_here_doc;
-typedef struct s_exp	t_exp;
-struct					s_cmd
+typedef struct s_exp		t_exp;
+struct						s_here_doc
 {
-	t_list						*word;
-	char 						*input;
-	char						**env;
-	int							*pryority;
-	int 						who_am_i;
-	int 						exit_status;
-	int							shlvl;
-	int flag;
-}		;
-
-struct s_here_doc
+	int						fd;
+	char					**file_loc;
+	int						*pryority;
+	int						counter;
+	int						index;
+	char					*input;
+	char					*temp;
+};
+struct						s_cmd
 {
-	int		fd;
-	int		*pryority;
-	char	*input;
-	char	*temp;
-}		;
+	t_here_doc				*here_doc;
+	t_list					*word;
+	char					*input;
+	char					**env;
+	int						*pryority;
+	int						who_am_i;
+	int						counter;
+	int						index;
+	int						exit_status;
+};
 
-int						heredoc(char *temp);
-int						handle_here_doc(char *temp);
-struct		s_exp
+int							heredoc(char *temp, char **file_loc, size_t size);
+int							handle_here_doc(char *temp);
+struct						s_exp
 {
 	char						**name;
 	char						**value;
@@ -109,8 +112,5 @@ int						word_count_custuom(char const *s, char c);
 size_t					word_len_custuom(char *s, char c, int *flag);
 char					**ft_split_custom_exp(char const *s, char c);
 void					free_it(char **str, size_t i);
-
-
-
 
 #endif

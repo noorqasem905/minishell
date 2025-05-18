@@ -11,17 +11,13 @@ SRCS = ft_toupper.c ft_tolower.c ft_isalpha.c ft_memset.c ft_bzero.c ft_atoi.c f
 	
 SRCSB =	ft_lstlast.c ft_lstsize.c ft_lstadd_front.c ft_lstadd_back.c ft_lstnew.c
 
+
 OBJS_DIR = build
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 OBJSB = $(SRCSB:%.c=$(OBJS_DIR)/%.o)
-#creating the statico librere
 all: $(NAME)
 HIDE = $(if $(set),, @)
 
-#now we compile the source files (build them and turning them into objects)
-#$< means the %.c (requirements) and the $@ means the target which is %.o
-%.o: %.c
-	$(HIDE) $(CC) $(CFLAGS) -c $< -o $@
 $(NAME): $(OBJS)
 	$(HIDE) ar $(ARFLAGS) $@ $^
 
@@ -31,13 +27,14 @@ bonus: $(NAME) $(OBJSB)
 $(OBJS_DIR)/%.o: %.c
 	@mkdir -p $(OBJS_DIR)
 	$(HIDE) $(CC) $(CFLAGS) -c $< -o $@
-#here we remove the object files (.o) that were created
+
 clean:
 	$(HIDE) rm -f $(OBJS) $(OBJSB)
-#we just remove the library files here
+	$(HIDE)rm -df $(OBJS_DIR)
+
 fclean: clean
 	$(HIDE) rm -f $(NAME)
-#here we rebuild everything, by deleting and redoing all of the steps again
+
 re: fclean all
-#
+
 .PHONY: all clean fclean re

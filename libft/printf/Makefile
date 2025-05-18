@@ -26,6 +26,7 @@ $(OBJS_DIR)/%.o: %.c
 #here we remove the object files (.o) that were created
 clean:
 	$(HIDE)rm -f $(OBJS)
+	$(HIDE)rm -df $(OBJS_DIR)
 #we just remove the library files here
 fclean: clean
 	$(HIDE)rm -f $(NAME)

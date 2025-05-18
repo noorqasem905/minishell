@@ -39,5 +39,3 @@ char	**my_env(char **env)
 	my_env[i] = NULL;
 	return (my_env);
 }
-
-

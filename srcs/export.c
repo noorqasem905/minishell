@@ -122,6 +122,8 @@ void robo_export(t_cmd **cmd, t_exp *export)
 		}
 		i++;
 	}
+	save_export_to_expo(*cmd);
+	//printf_split(NULL, (*cmd)->expo);
 }
 
 

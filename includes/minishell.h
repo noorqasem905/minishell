@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/18 18:15:33 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:42:56 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ struct						s_cmd
 	int						index;
 	int						exit_status;
 	int 					flag;
+	char **expo;
 };
 
 int							heredoc(char *temp, char **file_loc, size_t size);
@@ -124,5 +125,6 @@ int						word_count_custuom(char const *s, char c);
 size_t					word_len_custuom(char *s, char c, int *flag);
 char					**ft_split_custom_exp(char const *s, char c);
 void					free_it(char **str, size_t i);
+void save_export_to_expo(t_cmd *cmd);
 
 #endif

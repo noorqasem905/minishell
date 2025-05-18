@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   robo_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 19:56:32 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/13 18:37:18 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:45:56 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/minishell.h"
-
-
 
 void robo_pwd(void)
 

@@ -6,13 +6,11 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:29:22 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/18 18:38:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/18 18:46:05 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/minishell.h"
-
 
 int check_n(char *n)
 {
@@ -30,11 +28,10 @@ int check_n(char *n)
     return (1);
 }
 
-
 void    robo_exit(char **str,t_cmd *cmd)
 
 {
-    int n;
+    int     n;
     
     printf("Exiting\n");
     if (str[1])

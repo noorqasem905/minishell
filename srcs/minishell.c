@@ -44,6 +44,7 @@ int	main(int argc, char *argv[], char **robo_env)
 	reading_manager(&cmd, &flag, &temp, cmd->env);
 	frees_split(cmd->env);
 	free(cmd->here_doc);
+	free(cmd->expo);
 	free(cmd);
 	return (0);
 }

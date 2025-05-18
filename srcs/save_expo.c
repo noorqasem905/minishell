@@ -6,47 +6,85 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:32:38 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/18 18:42:49 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/18 20:02:57 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../includes/minishell.h"
 
+
+static char *helper_fun(char *env)
+{
+    char *eq;
+    char *name;
+    char *value;
+    char *line;
+    char *tmp;
+
+    eq = ft_strchr(env, '=');
+    if (eq)
+    {
+        name = ft_substr(env, 0, eq - env);
+        if (!name)
+            return (NULL);
+        value = ft_strdup(eq + 1);
+        if (!value)
+        {
+            free(name);
+            return (NULL);
+        }
+        line = ft_strjoin("declare -x ", name);
+        free(name);
+        if (!line)
+        {
+            free(value);
+           return (NULL);
+        }
+        tmp = line;
+        line = ft_strjoin(tmp, "=\"");
+        free(tmp);
+        if (!line)
+        {
+            free(value);
+           return (NULL);
+        }
+        tmp = line;
+        line = ft_strjoin(tmp, value);
+        free(tmp);
+        free(value);
+        if (!line)
+            return (NULL);
+        tmp = line;
+        line = ft_strjoin(tmp, "\"");
+        free(tmp);
+        if (!line)
+            return (NULL);
+        return (line);
+    }
+    else
+    {
+        return ft_strjoin("declare -x ", env);
+    }
+}
+
+
 void save_export_to_expo(t_cmd *cmd)
 {
     int i;
     int j;
-    char *eq;
-    char *name;
-    char *value;
-    char *output;
-    
+
     i = 0;
+    j = 0;
     while (cmd->env && cmd->env[i])
         i++;
     cmd->expo = (char **)malloc((i + 1) * sizeof(char *));
-    j = 0;
-    while (cmd->env[j])
+    if (!cmd->expo)
+        return ;
+    while  (j < i)
     {
-        eq = ft_strchr(cmd->env[j], '=');
-        if (eq)
-        {
-            name = ft_substr(cmd->env[j], 0, eq - cmd->env[j]);
-            value = ft_strdup(eq + 1);
-           output = ft_strjoin("declare -x ", name);
-           output = ft_strjoin(output, "=\"");
-           output = ft_strjoin(output, value);
-           output = ft_strjoin(output, "\"");
-            free(name);
-            free(value);
-        }
-        else
-        {
-           output = ft_strjoin("declare -x ", cmd->env[j]);
-        }
-        cmd->expo[j] =output;
+        cmd->expo[j] = helper_fun(cmd->env[j]);
         j++;
     }
-    cmd->expo[j] = NULL;
+    cmd->expo[i] = NULL;
 }

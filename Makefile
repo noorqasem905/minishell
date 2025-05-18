@@ -21,7 +21,8 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/robo_exit.c					\
 		srcs/utils.c						\
 		srcs/utils_export.c					\
-		srcs/helper_export.c										
+		srcs/helper_export.c				\
+		srcs/save_expo.c						
 
 all: $(NAME)
 

@@ -72,6 +72,8 @@ int	check_validation(char **paths, char **result, char **m)
 			perror("Error: File is not executable or doesn't exist");
 			return (1);
 		}
+		if (ft_strcmp(result[0], "./minishell") == 0)
+			(*cmd)->shlvl++;
 		*m = ft_strdup(result[0]);
 		return (4);
 	}
@@ -85,14 +87,21 @@ int	check_validation(char **paths, char **result, char **m)
 int	get_path(char **ev)
 {
 	int	i;
+	int flag;
 
 	i = 0;
+	flag = 0;
 	while (ev[i])
 	{
 		if (ft_strncmp(ev[i], "PATH=/", 6) == 0)
+		{
+			flag = 1;
 			break ;
+		}
 		i++;
 	}
+	if (flag == 0)
+		return (-1);
 	return (i);
 }
 
@@ -128,6 +137,17 @@ char	*check_access(char **paths, char **result)
 	return (m);
 }
 
+
+int	ft_execve(char *file, char **ev, t_cmd **cmd)
+{
+	char	**result;
+	char	**paths;
+	int		flag;
+	char	*m;
+	int value;
+
+	result = ft_split(file, ' ');
+	if (!result)
 int		ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 {
 	if (!file)
@@ -138,15 +158,23 @@ int		ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 		perror("Error splitting file");
  		return (-1);
 	}
-	*paths = ft_split(ev[get_path(ev)] + 5, ':');
+	value = get_path(ev);
+	if (value == -1)
+	{
+		free_it_now(result, NULL, 1);
+		return (-1);
+	}
+	paths = ft_split(ev[value] + 5, ':');
+	if (!paths)
+	  *paths = ft_split(ev[get_path(ev)] + 5, ':');
 	if (!*paths)
 	{
 		free_it_now(*result, NULL, 1);
 		return (-1);
 	}
-	return (0);
+	flag = check_validation(paths, result, &m, cmd);
+	  return (0);
 }
-
 int		check_validation_handle(int flag, char *m, char **result)
 {
 	if (m == NULL || flag < 0)
@@ -182,8 +210,10 @@ int		ft_execve(char *file, char **ev)
 	{
 		perror("Error executing command");
 		free_it_now(result, m, 1);
+		free_it_now(paths, NULL, 0);
 		return (-1);
 	}
 	free_it_now(result, m, 0);
+	free_it_now(paths, NULL, 0);
 	return (0);
 }

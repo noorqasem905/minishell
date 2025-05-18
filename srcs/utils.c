@@ -13,30 +13,34 @@
 #include "../includes/minishell.h"
 
 
-void	swap_strings(char **a, char **b)
+char *trim_quotes(char *str)
 {
-	char	*temp;
-    
-    temp = *a;
-	*a = *b;
-	*b = temp;
-}
-void	sort_env(char **env, int len)
-{
-	int	i;
-	int	j;
+    int len;
 
-	i = 0;
-	while (i < len - 1)
-	{
-		j = 0;
-		while (j < len - i - 1)
-		{
-			if (ft_strcmp(env[j], env[j + 1]) > 0)
-				swap_strings(&env[j], &env[j + 1]);
-			j++;
-		}
-		i++;
-	}
+    len = ft_strlen(str);
+    if (len >= 2 && str[0] == '"' && str[len - 1] == '"')
+        return (ft_substr(str, 1, len - 2));
+    return (ft_strdup(str));
+}
+int ft_isspace(char c)
+{
+    return (c == ' ' || c == '\t' || c == '\n' || c == '\v' 
+		|| c == '\f' || c == '\r');
+}
+
+int is_valid(char *name)
+{
+    int i;
+
+    if (!name || (!ft_isalpha(name[0]) && name[0] != '_'))
+        return (0);
+    i = 1;
+    while (name[i] && name[i] != '=')
+    {
+        if (!ft_isalnum(name[i]) && name[i] != '_')
+            return (0);
+        i++;
+    }
+    return (1);
 }
 

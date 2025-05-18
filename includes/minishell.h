@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/15 19:18:35 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/15 18:24:06 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,54 +58,59 @@ int							heredoc(char *temp, char **file_loc, size_t size);
 int							handle_here_doc(char *temp);
 struct						s_exp
 {
-	char					**name;
-	char					**value;
-	int						flag;
-};
+	char						**name;
+	char						**value;
+	int							flag;
+}		;
 
-int							process_input(t_cmd **cmd, int *flag, char ***temp,
-								char **input, char **robo_env);
-int							check_validation(char **paths, char **result,
-								char **m);
-int							child_process(t_cmd **cmd, t_list **current,
-								int pipe_fd2[][2], pid_t pids[],
-								char **file_loc);
-int							dup_process(int *i, int size, int pipe_fd2[][2]);
-int							dup_process_2(t_cmd **cmd, t_list **current,
-								char **file_loc, int i);
-int							get_path(char **ev);
-int							ft_strfind(char *str, char *c);
-int							execution(t_cmd **cmd, char **env);
-int							ft_execve(char *file, char **ev);
-int							searching_comand(char **input, char **temp);
-int							save_data(char **input, t_cmd **cmd, int *flag,
-								char ***temp);
-int							which_redirection_char(char *temp);
-int							reading_manager(t_cmd **cmd, int *flag,
-								char ***temp, char **robo_env);
-int							ft_redirection(char *input,
-								char ***redirection_split, char **robo_env);
-int							ft_execute_redirection(char **redirection_split,
-								int ccount, int *fd, char *temp3,
-								char **robo_env);
-int							read_input(char **input);
-size_t						element_size(char **str);
-void						close_wait(pid_t pids[], int size,
-								int pipe_fd2[][2]);
-void						free_list(t_list **root);
-void						frees(t_list **root);
-void						printf_split(char *str, char **split);
-void						robo_cd(char **temp, char **robo_env);
-void						free_it_now(char **s, char *s2, int emassage);
-void						expand_cmds(t_cmd **cmd, char **env);
-void						signal_handler(int x);
-char						*check_access(char **paths, char **result);
-char						*expander_input(t_list *input, char **env);
-char						**my_env(char **env);
-void						init_data(t_cmd **cmd);
-void						export_t(char **var, t_cmd *cmd);
-void						env_sorted(char **env);
-void						sort_env(char **env, int len);
-void						swap_strings(char **a, char **b);
+int						process_input(t_cmd **cmd, int *flag, char ***temp,
+							char **input, char **robo_env);
+int						check_validation(char **paths, char **result, char **m, t_cmd **cmd);
+int						get_path(char **ev);
+int						ft_strfind(char *str, char *c);
+int						execution(t_cmd **cmd, char **env);
+int						ft_execve(char *file, char **ev, t_cmd **cmd);
+int						searching_comand(char **input, char **temp);
+int						save_data(char **input, t_cmd **cmd, int *flag,
+							char ***temp);
+int						reading_manager(t_cmd **cmd, int *flag,
+							char ***temp, char **robo_env);
+int						ft_redirection(char *input, char ***redirection_split,
+							char **robo_env, t_cmd **cmd);
+int						ft_execute_redirection(char **redirection_split ,int ccount, int *fd,
+							char *temp3, char **robo_env);
+int						read_input(char **input);
+void					free_list(t_list **root);
+void					frees(t_list **root);
+void					printf_split(char *str, char **split);
+void					robo_cd(char **temp, char **robo_env);
+void					free_it_now(char **s, char *s2, int emassage);
+void					expand_cmds(t_cmd **cmd, char **env);
+void					signal_handler(int x);
+char					*check_access(char **paths, char **result);
+char					*expander_input(t_list *input, char **env, t_cmd *cmd);
+char					**my_env(char **env);
+void					init_data(t_cmd **cmd);
+void 					robo_export(t_cmd **cmd, t_exp *export);
+int						ft_export(char *str, t_cmd **cmd);
+int						is_valid(char *name);
+void					unset(char *name, t_cmd *cmd);
+void					env(t_cmd *cmd);
+void					robo_pwd(void);
+int						ft_isspace(char c);
+void					robo_exit(char **str,t_cmd *cmd);
+void 					update_env(char **env, int j, char *name, char *value);
+char					**add_env(char **env, char *name, char *value);
+//char					*get_env_value(char *name, char **env);
+int 					get_env_j(char **env, char *name);
+char 					*trim_quotes(char *str);
+void 					error_export(t_cmd **cmd);
+void 					handle_added(t_cmd **cmd, t_exp *export, int i, int j);
+void					print_with_value(char *name, char *value);
+void					handle_invalid(char *name);
+int						word_count_custuom(char const *s, char c);
+size_t					word_len_custuom(char *s, char c, int *flag);
+char					**ft_split_custom_exp(char const *s, char c);
+void					free_it(char **str, size_t i);
 
 #endif

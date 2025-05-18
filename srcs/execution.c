@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
 /*   Updated: 2025/05/17 09:44:39 by nqasem           ###   ########.fr       */
@@ -287,6 +287,50 @@ int		child_process(t_cmd **cmd, t_list	**current,  int pipe_fd2[][2], pid_t pids
 		}
 		if ((pids)[i] == 0)
 		{
+			if (i != 0)
+			{
+				if (dup2(pipe_fd2[i - 1][0], STDIN_FILENO) == -1)
+				{
+					dprintf(2, "pipe failed at index %d\n", i);
+					perror("dup2");
+ 					return (-1);
+				}
+			}
+			if (i != size - 1)
+			{
+				if (dup2(pipe_fd2[i][1], STDOUT_FILENO) == -1)
+				{
+					perror("dup2");
+					return (-1);
+				}
+			}
+			j = 0;
+			while (j < size - 1)
+			{
+ 					close(pipe_fd2[j][0]);
+ 					close(pipe_fd2[j][1]);
+				j++;
+			}
+			if (ft_strmchr(current->content ,"<>") && (*cmd)->who_am_i != 13)
+			{
+				if(ft_redirection(current->content, &redirection_split, env, cmd) < 0)
+				{
+					write(2, "Error: Invalid redirection\n\n", 27);
+					return (-1);
+				}
+			}
+			if ((*cmd)->who_am_i == 13)
+			{
+				{
+					write(2, "here doc\n", 9);
+					return (-1);
+				}
+			}
+			if (ft_execve(current->content, env, cmd) == -1 || (*cmd)->flag)
+			{
+				perror("Command not found");
+ 				return (-1);
+			}
 			if(dup_process(&i, size, pipe_fd2) == -1)
 				return (-1);
 			if(dup_process_2(cmd, (current), file_loc, i) == -1)
@@ -502,9 +546,6 @@ int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
 		free(st);
     return (0);
 }
-
-
-
 int		dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 {
 	char	**redirection_split;

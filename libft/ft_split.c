@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 22:04:10 by nqasem            #+#    #+#             */
 /*   Updated: 2025/05/13 16:43:58 by nqasem           ###   ########.fr       */
@@ -22,6 +22,7 @@ void	frees_split(char **root)
 	while (root[i])
 	{
 		free(root[i]);
+		root[i] = NULL;
 		i++;
 	}
 	free(root);

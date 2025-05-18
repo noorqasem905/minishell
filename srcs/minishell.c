@@ -24,7 +24,6 @@ int	main(int argc, char *argv[], char **robo_env)
 	cmd = malloc(sizeof(t_cmd));
 	cmd->here_doc = malloc(sizeof(t_here_doc));
 	cmd->env = NULL;
-	cmd->exit_status = 0;
 	if (cmd == NULL)
 	{
 		perror("malloc");

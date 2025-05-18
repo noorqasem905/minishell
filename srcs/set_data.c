@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/17 09:43:38 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/14 20:03:50 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	init_data(t_cmd **cmd)
 	(*cmd)->index = 0;
 	(*cmd)->here_doc->file_loc = NULL;
 	(*cmd)->exit_status = 0;
+	(*cmd)->shlvl = 1;
 	here_doc->counter = 0;
 	here_doc->index = 0;
 	here_doc->pryority = NULL;
@@ -152,9 +153,9 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 {
 	t_list	*current;
 	char	**split;
+	int s;
 	char	*t;
 	int		ret;
-
 	if (*input)
 		add_history(*input);
 	if (check_no_pipe(*input) && check_pipe_input(*input) == -1)
@@ -178,7 +179,8 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	}
 	if (searching_comand(input, *temp) == -1)
 		return (-1);
-	expand_cmds(cmd, robo_env);
+	expand_cmds(cmd, (*cmd)->env);
+	char *t = expander_input((*cmd)->word, (*cmd)->env, *cmd);
 	split = ft_split((*temp)[0], ' ');
 	if (!split || !*split)
 	{
@@ -189,13 +191,51 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	}
 	if (ft_strncmp(split[0], "cd", 2) == 0)
 	{
-		robo_cd(split, robo_env);
+		robo_cd(split, (*cmd)->env);
 		free(*input);
 		frees_split(split);
 		return (-3);
 	}
-	frees_split(split);
+	if (ft_strcmp(split[0], "export") == 0)
+	{
+		ft_export(t, cmd);
+		//check_shlvl((*cmd));
+		frees_split(split);
+		return(-3);
+	}
+	if (ft_strcmp(split[0], "unset") == 0)
+	{
+		s = 1;
+		while (split[s])
+		{
+			unset(split[s], *cmd);
+			s++;
+		}
+		frees_split(split);
+		return (-3);
+	}
+	if (ft_strcmp(split[0], "env") == 0)
+	{
+		env(*cmd);
+		frees_split(split);
+		return (-3);
+	}
+	if (ft_strcmp(split[0], "pwd") == 0)
+	{
+		robo_pwd();
+	}
+	if (ft_strcmp(split[0], "exit") == 0)
+	{
+		robo_exit(split, *cmd);
+	}
 	if (searching_comand(input, *temp) == -13)
+	  return (-13);
+	if (execution(cmd, (*cmd)->env) == -1 && !(*cmd)->flag)
+	{
+		free(t);
+		free(*input);
+		if ((*cmd)->pryority)
+	  	free((*cmd)->pryority);
 		return (-13);
 	t = expander_input((*cmd)->word, robo_env);
 	if ((ret = execution(cmd, robo_env)) == -1)
@@ -207,9 +247,10 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 		if ((*cmd)->here_doc->pryority)
 			free((*cmd)->here_doc->pryority);
 		if ((*cmd)->exit_status == -13)
-			return (-14);
+		  return (-14);
 		return (-12);
 	}
+	frees_split(split);
 	if (ret == 65)
 	{
 		if ((*cmd)->here_doc->file_loc)
@@ -245,10 +286,16 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			free(input);
 			continue ;
 		}
+    ret = process_input(cmd, flag, temp, &input, (*cmd)->env);
+		if (ret < 0 && ret != -3 && ret != -42)
 		ret = process_input(cmd, flag, temp, &input, robo_env);
 		if (ret < 0 && ret != -3 && ret != -42 && ret != -55)
 		{
-			frees_split(*temp);
+			if (*temp)
+			{
+				frees_split(*temp);
+				*temp = NULL;
+			}
 			free_list((&(*cmd)->word));
 			if (ret == -1)
 				dprintf(2, "No command found\n");
@@ -270,6 +317,11 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 		}
 		else if (ret == -42)
 			continue ;
+		if (*temp)
+		{
+			frees_split(*temp);
+			*temp = NULL;
+		}
 		frees_split(*temp);
 		free_list(&(*cmd)->word);
 	}

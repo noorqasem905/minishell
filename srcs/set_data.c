@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/18 18:15:00 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:40:57 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,8 +304,8 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 		else if (ret == -42)
 			continue ;
 		frees_split(*temp);
-		free_list(&(*cmd)->word);
 	}
-	printf("Exiting...\n");
+	// write(1,"Exiting...\n",12);
+	ft_printf("Exiting...\n");
 	return (0);
 }

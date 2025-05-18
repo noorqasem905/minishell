@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/18 16:44:24 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:15:00 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,9 +179,9 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	}
 	if (searching_comand(input, *temp) == -1)
 		return (-1);
-	expand_cmds(cmd, robo_env);
+	//expand_cmds(cmd, (*cmd)->env);
 	split = ft_split((*temp)[0], ' ');
-	t = expander_input((*cmd)->word, robo_env);
+	t = expander_input((*cmd)->word, robo_env, (*cmd));
 	if (!split || !*split)
 	{
 		if (split)

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/18 16:34:20 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:15:33 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,9 @@ void						frees(t_list **root);
 void						printf_split(char *str, char **split);
 void						robo_cd(char **temp, char **robo_env);
 void						free_it_now(char **s, char *s2, int emassage);
-void						expand_cmds(t_cmd **cmd, char **env);
 void						signal_handler(int x);
 char						*check_access(char **paths, char **result);
-char						*expander_input(t_list *input, char **env);
+char	*expander_input(t_list *input, char **env, t_cmd *cmd);
 char						**my_env(char **env);
 void						init_data(t_cmd **cmd);
 void 					robo_export(t_cmd **cmd, t_exp *export);

@@ -36,7 +36,7 @@ void	free_it_now(char **s, char *s2, int emassage)
 		perror("Error");
 }
 
-int		handle_ecv_slash(char *result, char **m, char **paths)
+int	handle_ecv_slash(char *result, char **m, char **paths)
 {
 	if (result && ft_strncmp(result, "/", 1) == 0)
 	{
@@ -56,7 +56,7 @@ int		handle_ecv_slash(char *result, char **m, char **paths)
 
 int	check_validation(char **paths, char **result, char **m)
 {
-	int ret;
+	int	ret;
 
 	*m = NULL;
 	if (!paths)
@@ -76,7 +76,7 @@ int	check_validation(char **paths, char **result, char **m)
 		return (4);
 	}
 	ret = handle_ecv_slash(result[0], m, paths);
-	if(ret == 5 || ret == -6)
+	if (ret == 5 || ret == -6)
 		return (ret);
 	*m = check_access(paths, result);
 	return (0);
@@ -85,7 +85,7 @@ int	check_validation(char **paths, char **result, char **m)
 int	get_path(char **ev)
 {
 	int	i;
-	int flag;
+	int	flag;
 
 	i = 0;
 	flag = 0;
@@ -135,7 +135,7 @@ char	*check_access(char **paths, char **result)
 	return (m);
 }
 
-int		ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
+int	ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 {
 	if (!file)
 		return (-1);
@@ -143,7 +143,7 @@ int		ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 	if (!*result)
 	{
 		perror("Error splitting file");
- 		return (-1);
+		return (-1);
 	}
 	*paths = ft_split(ev[get_path(ev)] + 5, ':');
 	if (!*paths)
@@ -154,7 +154,7 @@ int		ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 	return (0);
 }
 
-int		check_validation_handle(int flag, char *m, char **result)
+int	check_validation_handle(int flag, char *m, char **result)
 {
 	if (m == NULL || flag < 0)
 	{
@@ -166,24 +166,24 @@ int		check_validation_handle(int flag, char *m, char **result)
 	return (0);
 }
 
-int		ft_execve(char *file, char **ev)
+int	ft_execve(char *file, char **ev)
 {
 	char	**result;
 	char	**paths;
 	int		flag;
 	char	*m;
 
-	if(ft_setup_execve(file, &result, ev, &paths) == -1)
+	if (ft_setup_execve(file, &result, ev, &paths) == -1)
 		return (-1);
-    if (!result || !result[0] || !*result[0]) 
+	if (!result || !result[0] || !*result[0])
 	{
 		if (paths)
 			frees_split(paths);
-        free_it_now(result, NULL, 1);
-        return (-1);
-    }
+		free_it_now(result, NULL, 1);
+		return (-1);
+	}
 	flag = check_validation(paths, result, &m);
-	if (check_validation_handle(flag, m	, result) < 0)
+	if (check_validation_handle(flag, m, result) < 0)
 		return (-1);
 	if (execve(m, result, ev) == -1)
 	{

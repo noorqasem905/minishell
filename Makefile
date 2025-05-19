@@ -22,7 +22,15 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/utils.c						\
 		srcs/utils_export.c					\
 		srcs/helper_export.c				\
-		srcs/save_expo.c						
+		srcs/save_expo.c					\
+		srcs/check_redirection.c			\
+		srcs/exeute_redirection.c			\
+		srcs/redirection_extract_2.c		\
+		srcs/redirection_extract.c			\
+		srcs/redirection_handle.c			\
+		srcs/redirection_handle2.c			\
+		srcs/utils_redirection.c
+		
 
 all: $(NAME)
 

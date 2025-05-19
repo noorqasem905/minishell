@@ -25,23 +25,24 @@ void	printf_split(char *str, char **split)
 }
  */
 
-int		is_there_else_heredoc(char *temp)
+int	is_there_else_heredoc(char *temp)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (temp[i])
 	{
-		while(temp[i] == '<' || temp[i] == '>')
+		while (temp[i] == '<' || temp[i] == '>')
 			i++;
 		while (isspace(temp[i]))
 			i++;
-		if(temp[i] == '\0' || temp[i] == '<' || temp[i] == '>')
+		if (temp[i] == '\0' || temp[i] == '<' || temp[i] == '>')
 			return (-8);
-		while (temp[i] != '\0' && temp[i] != '<' && temp[i] != '>' && !isspace(temp[i]))
+		while (temp[i] != '\0' && temp[i] != '<' && temp[i] != '>'
+			&& !isspace(temp[i]))
 			i++;
 		while (isspace(temp[i]))
-			i++;		
+			i++;
 	}
 	return (8);
 }
@@ -137,7 +138,7 @@ int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 	if ((*fd) < 0)
 	{
 		if (*file_loc)
-		free(*file_loc);
+			free(*file_loc);
 		return (-2);
 	}
 	*input_split = ft_mult_split(temp, " <");
@@ -174,69 +175,72 @@ int	implement_heredoc(int *fd, char **input, int original_stdout)
 	return (0);
 }
 
-int		heredoc_mult_process(int check_error, char **file_loc, int fd[])
+int	heredoc_mult_process(int check_error, char **file_loc, int fd[])
 {
 	if (check_error < 0)
-    {
-        printf("error here doc\n");
-        if (*file_loc)
-            free(*file_loc);
-        return (-1);
-    }
-    fd[0] = dup(STDOUT_FILENO);
-    if (fd[0] == -1)
-    {
-        perror("dup");
-        close(fd[1]);
-        if (*file_loc)
-            free(*file_loc);
-        return (-1);
-    }
+	{
+		printf("error here doc\n");
+		if (*file_loc)
+			free(*file_loc);
+		return (-1);
+	}
+	fd[0] = dup(STDOUT_FILENO);
+	if (fd[0] == -1)
+	{
+		perror("dup");
+		close(fd[1]);
+		if (*file_loc)
+			free(*file_loc);
+		return (-1);
+	}
 	return (0);
 }
 
-int		heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[])
+int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[])
 {
 	char	**input;
-    int		fd[2];
-    int		check_error;
-    int		i = 0;
+	int		fd[2];
+	int		check_error;
+	int		i;
 
 	i = 0;
+	i = 0;
 	while (i < heredoc_count)
-    {
-        check_error = dbg_heredoc(heredoc_ptrs[i], &fd[1], &input, file_loc);
-		if(heredoc_mult_process(check_error, file_loc, fd) < 0)
+	{
+		check_error = dbg_heredoc(heredoc_ptrs[i], &fd[1], &input, file_loc);
+		if (heredoc_mult_process(check_error, file_loc, fd) < 0)
 			return (-1);
-        implement_heredoc(&fd[1], input, fd[0]);
-        close(fd[1]);
-        close(fd[0]);
-        frees_split(input);
-        if (i < heredoc_count - 1 && *file_loc)
-        {
-            free(*file_loc);
-            *file_loc = NULL;
-        }
-        i++;
-    }
+		implement_heredoc(&fd[1], input, fd[0]);
+		close(fd[1]);
+		close(fd[0]);
+		frees_split(input);
+		if (i < heredoc_count - 1 && *file_loc)
+		{
+			free(*file_loc);
+			*file_loc = NULL;
+		}
+		i++;
+	}
 	return (0);
 }
 
 int	heredoc(char *temp, char **file_loc, size_t size)
 {
-    char	*heredoc_ptrs[size];
-    char	*search = temp;
-    int		heredoc_count = 0;
+	char	*heredoc_ptrs[size];
+	char	*search;
+	int		heredoc_count;
 	int		fd[2];
 
+	search = temp;
+	heredoc_count = 0;
 	while ((search = ft_strnstr(search, "<<", ft_strlen(search))))
-    {
-        heredoc_ptrs[heredoc_count++] = search;
-        search += 2;
-    }
+	{
+		heredoc_ptrs[heredoc_count++] = search;
+		search += 2;
+	}
 	if (heredoc_mult(heredoc_count, file_loc, heredoc_ptrs) < 0)
 		return (-1);
-    return (0);
+	return (0);
 }
 
 /* # include <readline/readline.h>
@@ -313,4 +317,4 @@ step 1: find the here doc formula
 step 2: find the exit if no error and no here doc
 step 3: find the here doc are correct
 step 4: do the here doc
-*/	
+*/

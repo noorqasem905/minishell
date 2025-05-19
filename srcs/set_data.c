@@ -154,7 +154,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	char	**split;
 	char	*t;
 	int		ret;
-	int s;
+	int		s;
 
 	if (*input)
 		add_history(*input);
@@ -179,12 +179,12 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	}
 	if (searching_comand(input, *temp) == -1)
 		return (-1);
-	//expand_cmds(cmd, (*cmd)->env);
+	// expand_cmds(cmd, (*cmd)->env);
 	split = ft_split((*temp)[0], ' ');
 	t = expander_input((*cmd)->word, robo_env, (*cmd));
 	if (!split || !*split)
 	{
-		if(split)
+		if (split)
 			free(split);
 		free(*input);
 		return (-3);
@@ -199,9 +199,9 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	if (ft_strcmp(split[0], "export") == 0)
 	{
 		ft_export(t, cmd);
-		//check_shlvl((*cmd));
+		// check_shlvl((*cmd));
 		frees_split(split);
-		return(-3);
+		return (-3);
 	}
 	if (ft_strcmp(split[0], "unset") == 0)
 	{
@@ -250,7 +250,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 		if ((*cmd)->here_doc->pryority)
 			free((*cmd)->here_doc->pryority);
 		if (t)
-			free (t);
+			free(t);
 		t = NULL;
 		(*cmd)->here_doc->pryority = NULL;
 		(*cmd)->here_doc->file_loc = NULL;
@@ -261,7 +261,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	if ((*cmd)->here_doc->file_loc)
 		free((*cmd)->here_doc->file_loc);
 	if ((*cmd)->here_doc->pryority)
-			free((*cmd)->here_doc->pryority);
+		free((*cmd)->here_doc->pryority);
 	return (0);
 }
 

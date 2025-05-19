@@ -12,17 +12,17 @@
 
 #include "../includes/minishell.h"
 
-void env(t_cmd *cmd)
+void	env(t_cmd *cmd)
 {
-    int i;
-    char *eq;
+	int i;
+	char *eq;
 
-    i = 0;
-    while (cmd->env[i])
-    {
-        eq = ft_strchr(cmd->env[i], '=');
-        if (eq && *(eq + 1) != '\0')
-            ft_printf("%s\n", cmd->env[i]);
-        i++;
-    }
+	i = 0;
+	while (cmd->env[i])
+	{
+		eq = ft_strchr(cmd->env[i], '=');
+		if (eq && *(eq + 1) != '\0')
+			ft_printf("%s\n", cmd->env[i]);
+		i++;
+	}
 }

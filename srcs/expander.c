@@ -12,12 +12,11 @@
 
 #include "../includes/minishell.h"
 
-
 static char	*get_env_value(char *name, char **env)
 {
 	int	len;
 	int	i;
-	
+
 	len = ft_strlen(name);
 	i = 0;
 	while (env[i])
@@ -31,7 +30,6 @@ static char	*get_env_value(char *name, char **env)
 	return (ft_strdup(""));
 }
 
-
 static char	*expantions(char *input, int *i, char **env, t_cmd *cmd)
 {
 	char	*name;
@@ -41,40 +39,43 @@ static char	*expantions(char *input, int *i, char **env, t_cmd *cmd)
 	if (input[*i + 1] && input[*i + 1] == '?')
 	{
 		*i += 2;
-		return ft_itoa(cmd->exit_status);
+		return (ft_itoa(cmd->exit_status));
 	}
 	if (!input[*i + 1] || (!ft_isalnum(input[*i + 1]) && input[*i + 1] != '_'))
 	{
 		(*i)++;
-		return ft_strdup("$");
+		return (ft_strdup("$"));
 	}
-
 	start = *i + 1;
 	*i = start;
 	while (input[*i] && (ft_isalnum(input[*i]) || input[*i] == '_'))
 		(*i)++;
-
 	name = ft_substr(input, start, *i - start);
 	value = get_env_value(name, env);
 	free(name);
-	return value;
+	return (value);
 }
 
 char	*expander_input(t_list *input, char **env, t_cmd *cmd)
 {
-	char *expanded = ft_strdup("");
-	char *expand_var;
-	char *temp;
-	char c[2];
-	int i;
-	int start = 0;
-	int end = 0;
-	
-	int flag_single = 0;
-	int flag_double = 0;
+	char	*expanded;
+	char	*expand_var;
+	char	*temp;
+	char	c[2];
+	int		i;
+	int		start;
+	int		end;
+	int		flag_single;
+	int		flag_double;
+	char	*content;
+
+	expanded = ft_strdup("");
+	start = 0;
+	end = 0;
+	flag_single = 0;
+	flag_double = 0;
 	i = 0;
-	
-	char *content = (char *)input->content;
+	content = (char *)input->content;
 	while (content[i])
 	{
 		if (content[i] == '\'' && !flag_double)

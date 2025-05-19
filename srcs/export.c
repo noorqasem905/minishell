@@ -12,8 +12,6 @@
 
 #include "../includes/minishell.h"
 
-
-
 static void	print_env_var(char *env_var)
 {
 	char	*eq;
@@ -25,7 +23,7 @@ static void	print_env_var(char *env_var)
 	if (!eq)
 	{
 		ft_printf("declare -x %s\n", env_var);
-		return;
+		return ;
 	}
 	name_len = eq - env_var;
 	name = ft_substr(env_var, 0, name_len);
@@ -55,62 +53,62 @@ static void	print_export(t_cmd *cmd)
 	}
 }
 
-void update_env(char **env, int j, char *name, char *value)
+void	update_env(char **env, int j, char *name, char *value)
 {
-    char *new_name;
-    char *temp;
+	char	*new_name;
+	char	*temp;
 
-    temp = ft_strjoin(name, "=");
-    new_name = ft_strjoin(temp, value);
-    free(temp);
-    free(env[j]);
-    env[j] = new_name;
+	temp = ft_strjoin(name, "=");
+	new_name = ft_strjoin(temp, value);
+	free(temp);
+	free(env[j]);
+	env[j] = new_name;
 }
 
-char **add_env(char **env, char *name, char *value)
+char	**add_env(char **env, char *name, char *value)
 {
-    int i;
-    int j;
-    char **new_env;
-    char *new_name;
-    char *temp;
+	int		i;
+	int		j;
+	char	**new_env;
+	char	*new_name;
+	char	*temp;
 
-    i = 0;
-    j = 0;
-    while (env && env[i])
-        i++;
-    new_env = malloc(sizeof(char*) * (i + 2));
-    if (!new_env)
-        return (NULL);
-    while (j < i)
-    {
-        new_env[j] = ft_strdup(env[j]);
-        j++;
-    }
-    temp = ft_strjoin(name , "=");
-    new_name = ft_strjoin(temp, value);
-    free(temp);
-    new_env[i] = new_name;
+	i = 0;
+	j = 0;
+	while (env && env[i])
+		i++;
+	new_env = malloc(sizeof(char *) * (i + 2));
+	if (!new_env)
+		return (NULL);
+	while (j < i)
+	{
+		new_env[j] = ft_strdup(env[j]);
+		j++;
+	}
+	temp = ft_strjoin(name, "=");
+	new_name = ft_strjoin(temp, value);
+	free(temp);
+	new_env[i] = new_name;
 	new_env[i + 1] = NULL;
 	return (new_env);
 }
 
-void robo_export(t_cmd **cmd, t_exp *export)
+void	robo_export(t_cmd **cmd, t_exp *export)
 {
-    char **tmp;
-	int i;
-    int j;
+	char	**tmp;
+	int		i;
+	int		j;
 
 	i = 0;
-    if (export->name[0] == NULL)
-    {
-        if (!(*cmd)->env)
-        {
-            error_export(cmd);
-            return;
-        }
-        print_export((*cmd));
-    }
+	if (export->name[0] == NULL)
+	{
+		if (!(*cmd)->env)
+		{
+			error_export(cmd);
+			return ;
+		}
+		print_export((*cmd));
+	}
 	while (export->name[i])
 	{
 		if (!is_valid(export->name[i]))
@@ -123,7 +121,5 @@ void robo_export(t_cmd **cmd, t_exp *export)
 		i++;
 	}
 	save_export_to_expo(*cmd);
-	//printf_split(NULL, (*cmd)->expo);
+	// printf_split(NULL, (*cmd)->expo);
 }
-
-

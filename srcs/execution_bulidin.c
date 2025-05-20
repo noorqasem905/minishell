@@ -1,46 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   robo_pwd.c                                         :+:      :+:    :+:   */
+/*   execution_bulidin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 19:56:32 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/18 18:45:56 by nqasem           ###   ########.fr       */
+/*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
+/*   Updated: 2025/05/20 17:14:00 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	robo_pwd(void)
-
+void	run_export_execution(char **run)
 {
-	char *pwd;
+	int	i;
 
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
+	i = 0;
+	while (run[i])
 	{
-		ft_printf("%2 error pwd");
-		return ;
-	}
-	ft_printf("%s", pwd);
-	free(pwd);
-	return ;
-}
-
-/*void robo_pwd(char **env)
-{
-	int i;
-
-	while (env[i])
-	{
-		if (ft_strcmp(env[i], "PWD") == 0)
-		{
-			char *eq = ft_strchr(env[i], "=");
-			return(eq);
-		}
+		ft_printf("%s\n", run[i]);
 		i++;
 	}
-	return (0);
+}
 
-}*/
+int	run_buildin_execution(t_cmd *cmd, t_list *current)
+{
+	char	*tmp;
+
+	tmp = ft_strtrim(current->content, " ");
+	if (!tmp)
+		return (-1);
+	if (ft_strcmp(tmp, "export") == 0 || ft_strcmp(tmp, "env") == 0)
+	{
+		free(tmp);
+		run_export_execution(cmd->env);
+		return (-1);
+	}
+	free(tmp);
+	return (0);
+}

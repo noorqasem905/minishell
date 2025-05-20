@@ -25,10 +25,16 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/save_expo.c					\
 		srcs/check_redirection.c			\
 		srcs/exeute_redirection.c			\
+		srcs/setup_execution_heredoc.c		\
 		srcs/redirection_extract_2.c		\
 		srcs/redirection_extract.c			\
 		srcs/redirection_handle.c			\
 		srcs/redirection_handle2.c			\
+		srcs/redirection_heredoc.c			\
+		srcs/execution_bulidin.c			\
+		srcs/execute_heredoc.c				\
+		srcs/utils_exeution.c				\
+		srcs/dup_process.c					\
 		srcs/utils_redirection.c
 		
 

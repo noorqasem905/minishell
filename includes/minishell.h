@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 18:54:36 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 19:02:24 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ struct						s_here_doc
 	char					**file_loc;
 	int						*pryority;
 	int						counter;
+	int						counter_total;
 	int						index;
 	char					*input;
 	char					*temp;

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 18:55:43 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 19:10:55 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	init_data(t_cmd **cmd)
 	(*cmd)->exit_status = 0;
 	here_doc->counter = 0;
 	here_doc->index = 0;
+	here_doc->counter_total = 0;
 	here_doc->pryority = NULL;
 	here_doc->temp = NULL;
 	here_doc->fd = 0;
@@ -181,7 +182,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 		return (-1);
 	// expand_cmds(cmd, (*cmd)->env);
 	split = ft_split((*temp)[0], ' ');
-	t = expander_input((*cmd)->word,(*cmd));
+	t = expander_input((*cmd)->word, (*cmd));
 	if (!split || !*split)
 	{
 		if (split)

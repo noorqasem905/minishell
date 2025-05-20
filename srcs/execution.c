@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/17 09:44:39 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 15:45:18 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,40 +66,45 @@ int		ft_strfind(char *str, char *c)
 	return (0);
 }
 
+int searching_here_doc_2(t_cmd **cmd, t_here_doc **here_doc, t_list	**current, int i_p[])
+{
+	int		check_error;
+	char	*temp;
+
+	if (ft_strfind((*current)->content, "<<"))
+	{
+		(*cmd)->who_am_i = 13;
+		temp = ft_strnstr((*current)->content, "<<", ft_strlen((*current)->content));
+		check_error = handle_here_doc(temp);
+		if (check_error < 0)
+		{
+			printf("error here doc\n");
+			(*cmd)->exit_status = -14;
+			return (-1);
+		}
+		(*here_doc)->pryority[i_p[0]] = 2 + i_p[1];
+		(*here_doc)->counter++;
+		i_p[1]++;
+	}
+	else
+		(*here_doc)->pryority[i_p[0]] = 1;
+	(*current) = (*current)->next;
+	return (0);
+}
+
 int searching_here_doc(t_cmd **cmd, t_here_doc **here_doc)
 {
 	t_list	*current;
-	int		check_error;
-	char	*temp;
-	int		i;
-	int		p;
+	int		i_p[2];
 
-	i = -1;
-	p = 0;
+	i_p[0] = -1;
+	i_p[1] = 0;
 	current = (*cmd)->word;
 	(*here_doc)->counter = 0;
-	while (-1 < ++i && current != NULL)
-	{
-		if (ft_strfind(current->content, "<<"))
-		{
-			(*cmd)->who_am_i = 13;
-			temp = ft_strnstr(current->content, "<<", ft_strlen(current->content));
-			check_error = handle_here_doc(temp);
-			if (check_error < 0)
-			{
-				printf("error here doc\n");
-				(*cmd)->exit_status = -14;
-				return (-1);
-			}
-			(*here_doc)->pryority[i] = 2 + p;
-			(*here_doc)->counter++;
-			p++;
-		}
-		else
-			(*here_doc)->pryority[i] = 1;
-		current = current->next;
-	}
- 	(*here_doc)->pryority[i] = '\0';
+	while (-1 < ++i_p[0] && current != NULL)
+		if (searching_here_doc_2(cmd, here_doc, &current, i_p) < 0)
+			return (-1);
+ 	(*here_doc)->pryority[i_p[0]] = '\0';
 	return (0);
 }
 
@@ -137,28 +142,26 @@ int		here_doc_manger(t_cmd **cmd, char **file_loc)
 	t_list	*current;
 	int		num_here_doc;
 	int		size;
-	int		i;
-	int		j;
+	int		i_j[2];
 
-	i = 0;
-	j = 0;
+	i_j[0] = 0;
+	i_j[1] = 0;
 	current = (*cmd)->word;
-	while ((*cmd)->here_doc->pryority[i] != '\0')
+	while ((*cmd)->here_doc->pryority[i_j[0]] != '\0')
 	{
-		if ((*cmd)->here_doc->pryority[i] >= 2)
+		if ((*cmd)->here_doc->pryority[i_j[0]] >= 2)
 		{
 				size = sizeof_heredoc(current->content);
-				if (size > 1023 || heredoc(current->content, &(file_loc[j]), size) < 0)
+				if (size > 1023 || heredoc(current->content, &(file_loc[i_j[1]]), size) < 0)
 				{
 					perror("heredoc");
 					return (-1);
 				}
-				j++;
+				i_j[1]++;
 		}
 		current = current->next;
-		i++;
+		i_j[0]++;
 	}
-	
 	return (0);
 }
 

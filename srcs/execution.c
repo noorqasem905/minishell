@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 18:01:33 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 22:24:43 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	execution(t_cmd **cmd, char **env)
 	ret = setup_execution_heredoc(cmd, &file_loc);
 	if (ret != 0)
 		return (ret);
+	expand_cmds(cmd);
 	ret = execution_process(cmd, size, file_loc);
 	if (ret != 0)
 		return (ret);

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:49:58 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/15 16:25:13 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/20 22:28:50 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,6 @@ void	handle_added(t_cmd **cmd, t_exp *export, int i, int j)
 		frees_split((*cmd)->env);
 		(*cmd)->env = tmp;
 	}
+	frees_split((*cmd)->expo);
+	save_export_to_expo(cmd);
 }

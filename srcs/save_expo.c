@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:32:38 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/18 20:02:57 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/20 22:04:08 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,22 @@ static char	*helper_fun(char *env)
 	}
 }
 
-void	save_export_to_expo(t_cmd *cmd)
+void	save_export_to_expo(t_cmd **cmd)
 {
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	while (cmd->env && cmd->env[i])
+	while ((*cmd)->env && (*cmd)->env[i])
 		i++;
-	cmd->expo = (char **)malloc((i + 1) * sizeof(char *));
-	if (!cmd->expo)
+	(*cmd)->expo = (char **)malloc((i + 1) * sizeof(char *));
+	if (!(*cmd)->expo)
 		return ;
 	while (j < i)
 	{
-		cmd->expo[j] = helper_fun(cmd->env[j]);
+		(*cmd)->expo[j] = helper_fun((*cmd)->env[j]);
 		j++;
 	}
-	cmd->expo[i] = NULL;
+	(*cmd)->expo[i] = NULL;
 }

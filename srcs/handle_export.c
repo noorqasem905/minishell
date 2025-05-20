@@ -6,12 +6,25 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/18 16:27:47 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/20 21:06:39 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+static void	frees_newsplit(char **root)
+{
+	int	i;
+
+	i = 0;
+	while (root[i])
+	{
+		free(root[i]);
+		i++;
+	}
+	free(root);
+	root = NULL;
+}
 static size_t	word_lenn(char *s, char c)
 {
 	size_t	i;
@@ -51,7 +64,6 @@ int	ft_export(char *str, t_cmd **cmd)
 	int		x;
 	int		y;
 	int		j;
-
 	len = 0;
 	result = ft_split_custom_exp(str, ' ');
 	if (result == NULL)
@@ -133,8 +145,8 @@ int	ft_export(char *str, t_cmd **cmd)
 	// printf("%s", export->name[0]);
 	// printf("*****export*********\n");
 	robo_export(cmd, export);
-	frees_split(export->name);
-	frees_split(export->value);
+	frees_newsplit(export->name);
+	frees_newsplit(export->value);
 	free(export);
 	frees_split(result);
 	return (0);

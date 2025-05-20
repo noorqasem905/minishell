@@ -41,8 +41,10 @@ int	main(int argc, char *argv[], char **robo_env)
 	}
 	init_data(&cmd);
 	cmd->env = my_env(robo_env);
+	save_export_to_expo(&cmd);
 	reading_manager(&cmd, &flag, &temp, cmd->env);
 	frees_split(cmd->env);
+	frees_split(cmd->expo);
 	free(cmd->here_doc);
 	//free(cmd->expo);
 	free(cmd);

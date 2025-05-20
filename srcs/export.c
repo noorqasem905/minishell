@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:18:35 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/03 20:18:35 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/20 21:35:40 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	robo_export(t_cmd **cmd, t_exp *export)
 			error_export(cmd);
 			return ;
 		}
-		print_export((*cmd));
+		// print_export((*cmd));
 	}
 	while (export->name[i])
 	{
@@ -120,6 +120,6 @@ void	robo_export(t_cmd **cmd, t_exp *export)
 		}
 		i++;
 	}
-	save_export_to_expo(*cmd);
+	// save_export_to_expo(*cmd);
 	// printf_split(NULL, (*cmd)->expo);
 }

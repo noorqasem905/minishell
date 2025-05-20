@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   robo_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:29:22 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/20 15:49:07 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 19:54:51 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,13 @@ void	robo_exit(char **str, t_cmd *cmd)
 				str[1]);
 			cmd->exit_status = 255;
 
+			free(cmd);
 			free_list(&cmd->word);
 			free(cmd->here_doc);
+			(cmd)->expo = NULL;
+			(cmd)->word = NULL;
+			(cmd)->here_doc = NULL;
 			exit(cmd->exit_status);
-			free(cmd);
 		}
 		if (str[2])
 		{
@@ -58,6 +61,13 @@ void	robo_exit(char **str, t_cmd *cmd)
 		n = cmd->exit_status;
 	free_list(&cmd->word);
 	free(cmd->here_doc);
+	if (cmd->expo)
+		frees_split(cmd->expo);
+	(cmd)->expo = NULL;
+	(cmd)->word = NULL;
+	(cmd)->here_doc = NULL;
 	free(cmd);
+	cmd = NULL;
+	free_every(cmd);
 	exit((unsigned char)n);
 }

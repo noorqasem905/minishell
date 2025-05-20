@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 18:54:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 22:12:17 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	init_data(t_cmd **cmd)
 	here_doc = (*cmd)->here_doc;
 	(*cmd)->word = NULL;
 	(*cmd)->env = NULL;
+	(*cmd)->expo = NULL;
 	(*cmd)->pryority = NULL;
 	(*cmd)->who_am_i = 0;
 	(*cmd)->counter = 0;
@@ -147,6 +148,17 @@ void	printf_split(char *str, char **split)
 		i++;
 	}
 }
+
+int	searching_bulidin(char **split, t_cmd **cmd, char *t)
+{
+	if (ft_strcmp(split[0], "export") == 0)
+	{
+		ft_export(t, cmd);
+		return (13);
+	}
+	return (0);
+}
+
 int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 		char **robo_env)
 {
@@ -154,8 +166,9 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	char	**split;
 	char	*t;
 	int		ret;
-	int		s;
+	int		ret_of_searching;
 
+	ret_of_searching = 0;
 	if (*input)
 		add_history(*input);
 	if (check_no_pipe(*input) && check_pipe_input(*input) == -1)
@@ -179,9 +192,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	}
 	if (searching_comand(input, *temp) == -1)
 		return (-1);
-	// expand_cmds(cmd, (*cmd)->env);
 	split = ft_split((*temp)[0], ' ');
-	t = expander_input((*cmd)->word,(*cmd));
 	if (!split || !*split)
 	{
 		if (split)
@@ -192,48 +203,20 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	if (ft_strncmp(split[0], "cd", 2) == 0)
 	{
 		robo_cd(split, robo_env);
+		return (-3);
 		free(*input);
 		frees_split(split);
-		return (-3);
 	}
-	if (ft_strcmp(split[0], "export") == 0)
-	{
-		ft_export(t, cmd);
-		// check_shlvl((*cmd));
-		frees_split(split);
-		return (-3);
-	}
-	if (ft_strcmp(split[0], "unset") == 0)
-	{
-		s = 1;
-		while (split[s])
-		{
-			unset(split[s], *cmd);
-			s++;
-		}
-		frees_split(split);
-		return (-3);
-	}
-	if (ft_strcmp(split[0], "env") == 0)
-	{
-		env(*cmd);
-		frees_split(split);
-		return (-3);
-	}
-	if (ft_strcmp(split[0], "pwd") == 0)
-	{
-		robo_pwd();
-	}
-	if (ft_strcmp(split[0], "exit") == 0)
-	{
-		robo_exit(split, *cmd);
-	}
+	t = expander_input(cmd);
+	ret_of_searching = searching_bulidin(split, cmd, t);
+	free(t);
+	
+	// if (ret_of_searching == 11)
 	frees_split(split);
 	if (searching_comand(input, *temp) == -13)
 		return (-13);
 	if ((ret = execution(cmd, robo_env)) == -1)
 	{
-		free(t);
 		free(*input);
 		if ((*cmd)->here_doc->file_loc)
 			free((*cmd)->here_doc->file_loc);
@@ -249,22 +232,17 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 			free((*cmd)->here_doc->file_loc);
 		if ((*cmd)->here_doc->pryority)
 			free((*cmd)->here_doc->pryority);
-		if (t)
-			free(t);
-		t = NULL;
 		(*cmd)->here_doc->pryority = NULL;
 		(*cmd)->here_doc->file_loc = NULL;
 		return (0);
 	}
-	free(t);
 	free(*input);
 	if ((*cmd)->here_doc->file_loc)
 		free((*cmd)->here_doc->file_loc);
 	if ((*cmd)->here_doc->pryority)
-		free((*cmd)->here_doc->pryority);
+			free((*cmd)->here_doc->pryority);
 	return (0);
 }
-
 int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 {
 	char	*input;
@@ -288,6 +266,9 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			if (ret == -12)
 			{
 				frees_split((*cmd)->env);
+				if ((*cmd)->expo)
+					frees_split((*cmd)->expo);
+				(*cmd)->expo = NULL;
 				free((*cmd)->here_doc);
 				free(*cmd);
 				exit(EXIT_FAILURE);

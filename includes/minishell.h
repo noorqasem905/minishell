@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 18:54:36 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 22:04:46 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void						robo_cd(char **temp, char **robo_env);
 void						free_it_now(char **s, char *s2, int emassage);
 void						signal_handler(int x);
 char						*check_access(char **paths, char **result);
-char						*expander_input(t_list *input, t_cmd *cmd);
+char						*expander_input(t_cmd **cmd);
 char						**my_env(char **env);
 void						init_data(t_cmd **cmd);
 void						robo_export(t_cmd **cmd, t_exp *export);
@@ -167,7 +167,7 @@ void						handle_added(t_cmd **cmd, t_exp *export, int i,
 void						print_with_value(char *name, char *value);
 void						handle_invalid(char *name);
 void						free_it(char **str, size_t i);
-void						save_export_to_expo(t_cmd *cmd);
+void						save_export_to_expo(t_cmd **cmd);
 void						check_redirection_mult_nosiggrle(int mult[],
 								int conflect_handle[], int is_file_enter[],
 								char *input);
@@ -222,5 +222,6 @@ void						child_process_close(int pipe_fd2[][2], pid_t pids[],
 void						setup_extra_command_h_2(char **split_2,
 								char **command);
 void						dup_process_handle(int size, int pipe_fd2[][2]);
+void						free_every(t_cmd *cmd);
 
 #endif

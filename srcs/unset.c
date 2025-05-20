@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 23:20:32 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/12 18:56:32 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:04:46 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,5 @@ void	unset(char *name, t_cmd *cmd)
 	new_env[j] = NULL;
 	free(cmd->env);
 	cmd->env = new_env;
+	free(new_env);
 }

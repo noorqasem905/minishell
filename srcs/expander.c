@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/20 18:21:15 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/20 21:55:54 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*expantions(char *input, int *i, t_cmd *cmd)
 	return (value);
 }
 
-char	*expander_input(t_list *input, t_cmd *cmd)
+char	*expander_input(t_cmd **cmd)
 {
 	char	*expanded;
 	char	*expand_var;
@@ -75,7 +75,7 @@ char	*expander_input(t_list *input, t_cmd *cmd)
 	flag_single = 0;
 	flag_double = 0;
 	i = 0;
-	content = (char *)input->content;
+	content = (char *)(*cmd)->word->content;
 	while (content[i])
 	{
 		if (content[i] == '\'' && !flag_double)
@@ -90,7 +90,7 @@ char	*expander_input(t_list *input, t_cmd *cmd)
 		}
 		else if (content[i] == '$' && !flag_single)
 		{
-			expand_var = expantions(content, &i, cmd);
+			expand_var = expantions(content, &i, *cmd);
 			temp = ft_strjoin(expanded, expand_var);
 			free(expanded);
 			free(expand_var);
@@ -104,7 +104,7 @@ char	*expander_input(t_list *input, t_cmd *cmd)
 			free(expanded);
 			expanded = temp;
 		}
-	}
+	}				
 	return (expanded);
 }
 
@@ -116,7 +116,7 @@ void	expand_cmds(t_cmd **cmd)
 	current = (*cmd)->word;
 	while (current != NULL)
 	{
-		expanded_cmd = expander_input(current,*cmd);
+		expanded_cmd = expander_input(cmd);
 		free(current->content);
 		current->content = expanded_cmd;
 		current = current->next;

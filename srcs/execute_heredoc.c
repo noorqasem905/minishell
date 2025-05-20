@@ -6,14 +6,13 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:54:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 18:02:36 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 18:40:53 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-int		here_doc_manger(t_cmd **cmd, char **file_loc)
+int	here_doc_manger(t_cmd **cmd, char **file_loc)
 {
 	t_list	*current;
 	int		num_here_doc;
@@ -27,13 +26,14 @@ int		here_doc_manger(t_cmd **cmd, char **file_loc)
 	{
 		if ((*cmd)->here_doc->pryority[i_j[0]] >= 2)
 		{
-				size = sizeof_heredoc(current->content);
-				if (size > 1023 || heredoc(current->content, &(file_loc[i_j[1]]), size) < 0)
-				{
-					perror("heredoc");
-					return (-1);
-				}
-				i_j[1]++;
+			size = sizeof_heredoc(current->content);
+			if (size > 1023 || heredoc(current->content, &(file_loc[i_j[1]]),
+					size) < 0)
+			{
+				perror("heredoc");
+				return (-1);
+			}
+			i_j[1]++;
 		}
 		current = current->next;
 		i_j[0]++;
@@ -43,27 +43,27 @@ int		here_doc_manger(t_cmd **cmd, char **file_loc)
 
 void	handle_here_doc_unlink(t_cmd **cmd, char **file_loc)
 {
-	int		no;
-	
+	int	no;
+
 	no = 0;
-    while (no < (*cmd)->here_doc->counter)
-    {
-        if ((*cmd)->here_doc->file_loc[no]) 
+	while (no < (*cmd)->here_doc->counter)
+	{
+		if ((*cmd)->here_doc->file_loc[no])
 		{
-            unlink((*cmd)->here_doc->file_loc[no]);
-            free((*cmd)->here_doc->file_loc[no]);
+			unlink((*cmd)->here_doc->file_loc[no]);
+			free((*cmd)->here_doc->file_loc[no]);
 			(*cmd)->here_doc->file_loc[no] = NULL;
 		}
-        no++;
-    }
+		no++;
+	}
 	if ((*cmd)->here_doc->file_loc)
 	{
-    	free((*cmd)->here_doc->file_loc);
-    	(*cmd)->here_doc->file_loc = NULL;
+		free((*cmd)->here_doc->file_loc);
+		(*cmd)->here_doc->file_loc = NULL;
 	}
 }
 
-int		setup_execution_heredoc(t_cmd **cmd, char ***file_loc)
+int	setup_execution_heredoc(t_cmd **cmd, char ***file_loc)
 {
 	(*file_loc) = NULL;
 	if ((*cmd)->here_doc->counter > 0)
@@ -75,13 +75,13 @@ int		setup_execution_heredoc(t_cmd **cmd, char ***file_loc)
 			return (-1);
 		}
 		(*cmd)->here_doc->file_loc = (*file_loc);
-		if(here_doc_manger(cmd, (*cmd)->here_doc->file_loc) < 0)
+		if (here_doc_manger(cmd, (*cmd)->here_doc->file_loc) < 0)
 			return (65);
 	}
 	return (0);
 }
 
-int 	manager_execution_heredoc(char *file, char **temp)
+int	manager_execution_heredoc(char *file, char **temp)
 {
 	char	*command;
 	int		which;
@@ -97,9 +97,9 @@ int 	manager_execution_heredoc(char *file, char **temp)
 	return (0);
 }
 
-int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
+int	execute_heredoc(char *file, char **ev, int i, char **file_loc)
 {
-	char 	**redirection_split;
+	char	**redirection_split;
 	char	*temp;
 	char	*str;
 	char	*st;
@@ -117,5 +117,5 @@ int		execute_heredoc(char *file, char **ev, int i, char **file_loc)
 	}
 	if (temp)
 		free(temp);
-    return (0);
+	return (0);
 }

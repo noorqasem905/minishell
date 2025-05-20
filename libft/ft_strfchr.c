@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:57:04 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/15 21:57:38 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 17:24:38 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*ft_strmfchr(const char *s, const char *set)
 	while (s[i])
 	{
 		if (ft_strchr(set, s[i]) && i > 0)
-			break;
+			break ;
 		i++;
 	}
 	if (i == 0 || s[0] == '\0')
@@ -65,7 +65,6 @@ char	*ft_strmfchr(const char *s, const char *set)
 	copy[i] = '\0';
 	return (copy);
 }
-
 
 /* #include <stdio.h>
 int	main(void)

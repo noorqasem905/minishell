@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:03:40 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 17:05:29 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 17:26:00 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 	if ((*cmd)->here_doc->pryority[i] >= 2)
 	{
 		heredoc_idx = (*cmd)->here_doc->pryority[i] - 2;
-		if (execute_heredoc((*current)->content, env, heredoc_idx, file_loc) ==
-			-1)
+		if (execute_heredoc((*current)->content, env, heredoc_idx, file_loc)
+			== -1)
 			return (-1);
 	}
 	if (ft_strmchr((*current)->content, "<>") && (*cmd)->who_am_i != 13)

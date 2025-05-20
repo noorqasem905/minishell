@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:54:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 17:01:53 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 18:40:53 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ void	handle_here_doc_unlink(t_cmd **cmd, char **file_loc)
 		{
 			unlink((*cmd)->here_doc->file_loc[no]);
 			free((*cmd)->here_doc->file_loc[no]);
+			(*cmd)->here_doc->file_loc[no] = NULL;
 		}
 		no++;
 	}
-	if (file_loc)
+	if ((*cmd)->here_doc->file_loc)
 	{
 		free((*cmd)->here_doc->file_loc);
 		(*cmd)->here_doc->file_loc = NULL;
@@ -74,7 +75,7 @@ int	setup_execution_heredoc(t_cmd **cmd, char ***file_loc)
 			return (-1);
 		}
 		(*cmd)->here_doc->file_loc = (*file_loc);
-		if (here_doc_manger(cmd, (*cmd)->here_doc->file_loc))
+		if (here_doc_manger(cmd, (*cmd)->here_doc->file_loc) < 0)
 			return (65);
 	}
 	return (0);

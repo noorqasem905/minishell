@@ -6,31 +6,31 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/18 16:26:18 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:21:15 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char	*get_env_value(char *name, char **env)
+static char	*get_env_value(char *name, t_cmd *cmd)
 {
 	int	len;
 	int	i;
 
 	len = ft_strlen(name);
 	i = 0;
-	while (env[i])
+	while (cmd->env[i])
 	{
-		if (!ft_strncmp(env[i], name, len) && env[i][len] == '=')
+		if (!ft_strncmp(cmd->env[i], name, len) && cmd->env[i][len] == '=')
 		{
-			return (ft_strdup(env[i] + len + 1));
+			return (ft_strdup(cmd->env[i] + len + 1));
 		}
 		i++;
 	}
 	return (ft_strdup(""));
 }
 
-static char	*expantions(char *input, int *i, char **env, t_cmd *cmd)
+static char	*expantions(char *input, int *i, t_cmd *cmd)
 {
 	char	*name;
 	char	*value;
@@ -51,12 +51,12 @@ static char	*expantions(char *input, int *i, char **env, t_cmd *cmd)
 	while (input[*i] && (ft_isalnum(input[*i]) || input[*i] == '_'))
 		(*i)++;
 	name = ft_substr(input, start, *i - start);
-	value = get_env_value(name, env);
+	value = get_env_value(name, cmd);
 	free(name);
 	return (value);
 }
 
-char	*expander_input(t_list *input, char **env, t_cmd *cmd)
+char	*expander_input(t_list *input, t_cmd *cmd)
 {
 	char	*expanded;
 	char	*expand_var;
@@ -90,7 +90,7 @@ char	*expander_input(t_list *input, char **env, t_cmd *cmd)
 		}
 		else if (content[i] == '$' && !flag_single)
 		{
-			expand_var = expantions(content, &i, env, cmd);
+			expand_var = expantions(content, &i, cmd);
 			temp = ft_strjoin(expanded, expand_var);
 			free(expanded);
 			free(expand_var);
@@ -108,7 +108,7 @@ char	*expander_input(t_list *input, char **env, t_cmd *cmd)
 	return (expanded);
 }
 
-void	expand_cmds(t_cmd **cmd, char **env)
+void	expand_cmds(t_cmd **cmd)
 {
 	t_list	*current;
 	char	*expanded_cmd;
@@ -116,7 +116,7 @@ void	expand_cmds(t_cmd **cmd, char **env)
 	current = (*cmd)->word;
 	while (current != NULL)
 	{
-		expanded_cmd = expander_input(current, env, *cmd);
+		expanded_cmd = expander_input(current,*cmd);
 		free(current->content);
 		current->content = expanded_cmd;
 		current = current->next;

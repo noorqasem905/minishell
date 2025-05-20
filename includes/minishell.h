@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/19 19:49:35 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 17:16:32 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,6 @@ int							ft_isspace(char c);
 char						**add_env(char **env, char *name, char *value);
 char						*get_redirection_command(char *temp,
 								char **redirection_split, int iteritor);
-// char						*get_env_value(char *name, char **env);
 int							get_env_j(char **env, char *name);
 char						*trim_quotes(char *str);
 void						unset(char *name, t_cmd *cmd);
@@ -184,5 +183,45 @@ size_t						word_len_custuom(char *s, char c, int *flag);
 char						**ft_split_custom_exp(char const *s, char c);
 char						*extract_filename(char **redirection_split,
 								int ccount);
+int							manager_execution_heredoc(char *file, char **temp);
+int							set_init(t_cmd **cmd, int size);
+int							searching_here_doc_2(t_cmd **cmd,
+								t_here_doc **here_doc, t_list **current,
+								int i_p[]);
+int							searching_here_doc(t_cmd **cmd,
+								t_here_doc **here_doc);
+int							sizeof_heredoc(char *str);
+int							here_doc_manger(t_cmd **cmd, char **file_loc);
+int							setup_execution(t_cmd **cmd, int *size);
+int							setup_execution_heredoc(t_cmd **cmd,
+								char ***file_loc);
+int							open_pipe(t_cmd **cmd, int size, int pipe_fd2[][2]);
+int							execution_process(t_cmd **cmd, int size,
+								char **file_loc);
+int							run_buildin_execution(t_cmd *cmd, t_list *current);
+int							str_size_element(char const *s, char c);
+int							setup_extra_command_h(char *temp5, char **command);
+int							ft_heredoc_redirection_process(char **str,
+								char *temp);
+int							ft_heredoc_redirection_manager(char *file,
+								char **str);
+int							execute_heredoc_setup_exe(char *file,
+								char **file_loc, int i, char **temp);
+int							execute_heredoc_manage_exeu(char *file, char **str,
+								char **ev, char *temp);
+int							execute_heredoc_redirection(char ***redirection_split,
+								char *str, char *st, char **ev);
+int							execute_heredoc(char *file, char **ev, int i,
+								char **file_loc);
+int							dup_process_2_handle(t_cmd **cmd, t_list **current,
+								char **env);
+void						handle_here_doc_unlink(t_cmd **cmd,
+								char **file_loc);
+void						run_export_execution(char **run);
+void						child_process_close(int pipe_fd2[][2], pid_t pids[],
+								int i, int size);
+void						setup_extra_command_h_2(char **split_2,
+								char **command);
+void						dup_process_handle(int size, int pipe_fd2[][2]);
 
 #endif

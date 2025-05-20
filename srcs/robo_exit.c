@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:29:22 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/18 18:46:05 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 15:49:07 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	check_n(char *n)
 }
 
 void	robo_exit(char **str, t_cmd *cmd)
-
 {
 	int n;
 

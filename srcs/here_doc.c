@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/15 19:06:21 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 19:26:02 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 	int		check_error;
 	char	*temp;
 
-	// ft_printf("%2%s\n", input);
 	temp = ft_strnstr(input, "<<", ft_strlen(input));
 	if (!temp)
 	{
@@ -216,6 +215,7 @@ int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[])
 		frees_split(input);
 		if (i < heredoc_count - 1 && *file_loc)
 		{
+			unlink(*file_loc);
 			free(*file_loc);
 			*file_loc = NULL;
 		}

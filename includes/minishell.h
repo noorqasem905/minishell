@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 22:04:46 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/20 22:17:53 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ struct						s_here_doc
 	char					**file_loc;
 	int						*pryority;
 	int						counter;
+	int						counter_total;
 	int						index;
 	char					*input;
 	char					*temp;

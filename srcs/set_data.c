@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 22:12:17 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/20 22:17:41 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	init_data(t_cmd **cmd)
 	(*cmd)->exit_status = 0;
 	here_doc->counter = 0;
 	here_doc->index = 0;
+	here_doc->counter_total = 0;
 	here_doc->pryority = NULL;
 	here_doc->temp = NULL;
 	here_doc->fd = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/18 18:58:23 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 18:19:42 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 		return (-1);
 	// expand_cmds(cmd, (*cmd)->env);
 	split = ft_split((*temp)[0], ' ');
-	t = expander_input((*cmd)->word, robo_env, (*cmd));
+	t = expander_input((*cmd)->word,(*cmd));
 	if (!split || !*split)
 	{
 		if (split)

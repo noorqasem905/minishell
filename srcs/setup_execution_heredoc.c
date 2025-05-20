@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:11:43 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 17:13:27 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 18:37:42 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,16 @@ int	searching_here_doc(t_cmd **cmd, t_here_doc **here_doc)
 	t_list	*current;
 	int		i_p[2];
 
-	i_p[0] = -1;
+	i_p[0] = 0;
 	i_p[1] = 0;
 	current = (*cmd)->word;
 	(*here_doc)->counter = 0;
-	while (-1 < ++i_p[0] && current != NULL)
+	while (current != NULL)
+	{
 		if (searching_here_doc_2(cmd, here_doc, &current, i_p) < 0)
 			return (-1);
+		i_p[0]++;
+	}
 	(*here_doc)->pryority[i_p[0]] = '\0';
 	return (0);
 }

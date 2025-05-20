@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 17:16:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/20 17:33:59 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,7 @@ int							process_input(t_cmd **cmd, int *flag, char ***temp,
 int							check_validation(char **paths, char **result,
 								char **m);
 int							child_process(t_cmd **cmd, t_list **current,
-								int pipe_fd2[][2], pid_t pids[],
-								char **file_loc);
+								int pipe_fd2[][2], pid_t pids[]);
 int							dup_process(int *i, int size, int pipe_fd2[][2]);
 int							dup_process_2(t_cmd **cmd, t_list **current,
 								char **file_loc, int i);

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 19:44:09 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:48:53 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,87 +106,3 @@ char	*expander_input(t_cmd **cmd)
 	}
 	return (expanded);
 }
-/* char	*expander_input(t_cmd **cmd)
-{
-	char	*expanded;
-	int		i;
-	int		flag_single;
-	int		flag_double;
-	char	*content;
-
-	expanded = ft_strdup("");
-	flag_single = 0;
-	flag_double = 0;
-	i = 0;
-	content = (char *)(*cmd)->word->content;
-	while (content[i])
-	{
-		if (content[i] == '\'' && !flag_double)
-		{
-			flag_single = !flag_single;
-			i++;
-		}
-		else if (content[i] == '\"' && !flag_single)
-		{
-			flag_double = !flag_double;
-			i++;
-		}
-		else if (content[i] == '$' && !flag_single)
-			append_expansion(&expanded, content, &i, *cmd);
-		else
-			append_char(&expanded, content[i++]);
-	}
-	return (expanded);
-} */
-
-/* char	*expander_input(t_cmd **cmd)
-{
-	char	*expanded;
-	char	*expand_var;
-	char	*temp;
-	char	c[2];
-	int		i;
-	int		start;
-	int		end;
-	int		flag_single;
-	int		flag_double;
-	char	*content;
-
-	expanded = ft_strdup("");
-	start = 0;
-	end = 0;
-	flag_single = 0;
-	flag_double = 0;
-	i = 0;
-	content = (char *)(*cmd)->word->content;
-	while (content[i])
-	{
-		if (content[i] == '\'' && !flag_double)
-		{
-			flag_single = !flag_single;
-			i++;
-		}
-		else if (content[i] == '\"' && !flag_single)
-		{
-			flag_double = !flag_double;
-			i++;
-		}
-		else if (content[i] == '$' && !flag_single)
-		{
-			expand_var = expantions(content, &i, *cmd);
-			temp = ft_strjoin(expanded, expand_var);
-			free(expanded);
-			free(expand_var);
-			expanded = temp;
-		}
-		else
-		{
-			c[0] = content[i++];
-			c[1] = '\0';
-			temp = ft_strjoin(expanded, c);
-			free(expanded);
-			expanded = temp;
-		}
-	}				
-	return (expanded);
-} */

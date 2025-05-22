@@ -6,13 +6,11 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 18:13:58 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 22:40:00 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-
 
 int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 {

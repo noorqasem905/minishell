@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:58:09 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 20:53:27 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 22:39:08 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,16 @@ int	check_validation(char **paths, char **result, char **m)
 		return (ret);
 	*m = check_access(paths, result);
 	return (0);
+}
+
+void	printf_split(char *str, char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		ft_printf("%2%s%s\n", str, split[i]);
+		i++;
+	}
 }

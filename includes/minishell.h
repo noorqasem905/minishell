@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 20:54:03 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 22:45:35 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,5 +247,8 @@ void						append_char(char **expanded, char ch);
 void						append_expansion(char **expanded, char *content,
 								int *i, t_cmd *cmd);
 void						no_space(int *l, char **m, char **o);
+int							is_closed(char *input);
+int							check_no_pipe(char *input);
+int							check_pipe_input(char *input);
 
 #endif

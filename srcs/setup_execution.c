@@ -12,7 +12,6 @@
 
 #include "../includes/minishell.h"
 
-
 void	free_it_noww(char **s, char *s2, int emassage)
 {
 	int	n;
@@ -36,8 +35,6 @@ void	free_it_noww(char **s, char *s2, int emassage)
 	if (emassage || emassage == -1)
 		perror("Error");
 }
-
-
 
 char	*check_access(char **paths, char **result)
 {

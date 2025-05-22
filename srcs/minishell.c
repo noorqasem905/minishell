@@ -12,6 +12,29 @@
 
 #include "../includes/minishell.h"
 
+static void	error_main(int argc, t_cmd *cmd, char *str)
+{
+	if (argc > 1)
+		exit(EXIT_FAILURE);
+	ft_printf("%2 Usage: %s\n", str);
+}
+
+static void	malloc_error(void *err)
+{
+	if (err == NULL)
+	{
+		ft_printf("%2 Malloc Error");
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void	free_main(void *mal)
+{
+	if (!mal)
+		return ;
+	free(mal);
+}
+
 int	main(int argc, char *argv[], char **robo_env)
 {
 	t_cmd	*cmd;
@@ -23,21 +46,12 @@ int	main(int argc, char *argv[], char **robo_env)
 	e = 0;
 	input = NULL;
 	temp = NULL;
+	error_main(argc, cmd, argv[0]);
 	cmd = malloc(sizeof(t_cmd));
+	malloc_error(cmd);
 	cmd->here_doc = malloc(sizeof(t_here_doc));
-	if (cmd == NULL)
-	{
-		ft_printf("%2malloc");
-		return (1);
-	}
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, SIG_IGN);
-	if (argc > 1)
-	{
-		fprintf(stderr, "Usage: %s\n", argv[0]);
-		free(cmd);
-		return (1);
-	}
+	if (!cmd->here_doc)
+		free_main(cmd);
 	init_data(&cmd);
 	cmd->env = my_env(robo_env);
 	save_export_to_expo(&cmd);
@@ -49,6 +63,3 @@ int	main(int argc, char *argv[], char **robo_env)
 	free(cmd);
 	return (e);
 }
-
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:37:38 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 19:09:09 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:04:43 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	check_redirection_mult_nosiggrle(int mult[], int conflect_handle[],
 int	check_redirection_mult_sign(int mult[], int conflect_handle[],
 		int is_file_enter[], char *input)
 {
-	int ret;
+	int	ret;
 
 	ret = 0;
 	if (input[mult[2]] == '<')

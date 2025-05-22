@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 19:50:36 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 21:23:10 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,10 +177,10 @@ int	searching_bulidin(char **split, t_cmd **cmd, char *t)
 	}
 	if (ft_strcmp(split[0], "pwd") == 0)
 		robo_pwd();
-	if (ft_strcmp(split[0], "exit") == 0)
+	/*if (ft_strcmp(split[0], "exit") == 0)
 	{
 		robo_exit(split, *cmd);
-	}
+	}*/
 	return (0);
 }
 

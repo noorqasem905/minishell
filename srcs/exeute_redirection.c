@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exeute_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:40:16 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 19:20:38 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:09:02 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_execute_redirection_p2(char **redirection_split, int ccount, int *fd)
 int	ft_execute_redirection_p3(char **redirection_split, int ccount, int *fd)
 {
 	char	*tmp2;
-	
+
 	tmp2 = extract_filename(redirection_split, ccount);
 	*fd = open(tmp2, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	free(tmp2);

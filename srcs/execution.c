@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 19:49:49 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 21:12:04 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	execution_process(t_cmd **cmd)
 {
 	t_list	*current;
 	pid_t	pids[ft_lstsize((*cmd)->word)];
-	int		pipe_fd2[ft_lstsize((*cmd)->word)][2];
+	int		pipe_fd2[(ft_lstsize((*cmd)->word))][2];
 	int		ret;
 	int		size;
 

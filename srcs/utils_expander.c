@@ -6,12 +6,11 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:49:49 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 19:39:50 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 20:02:52 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 void	append_char(char **expanded, char ch)
 {
@@ -37,7 +36,6 @@ void	expand_cmds(t_cmd **cmd)
 	}
 }
 
-
 char	*ft_strjoin_free(char *s1, char *s2)
 {
 	char	*temp;
@@ -46,5 +44,3 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	free(s1);
 	return (temp);
 }
-
-

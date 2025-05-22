@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:18:35 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 18:31:06 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:55:54 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static char	*join_name_value(char *name, char *value)
 	free(temp);
 	return (new_name);
 }
+
 char	**add_env(char **env, char *name, char *value)
 {
 	int		i;

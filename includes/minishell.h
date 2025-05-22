@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 19:46:28 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 20:54:03 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void						free_list(t_list **root);
 void						frees(t_list **root);
 void						printf_split(char *str, char **split);
 void						robo_cd(char **temp, char **robo_env);
-void						free_it_now(char **s, char *s2, int emassage);
+void						free_it_noww(char **s, char *s2, int emassage);
 void						signal_handler(int x);
 char						*check_access(char **paths, char **result);
 char						*expander_input(t_cmd **cmd);
@@ -223,12 +223,14 @@ void						child_process_close(int pipe_fd2[][2], pid_t pids[],
 void						setup_extra_command_h_2(char **split_2,
 								char **command);
 void						dup_process_handle(int size, int pipe_fd2[][2]);
-int       					handle_cd_slash(char *temp);
-int       					handle_cd_dup_dot(char *temp);
-int       					build_quoted_string(char **dir, char ***temp, int total_len, int *end);
-int       					merge_quoted_tokens(char ***temp, char **dir, int start, int *end);
-int       					handle_space_infile(char ***temp, char **dir);
-int       					robo_cd_access(char **dir, char **temp);
+int							handle_cd_slash(char *temp);
+int							handle_cd_dup_dot(char *temp);
+int							build_quoted_string(char **dir, char ***temp,
+								int total_len, int *end);
+int							merge_quoted_tokens(char ***temp, char **dir,
+								int start, int *end);
+int							handle_space_infile(char ***temp, char **dir);
+int							robo_cd_access(char **dir, char **temp);
 char						*trim_quotess(char *str);
 void						frees_newsplit(char **root);
 size_t						word_lenn(char *s, char c);
@@ -237,10 +239,13 @@ int							handle_quotes(char **s, int *flag);
 void						ski_delimiters(char **s, char c);
 int							is_there_else_heredoc(char *temp);
 int							handle_here_doc(char *temp);
-int							get_free_filename(char **file_loc, char *new_fullpath);
+int							get_free_filename(char **file_loc,
+								char *new_fullpath);
 int							openfile_heredoc(int *fd, char **file_loc);
 char						*ft_strjoin_free(char *s1, char *s2);
 void						append_char(char **expanded, char ch);
-void						append_expansion(char **expanded, char *content, int *i, t_cmd *cmd);
+void						append_expansion(char **expanded, char *content,
+								int *i, t_cmd *cmd);
+void						no_space(int *l, char **m, char **o);
 
 #endif

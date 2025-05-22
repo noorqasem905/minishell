@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 19:32:33 by nqasem            #+#    #+#      			*/
+/*   Created: 2025/04/03 19:32:33 by nqasem            #+#    #+#			  */
 /*   Updated: 2025/04/06 12:20:41 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -18,7 +18,7 @@ int	main(int argc, char *argv[], char **robo_env)
 	char	*input;
 	char	**temp;
 	int		flag;
-	int e;
+	int		e;
 
 	e = 0;
 	input = NULL;
@@ -49,3 +49,6 @@ int	main(int argc, char *argv[], char **robo_env)
 	free(cmd);
 	return (e);
 }
+
+
+

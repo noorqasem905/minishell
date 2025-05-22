@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:26:37 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 19:36:07 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 20:02:33 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,3 @@ void	update_env(char **env, int j, char *name, char *value)
 	free(env[j]);
 	env[j] = new_name;
 }
-

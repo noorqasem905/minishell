@@ -40,7 +40,8 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/utils2.c						\
 		srcs/utils_here_doc.c				\
 		srcs/utils_export2.c				\
-		srcs/utils_expander.c
+		srcs/utils_expander.c				\
+		srcs/utils_setup.c
 		
 
 all: $(NAME)

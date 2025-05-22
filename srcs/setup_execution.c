@@ -12,7 +12,8 @@
 
 #include "../includes/minishell.h"
 
-void	free_it_now(char **s, char *s2, int emassage)
+
+void	free_it_noww(char **s, char *s2, int emassage)
 {
 	int	n;
 
@@ -36,81 +37,7 @@ void	free_it_now(char **s, char *s2, int emassage)
 		perror("Error");
 }
 
-int	handle_ecv_slash(char *result, char **m, char **paths)
-{
-	if (result && ft_strncmp(result, "/", 1) == 0)
-	{
-		if (access(result, F_OK | X_OK) == 0)
-		{
-			*m = ft_strdup(result);
-			return (5);
-		}
-		else
-		{
-			free_it_now(paths, NULL, 0);
-			return (-6);
-		}
-	}
-	return (0);
-}
 
-int	check_validation(char **paths, char **result, char **m)
-{
-	int	ret;
-
-	*m = NULL;
-	if (!paths)
-	{
-		free_it_now(paths, NULL, 1);
-		return (-1);
-	}
-	if (result[0] && ft_strncmp(result[0], "./", 2) == 0)
-	{
-		if (access(result[0], X_OK) == -1)
-		{
-			free_it_now(paths, NULL, 0);
-			perror("Error: File is not executable or doesn't exist");
-			return (1);
-		}
-		*m = ft_strdup(result[0]);
-		return (4);
-	}
-	ret = handle_ecv_slash(result[0], m, paths);
-	if (ret == 5 || ret == -6)
-		return (ret);
-	*m = check_access(paths, result);
-	return (0);
-}
-
-int	get_path(char **ev)
-{
-	int	i;
-	int	flag;
-
-	i = 0;
-	flag = 0;
-	while (ev[i])
-	{
-		if (ft_strncmp(ev[i], "PATH=/", 6) == 0)
-		{
-			flag = 1;
-			break ;
-		}
-		i++;
-	}
-	if (ev[i] == NULL)
-		return (-1);
-	if (flag == 0)
-		return (-1);
-	return (i);
-}
-
-static void	no_space(int *l, char **m, char **o)
-{
-	*l = -1;
-	*o = "/";
-	*m = NULL;
-}
 
 char	*check_access(char **paths, char **result)
 {
@@ -133,8 +60,7 @@ char	*check_access(char **paths, char **result)
 		}
 		free(full_path);
 	}
-	// if (paths[l] != NULL)
-	free_it_now(paths, p, 0);
+	free_it_noww(paths, p, 0);
 	return (m);
 }
 
@@ -159,7 +85,7 @@ int	ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 	*paths = ft_split(ev[get] + 5, ':');
 	if (!*paths)
 	{
-		free_it_now(*result, NULL, 1);
+		free_it_noww(*result, NULL, 1);
 		return (-1);
 	}
 	return (0);
@@ -169,7 +95,7 @@ int	check_validation_handle(int flag, char *m, char **result)
 {
 	if (m == NULL || flag < 0)
 	{
-		free_it_now(result, NULL, 1);
+		free_it_noww(result, NULL, 1);
 		if (m != NULL)
 			free(m);
 		return (-1);
@@ -183,13 +109,14 @@ int	ft_execve(char *file, char **ev)
 	char	**paths;
 	int		flag;
 	char	*m;
+
 	if (ft_setup_execve(file, &result, ev, &paths) == -1)
 		return (-1);
 	if (!result || !result[0] || !*result[0])
 	{
 		if (paths)
 			frees_split(paths);
-		free_it_now(result, NULL, 1);
+		free_it_noww(result, NULL, 1);
 		return (-1);
 	}
 	flag = check_validation(paths, result, &m);
@@ -198,9 +125,9 @@ int	ft_execve(char *file, char **ev)
 	if (execve(m, result, ev) == -1)
 	{
 		perror("Error executing command");
-		free_it_now(result, m, 1);
+		free_it_noww(result, m, 1);
 		return (-1);
 	}
-	free_it_now(result, m, 0);
+	free_it_noww(result, m, 0);
 	return (0);
 }

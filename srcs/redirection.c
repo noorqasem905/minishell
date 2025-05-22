@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 19:19:03 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:09:53 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	process_redirections(char ***redirection_split, char **robo_env,
 	return (0);
 }
 
-static int		error_process_redirection_free(char *command, char *temp)
+static int	error_process_redirection_free(char *command, char *temp)
 {
 	if (temp)
 		free(temp);
@@ -123,9 +123,9 @@ int	ft_redirection(char *input, char ***redirection_split, char **robo_env)
 			&command) < 0)
 		return (-1);
 	if (error_process_redirection(redirection_split, &temp, input, &temp3) < 0)
-		return(error_process_redirection_free(command, temp));
+		return (error_process_redirection_free(command, temp));
 	if (process_redirections(redirection_split, robo_env, &temp3, ret) < 0)
-		return(error_process_redirection_free(command, temp));
+		return (error_process_redirection_free(command, temp));
 	if (error_redirection(*redirection_split, command, temp2, temp) < 0)
 		return (-1);
 	if (error_ft_execute_redirection(temp, command, robo_env) < 0)

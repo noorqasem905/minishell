@@ -35,9 +35,7 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/execute_heredoc.c				\
 		srcs/utils_exeution.c				\
 		srcs/dup_process.c					\
-		srcs/utils_redirection.c			\
-		srcs/free_every.c
-		
+		srcs/utils_redirection.c		
 
 all: $(NAME)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   robo_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:29:22 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/20 19:54:51 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:37:02 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,5 @@ void	robo_exit(char **str, t_cmd *cmd)
 	(cmd)->here_doc = NULL;
 	free(cmd);
 	cmd = NULL;
-	free_every(cmd);
 	exit((unsigned char)n);
 }

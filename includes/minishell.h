@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 19:26:33 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/22 19:36:45 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,12 +192,11 @@ int							searching_here_doc(t_cmd **cmd,
 								t_here_doc **here_doc);
 int							sizeof_heredoc(char *str);
 int							here_doc_manger(t_cmd **cmd, char **file_loc);
-int							setup_execution(t_cmd **cmd, int *size);
+int							setup_execution(t_cmd **cmd);
 int							setup_execution_heredoc(t_cmd **cmd,
 								char ***file_loc);
 int							open_pipe(t_cmd **cmd, int size, int pipe_fd2[][2]);
-int							execution_process(t_cmd **cmd, int size,
-								char **file_loc);
+int							execution_process(t_cmd **cmd);
 int							run_buildin_execution(t_cmd *cmd, t_list *current);
 int							str_size_element(char const *s, char c);
 int							setup_extra_command_h(char *temp5, char **command);
@@ -224,6 +223,5 @@ void						child_process_close(int pipe_fd2[][2], pid_t pids[],
 void						setup_extra_command_h_2(char **split_2,
 								char **command);
 void						dup_process_handle(int size, int pipe_fd2[][2]);
-void						free_every(t_cmd *cmd);
 
 #endif

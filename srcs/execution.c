@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 22:24:43 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:23:55 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	execution_process(t_cmd **cmd, int size, char **file_loc)
 	return (0);
 }
 
-int	execution(t_cmd **cmd, char **env)
+int	execution(t_cmd **cmd)
 {
 	t_list	*current;
 	char	**file_loc;

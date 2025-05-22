@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:37:38 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/19 17:38:57 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/22 19:09:09 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ void	check_redirection_mult_nosiggrle(int mult[], int conflect_handle[],
 int	check_redirection_mult_sign(int mult[], int conflect_handle[],
 		int is_file_enter[], char *input)
 {
+	int ret;
+
+	ret = 0;
 	if (input[mult[2]] == '<')
 	{
 		if (check_redirection_mult_sigls(mult, conflect_handle, is_file_enter,
@@ -87,6 +90,11 @@ int	check_redirection_mult_sign(int mult[], int conflect_handle[],
 	}
 	else if (input[mult[2]] == '>')
 	{
+		if (input[mult[2] + 1] == '>' && input[mult[2] + 2] != '>')
+		{
+			input[mult[2] + 1] = ' ';
+			ret = 6;
+		}
 		if (check_redirection_mult_siggr(mult, conflect_handle, is_file_enter,
 				input) < 0)
 			return (-1);
@@ -95,5 +103,5 @@ int	check_redirection_mult_sign(int mult[], int conflect_handle[],
 		&& input[mult[2]] != '<')
 		check_redirection_mult_nosiggrle(mult, conflect_handle, is_file_enter,
 			input);
-	return (0);
+	return (ret);
 }

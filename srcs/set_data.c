@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 22:24:02 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:26:49 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,7 @@ int	searching_bulidin(char **split, t_cmd **cmd, char *t)
 	return (0);
 }
 
-int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
-		char **robo_env)
+int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 {
 	t_list	*current;
 	char	**split;
@@ -203,7 +202,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	}
 	if (ft_strncmp(split[0], "cd", 2) == 0)
 	{
-		robo_cd(split, robo_env);
+		robo_cd(split, (*cmd)->env);
 		return (-3);
 		free(*input);
 		frees_split(split);
@@ -216,7 +215,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	frees_split(split);
 	if (searching_comand(input, *temp) == -13)
 		return (-13);
-	if ((ret = execution(cmd, robo_env)) == -1)
+	if ((ret = execution(cmd)) == -1)
 	{
 		free(*input);
 		if ((*cmd)->here_doc->file_loc)
@@ -257,7 +256,7 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			free(input);
 			continue ;
 		}
-		ret = process_input(cmd, flag, temp, &input, robo_env);
+		ret = process_input(cmd, flag, temp, &input);
 		if (ret < 0 && ret != -3 && ret != -42 && ret != -55)
 		{
 			frees_split(*temp);

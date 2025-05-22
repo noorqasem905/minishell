@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 22:22:12 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:26:33 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -93,11 +92,11 @@ int							setup_handle_redirection(char *input,
 int							error_redirection(char **redirection_split,
 								char *command, char *temp2, char *temp);
 int							error_process_redirection(char ***redirection_split,
-								char **temp, char *input, char **robo_env);
+								char **temp, char *input, char **temp3);
 int							error_ft_execute_redirection(char *temp,
 								char *command, char **robo_env);
 int							process_input(t_cmd **cmd, int *flag, char ***temp,
-								char **input, char **robo_env);
+								char **input);
 int							check_validation(char **paths, char **result,
 								char **m);
 int							child_process(t_cmd **cmd, t_list **current,
@@ -107,7 +106,7 @@ int							dup_process_2(t_cmd **cmd, t_list **current,
 								char **file_loc, int i);
 int							get_path(char **ev);
 int							ft_strfind(char *str, char *c);
-int							execution(t_cmd **cmd, char **env);
+int							execution(t_cmd **cmd);
 int							ft_execve(char *file, char **ev);
 int							searching_comand(char **input, char **temp);
 int							save_data(char **input, t_cmd **cmd, int *flag,
@@ -118,16 +117,16 @@ int							reading_manager(t_cmd **cmd, int *flag,
 int							ft_redirection(char *input,
 								char ***redirection_split, char **robo_env);
 int							ft_execute_redirection(char **redirection_split,
-								int ccount, int *fd, char *temp3,
-								char **robo_env);
+								int ccount_i[], int *fd, char *temp3);
 int							process_redirections(char ***redirection_split,
-								char **robo_env, char **temp3);
+								char **robo_env, char **temp3, int i);
 int							handle_mult_redirection(char *temp3, char *temp2,
 								char **temp, char ***redirection_split);
 int							extract_and_apply_redirection(char **temp,
 								char *temp2, char ***redirection_split,
 								char **command);
-int							handle_redirection_segment(char ***redirection_split,
+int							handle_redirection_segment(
+								char ***redirection_split,
 								char **temp, char **temp4, char *th);
 int							read_input(char **input);
 size_t						element_size(char **str);
@@ -210,7 +209,8 @@ int							execute_heredoc_setup_exe(char *file,
 								char **file_loc, int i, char **temp);
 int							execute_heredoc_manage_exeu(char *file, char **str,
 								char **ev, char *temp);
-int							execute_heredoc_redirection(char ***redirection_split,
+int							execute_heredoc_redirection(
+								char ***redirection_split,
 								char *str, char *st, char **ev);
 int							execute_heredoc(char *file, char **ev, int i,
 								char **file_loc);

@@ -6,60 +6,49 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:00:34 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/15 17:58:26 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:01:57 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	word_count(char const *s, char c)
+static void	skip_delimiters(char **s, char c, int *flag)
 {
-	int	i;
-
-	i = 0;
-	while (*s)
+	while (**s == c && **s && **s != '\"')
 	{
-		while (*s == c)
-			s++;
-		if (*s)
-			i++;
-		while (*s && *s != c)
-			s++;
+		if (handle_quotes(s, flag))
+			continue ;
+		(*s)++;
 	}
-	return (i);
 }
 
-int	word_count_custuom(char const *s, char c)
+static void	skip_word(char **s, char c, int *flag)
 {
-	int	i;
-	int	flag;
+	while (**s && (**s != c || *flag == 1))
+	{
+		if (handle_quotes(s, flag))
+			continue ;
+		(*s)++;
+	}
+}
 
+int	word_count_custom(char const *s, char c)
+{
+	int		i;
+	int		flag;
+
+	i = 0;
 	flag = 0;
-	i = 0;
 	while (*s)
 	{
-		while (*s == c && *s && *s != '\"')
-		{
-			if (*s == '\"')
-			{
-				flag = 1;
-				s++;
-			}
-			s++;
-		}
+		skip_delimiters((char **)&s, c, &flag);
 		if (*s)
 			i++;
-		while (*s && (*s != c || flag == 1))
-		{
-			if (*s == '\"')
-			{
-				flag = 0;
-			}
-			s++;
-		}
+		skip_word((char **)&s, c, &flag);
 	}
 	return (i);
 }
+
 size_t	word_len_custuom(char *s, char c, int *flag)
 {
 	size_t	i;
@@ -80,18 +69,18 @@ size_t	word_len_custuom(char *s, char c, int *flag)
 
 char	**ft_split_custom_exp(char const *s, char c)
 {
-	char **str;
-	size_t i;
-	int flag = 0;
+	char	**str;
+	size_t	i;
+	int		flag;
 
+	flag = 0;
 	i = 0;
-	str = malloc(sizeof(char *) * (word_count_custuom(s, c) + 1));
+	str = malloc(sizeof(char *) * (word_count_custom(s, c) + 1));
 	if (!s || !str)
 		return (NULL);
 	while (*s)
 	{
-		while (*s == c && *s)
-			s++;
+		ski_delimiters((char **)&s, c);
 		if (*s)
 		{
 			str[i] = ft_substr(s, 0, word_len_custuom((char *)s, c, &flag));

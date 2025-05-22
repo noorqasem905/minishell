@@ -12,19 +12,30 @@
 
 #include "../includes/minishell.h"
 
-char	*trim_quotes(char *str)
+size_t	word_lenn(char *s, char c)
 {
-	int	len;
+	size_t	i;
 
-	len = ft_strlen(str);
-	if (len >= 2 && str[0] == '"' && str[len - 1] == '"')
-		return (ft_substr(str, 1, len - 2));
-	return (ft_strdup(str));
+	i = 0;
+	while (s[i] && s[i] != c)
+	{
+		i++;
+	}
+	return (i);
 }
-int	ft_isspace(char c)
+
+void	frees_newsplit(char **root)
 {
-	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
-		|| c == '\r');
+	int	i;
+
+	i = 0;
+	while (root[i])
+	{
+		free(root[i]);
+		i++;
+	}
+	free(root);
+	root = NULL;
 }
 
 int	is_valid(char *name)
@@ -41,4 +52,21 @@ int	is_valid(char *name)
 		i++;
 	}
 	return (1);
+}
+
+int	handle_quotes(char **s, int *flag)
+{
+	if (**s == '\"')
+	{
+		*flag = !(*flag);
+		(*s)++;
+		return (1);
+	}
+	return (0);
+}
+
+void	ski_delimiters(char **s, char c)
+{
+	while (*s && **s == c)
+		(*s)++;
 }

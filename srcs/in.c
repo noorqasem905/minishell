@@ -80,5 +80,23 @@ command:  ls file file file file < in > set_here
 
 
 
+export a | ls ---------> ignore set a in export 
+unset a | ls ---------> ignore delete a from export
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ... continue after pray in mosque (لا اله الا الله محمد رسول الله)
 */

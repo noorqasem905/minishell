@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 22:24:43 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:49:43 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ int	child_process(t_cmd **cmd, t_list **current, int pipe_fd2[][2],
 	int	size;
 	int	i;
 
-	i = 0;
+	i = -1;
 	size = ft_lstsize((*cmd)->word);
-	while (i < size)
+	while (++i < size)
 	{
 		(pids)[i] = fork();
 		if ((pids)[i] < 0)
@@ -107,12 +107,12 @@ int	child_process(t_cmd **cmd, t_list **current, int pipe_fd2[][2],
 		{
 			if (dup_process(&i, size, pipe_fd2) == -1)
 				return (-1);
-			if (dup_process_2(cmd, (current), (*cmd)->here_doc->file_loc , i) == -1)
+			if (dup_process_2(cmd, (current),
+					(*cmd)->here_doc->file_loc, i) == -1)
 				return (-1);
 		}
 		child_process_close(pipe_fd2, pids, i, size);
 		(*current) = (*current)->next;
-		i++;
 	}
 	return (0);
 }

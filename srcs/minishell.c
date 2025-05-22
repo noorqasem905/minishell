@@ -18,19 +18,18 @@ int	main(int argc, char *argv[], char **robo_env)
 	char	*input;
 	char	**temp;
 	int		flag;
+	int e;
 
+	e = 0;
 	input = NULL;
 	temp = NULL;
 	cmd = malloc(sizeof(t_cmd));
 	cmd->here_doc = malloc(sizeof(t_here_doc));
-	cmd->env = NULL;
-	cmd->exit_status = 0;
 	if (cmd == NULL)
 	{
-		perror("malloc");
+		ft_printf("%2malloc");
 		return (1);
 	}
-	cmd->word = NULL;
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 	if (argc > 1)
@@ -46,7 +45,7 @@ int	main(int argc, char *argv[], char **robo_env)
 	frees_split(cmd->env);
 	frees_split(cmd->expo);
 	free(cmd->here_doc);
-	//free(cmd->expo);
+	e = cmd->exit_status;
 	free(cmd);
-	return (0);
+	return (e);
 }

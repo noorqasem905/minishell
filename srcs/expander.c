@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/20 21:55:54 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:44:09 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,90 @@ static char	*expantions(char *input, int *i, t_cmd *cmd)
 	return (value);
 }
 
+int	next_expander(char *content, int *flag_single, int *flag_double, int *i)
+{
+	if (content[*i] == '\'' && !(*flag_double))
+	{
+		*flag_single = !(*flag_single);
+		(*i)++;
+		return (1);
+	}
+	else if (content[*i] == '\"' && !(*flag_single))
+	{
+		*flag_double = !(*flag_double);
+		(*i)++;
+		return (1);
+	}
+	return (0);
+}
+
+void	append_expansion(char **expanded, char *content, int *i, t_cmd *cmd)
+{
+	char	*expand_var;
+
+	expand_var = expantions(content, i, cmd);
+	*expanded = ft_strjoin_free(*expanded, expand_var);
+	free(expand_var);
+}
+
 char	*expander_input(t_cmd **cmd)
+{
+	char	*expanded;
+	int		i;
+	int		flag_single;
+	int		flag_double;
+	char	*content;
+
+	expanded = ft_strdup("");
+	flag_single = 0;
+	flag_double = 0;
+	i = 0;
+	content = (char *)(*cmd)->word->content;
+	while (content[i])
+	{
+		if (next_expander(content, &flag_single, &flag_double, &i))
+			continue ;
+		else if (content[i] == '$' && !flag_single)
+			append_expansion(&expanded, content, &i, *cmd);
+		else
+			append_char(&expanded, content[i++]);
+	}
+	return (expanded);
+}
+/* char	*expander_input(t_cmd **cmd)
+{
+	char	*expanded;
+	int		i;
+	int		flag_single;
+	int		flag_double;
+	char	*content;
+
+	expanded = ft_strdup("");
+	flag_single = 0;
+	flag_double = 0;
+	i = 0;
+	content = (char *)(*cmd)->word->content;
+	while (content[i])
+	{
+		if (content[i] == '\'' && !flag_double)
+		{
+			flag_single = !flag_single;
+			i++;
+		}
+		else if (content[i] == '\"' && !flag_single)
+		{
+			flag_double = !flag_double;
+			i++;
+		}
+		else if (content[i] == '$' && !flag_single)
+			append_expansion(&expanded, content, &i, *cmd);
+		else
+			append_char(&expanded, content[i++]);
+	}
+	return (expanded);
+} */
+
+/* char	*expander_input(t_cmd **cmd)
 {
 	char	*expanded;
 	char	*expand_var;
@@ -106,19 +189,4 @@ char	*expander_input(t_cmd **cmd)
 		}
 	}				
 	return (expanded);
-}
-
-void	expand_cmds(t_cmd **cmd)
-{
-	t_list	*current;
-	char	*expanded_cmd;
-
-	current = (*cmd)->word;
-	while (current != NULL)
-	{
-		expanded_cmd = expander_input(cmd);
-		free(current->content);
-		current->content = expanded_cmd;
-		current = current->next;
-	}
-}
+} */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_handle2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:47:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/19 17:49:12 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:39:01 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	handle_mult_redirection(char *temp3, char *temp2, char **temp,
 		tmp = ft_strrmchr(temp2, "<>");
 		p = word_mult_count((tmp + 1), " <>");
 		px = word_mult_count((temp2), " <>");
-		// printf_split("OUT: ", *redirection_split);
 		if ((element_size((*redirection_split)) == 2 || p == 2) && !*temp)
 		{
 			*temp = ft_strdup((*redirection_split)[px - 1]);
@@ -54,7 +53,6 @@ int	handle_mult_redirection(char *temp3, char *temp2, char **temp,
 		}
 		if (*temp != NULL)
 			free(*temp);
-		// printf_split("out:", *redirection_split);
 		if (*redirection_split)
 			frees_split(*redirection_split);
 		printf("%s", tmp);

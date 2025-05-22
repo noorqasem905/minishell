@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_every.c                                       :+:      :+:    :+:   */
+/*   utils_export2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 19:07:21 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/20 19:40:47 by aalquraa         ###   ########.fr       */
+/*   Created: 2025/05/22 18:26:37 by aalquraa          #+#    #+#             */
+/*   Updated: 2025/05/22 19:36:07 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void free_every(t_cmd *cmd)
+void	update_env(char **env, int j, char *name, char *value)
 {
-    if (!cmd)
-        return;
-    if (cmd->word)
-        free_list(&cmd->word);
-    if (cmd->here_doc) {
-        free(cmd->here_doc->file_loc);
-        free(cmd->here_doc->pryority);
-        free(cmd->here_doc);
-    }
-    if (cmd->env)
-        frees_split(cmd->env);
-    if (cmd->expo)
-        frees_split(cmd->expo);
-    free(cmd);
+	char	*new_name;
+	char	*temp;
+
+	temp = ft_strjoin(name, "=");
+	new_name = ft_strjoin(temp, value);
+	free(temp);
+	free(env[j]);
+	env[j] = new_name;
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   robo_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 19:56:32 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/18 18:45:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:30:31 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	robo_pwd(void)
 
 {
-	char *pwd;
+	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)

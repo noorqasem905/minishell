@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:49:58 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/20 22:28:50 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:26:29 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	handle_invalid(char *name)
 {
 	ft_printf("%2export: `%s`: not a valid identifier\n", name);
 }
+
 void	error_export(t_cmd **cmd)
 {
 	ft_printf("%2ERROR EXPORT");
@@ -26,7 +27,9 @@ void	print_with_value(char *name, char *value)
 {
 	char	*trimmed;
 
-	if (value[0] == '\0')
+	if (value == NULL)
+		ft_printf("declare -x %s\n", name);
+	else if (value[0] == '\0')
 		ft_printf("declare -x %s\n", name);
 	else
 	{
@@ -35,6 +38,7 @@ void	print_with_value(char *name, char *value)
 		free(trimmed);
 	}
 }
+
 int	get_env_j(char **env, char *name)
 {
 	int	i;
@@ -50,16 +54,18 @@ int	get_env_j(char **env, char *name)
 	}
 	return (-1);
 }
+
 void	handle_added(t_cmd **cmd, t_exp *export, int i, int j)
 {
+	char	**tmp;
+
 	if (j != -1)
 		update_env((*cmd)->env, j, export->name[i], export->value[i]);
 	else
 	{
-		char **tmp = add_env((*cmd)->env, export->name[i], export->value[i]);
+		tmp = add_env((*cmd)->env, export->name[i], export->value[i]);
 		frees_split((*cmd)->env);
 		(*cmd)->env = tmp;
 	}
-	frees_split((*cmd)->expo);
 	save_export_to_expo(cmd);
 }

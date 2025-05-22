@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 23:42:58 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/14 17:47:25 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:32:16 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	env(t_cmd *cmd)
 {
-	int i;
-	char *eq;
+	char	*eq;
+	int		i;
 
 	i = 0;
 	while (cmd->env[i])

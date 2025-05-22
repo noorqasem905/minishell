@@ -98,6 +98,8 @@ int	get_path(char **ev)
 		}
 		i++;
 	}
+	if (ev[i] == NULL)
+		return (-1);
 	if (flag == 0)
 		return (-1);
 	return (i);
@@ -131,13 +133,16 @@ char	*check_access(char **paths, char **result)
 		}
 		free(full_path);
 	}
+	// if (paths[l] != NULL)
 	free_it_now(paths, p, 0);
 	return (m);
 }
 
 int	ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 {
-	if (!file)
+	int		get;
+
+	if (!file || !*file)
 		return (-1);
 	*result = ft_split(file, ' ');
 	if (!*result)
@@ -145,7 +150,13 @@ int	ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 		perror("Error splitting file");
 		return (-1);
 	}
-	*paths = ft_split(ev[get_path(ev)] + 5, ':');
+	get = get_path(ev);
+	if (get < 0)
+	{
+		frees_split(*result);
+		return (-1);
+	}
+	*paths = ft_split(ev[get] + 5, ':');
 	if (!*paths)
 	{
 		free_it_now(*result, NULL, 1);
@@ -172,7 +183,6 @@ int	ft_execve(char *file, char **ev)
 	char	**paths;
 	int		flag;
 	char	*m;
-
 	if (ft_setup_execve(file, &result, ev, &paths) == -1)
 		return (-1);
 	if (!result || !result[0] || !*result[0])

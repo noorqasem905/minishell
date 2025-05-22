@@ -36,7 +36,11 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/utils_exeution.c				\
 		srcs/dup_process.c					\
 		srcs/utils_redirection.c			\
-		srcs/free_every.c
+		srcs/robo_cd.c						\
+		srcs/utils2.c						\
+		srcs/utils_here_doc.c				\
+		srcs/utils_export2.c				\
+		srcs/utils_expander.c
 		
 
 all: $(NAME)

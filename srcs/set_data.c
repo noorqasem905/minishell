@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 22:24:02 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/21 19:45:55 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,10 +152,34 @@ void	printf_split(char *str, char **split)
 
 int	searching_bulidin(char **split, t_cmd **cmd, char *t)
 {
+	int s;
+	
 	if (ft_strcmp(split[0], "export") == 0)
 	{
 		ft_export(t, cmd);
 		return (13);
+	}
+	if (ft_strcmp(split[0], "unset") == 0)
+	{
+		s = 1;
+		while (split[s])
+		{
+			robo_unset(split[s], cmd);
+			s++;
+		}
+		//frees_split(split);
+		return (-3);
+	}
+	if (ft_strcmp(split[0], "env") == 0)
+	{
+		env(*cmd);
+		return (-3);
+	}
+	if (ft_strcmp(split[0], "pwd") == 0)
+		robo_pwd();
+	if (ft_strcmp(split[0], "exit") == 0)
+	{
+		robo_exit(split, *cmd);
 	}
 	return (0);
 }
@@ -210,9 +234,13 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input,
 	}
 	t = expander_input(cmd);
 	ret_of_searching = searching_bulidin(split, cmd, t);
+	if (ret_of_searching < 0)
+	{
+		free(t);
+		frees_split(split);
+		return (ret_of_searching);
+	}
 	free(t);
-	
-	// if (ret_of_searching == 11)
 	frees_split(split);
 	if (searching_comand(input, *temp) == -13)
 		return (-13);

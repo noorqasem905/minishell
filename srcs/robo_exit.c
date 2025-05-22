@@ -6,13 +6,13 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:29:22 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/20 19:54:51 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/21 20:58:36 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_n(char *n)
+static int	check_n(char *n)
 {
 	int	i;
 
@@ -28,46 +28,45 @@ int	check_n(char *n)
 	return (1);
 }
 
-void	robo_exit(char **str, t_cmd *cmd)
+static void	free_exit(t_cmd *cmd)
 {
-	int n;
-
-	printf("Exiting\n");
-	if (str[1])
+	if (cmd->env)
+		frees_split(cmd->env);
+	if (cmd->expo)
+		frees_split(cmd->expo);
+	if (cmd->here_doc)
 	{
-		if (!check_n(str[1]))
-		{
-			ft_printf("%2roboshell: exit: %s: numeric argument required",
-				str[1]);
-			cmd->exit_status = 255;
+		if (cmd->here_doc->file_loc)
+			free(cmd->here_doc->file_loc);
+		free(cmd->here_doc);
+	}
+	if (cmd->word)
+		free_list(&(cmd->word));
+	free(cmd);
+}
 
-			free(cmd);
-			free_list(&cmd->word);
-			free(cmd->here_doc);
-			(cmd)->expo = NULL;
-			(cmd)->word = NULL;
-			(cmd)->here_doc = NULL;
-			exit(cmd->exit_status);
-		}
-		if (str[2])
+void	robo_exit(char **split, t_cmd *cmd)
+{
+	int	n;
+
+	n = 0;
+	ft_printf("exit\n");
+	if (split && split[1])
+	{
+		if (!check_n(split[1]))
 		{
-			ft_printf("%2robo: exit: too many arguments\n");
+			ft_printf("%2exit: %s: numeric argument required\n", split[1]);
+			n = 255;
+		}
+		else if (split[2])
+		{
+			ft_printf("%2exit: too many arguments\n");
 			cmd->exit_status = 1;
 			return ;
 		}
-		n = ft_atoi(str[1]);
+		else
+			n = ft_atoi(split[1]);
 	}
-	else
-		n = cmd->exit_status;
-	free_list(&cmd->word);
-	free(cmd->here_doc);
-	if (cmd->expo)
-		frees_split(cmd->expo);
-	(cmd)->expo = NULL;
-	(cmd)->word = NULL;
-	(cmd)->here_doc = NULL;
-	free(cmd);
-	cmd = NULL;
-	free_every(cmd);
-	exit((unsigned char)n);
+	free_exit(cmd);
+	exit((unsigned int)n);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   setup_execution_heredoc.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:11:43 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 19:15:43 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:29:19 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	 counter_total_heredoc(t_here_doc **here_doc, char *str)
+static	void	counter_total_heredoc(t_here_doc **here_doc, char *str)
 {
 	int		i;
 

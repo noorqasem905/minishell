@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 22:22:12 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:36:35 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ char						*check_access(char **paths, char **result);
 char						*expander_input(t_cmd **cmd);
 void						expand_cmds(t_cmd **cmd);
 char						**my_env(char **env);
+void						robo_unset(char *name, t_cmd **cmd);
 void						init_data(t_cmd **cmd);
 void						robo_export(t_cmd **cmd, t_exp *export);
 int							ft_export(char *str, t_cmd **cmd);
@@ -157,10 +158,9 @@ char						*get_redirection_command(char *temp,
 								char **redirection_split, int iteritor);
 int							get_env_j(char **env, char *name);
 char						*trim_quotes(char *str);
-void						unset(char *name, t_cmd *cmd);
+void						robo_exit(char **split, t_cmd *cmd);
 void						env(t_cmd *cmd);
 void						robo_pwd(void);
-void						robo_exit(char **str, t_cmd *cmd);
 void						update_env(char **env, int j, char *name,
 								char *value);
 void						error_export(t_cmd **cmd);
@@ -179,7 +179,7 @@ void						setup_extra_command_2(char **split_2,
 								char **command);
 void						set_data_extr_apy_redir(int *which, char *temp2,
 								char **temp4, char **redirection_split);
-int							word_count_custuom(char const *s, char c);
+int							word_count_custom(char const *s, char c);
 size_t						word_len_custuom(char *s, char c, int *flag);
 char						**ft_split_custom_exp(char const *s, char c);
 char						*extract_filename(char **redirection_split,
@@ -224,6 +224,24 @@ void						child_process_close(int pipe_fd2[][2], pid_t pids[],
 void						setup_extra_command_h_2(char **split_2,
 								char **command);
 void						dup_process_handle(int size, int pipe_fd2[][2]);
-void						free_every(t_cmd *cmd);
+int       					handle_cd_slash(char *temp);
+int       					handle_cd_dup_dot(char *temp);
+int       					build_quoted_string(char **dir, char ***temp, int total_len, int *end);
+int       					merge_quoted_tokens(char ***temp, char **dir, int start, int *end);
+int       					handle_space_infile(char ***temp, char **dir);
+int       					robo_cd_access(char **dir, char **temp);
+char						*trim_quotess(char *str);
+void						frees_newsplit(char **root);
+size_t						word_lenn(char *s, char c);
+void						free_exp(t_exp *export);
+int							handle_quotes(char **s, int *flag);
+void						ski_delimiters(char **s, char c);
+int							is_there_else_heredoc(char *temp);
+int							handle_here_doc(char *temp);
+int							get_free_filename(char **file_loc, char *new_fullpath);
+int							openfile_heredoc(int *fd, char **file_loc);
+char						*ft_strjoin_free(char *s1, char *s2);
+void						append_char(char **expanded, char ch);
+void						append_expansion(char **expanded, char *content, int *i, t_cmd *cmd);
 
 #endif

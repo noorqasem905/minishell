@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:11:43 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 17:29:19 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:50:47 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,16 @@ int	sizeof_heredoc(char *str)
 	return (size);
 }
 
-int	setup_execution(t_cmd **cmd, int *size)
+int	setup_execution(t_cmd **cmd)
 {
-	(*size) = ft_lstsize((*cmd)->word);
+	int		size;
+
+	(size) = ft_lstsize((*cmd)->word);
 	(*cmd)->here_doc->pryority = NULL;
-	if (*size > 300)
+	if (size > 300)
 		return (65);
-	(*cmd)->here_doc->pryority = malloc(sizeof(int) * (*size + 1));
-	(*cmd)->here_doc->pryority[*size] = '\0';
+	(*cmd)->here_doc->pryority = malloc(sizeof(int) * (size + 1));
+	(*cmd)->here_doc->pryority[size] = '\0';
 	(*cmd)->who_am_i = 0;
 	(*cmd)->here_doc->index = 0;
 	if (searching_here_doc(cmd, &(*cmd)->here_doc) == -1)

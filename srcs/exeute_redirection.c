@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:40:16 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/19 17:52:58 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/22 19:20:38 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	ft_execute_redirection_p1(char **redirection_split, int ccount, int *fd)
 	close(*fd);
 	return (0);
 }
+
 int	ft_execute_redirection_p2(char **redirection_split, int ccount, int *fd)
 {
 	char	*tmp2;
@@ -78,17 +79,44 @@ int	ft_execute_redirection_p2(char **redirection_split, int ccount, int *fd)
 	return (0);
 }
 
-int	ft_execute_redirection(char **redirection_split, int ccount, int *fd,
-		char *temp3, char **robo_env)
+int	ft_execute_redirection_p3(char **redirection_split, int ccount, int *fd)
 {
-	if (temp3[0] == '<')
+	char	*tmp2;
+	
+	tmp2 = extract_filename(redirection_split, ccount);
+	*fd = open(tmp2, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	free(tmp2);
+	if (*fd == -1)
 	{
-		if (ft_execute_redirection_p1(redirection_split, ccount, fd) < 0)
+		perror("open");
+		return (-1);
+	}
+	if (dup2(*fd, STDOUT_FILENO) == -1)
+	{
+		perror("dup2");
+		close(*fd);
+		return (-1);
+	}
+	close(*fd);
+	return (0);
+}
+
+int	ft_execute_redirection(char **redirection_split, int ccount_i[], int *fd,
+		char *temp3)
+{
+	if (ccount_i[1] == 6)
+	{
+		if (ft_execute_redirection_p3(redirection_split, ccount_i[0], fd) < 0)
+			return (-1);
+	}
+	else if (temp3[0] == '<')
+	{
+		if (ft_execute_redirection_p1(redirection_split, ccount_i[0], fd) < 0)
 			return (-1);
 	}
 	else if (temp3[0] == '>')
 	{
-		if (ft_execute_redirection_p2(redirection_split, ccount, fd) < 0)
+		if (ft_execute_redirection_p2(redirection_split, ccount_i[0], fd) < 0)
 			return (-1);
 	}
 	else

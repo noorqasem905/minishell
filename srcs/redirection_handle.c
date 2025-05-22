@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:43:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/19 17:43:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/22 19:28:00 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	redirection_check2free(char **temp, char ***redirection_split)
 int	setup_handle_redirection(char *input, char ***redirection_split,
 		char **temp, char **temp2)
 {
-	if (setup_redirection(input, temp, temp2))
+	int	ret;
+
+	ret = setup_redirection(input, temp, temp2);
+	if (ret < 0)
 		return (-1);
 	if (!(*temp2))
 	{
@@ -38,7 +41,7 @@ int	setup_handle_redirection(char *input, char ***redirection_split,
 		free(*temp2);
 		return (-1);
 	}
-	return (0);
+	return (ret);
 }
 
 int	error_redirection(char **redirection_split, char *command, char *temp2,
@@ -55,18 +58,14 @@ int	error_redirection(char **redirection_split, char *command, char *temp2,
 }
 
 int	error_process_redirection(char ***redirection_split, char **temp,
-		char *input, char **robo_env)
+		char *input, char **temp3)
 {
-	char	*temp3;
-
-	temp3 = ft_strmchr(input, "<>");
+	*temp3 = ft_strmchr(input, "<>");
 	if (!temp3)
 	{
 		redirection_check2free(temp, redirection_split);
 		return (-1);
 	}
-	if (process_redirections(redirection_split, robo_env, &temp3) < 0)
-		return (-1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:47:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 17:39:01 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:50:06 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,28 @@ int	check_redirection_mult(char *input)
 	int	mult_i[3];
 	int	conflect_handle[2];
 	int	is_file_enter[2];
+	int	ret_mul_ret[2];
 
 	mult_i[2] = 0;
+	ret_mul_ret[1] = 0;
 	init_check_redirection_mult(mult_i, conflect_handle, is_file_enter);
 	while (input[mult_i[2]])
 	{
-		if (check_redirection_mult_sign(mult_i, conflect_handle, is_file_enter,
-				input) < 0)
+		ret_mul_ret[0] = check_redirection_mult_sign(mult_i, conflect_handle,
+				is_file_enter, input);
+		if (ret_mul_ret[0] < 0)
 			return (-1);
+		if (ret_mul_ret[0] == 6)
+		{
+			ret_mul_ret[1] = ret_mul_ret[0];
+			mult_i[2]++;
+		}
 		mult_i[2]++;
 	}
-	if (is_file_enter[1] > 0 && is_file_enter[0] == 0)
+	if ((is_file_enter[1] > 0 && is_file_enter[0] == 0) || mult_i[0] > 1
+		|| mult_i[1] > 1 || conflect_handle[0] > 1)
 		return (-1);
-	if (mult_i[0] > 1 || mult_i[1] > 1 || conflect_handle[0] > 1)
-		return (-1);
-	return (0);
+	return (ret_mul_ret[1]);
 }
 
 int	handle_mult_redirection(char *temp3, char *temp2, char **temp,

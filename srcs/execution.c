@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 15:49:43 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:49:49 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,15 @@ int	open_pipe(t_cmd **cmd, int size, int pipe_fd2[][2])
 	return (0);
 }
 
-int	execution_process(t_cmd **cmd, int size, char **file_loc)
+int	execution_process(t_cmd **cmd)
 {
 	t_list	*current;
-	pid_t	pids[size];
-	int		pipe_fd2[size][2];
+	pid_t	pids[ft_lstsize((*cmd)->word)];
+	int		pipe_fd2[ft_lstsize((*cmd)->word)][2];
 	int		ret;
+	int		size;
 
+	size = ft_lstsize((*cmd)->word);
 	current = (*cmd)->word;
 	ret = open_pipe(cmd, size, pipe_fd2);
 	if (ret != 0)
@@ -58,21 +60,20 @@ int	execution_process(t_cmd **cmd, int size, char **file_loc)
 	return (0);
 }
 
-int	execution(t_cmd **cmd, char **env)
+int	execution(t_cmd **cmd)
 {
 	t_list	*current;
 	char	**file_loc;
-	int		size;
 	int		ret;
 
-	ret = setup_execution(cmd, &size);
+	ret = setup_execution(cmd);
 	if (ret != 0)
 		return (ret);
 	ret = setup_execution_heredoc(cmd, &file_loc);
 	if (ret != 0)
 		return (ret);
 	expand_cmds(cmd);
-	ret = execution_process(cmd, size, file_loc);
+	ret = execution_process(cmd);
 	if (ret != 0)
 		return (ret);
 	handle_here_doc_unlink(cmd, file_loc);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 14:18:58 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/23 17:41:27 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void						free_it_noww(char **s, char *s2, int emassage);
 void						signal_handler(int x);
 char						*check_access(char **paths, char **result);
 char						*expander_input(t_cmd **cmd);
-void						expand_cmds(t_cmd **cmd);
+void						expand_cmds(t_cmd **cmd, char *input);
 char						**my_env(char **env);
 void						robo_unset(char *name, t_cmd **cmd);
 void						init_data(t_cmd **cmd);

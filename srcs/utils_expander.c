@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:49:49 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 20:02:52 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/23 17:58:35 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,15 @@ void	append_char(char **expanded, char ch)
 	*expanded = ft_strjoin_free(*expanded, c);
 }
 
-void	expand_cmds(t_cmd **cmd)
+void	expand_cmds(t_cmd **cmd, char *input)
 {
 	t_list	*current;
 	char	*expanded_cmd;
 
+	current = NULL;
+	expanded_cmd = NULL;
+	if (ft_strchr(input, '|'))
+		return ;
 	current = (*cmd)->word;
 	while (current != NULL)
 	{

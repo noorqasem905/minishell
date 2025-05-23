@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 14:46:33 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/23 17:40:12 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 	frees_split(split);
 	if (searching_comand(input, *temp) == -13)
 		return (-13);
+	expand_cmds(cmd, *input);
 	ret = execution(cmd);
 	if (ret == -1)
 	{
@@ -134,6 +135,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 		free((*cmd)->here_doc->file_loc);
 	if ((*cmd)->here_doc->pryority)
 			free((*cmd)->here_doc->pryority);
+
 	return (0);
 }
 int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
@@ -147,7 +149,7 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 	{
 		if (is_closed(input) == -1)
 		{
-			dprintf(2, "Syntax error: Unclosed quotes\n");
+			ft_printf("%2Syntax error: Unclosed quotes\n");
 			free(input);
 			continue ;
 		}
@@ -157,7 +159,7 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			frees_split(*temp);
 			free_list((&(*cmd)->word));
 			if (ret == -1)
-				dprintf(2, "No command found\n");
+				ft_printf("%2No command found\n");
 			if (ret == -12)
 			{
 				frees_split((*cmd)->env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 14:43:34 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/23 17:09:11 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ int	execution_process(t_cmd **cmd)
 	int		size;
 
 	size = ft_lstsize((*cmd)->word);
-	// pids = malloc((size + 1) * sizeof(pid_t))
-	// pids[size] = NULL;
 	current = (*cmd)->word;
 	ret = open_pipe(cmd, size, pipe_fd2);
 	if (ret != 0)
@@ -73,7 +71,7 @@ int	execution(t_cmd **cmd)
 	ret = setup_execution_heredoc(cmd, &file_loc);
 	if (ret != 0)
 		return (ret);
-	expand_cmds(cmd);
+	//expand_cmds(cmd);
 	ret = execution_process(cmd);
 	if (ret != 0)
 		return (ret);

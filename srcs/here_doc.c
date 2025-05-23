@@ -6,11 +6,22 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 13:56:31 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/23 14:11:10 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int		free_err_ret(char *message, char *free_it, char **free_splt, int ret_value)
+{	
+	if (message)
+		ft_printf("%2", message);
+	if (free_it)
+		free(free_it);
+	if (free_splt)
+		frees_split(free_splt);
+	return (ret_value);
+}
 
 int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 {
@@ -19,30 +30,16 @@ int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 
 	temp = ft_strnstr(input, "<<", ft_strlen(input));
 	if (!temp)
-	{
-		ft_printf("%2no here doc\n");
-		return (0);
-	}
+		return(free_err_ret("no here doc\n", NULL, NULL, 0));
 	check_error = handle_here_doc(temp);
 	if (check_error < 0)
-	{
-		printf("error here doc\n");
-		return (-1);
-	}
+		return(free_err_ret("error here doc\n", NULL, NULL, -1));
 	(*fd) = openfile_heredoc(fd, file_loc);
 	if ((*fd) < 0)
-	{
-		if (*file_loc)
-			free(*file_loc);
-		return (-2);
-	}
+		return(free_err_ret(NULL, NULL, NULL, -2));
 	*input_split = ft_mult_split(temp, " <");
 	if (!*input_split)
-	{
-		if (*file_loc)
-			free(*file_loc);
-		return (-1);
-	}
+		return(free_err_ret(NULL, *file_loc, NULL, -1));
 	return (check_error);
 }
 
@@ -144,79 +141,3 @@ int	heredoc(char *temp, char **file_loc, size_t size)
 	free(heredoc_ptrs);
 	return (0);
 }
-
-/* # include <readline/readline.h>
-#include <readline/history.h>
-
-int	main(int argc, char *argv[], char **robo_env)
-{
-	// char    **input;
-	char	*temp = "cat << end ";
-	dprintf(2,"%d", heredoc(temp));
-} */
-//     // int     fd;
-//     // fd = open("/tmp/minishell_heredoc", O_RDWR | O_CREAT | O_TRUNC, 0644);
-//     // fd = openfile_heredoc(&fd);
-//     // if (fd < 0)
-//     //     return (-1);
-//     // if(dbg_heredoc(temp, &fd, &input))
-//     // {
-//     //     printf("error here doc\n");
-//     //     return (-1);
-//     // }
-//     // Done
-//     // char *here_doc;
-//     // int original_stdout = dup(STDOUT_FILENO);
-//     // if (original_stdout == -1)
-//     // {
-//     //     perror("dup");
-//     //     close(fd);
-//     //     return (-1);
-//     // }
-//     // printf("here doc: %d\n", fd);
-//     // while ((here_doc = get_next_line(STDIN_FILENO)) != NULL)
-//     // {
-//     //     size_t len = ft_strlen(here_doc);
-//     //     if (len > 0 && here_doc[len - 1] == '\n')
-//     //         here_doc[len - 1] = '\0';
-//     //     if (ft_strcmp(here_doc, input[0]) == 0)
-//     //     {
-//     //         free(here_doc);
-//     //         break ;
-//     //     }
-//     //     dup2(fd, STDOUT_FILENO);
-//     //     printf("%s\n", here_doc);
-//     //     dup2(original_stdout, STDOUT_FILENO);
-//     //     free(here_doc);
-//     // }
-//     // while ((here_doc = readline("> ")) != NULL)
-//     // {
-//     //     if (ft_strcmp(here_doc, input[0]) == 0)
-//     //     {
-//     //         free(here_doc);
-//     //         break ;
-//     //     }
-//     //     dup2(fd, STDOUT_FILENO);
-//     //     printf("%s\n", here_doc);
-//     //     dup2(original_stdout, STDOUT_FILENO);
-//     //     free(here_doc);
-//     // }
-//     // close(fd);
-//     // close(original_stdout);
-//     // frees_split(input);
-// }
-/*
-here doc
-
-formula << exit
-> ls
-> ls -l
-> ls -a
-> exit
-RoboShell>
-
-step 1: find the here doc formula
-step 2: find the exit if no error and no here doc
-step 3: find the here doc are correct
-step 4: do the here doc
-*/

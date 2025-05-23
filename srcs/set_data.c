@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 18:40:55 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/23 21:17:45 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define COLOR_CUSTOM "\x1b[38;2;42;161;179m"
 #define COLOR_RESET "\x1b[0m"
 
-int	searching_bulidin(char **split, t_cmd **cmd, char *t)
+int	searching_bulidin_2(char **split, t_cmd **cmd, char *t)
 {
 	int	s;
 
@@ -31,7 +31,6 @@ int	searching_bulidin(char **split, t_cmd **cmd, char *t)
 			robo_unset(split[s], cmd);
 			s++;
 		}
-		//frees_split(split);
 		return (-3);
 	}
 	if (ft_strcmp(split[0], "env") == 0)
@@ -39,12 +38,53 @@ int	searching_bulidin(char **split, t_cmd **cmd, char *t)
 		env(*cmd);
 		return (-3);
 	}
+	return (0);
+}
+
+int	searching_bulidin(char **split, t_cmd **cmd, char *t, char **input)
+{
+	int ret;
+
+	ret = searching_bulidin_2(split, cmd, t);
+	if(ret < 0)
+		return (ret);
 	if (ft_strcmp(split[0], "pwd") == 0)
 		robo_pwd();
-	/*if (ft_strcmp(split[0], "exit") == 0)
+	if (ft_strncmp(split[0], "cd", 2) == 0)
 	{
-		robo_exit(split, *cmd);
-	}*/
+		robo_cd(split, (*cmd)->env);
+		free(*input);
+		return (-3);
+	}
+	/*if (ft_strcmp(split[0], "exit") == 0)
+		robo_exit(split, *cmd);*/
+	return (0);
+}
+
+int	exitting_handle(int ret, t_cmd **cmd, char **input)
+{
+	if (ret == -1)
+	{
+		free(*input);
+		if ((*cmd)->here_doc->file_loc)
+			free((*cmd)->here_doc->file_loc);
+		if ((*cmd)->here_doc->pryority)
+			free((*cmd)->here_doc->pryority);
+		if ((*cmd)->exit_status == -13)
+			return (-14);
+		return (-12);
+	}
+	if (ret == 65)
+	{
+		if ((*cmd)->here_doc->file_loc)
+			free((*cmd)->here_doc->file_loc);
+		if ((*cmd)->here_doc->pryority)
+			free((*cmd)->here_doc->pryority);
+		(*cmd)->here_doc->pryority = NULL;
+		(*cmd)->here_doc->file_loc = NULL;
+		return (0);
+	}
+	free(*input);
 	return (0);
 }
 
@@ -88,15 +128,8 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 		free(*input);
 		return (-3);
 	}
-	if (ft_strncmp(split[0], "cd", 2) == 0)
-	{
-		robo_cd(split, (*cmd)->env);
-		free(*input);
-		frees_split(split);
-		return (-3);
-	}
 	t = expander_input(cmd);
-	ret_of_searching = searching_bulidin(split, cmd, t);
+	ret_of_searching = searching_bulidin(split, cmd, t, input);
 	if (ret_of_searching < 0)
 	{
 		free(t);
@@ -109,35 +142,16 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 		return (-13);
 	expand_cmds(cmd, *input);
 	ret = execution(cmd);
-	if (ret == -1)
-	{
-		free(*input);
-		if ((*cmd)->here_doc->file_loc)
-			free((*cmd)->here_doc->file_loc);
-		if ((*cmd)->here_doc->pryority)
-			free((*cmd)->here_doc->pryority);
-		if ((*cmd)->exit_status == -13)
-			return (-14);
-		return (-12);
-	}
-	if (ret == 65)
-	{
-		if ((*cmd)->here_doc->file_loc)
-			free((*cmd)->here_doc->file_loc);
-		if ((*cmd)->here_doc->pryority)
-			free((*cmd)->here_doc->pryority);
-		(*cmd)->here_doc->pryority = NULL;
-		(*cmd)->here_doc->file_loc = NULL;
-		return (0);
-	}
-	free(*input);
+	ret = exitting_handle(ret, cmd, input);
+	if (ret < 0)
+		return(ret);
 	if ((*cmd)->here_doc->file_loc)
 		free((*cmd)->here_doc->file_loc);
 	if ((*cmd)->here_doc->pryority)
-			free((*cmd)->here_doc->pryority);
-
+		free((*cmd)->here_doc->pryority);
 	return (0);
 }
+
 int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 {
 	char	*input;

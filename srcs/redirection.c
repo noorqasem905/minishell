@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 20:09:53 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:26:38 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,7 @@ int	process_redirections(char ***redirection_split, char **robo_env,
 		{
 			if (*redirection_split)
 				frees_split(*redirection_split);
-			if (tty)
-				frees_split(tty);
-			dprintf(2, "Error: Invalid redirection\n");
+			free_err_ret("Error: Invalid redirection\n", NULL, tty, 0);
 			return (-1);
 		}
 		(*temp3)++;

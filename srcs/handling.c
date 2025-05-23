@@ -6,11 +6,23 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 20:40:01 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/17 18:45:37 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/23 14:24:47 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	free_err_ret(char *message, char *free_it,
+			char **free_splt, int ret_value)
+{
+	if (message)
+		ft_printf("%2", message);
+	if (free_it)
+		free(free_it);
+	if (free_splt)
+		frees_split(free_splt);
+	return (ret_value);
+}
 
 void	free_list(t_list **saved_cmd)
 {

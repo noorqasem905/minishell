@@ -6,22 +6,11 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 14:11:10 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/23 14:23:53 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int		free_err_ret(char *message, char *free_it, char **free_splt, int ret_value)
-{	
-	if (message)
-		ft_printf("%2", message);
-	if (free_it)
-		free(free_it);
-	if (free_splt)
-		frees_split(free_splt);
-	return (ret_value);
-}
 
 int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 {
@@ -30,16 +19,16 @@ int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 
 	temp = ft_strnstr(input, "<<", ft_strlen(input));
 	if (!temp)
-		return(free_err_ret("no here doc\n", NULL, NULL, 0));
+		return ((free_err_ret("no here doc\n", NULL, NULL, 0)));
 	check_error = handle_here_doc(temp);
 	if (check_error < 0)
-		return(free_err_ret("error here doc\n", NULL, NULL, -1));
+		return ((free_err_ret("error here doc\n", NULL, NULL, -1)));
 	(*fd) = openfile_heredoc(fd, file_loc);
 	if ((*fd) < 0)
-		return(free_err_ret(NULL, NULL, NULL, -2));
+		return ((free_err_ret(NULL, NULL, NULL, -2)));
 	*input_split = ft_mult_split(temp, " <");
 	if (!*input_split)
-		return(free_err_ret(NULL, *file_loc, NULL, -1));
+		return ((free_err_ret(NULL, *file_loc, NULL, -1)));
 	return (check_error);
 }
 
@@ -48,8 +37,11 @@ int	implement_heredoc(int *fd, char **input, int original_stdout)
 	char	*here_doc;
 	size_t	len;
 
-	while ((here_doc = get_next_line(STDIN_FILENO)) != NULL)
+	while (1)
 	{
+		here_doc = get_next_line(STDIN_FILENO);
+		if (here_doc == NULL)
+			break ;
 		len = ft_strlen(here_doc);
 		if (len > 0 && here_doc[len - 1] == '\n')
 			here_doc[len - 1] = '\0';
@@ -127,8 +119,11 @@ int	heredoc(char *temp, char **file_loc, size_t size)
 	search = (temp);
 	heredoc_count = 0;
 	heredoc_ptrs = malloc((size + 1) * sizeof(char *));
-	while ((search = ft_strnstr(search, "<<", ft_strlen(search))))
+	while (1)
 	{
+		search = ft_strnstr(search, "<<", ft_strlen(search));
+		if (search == NULL)
+			break ;
 		heredoc_ptrs[heredoc_count++] = search;
 		search += 2;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_set_data2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 22:39:47 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 22:40:48 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:22:46 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,3 @@ void	init_data(t_cmd **cmd)
 	here_doc->temp = NULL;
 	here_doc->fd = 0;
 }
-

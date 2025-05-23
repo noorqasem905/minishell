@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 22:45:35 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:18:58 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ struct						s_exp
 int							check_redirection_mult_siggr(int mult[],
 								int conflect_handle[], int is_file_enter[],
 								char *input);
+int							free_err_ret(char *message, char *free_it,
+								char **free_splt, int ret_value);
 int							check_redirection_mult_sign(int mult[],
 								int conflect_handle[], int is_file_enter[],
 								char *input);

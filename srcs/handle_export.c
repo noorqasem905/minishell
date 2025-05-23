@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_export.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 22:38:34 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:37:35 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,6 @@ int	ft_export(char *str, t_cmd **cmd)
 	}
 	fill_export(export, result);
 	robo_export(cmd, export);
-	//printf_split("NAME: ", export->name);
-	//printf_split("VALUE: ", export->value);
 	free_exp(export);
 	frees_split(result);
 	return (0);

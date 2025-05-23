@@ -6,13 +6,13 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 20:40:01 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 14:24:47 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/23 17:45:39 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	free_err_ret(char *message, char *free_it,
+int	free_err_ret(char *message, void *free_it,
 			char **free_splt, int ret_value)
 {
 	if (message)

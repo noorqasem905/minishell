@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 14:23:53 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/23 17:49:36 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 
 	temp = ft_strnstr(input, "<<", ft_strlen(input));
 	if (!temp)
-		return ((free_err_ret("no here doc\n", NULL, NULL, 0)));
+		return ((free_err_ret("no here doc\n", (NULL), NULL, 0)));
 	check_error = handle_here_doc(temp);
 	if (check_error < 0)
 		return ((free_err_ret("error here doc\n", NULL, NULL, -1)));
@@ -28,7 +28,7 @@ int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 		return ((free_err_ret(NULL, NULL, NULL, -2)));
 	*input_split = ft_mult_split(temp, " <");
 	if (!*input_split)
-		return ((free_err_ret(NULL, *file_loc, NULL, -1)));
+		return ((free_err_ret(NULL, (void *)(*file_loc), NULL, -1)));
 	return (check_error);
 }
 

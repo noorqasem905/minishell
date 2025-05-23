@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 14:18:58 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/23 17:48:27 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ struct						s_exp
 int							check_redirection_mult_siggr(int mult[],
 								int conflect_handle[], int is_file_enter[],
 								char *input);
-int							free_err_ret(char *message, char *free_it,
+int							free_err_ret(char *message, void *free_it,
 								char **free_splt, int ret_value);
 int							check_redirection_mult_sign(int mult[],
 								int conflect_handle[], int is_file_enter[],
@@ -169,6 +169,7 @@ void						handle_added(t_cmd **cmd, t_exp *export, int i,
 								int j);
 void						print_with_value(char *name, char *value);
 void						handle_invalid(char *name);
+void						print_saved_cmd(t_list *saved_cmd);
 void						free_it(char **str, size_t i);
 void						save_export_to_expo(t_cmd **cmd);
 void						check_redirection_mult_nosiggrle(int mult[],

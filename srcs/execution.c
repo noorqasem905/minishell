@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 18:08:49 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:25:18 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,23 @@ int	execution_process(t_cmd **cmd)
 {
 	t_list	*current;
 	pid_t	*pids;
-	int		pipe_fd2[(ft_lstsize((*cmd)->word))][2];
+	int		(*pipe_fd2)[2];
 	int		ret;
 	int		size;
 
 	size = ft_lstsize((*cmd)->word);
 	pids = malloc((size + 1) * sizeof(pid_t));
+	pipe_fd2 = malloc((size + 1) * sizeof(int [2]));
 	pids[size] = '\0';
 	current = (*cmd)->word;
 	ret = open_pipe(cmd, size, pipe_fd2);
 	if (ret != 0)
 		return (ret);
 	if (child_process(cmd, &current, pipe_fd2, pids) < 0)
+	{
+		free(pipe_fd2);
 		return (free_err_ret(NULL, pids, NULL, -1));
+	}
 	close_wait(pids, size, pipe_fd2);
 	return (0);
 }
@@ -73,9 +77,6 @@ int	execution(t_cmd **cmd)
 	ret = setup_execution_heredoc(cmd, &file_loc);
 	if (ret != 0)
 		return (ret);
-	// free_err_ret
-	// expand_cmds(cmd);
-	// print_saved_cmd((*cmd)->word);
 	ret = execution_process(cmd);
 	if (ret != 0)
 		return (ret);

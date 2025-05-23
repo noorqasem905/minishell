@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:03:40 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 17:43:08 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:18:01 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,5 @@ void	close_wait(pid_t pids[], int size, int pipe_fd2[][2])
 				WEXITSTATUS(status));
 	}
 	free(pids);
+	free(pipe_fd2);
 }

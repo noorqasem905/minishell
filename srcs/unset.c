@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 23:20:32 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 22:53:33 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:25:59 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int	is_var_exist(char *name, t_cmd *cmd)
 	while (cmd->env[i])
 	{
 		if (ft_strncmp(cmd->env[i], name, ft_strlen(name)) == 0
-			&& cmd->env[i][ft_strlen(name) - 1] == '='
-			|| cmd->env[i][ft_strlen(name) - 1] == '\0')
+			&& cmd->env[i][ft_strlen(name)] == '='
+			/* || cmd->env[i][ft_strlen(name) - 1] == '\0' */)
 			return (1);
 		i++;
 	}

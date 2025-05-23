@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 22:40:00 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/23 13:56:31 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,20 +122,26 @@ int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[])
 
 int	heredoc(char *temp, char **file_loc, size_t size)
 {
-	char	*heredoc_ptrs[size];
+	char	**heredoc_ptrs;
 	char	*search;
 	int		heredoc_count;
 	int		fd[2];
 
-	search = temp;
+	search = (temp);
 	heredoc_count = 0;
+	heredoc_ptrs = malloc((size + 1) * sizeof(char *));
 	while ((search = ft_strnstr(search, "<<", ft_strlen(search))))
 	{
 		heredoc_ptrs[heredoc_count++] = search;
 		search += 2;
 	}
+	heredoc_ptrs[heredoc_count] = NULL;
 	if (heredoc_mult(heredoc_count, file_loc, heredoc_ptrs) < 0)
+	{
+		free(heredoc_ptrs);
 		return (-1);
+	}
+	free(heredoc_ptrs);
 	return (0);
 }
 

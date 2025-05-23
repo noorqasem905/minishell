@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 18:09:30 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/24 01:19:32 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int							get_env_j(char **env, char *name);
 char						*trim_quotes(char *str);
 void						robo_exit(char **split, t_cmd *cmd);
 void						env(t_cmd *cmd);
+void						handle_here_doc_nolink(t_cmd **cmd);
 void						robo_pwd(void);
 void						update_env(char **env, int j, char *name,
 								char *value);
@@ -208,13 +209,13 @@ int							ft_heredoc_redirection_process(char **str,
 int							ft_heredoc_redirection_manager(char *file,
 								char **str);
 int							execute_heredoc_setup_exe(char *file,
-								char **file_loc, int i, char **temp);
+								t_cmd **cmd, int i, char **temp);
 int							execute_heredoc_manage_exeu(char *file, char **str,
-								char **ev, char *temp);
+								t_cmd **cmd, char *temp);
 int							execute_heredoc_redirection(
 								char ***redirection_split,
 								char *str, char *st, char **ev);
-int							execute_heredoc(char *file, char **ev, int i,
+int							execute_heredoc(char *file, t_cmd **cmd, int i,
 								char **file_loc);
 int							dup_process_2_handle(t_cmd **cmd, t_list **current,
 								char **env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 17:40:12 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:35:49 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 	if (ft_strncmp(split[0], "cd", 2) == 0)
 	{
 		robo_cd(split, (*cmd)->env);
-		return (-3);
 		free(*input);
 		frees_split(split);
+		return (-3);
 	}
 	t = expander_input(cmd);
 	ret_of_searching = searching_bulidin(split, cmd, t);
@@ -107,7 +107,6 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 	frees_split(split);
 	if (searching_comand(input, *temp) == -13)
 		return (-13);
-	expand_cmds(cmd, *input);
 	ret = execution(cmd);
 	if (ret == -1)
 	{

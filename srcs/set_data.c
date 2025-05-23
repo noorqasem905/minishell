@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 21:17:45 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/24 01:20:30 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,34 @@ int	searching_bulidin(char **split, t_cmd **cmd, char *t, char **input)
 	return (0);
 }
 
+void	handle_here_doc_nolink(t_cmd **cmd)
+{
+	int	no;
+
+	no = 0;
+	while (no < (*cmd)->here_doc->counter)
+	{
+		if ((*cmd)->here_doc->file_loc[no])
+		{
+			free((*cmd)->here_doc->file_loc[no]);
+			(*cmd)->here_doc->file_loc[no] = NULL;
+		}
+		no++;
+	}
+	if ((*cmd)->here_doc->file_loc)
+	{
+		free((*cmd)->here_doc->file_loc);
+		(*cmd)->here_doc->file_loc = NULL;
+	}
+}
+
 int	exitting_handle(int ret, t_cmd **cmd, char **input)
 {
 	if (ret == -1)
 	{
 		free(*input);
 		if ((*cmd)->here_doc->file_loc)
-			free((*cmd)->here_doc->file_loc);
+			handle_here_doc_nolink(cmd);
 		if ((*cmd)->here_doc->pryority)
 			free((*cmd)->here_doc->pryority);
 		if ((*cmd)->exit_status == -13)
@@ -77,7 +98,7 @@ int	exitting_handle(int ret, t_cmd **cmd, char **input)
 	if (ret == 65)
 	{
 		if ((*cmd)->here_doc->file_loc)
-			free((*cmd)->here_doc->file_loc);
+			handle_here_doc_nolink(cmd);
 		if ((*cmd)->here_doc->pryority)
 			free((*cmd)->here_doc->pryority);
 		(*cmd)->here_doc->pryority = NULL;
@@ -87,16 +108,8 @@ int	exitting_handle(int ret, t_cmd **cmd, char **input)
 	free(*input);
 	return (0);
 }
-
-int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
+int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 {
-	t_list	*current;
-	char	**split;
-	char	*t;
-	int		ret;
-	int		ret_of_searching;
-
-	ret_of_searching = 0;
 	if (*input)
 		add_history(*input);
 	if (check_no_pipe(*input) && check_pipe_input(*input) == -1)
@@ -118,37 +131,70 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 			return (-3);
 		return (-1);
 	}
-	if (searching_comand(input, *temp) == -1)
-		return (-1);
-	split = ft_split((*temp)[0], ' ');
-	if (!split || !*split)
+	return(0);
+}
+
+int	process_set_input(t_cmd **cmd, char **t, char ***split, char **input)
+{
+	int	ret_of_searching;
+
+	if (!(*split) || !*(*split))
 	{
-		if (split)
-			free(split);
+		if ((*split))
+			free((*split));
 		free(*input);
 		return (-3);
 	}
-	t = expander_input(cmd);
-	ret_of_searching = searching_bulidin(split, cmd, t, input);
+	*t = expander_input(cmd);
+	ret_of_searching = searching_bulidin((*split), cmd, (*t), input);
 	if (ret_of_searching < 0)
 	{
-		free(t);
-		frees_split(split);
+		free(*t);
+		frees_split((*split));
 		return (ret_of_searching);
 	}
-	free(t);
-	frees_split(split);
-	if (searching_comand(input, *temp) == -13)
-		return (-13);
-	expand_cmds(cmd, *input);
-	ret = execution(cmd);
-	ret = exitting_handle(ret, cmd, input);
+	free(*t);
+	frees_split((*split));
+	return (ret_of_searching);
+}
+
+int	process_input_leaks(t_cmd **cmd, int ret)
+{
 	if (ret < 0)
 		return(ret);
 	if ((*cmd)->here_doc->file_loc)
-		free((*cmd)->here_doc->file_loc);
+		handle_here_doc_nolink(cmd);
 	if ((*cmd)->here_doc->pryority)
 		free((*cmd)->here_doc->pryority);
+	return (0);
+}
+
+int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
+{
+	t_list	*current;
+	char	**split;
+	char	*t;
+	int		ret_of_searching;
+
+	ret_of_searching = process_handle_input(cmd, flag, temp, input);
+	if (ret_of_searching < 0)
+		return (ret_of_searching);
+	if (searching_comand(input, *temp) == -1)
+		return (-1);
+	split = ft_split((*temp)[0], ' ');
+	ret_of_searching = process_set_input(cmd, &t, &split, input);
+	if (ret_of_searching < 0)
+		return(ret_of_searching);
+	if (searching_comand(input, *temp) == -13)
+		return (-13);
+	expand_cmds(cmd, *input);
+	ret_of_searching = execution(cmd);
+	ret_of_searching = exitting_handle(ret_of_searching, cmd, input);
+	if (ret_of_searching < 0)
+		return (ret_of_searching);
+	ret_of_searching = process_input_leaks(cmd, ret_of_searching);
+	if (ret_of_searching < 0)
+		return (ret_of_searching);
 	return (0);
 }
 

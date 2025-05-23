@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:06:12 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 17:40:02 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/24 01:21:52 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,17 @@ int	ft_heredoc_redirection_manager(char *file, char **str)
 	return (0);
 }
 
-int	execute_heredoc_setup_exe(char *file, char **file_loc, int i, char **temp)
+int	execute_heredoc_setup_exe(char *file, t_cmd **cmd, int i, char **temp)
 {
 	int	fd;
 
-	if (!file_loc[i])
+	if (!((*cmd)->here_doc->file_loc)[i])
 	{
 		dprintf(2, "Error: file_loc[%d] is NULL in execute_heredoc\n", i);
 		return (-1);
 	}
-	fd = open(file_loc[i], O_RDONLY);
-	free(file_loc[i]);
+	fd = open(((*cmd)->here_doc->file_loc)[i], O_RDONLY);
+	handle_here_doc_nolink(cmd);
 	if (fd < 0)
 	{
 		perror("open heredoc file");
@@ -91,7 +91,7 @@ int	execute_heredoc_setup_exe(char *file, char **file_loc, int i, char **temp)
 	return (0);
 }
 
-int	execute_heredoc_manage_exeu(char *file, char **str, char **ev, char *temp)
+int	execute_heredoc_manage_exeu(char *file, char **str, t_cmd **cmd, char *temp)
 {
 	if (ft_heredoc_redirection_manager(file, str) < 0)
 	{
@@ -101,7 +101,7 @@ int	execute_heredoc_manage_exeu(char *file, char **str, char **ev, char *temp)
 	}
 	if (!(*str))
 	{
-		if (ft_execve(temp, ev))
+		if (ft_execve(temp, (*cmd)->env))
 		{
 			if (temp)
 				free(temp);

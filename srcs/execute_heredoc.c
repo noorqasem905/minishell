@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:54:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 14:43:29 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/24 01:09:17 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,19 +97,19 @@ int	manager_execution_heredoc(char *file, char **temp)
 	return (0);
 }
 
-int	execute_heredoc(char *file, char **ev, int i, char **file_loc)
+int	execute_heredoc(char *file, t_cmd **cmd, int i, char **file_loc)
 {
 	char	**redirection_split;
 	char	*temp;
 	char	*str;
 	char	*st;
 
-	if (execute_heredoc_setup_exe(file, file_loc, i, &temp) < 0)
+	if (execute_heredoc_setup_exe(file, cmd, i, &temp) < 0)
 		return (-1);
-	if (execute_heredoc_manage_exeu(file, &str, ev, temp) < 0)
+	if (execute_heredoc_manage_exeu(file, &str, cmd, temp) < 0)
 		return (-1);
 	st = ft_strjoin(temp, str);
-	if (execute_heredoc_redirection(&redirection_split, str, st, ev) < 0)
+	if (execute_heredoc_redirection(&redirection_split, str, st, (*cmd)->env) < 0)
 	{
 		if (temp)
 			free(temp);

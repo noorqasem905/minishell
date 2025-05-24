@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/24 14:51:46 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/24 15:28:27 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int							handle_redirection_segment(
 int							read_input(char **input);
 size_t						element_size(char **str);
 void						close_wait(pid_t pids[], int size,
-								int pipe_fd2[][2]);
+								int pipe_fd2[][2], t_cmd **cmd);
 void						extract_apply_short_3(char **tmp, char **temp,
 								char *temp4, char **command);
 int							extract_apply_short(char **temp, char **tmp,
@@ -169,7 +169,7 @@ void						error_export(t_cmd **cmd);
 void						handle_added(t_cmd **cmd, t_exp *export, int i,
 								int j);
 void						print_with_value(char *name, char *value);
-void						handle_invalid(char *name);
+void						handle_invalid(char *name, t_cmd **cmd);
 void						print_saved_cmd(t_list *saved_cmd);
 void						free_it(char **str, size_t i);
 void						save_export_to_expo(t_cmd **cmd);

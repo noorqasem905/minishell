@@ -63,3 +63,4 @@ int	main(int argc, char *argv[], char **robo_env)
 	free(cmd);
 	return (e);
 }
+// handle end in heredoc that don't incude << end<<

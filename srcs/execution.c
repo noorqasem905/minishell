@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 18:40:52 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/24 15:12:47 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	execution_process(t_cmd **cmd)
 		free(pipe_fd2);
 		return (free_err_ret(NULL, pids, NULL, -1));
 	}
-	close_wait(pids, size, pipe_fd2);
+	close_wait(pids, size, pipe_fd2, cmd);
 	return (0);
 }
 

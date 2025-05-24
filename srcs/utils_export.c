@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:49:58 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 17:26:29 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/24 15:28:36 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	handle_invalid(char *name)
+void	handle_invalid(char *name, t_cmd **cmd)
 {
 	ft_printf("%2export: `%s`: not a valid identifier\n", name);
+	(*cmd)->exit_status = 1;
+
 }
 
 void	error_export(t_cmd **cmd)

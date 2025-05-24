@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:06:12 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/24 01:21:52 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/24 19:33:05 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_heredoc_redirection_process(char **str, char *temp)
 	int		i;
 
 	i = 1;
-	while (isspace(temp[i]))
+	while (ft_isspace(temp[i]))
 		i++;
 	if (temp[i] == '\0' || temp[i] == '<' || temp[i] == '>')
 		return (-1);
@@ -40,27 +40,79 @@ int	ft_heredoc_redirection_process(char **str, char *temp)
 	return (0);
 }
 
+int	ft_heredoc_redirection_manager_2(int *j, char **str, char **tmp)
+{
+	char	*tmp2;
+
+	if ((*tmp) && ((*tmp)[1] != '<') && ((*tmp)[0] == '<' || (*tmp)[0] == '>'))
+	{
+		if ((*tmp)[1] == '>')
+		{
+			(*tmp)[1] = ' ';
+			*j = 1;
+		}
+		if(ft_heredoc_redirection_process(str, (*tmp)))
+			return (-1);
+		tmp2 = ft_strmchr((*tmp) + 1, "<>");
+		(*tmp) = tmp2;
+	}
+	else
+	{
+		tmp2 = ft_strmchr((*tmp) + 2, "<>");
+		(*tmp) = tmp2;
+	}
+	return (0);
+}
+
+int	check_extra_redirection(char *tmp)
+{
+	int i;
+	int heredoc;
+	char *curr;
+	char *s;
+
+	i = 0;
+	heredoc = 1;
+	s = ft_strdup(tmp);
+	curr = s;
+	while (*curr)
+	{
+		if (*curr == '<' && (*curr+1) == '<' && heredoc)
+		{
+			heredoc = 0;
+			curr += 2;
+		}
+		if (*curr != '<' && *curr != '>' && !ft_isspace(*curr))
+			heredoc = 1;
+		if (check_redirection_mult(curr) < 0)
+		{
+			free(s);
+			return (-1);
+		}
+		curr++;
+	}
+	free(s);
+	return (0);
+}
+
 int	ft_heredoc_redirection_manager(char *file, char **str)
 {
 	char	*tmp2;
 	char	*tmp;
-	char	*st;
+	int		j;
 
 	*str = NULL;
+	j = 0;
 	tmp = ft_strmchr(file, "<>");
+	if (check_extra_redirection(tmp) < 0)
+		return (-1);
 	while (tmp != NULL)
+		ft_heredoc_redirection_manager_2(&j, str, &tmp);
+	if(j)
 	{
-		if (tmp && tmp[1] != '<' && (tmp[0] == '<' || tmp[0] == '>'))
-		{
-			ft_heredoc_redirection_process(str, tmp);
-			tmp2 = ft_strmchr(tmp + 1, "<>");
-			tmp = tmp2;
-		}
-		else
-		{
-			tmp2 = ft_strmchr(tmp + 2, "<>");
-			tmp = tmp2;
-		}
+		tmp2 = ft_strjoin(">", *str);
+		free(*str);
+		*str = tmp2;
 	}
 	return (0);
 }

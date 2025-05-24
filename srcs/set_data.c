@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/24 14:49:09 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/24 17:15:47 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,16 @@ int	exitting_handle(int ret, t_cmd **cmd, char **input)
 
 int	reading_manager_handle_2(t_cmd **cmd, int ret, char ***temp)
 {
+	int	exit_status;
+
+	exit_status = 0;
 	frees_split(*temp);
 	free_list((&(*cmd)->word));
 	if (ret == -1)
+	{
 		ft_printf("%2No command found\n");
+		(*cmd)->exit_status = 127;
+	}
 	if (ret == -12)
 	{
 		frees_split((*cmd)->env);
@@ -75,8 +81,9 @@ int	reading_manager_handle_2(t_cmd **cmd, int ret, char ***temp)
 			frees_split((*cmd)->expo);
 		(*cmd)->expo = NULL;
 		free((*cmd)->here_doc);
+		exit_status = (*cmd)->exit_status;
 		free(*cmd);
-		exit(EXIT_FAILURE);
+		exit(exit_status);
 	}
 	return (25);
 }
@@ -119,6 +126,7 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 		if (is_closed(input) == -1)
 		{
 			ft_printf("%2Syntax error: Unclosed quotes\n");
+			(*cmd)->exit_status = 1;
 			free(input);
 			continue ;
 		}

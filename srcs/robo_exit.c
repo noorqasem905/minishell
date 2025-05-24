@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   robo_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:29:22 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 19:50:24 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/24 15:27:04 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,14 @@ static void	free_exit(t_cmd *cmd)
 
 void	robo_exit(char **split, t_cmd *cmd)
 {
-	int	n;
-
-	n = 0;
+	cmd->exit_status = 0;
 	ft_printf("exit\n");
 	if (split && split[1])
 	{
 		if (!check_n(split[1]))
 		{
 			ft_printf("%2exit: %s: numeric argument required\n", split[1]);
-			n = 255;
+			cmd->exit_status= 255;
 		}
 		else if (split[2])
 		{
@@ -65,8 +63,6 @@ void	robo_exit(char **split, t_cmd *cmd)
 			return ;
 		}
 		else
-			n = ft_atoi(split[1]);
+			cmd->exit_status = ft_atoi(split[1]);
 	}
-	free_exit(cmd);
-	exit((unsigned int)n);
 }

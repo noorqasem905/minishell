@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:18:35 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/23 14:43:39 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/24 15:28:57 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	robo_export(t_cmd **cmd, t_exp *export)
 	while (export->name[i])
 	{
 		if (!is_valid(export->name[i]))
-			handle_invalid(export->name[i]);
+			handle_invalid(export->name[i], cmd);
 		else
 		{
 			j = get_env_j((*cmd)->env, export->name[i]);

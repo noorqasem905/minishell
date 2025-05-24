@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/24 01:20:30 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/24 12:37:35 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,48 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 	return (0);
 }
 
+int	reading_manager_handle_2(t_cmd **cmd, int ret, char ***temp)
+{
+	frees_split(*temp);
+	free_list((&(*cmd)->word));
+	if (ret == -1)
+		ft_printf("%2No command found\n");
+	if (ret == -12)
+	{
+		frees_split((*cmd)->env);
+		if ((*cmd)->expo)
+			frees_split((*cmd)->expo);
+		(*cmd)->expo = NULL;
+		free((*cmd)->here_doc);
+		free(*cmd);
+		exit(EXIT_FAILURE);
+	}
+	return (25);
+}
+
+int	reading_manager_handle(t_cmd **cmd, int *flag, char ***temp, char **input)
+{
+	int ret;
+
+	ret = process_input(cmd, flag, temp, input);
+	if (ret < 0 && ret != -3 && ret != -42 && ret != -55)
+	{
+		return (reading_manager_handle_2(cmd, ret, temp));
+	}
+	else if (ret == -3 || ret == -14)
+	{
+		*flag = 0;
+		frees_split(*temp);
+		free_list(&(*cmd)->word);
+		return (26);
+	}
+	else if (ret == -42)
+		return (26);
+	frees_split(*temp);
+	free_list(&(*cmd)->word); 
+	return (0);
+}
+
 int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 {
 	char	*input;
@@ -213,38 +255,13 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
 			free(input);
 			continue ;
 		}
-		ret = process_input(cmd, flag, temp, &input);
-		if (ret < 0 && ret != -3 && ret != -42 && ret != -55)
-		{
-			frees_split(*temp);
-			free_list((&(*cmd)->word));
-			if (ret == -1)
-				ft_printf("%2No command found\n");
-			if (ret == -12)
-			{
-				frees_split((*cmd)->env);
-				if ((*cmd)->expo)
-					frees_split((*cmd)->expo);
-				(*cmd)->expo = NULL;
-				free((*cmd)->here_doc);
-				free(*cmd);
-				exit(EXIT_FAILURE);
-			}
+		ret = reading_manager_handle(cmd, flag, temp, &input);
+ 		if (ret == 25)
 			break ;
-		}
-		else if (ret == -3 || ret == -14)
-		{
-			*flag = 0;
-			frees_split(*temp);
-			free_list(&(*cmd)->word);
-			// free((*cmd)->word);
+		else if(ret == 26);
 			continue ;
-		}
-		else if (ret == -42)
-			continue ;
-		frees_split(*temp);
-		free_list(&(*cmd)->word);
 	}
 	ft_printf("Exiting...\n");
 	return (0);
 }
+//handle input / or ./ with empty 

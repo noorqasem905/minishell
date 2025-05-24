@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/24 01:19:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/24 14:51:46 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,8 @@ int							extract_and_apply_redirection(char **temp,
 								char *temp2, char ***redirection_split,
 								char **command);
 int							handle_redirection_segment(
-								char ***redirection_split,
-								char **temp, char **temp4, char *th);
+								char ***redirection_split, char **temp,
+								char **temp4, char *th);
 int							read_input(char **input);
 size_t						element_size(char **str);
 void						close_wait(pid_t pids[], int size,
@@ -208,8 +208,8 @@ int							ft_heredoc_redirection_process(char **str,
 								char *temp);
 int							ft_heredoc_redirection_manager(char *file,
 								char **str);
-int							execute_heredoc_setup_exe(char *file,
-								t_cmd **cmd, int i, char **temp);
+int							execute_heredoc_setup_exe(char *file, t_cmd **cmd,
+								int i, char **temp);
 int							execute_heredoc_manage_exeu(char *file, char **str,
 								t_cmd **cmd, char *temp);
 int							execute_heredoc_redirection(
@@ -254,5 +254,19 @@ void						no_space(int *l, char **m, char **o);
 int							is_closed(char *input);
 int							check_no_pipe(char *input);
 int							check_pipe_input(char *input);
+int							searching_bulidin_2(char **split, t_cmd **cmd,
+								char *t);
+int							searching_bulidin(char **split, t_cmd **cmd,
+								char *t, char **input);
+int							exitting_handle(int ret, t_cmd **cmd, char **input);
+int							process_handle_input(t_cmd **cmd, int *flag,
+								char ***temp, char **input);
+int							process_set_input(t_cmd **cmd, char **t,
+								char ***split, char **input);
+int							process_input_leaks(t_cmd **cmd, int ret);
+int							reading_manager_handle_2(t_cmd **cmd, int ret,
+								char ***temp);
+int							reading_manager_handle(t_cmd **cmd, int *flag,
+								char ***temp, char **input);
 
 #endif

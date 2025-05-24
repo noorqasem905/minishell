@@ -43,8 +43,9 @@ SRCS = 	srcs/minishell.c 					\
 		srcs/utils_expander.c				\
 		srcs/utils_setup.c					\
 		srcs/utils_set_data.c				\
-		srcs/utils_set_data2.c
-		
+		srcs/utils_set_data2.c				\
+		srcs/process_input.c				\
+		srcs/searching_bulidin.c
 
 all: $(NAME)
 

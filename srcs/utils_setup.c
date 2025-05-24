@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_setup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:58:09 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 22:39:08 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:47:02 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	handle_ecv_slash(char *result, char **m, char **paths)
 {
 	if (result && ft_strncmp(result, "/", 1) == 0)
 	{
-		if (access(result, F_OK | X_OK) == 0)
+		if (access(result, F_OK | X_OK) == 0 && ft_strcmp(result, "/") != 0)
 		{
 			*m = ft_strdup(result);
 			return (5);
@@ -72,7 +72,7 @@ int	check_validation(char **paths, char **result, char **m)
 	}
 	if (result[0] && ft_strncmp(result[0], "./", 2) == 0)
 	{
-		if (access(result[0], X_OK) == -1)
+		if (access(result[0], X_OK) == -1 || ft_strcmp(result[0], "./") == 0)
 		{
 			free_it_noww(paths, NULL, 0);
 			perror("Error: File is not executable or doesn't exist");

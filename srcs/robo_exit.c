@@ -6,11 +6,23 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:29:22 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/25 15:17:31 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 23:17:01 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+/* 
+int	ft_mod(int a, int b)
+{
+	int	r;
+
+	if (b < 0)
+		b = -b;
+	r = a % b;
+	if (r < 0)
+		r += b;
+	return (r);
+} */
 
 static int	check_n(char *n)
 {
@@ -47,8 +59,12 @@ static void	free_exit(t_cmd *cmd)
 
 void	robo_exit(char **split, t_cmd *cmd)
 {
+	long long	value;
+	int			size;
+
 	cmd->exit_status = 0;
-	ft_printf("exit\n");
+	size = ft_strlen(split[1]);
+	value = 0;
 	if (split && split[1])
 	{
 		if (!check_n(split[1]))
@@ -56,13 +72,13 @@ void	robo_exit(char **split, t_cmd *cmd)
 			ft_printf("%2exit: %s: numeric argument required\n", split[1]);
 			cmd->exit_status = 255;
 		}
-		else if (split[2])
+		else if (split[2] || size > 19)
 		{
 			ft_printf("%2exit: too many arguments\n");
 			cmd->exit_status = 1;
 			return ;
 		}
 		else
-			cmd->exit_status = ft_atoi(split[1]);
+			cmd->exit_status = ft_mod(ft_atoi_long(split[1]), 256);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:06:12 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 18:10:08 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 22:47:00 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int	execute_heredoc_manage_exeu(char *file, char **str, t_cmd **cmd, char *temp)
 	}
 	if (!(*str))
 	{
+/* 		if (run_buildin_execution(*cmd, temp) < 0)
+			return (-1); */
 		if (ft_execve(temp, (*cmd)->env))
 		{
 			ft_printf("%2Command not found\n");

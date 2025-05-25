@@ -1,45 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   robo_pwd.c                                         :+:      :+:    :+:   */
+/*   ft_mod.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 19:56:32 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/25 23:27:54 by nqasem           ###   ########.fr       */
+/*   Created: 2025/05/25 20:27:25 by nqasem            #+#    #+#             */
+/*   Updated: 2025/05/25 20:28:51 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	robo_pwd(void)
+long long	ft_mod(long long a, long long b)
 {
-	char	*pwd;
+	int	r;
 
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-	{
-		ft_printf("%2 error pwd");
-		return ;
-	}
-	ft_printf("%s\n", pwd);
-	free(pwd);
-	return ;
+	if (b < 0)
+		b = -b;
+	r = a % b;
+	if (r < 0)
+		r += b;
+	return (r);
 }
-
-/*void robo_pwd(char **env)
-{
-	int i;
-
-	while (env[i])
-	{
-		if (ft_strcmp(env[i], "PWD") == 0)
-		{
-			char *eq = ft_strchr(env[i], "=");
-			return(eq);
-		}
-		i++;
-	}
-	return (0);
-
-}*/

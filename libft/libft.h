@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:06:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/15 21:58:11 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 20:29:04 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ size_t				ft_strlen(const char *s);
 size_t				word_mult_len(char *s, char c[]);
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
+long long			ft_mod(long long a, long long b);
+long long			ft_atoi_long(const char *str);
 int					ft_abs(int __x);
 int					ft_toupper(int c);
 int					ft_tolower(int c);

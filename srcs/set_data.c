@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 18:38:47 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 23:11:13 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	reading_manager_handle_2(t_cmd **cmd, int ret, char ***temp)
 	exit_status = 0;
 	frees_split(*temp);
 	free_list((&(*cmd)->word));
-	if ((*cmd)->exit_status == 12)
+	if ((*cmd)->who_am_i == 102)
 		(*cmd)->exit_status = 0;
 	if (ret == -1)
 	{
@@ -95,7 +95,7 @@ int	reading_manager_handle(t_cmd **cmd, int *flag, char ***temp, char **input)
 	int	ret;
 
 	ret = process_input(cmd, flag, temp, input);
-	if ((*cmd)->exit_status == 12)
+	if ((*cmd)->who_am_i == 102)
 		(*cmd)->exit_status = 0;
 	if (ret < 0 && ret != -3 && ret != -42 && ret != -55)
 		return (reading_manager_handle_2(cmd, ret, temp));

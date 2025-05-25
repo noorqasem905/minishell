@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:43:49 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 15:18:44 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 23:26:34 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,17 @@ int	searching_bulidin_2(char **split, t_cmd **cmd, char *t)
 	return (0);
 }
 
+int	searching_bulidin_exit(char **split, t_cmd **cmd, char *t, char **input)
+{
+	if (!ft_strchr(*input, '|'))
+		return (0);
+	ft_printf("%2%s\n", *input);
+	printf_split("output:", split);
+	robo_exit(split, *cmd);
+	ft_printf("%2e: %d\n", (*cmd)->exit_status);
+	return (0);
+}
+
 int	searching_bulidin(char **split, t_cmd **cmd, char *t, char **input)
 {
 	int	ret;
@@ -46,8 +57,6 @@ int	searching_bulidin(char **split, t_cmd **cmd, char *t, char **input)
 	ret = searching_bulidin_2(split, cmd, t);
 	if (ret < 0)
 		return (ret);
-	if (ft_strcmp(split[0], "pwd") == 0)
-		robo_pwd();
 	if (ft_strncmp(split[0], "cd", 2) == 0)
 	{
 		robo_cd(split, (*cmd)->env);

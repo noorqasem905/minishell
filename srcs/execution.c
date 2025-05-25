@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 18:32:49 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 23:30:36 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,15 @@ int	execution(t_cmd **cmd)
 {
 	t_list	*current;
 	char	**file_loc;
+	int		one_command;
 	int		ret;
 
+	one_command = 0;
+	if ((*cmd)->word->next == NULL && ft_strchr
+		((*cmd)->word->content, 'e')
+		&& ft_strncmp(ft_strchr((*cmd)->word->content,
+				'e'), "exit", 4) == 0)
+		one_command = -1;
 	ret = setup_execution(cmd);
 	if (ret != 0)
 		return (ret);
@@ -80,7 +87,7 @@ int	execution(t_cmd **cmd)
 	if (ret != 0)
 		return (ret);
 	handle_here_doc_unlink(cmd, file_loc);
-	return (0);
+	return (one_command);
 }
 
 void	child_process_close(int pipe_fd2[][2], pid_t pids[], int i, int size)

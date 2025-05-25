@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 14:49:12 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 23:26:02 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int	check_env(t_cmd *cmd)
 int	run_buildin_execution(t_cmd *cmd, t_list *current)
 {
 	char	*tmp;
+	char	**split;
 
 	tmp = ft_strtrim(current->content, " ");
 	if (!tmp)
@@ -49,6 +50,25 @@ int	run_buildin_execution(t_cmd *cmd, t_list *current)
 	{
 		free(tmp);
 		check_env(cmd);
+	}
+	else if (ft_strcmp(tmp, "pwd") == 0)
+	{
+		free(tmp);
+		robo_pwd();
+		return (-1);
+	}
+	else if (ft_strcmp(tmp, "exit") == 0)
+	{
+		free(tmp);
+		return (-1);
+	}
+	else if (ft_strncmp(tmp, "exit", 4) == 0)
+	{
+		split = ft_split(current->content, ' ');
+		robo_exit(split, cmd);
+		frees_split(split);
+		free(tmp);
+		return (-1);
 	}
 	if (ft_strncmp(tmp, "export", 6) == 0)
 	{

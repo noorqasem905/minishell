@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:03:40 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 15:26:42 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 18:18:28 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ int	dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 	}
 	else if (ft_strmchr((*current)->content, "<>"))
 	{
-		if (ft_redirection((*current)->content, &redirection_split, env) < 0)
+		if (ft_redirection((*current)->content, &redirection_split, cmd) < 0)
 		{
-			write(2, "Error: Invalid redirection\n\n", 27);
+			if ((*cmd)->exit_status == 0)
+				ft_printf("%2syntax error near unexpected token `newline`\n");
 			return (-1);
 		}
 	}
@@ -45,7 +46,7 @@ int	dup_process(int *i, int size, int pipe_fd2[][2])
 	{
 		if (dup2(pipe_fd2[(*i) - 1][0], STDIN_FILENO) == -1)
 		{
-			dprintf(2, "pipe failed at index %d\n", (*i));
+			ft_printf("%2pipe failed at index %d\n", (*i));
 			perror("dup2");
 			return (-1);
 		}
@@ -54,7 +55,7 @@ int	dup_process(int *i, int size, int pipe_fd2[][2])
 	{
 		if (dup2(pipe_fd2[(*i)][1], STDOUT_FILENO) == -1)
 		{
-			perror("dup2");
+			ft_printf("%2dup2");
 			return (-1);
 		}
 	}

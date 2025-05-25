@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_execution.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 20:14:59 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 16:54:27 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/25 17:33:44 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_it_noww(char **s, char *s2, int emassage)
 		s = NULL;
 	}
 	if (emassage || emassage == -1)
-		perror("Error");
+		ft_printf("%2");
 }
 
 char	*check_access(char **paths, char **result)
@@ -121,7 +121,6 @@ int	ft_execve(char *file, char **ev)
 		return (-1);
 	if (execve(m, result, ev) == -1)
 	{
-		perror("Error executing command");
 		free_it_noww(result, m, 1);
 		return (-1);
 	}

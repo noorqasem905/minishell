@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:11:43 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 15:18:10 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 17:27:48 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ int	setup_execution(t_cmd **cmd)
 	(*cmd)->here_doc->index = 0;
 	if (searching_here_doc(cmd, &(*cmd)->here_doc) == -1)
 	{
-		perror("Error in here doc");
+		ft_printf("%2syntax error near unexpected token `newline`\n");
+		(*cmd)->exit_status = 2;
 		return (-13);
 	}
 	return (0);

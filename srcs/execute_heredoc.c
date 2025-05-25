@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:54:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 13:52:58 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 18:01:13 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	here_doc_manger(t_cmd **cmd, char **file_loc)
 			if (size > 1023 || heredoc(current->content, &(file_loc[i_j[1]]),
 					size) < 0)
 			{
-				perror("heredoc");
+				ft_printf("%2heredoc");
 				return (-1);
 			}
 			i_j[1]++;
@@ -71,12 +71,15 @@ int	setup_execution_heredoc(t_cmd **cmd, char ***file_loc)
 		(*file_loc) = malloc(sizeof(char *) * ((*cmd)->here_doc->counter + 1));
 		if (!file_loc)
 		{
-			perror("malloc");
+			ft_printf("%2malloc\n");
 			return (-1);
 		}
 		(*cmd)->here_doc->file_loc = (*file_loc);
 		if (here_doc_manger(cmd, (*cmd)->here_doc->file_loc) < 0)
+		{
+			(*cmd)->exit_status = 2;
 			return (65);
+		}
 	}
 	return (0);
 }
@@ -110,8 +113,10 @@ int	execute_heredoc(char *file, t_cmd **cmd, int i, char **file_loc)
 		return (-1);
 	st = ft_strjoin(temp, str);
 	if (execute_heredoc_redirection
-		(&redirection_split, str, st, (*cmd)->env) < 0)
+		(&redirection_split, str, st, cmd) < 0)
 	{
+		if ((*cmd)->exit_status != 127)
+			(*cmd)->exit_status = 2;
 		if (temp)
 			free(temp);
 		return (-1);

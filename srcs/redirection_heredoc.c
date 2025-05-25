@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:06:12 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 15:08:12 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 18:10:08 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ int	execute_heredoc_setup_exe(char *file, t_cmd **cmd, int i, char **temp)
 
 	if (!((*cmd)->here_doc->file_loc)[i])
 	{
-		dprintf(2, "Error: file_loc[%d] is NULL in execute_heredoc\n", i);
+		ft_printf("%2Error: file_loc[%d] is NULL in execute_heredoc\n", i);
 		return (-1);
 	}
 	fd = open(((*cmd)->here_doc->file_loc)[i], O_RDONLY);
 	handle_here_doc_nolink(cmd);
 	if (fd < 0)
 	{
-		perror("open heredoc file");
+		ft_printf("%2open heredoc file\n");
 		return (-1);
 	}
 	dup2(fd, STDIN_FILENO);
@@ -102,6 +102,8 @@ int	execute_heredoc_manage_exeu(char *file, char **str, t_cmd **cmd, char *temp)
 	{
 		if (ft_execve(temp, (*cmd)->env))
 		{
+			ft_printf("%2Command not found\n");
+			(*cmd)->exit_status = 127;
 			if (temp)
 				free(temp);
 			return (-1);
@@ -111,9 +113,9 @@ int	execute_heredoc_manage_exeu(char *file, char **str, t_cmd **cmd, char *temp)
 }
 
 int	execute_heredoc_redirection(char ***redirection_split, char *str, char *st,
-		char **ev)
+		t_cmd **cmd)
 {
-	if (ft_redirection(st, redirection_split, ev) < 0)
+	if (ft_redirection(st, redirection_split, cmd) < 0)
 	{
 		if (str)
 			free(str);

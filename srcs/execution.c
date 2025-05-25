@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/24 15:12:47 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 18:32:49 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,20 @@ int	open_pipe(t_cmd **cmd, int size, int pipe_fd2[][2])
 	i = 0;
 	if (!cmd || !(*cmd) || !(*cmd)->word)
 	{
-		perror("Invalid command structure");
+		ft_printf("%2Invalid command structure");
 		return (-1);
 	}
 	if (size == 0)
 	{
-		perror("No commands to execute");
+		ft_printf("%2No commands to execute");
 		return (-1);
 	}
 	while (i < size - 1)
 	{
 		if (pipe(pipe_fd2[i]) == -1)
 		{
-			dprintf(2, "pipe failed at index %d\n", i);
-			perror("pipe");
-			exit(EXIT_FAILURE);
+			ft_printf("%2pipe failed at index %d\n", i);
+			return (-1);
 		}
 		i++;
 	}
@@ -59,7 +58,7 @@ int	execution_process(t_cmd **cmd)
 	if (child_process(cmd, &current, pipe_fd2, pids) < 0)
 	{
 		free(pipe_fd2);
-		return (free_err_ret(NULL, pids, NULL, -1));
+		return (free_err_ret("NULL", pids, NULL, -1));
 	}
 	close_wait(pids, size, pipe_fd2, cmd);
 	return (0);

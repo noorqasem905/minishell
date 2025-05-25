@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:14:36 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 15:15:07 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 17:38:51 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	dup_process_2_handle(t_cmd **cmd, t_list **current, char **env)
 		return (-1);
 	if (ft_execve((*current)->content, env) == -1)
 	{
-		perror("Command not found");
+		(*cmd)->exit_status = 127;
+		ft_printf("%2Command not found\n");
 		return (-1);
 	}
 	return (0);

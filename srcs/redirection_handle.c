@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:43:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/22 19:28:00 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 18:30:08 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,21 @@ int	error_process_redirection(char ***redirection_split, char **temp,
 	return (0);
 }
 
-int	error_ft_execute_redirection(char *temp, char *command, char **robo_env)
+int	error_ft_execute_redirection(char *temp, char *command, t_cmd **cmd, int i)
 {
-	if (ft_execve(command, robo_env) == -1)
+	if (ft_execve(command, (*cmd)->env) == -1)
 	{
 		if (command)
 			free(command);
 		if (temp)
 			free(temp);
-		perror("Command not found");
+		if (i == 3)
+		{
+			(*cmd)->exit_status = 12;
+			return (-1);
+		}
+		(*cmd)->exit_status = 127;
+		ft_printf("%2Command not found");
 		return (-1);
 	}
 	free(command);

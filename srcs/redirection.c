@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/24 19:34:24 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 18:30:24 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ int	setup_redirection(char *input, char **temp, char **temp2)
 
 	mult = check_redirection_mult(input);
 	if (mult == -1)
-	{
-		dprintf(2, "Error: Multiple redirections\n");
 		return (-1);
-	}
 	state = ft_strmchr(input, "<>")[0];
 	if (state == '<')
 	{
@@ -66,33 +63,34 @@ char	*get_redirection_command(char *temp, char **redirection_split,
 	return (NULL);
 }
 
-int	process_redirections(char ***redirection_split, char **robo_env,
+int	process_redirections(char ***redirection_split, t_cmd **cmd,
 		char **temp3, int i)
 {
 	char	**tty;
-	int		ccount_i[2];
+	int		ccount_i[3];
 	int		fd;
 
 	ccount_i[0] = -1;
 	ccount_i[1] = i;
+	ccount_i[2] = 0;
 	tty = ft_mult_split((*temp3), "<>");
 	while (++ccount_i[0] < ft_2dlen(*redirection_split))
 	{
 		(*temp3) = ft_strmchr((*temp3), "<>");
 		if (!(*temp3))
 			break ;
-		if (ft_execute_redirection(tty, ccount_i, &fd, (*temp3)) < 0)
+		if (ft_execute_redirection(tty, ccount_i, &fd, *temp3) < 0)
 		{
 			if (*redirection_split)
 				frees_split(*redirection_split);
-			free_err_ret("Error: Invalid redirection\n", NULL, tty, 0);
-			return (-1);
+			(*cmd)->exit_status = 1;
+			return (free_err_ret(NULL, NULL, tty, -1));
 		}
 		(*temp3)++;
 	}
 	frees_split(tty);
 	frees_split(*redirection_split);
-	return (0);
+	return (ccount_i[2]);
 }
 
 static int	error_process_redirection_free(char *command, char *temp)
@@ -104,7 +102,7 @@ static int	error_process_redirection_free(char *command, char *temp)
 	return (-1);
 }
 
-int	ft_redirection(char *input, char ***redirection_split, char **robo_env)
+int	ft_redirection(char *input, char ***redirection_split, t_cmd **cmd)
 {
 	char	*temp;
 	char	*temp2;
@@ -112,7 +110,7 @@ int	ft_redirection(char *input, char ***redirection_split, char **robo_env)
 	char	*command;
 	int		ret;
 
-	if (!input || !robo_env)
+	if (!input || !(*cmd)->env)
 		return (-1);
 	ret = setup_handle_redirection(input, redirection_split, &temp, &temp2);
 	if (ret < 0)
@@ -122,12 +120,13 @@ int	ft_redirection(char *input, char ***redirection_split, char **robo_env)
 		return (-1);
 	if (error_process_redirection(redirection_split, &temp, input, &temp3) < 0)
 		return (error_process_redirection_free(command, temp));
-	if (process_redirections(redirection_split, robo_env, &temp3, ret) < 0)
+	ret = process_redirections(redirection_split, cmd, &temp3, ret);
+	if (ret < 0)
 		return (error_process_redirection_free(command, temp));
 	if (error_redirection(*redirection_split, command, temp2, temp) < 0)
 		return (-1);
-	if (error_ft_execute_redirection(temp, command, robo_env) < 0)
-		return (-1);
+	if (error_ft_execute_redirection(temp, command, cmd, ret) < 0)
+		return (-12);
 	return (0);
 }
 

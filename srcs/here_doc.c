@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 15:07:16 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 17:59:56 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,11 @@ int	implement_heredoc(int *fd, char **input, int original_stdout)
 int	heredoc_mult_process(int check_error, char **file_loc, int fd[])
 {
 	if (check_error < 0)
-	{
-		printf("error here doc\n");
 		return (-1);
-	}
 	fd[0] = dup(STDOUT_FILENO);
 	if (fd[0] == -1)
 	{
-		perror("dup");
+		ft_printf("%2dup\n");
 		close(fd[1]);
 		if (*file_loc)
 			free(*file_loc);

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/24 14:43:55 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 17:24:23 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 		add_history(*input);
 	if (check_no_pipe(*input) && check_pipe_input(*input) == -1)
 	{
-		dprintf(2, "Syntax error: Invalid pipe usage\n");
+		ft_printf("%2syntax error near unexpected token `|`\n");
+		(*cmd)->exit_status = 2;
 		return (-42);
 	}
 	*temp = ft_split(*input, '|');

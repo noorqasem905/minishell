@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:40:16 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/24 17:08:15 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 18:23:10 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ int	ft_execute_redirection_p1(char **redirection_split, int ccount, int *fd)
 	free(tmp2);
 	if (*fd == -1)
 	{
-		perror("open");
+		ft_printf("%2No such file or directory\n");
 		return (-1);
 	}
 	if (dup2(*fd, STDIN_FILENO) == -1)
 	{
-		perror("dup2");
+		ft_printf("%2open\n");
 		close(*fd);
 		return (-1);
 	}
@@ -66,12 +66,12 @@ int	ft_execute_redirection_p2(char **redirection_split, int ccount, int *fd)
 	free(tmp2);
 	if (*fd == -1)
 	{
-		perror("open");
+		ft_printf("%2No such file or directory\n");
 		return (-1);
 	}
 	if (dup2(*fd, STDOUT_FILENO) == -1)
 	{
-		perror("dup2");
+		ft_printf("%2open\n");
 		close(*fd);
 		return (-1);
 	}
@@ -88,12 +88,12 @@ int	ft_execute_redirection_p3(char **redirection_split, int ccount, int *fd)
 	free(tmp2);
 	if (*fd == -1)
 	{
-		perror("open");
+		ft_printf("%2No such file or directory\n");
 		return (-1);
 	}
 	if (dup2(*fd, STDOUT_FILENO) == -1)
 	{
-		perror("dup2");
+		ft_printf("%2open\n");
 		close(*fd);
 		return (-1);
 	}
@@ -104,25 +104,26 @@ int	ft_execute_redirection_p3(char **redirection_split, int ccount, int *fd)
 int	ft_execute_redirection(char **redirection_split, int ccount_i[], int *fd,
 		char *temp3)
 {
+	ccount_i[2] = 0;
 	if (ccount_i[1] == 6)
 	{
+		ccount_i[2] = 1;
 		if (ft_execute_redirection_p3(redirection_split, ccount_i[0], fd) < 0)
 			return (-1);
 	}
 	else if (temp3[0] == '<')
 	{
+		ccount_i[2] = 2;
 		if (ft_execute_redirection_p1(redirection_split, ccount_i[0], fd) < 0)
 			return (-1);
 	}
 	else if (temp3[0] == '>')
 	{
+		ccount_i[2] = 3;
 		if (ft_execute_redirection_p2(redirection_split, ccount_i[0], fd) < 0)
-			return (-1);
+			return (-2);
 	}
 	else
-	{
-		dprintf(2, "Error: Invalid redirection\n");
 		return (-1);
-	}
 	return (0);
 }

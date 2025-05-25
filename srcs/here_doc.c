@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 17:49:36 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 15:07:16 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 	(*fd) = openfile_heredoc(fd, file_loc);
 	if ((*fd) < 0)
 		return ((free_err_ret(NULL, NULL, NULL, -2)));
-	*input_split = ft_mult_split(temp, " <");
+	*input_split = ft_mult_split(temp, " <>");
 	if (!*input_split)
 		return ((free_err_ret(NULL, (void *)(*file_loc), NULL, -1)));
 	return (check_error);
@@ -64,8 +64,6 @@ int	heredoc_mult_process(int check_error, char **file_loc, int fd[])
 	if (check_error < 0)
 	{
 		printf("error here doc\n");
-		if (*file_loc)
-			free(*file_loc);
 		return (-1);
 	}
 	fd[0] = dup(STDOUT_FILENO);

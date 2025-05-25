@@ -2,50 +2,52 @@ CC =  cc
 CFLAGS =  -g
 NAME = minishell
 
-SRCS = 	srcs/minishell.c 					\
+SRCS = 	srcs/env.c							\
+		srcs/unset.c						\
+		srcs/utils.c						\
+		srcs/export.c						\
+		srcs/signal.c 						\
 		srcs/handling.c 					\
 		srcs/set_data.c 					\
-		srcs/signal.c 						\
-		srcs/bulidin_cmd.c					\
 		srcs/expander.c						\
-		srcs/setup_execution.c				\
-		srcs/redirection.c					\
-		srcs/execution.c					\
 		srcs/here_doc.c						\
-		srcs/env.c							\
-		srcs/export.c						\
-		srcs/handle_export.c				\
-		srcs/unset.c						\
 		srcs/robo_env.c						\
 		srcs/robo_pwd.c						\
+		srcs/minishell.c 					\
+		srcs/execution.c					\
+		srcs/save_expo.c					\
 		srcs/robo_exit.c					\
-		srcs/utils.c						\
+		srcs/bulidin_cmd.c					\
+		srcs/redirection.c					\
 		srcs/utils_export.c					\
 		srcs/helper_export.c				\
-		srcs/save_expo.c					\
-		srcs/check_redirection.c			\
-		srcs/exeute_redirection.c			\
+		srcs/handle_export.c				\
+		srcs/setup_execution.c				\
 		srcs/setup_execution_heredoc.c		\
 		srcs/redirection_extract_2.c		\
+		srcs/dup_process_handle.c			\
 		srcs/redirection_extract.c			\
-		srcs/redirection_handle.c			\
 		srcs/redirection_handle2.c			\
 		srcs/redirection_heredoc.c			\
+		srcs/redirection_handle.c			\
+		srcs/exeute_redirection.c			\
+		srcs/append_redirection.c			\
+		srcs/check_redirection.c			\
 		srcs/execution_bulidin.c			\
-		srcs/execute_heredoc.c				\
-		srcs/utils_exeution.c				\
-		srcs/dup_process.c					\
 		srcs/utils_redirection.c			\
-		srcs/robo_cd.c						\
-		srcs/utils2.c						\
-		srcs/utils_here_doc.c				\
-		srcs/utils_export2.c				\
-		srcs/utils_expander.c				\
-		srcs/utils_setup.c					\
-		srcs/utils_set_data.c				\
+		srcs/searching_bulidin.c			\
+		srcs/execute_heredoc.c				\
 		srcs/utils_set_data2.c				\
+		srcs/utils_exeution.c				\
+		srcs/utils_here_doc.c				\
+		srcs/utils_expander.c				\
+		srcs/utils_set_data.c				\
 		srcs/process_input.c				\
-		srcs/searching_bulidin.c
+		srcs/utils_export2.c				\
+		srcs/dup_process.c					\
+		srcs/utils_setup.c					\
+		srcs/robo_cd.c						\
+		srcs/utils2.c 
 
 all: $(NAME)
 

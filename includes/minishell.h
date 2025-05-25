@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/24 15:28:27 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 15:23:02 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,12 @@ int							process_input(t_cmd **cmd, int *flag, char ***temp,
 								char **input);
 int							check_validation(char **paths, char **result,
 								char **m);
+int							check_extra_redirection(char *tmp);
+int							check_append_redirection(char **curr,
+								int heredoc_append[]);
+int							ft_heredoc_redirection_manager_2(int *j, char **str, char **tmp);
+void						init_append_redirection(int heredoc_append[]);
+void						close_wait2(pid_t pids[], int size, t_cmd **cmd);
 int							child_process(t_cmd **cmd, t_list **current,
 								int pipe_fd2[][2], pid_t pids[]);
 int							dup_process(int *i, int size, int pipe_fd2[][2]);

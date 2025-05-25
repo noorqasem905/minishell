@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:43:49 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/24 14:44:04 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 15:18:44 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,5 @@ int	searching_bulidin(char **split, t_cmd **cmd, char *t, char **input)
 		free(*input);
 		return (-3);
 	}
-	/*if (ft_strcmp(split[0], "exit") == 0)
-		robo_exit(split, *cmd);*/
 	return (0);
 }

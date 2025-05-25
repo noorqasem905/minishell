@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:49:58 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/24 15:28:36 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 15:06:19 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	handle_invalid(char *name, t_cmd **cmd)
 {
 	ft_printf("%2export: `%s`: not a valid identifier\n", name);
 	(*cmd)->exit_status = 1;
-
 }
 
 void	error_export(t_cmd **cmd)

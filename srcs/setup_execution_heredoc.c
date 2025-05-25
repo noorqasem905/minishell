@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:11:43 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 14:43:57 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 15:18:10 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ int	searching_here_doc_2(t_cmd **cmd, t_here_doc **here_doc, t_list **current,
 		check_error = handle_here_doc(temp);
 		if (check_error < 0)
 		{
-			printf("error here doc\n");
 			(*cmd)->exit_status = -14;
 			return (-1);
 		}
 		(*here_doc)->pryority[i_p[0]] = 2 + i_p[1];
 		(*here_doc)->counter++;
 		i_p[1]++;
+		if (check_extra_redirection((*current)->content) < 0)
+			return (-1);
 	}
 	else
 		(*here_doc)->pryority[i_p[0]] = 1;

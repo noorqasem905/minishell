@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/24 17:15:47 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/25 15:07:35 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	exitting_handle(int ret, t_cmd **cmd, char **input)
 	if (ret == 65)
 	{
 		if ((*cmd)->here_doc->file_loc)
-			handle_here_doc_nolink(cmd);
+			free((*cmd)->here_doc->file_loc);
 		if ((*cmd)->here_doc->pryority)
 			free((*cmd)->here_doc->pryority);
 		(*cmd)->here_doc->pryority = NULL;

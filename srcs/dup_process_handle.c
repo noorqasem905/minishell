@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:14:36 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 14:53:41 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/26 15:00:53 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	dup_process_2_handle(t_cmd **cmd, t_list **current)
 {
- 	if (run_buildin_execution(*cmd, *current) < 0)
+	if (run_buildin_execution(*cmd, *current) < 0)
 		return (-1);
 	if (ft_execve((*current)->content, cmd) == -1)
 	{

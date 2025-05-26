@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 08:31:37 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/26 21:54:32 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ int							extract_and_apply_redirection(char **temp,
 								char *temp2, char ***redirection_split,
 								char **command);
 int							handle_redirection_segment(
-								char ***redirection_split, char **temp,
-								char **temp4, char *th);
+								char ***redirection_split,
+								char **temp, char **temp4, char *th);
 int							read_input(char **input);
 size_t						element_size(char **str);
 void						close_wait(pid_t pids[], int size,
@@ -252,10 +252,19 @@ char						*trim_quotess(char *str);
 void						frees_newsplit(char **root);
 size_t						word_lenn(char *s, char c);
 void						free_exp(t_exp *export);
+void						ft_echo_setquotes(int *quotes, int *first,
+								int value);
+void						ft_echo_ignore_quotes(int new_line, int ignore,
+								char *buff);
 int							handle_quotes(char **s, int *flag);
+int							ft_echo_quotes(char *word, int *igonre);
 void						ski_delimiters(char **s, char c);
 int							is_there_else_heredoc(char *temp);
 int							handle_here_doc(char *temp);
+char						*strip_outer_quotes(char *str);
+int							ft_echo(t_cmd *cmd, t_list *command);
+int							ft_echo_quotes_manger(char **split, int *i,
+								int *ignore, char **buff);
 int							get_free_filename(char **file_loc,
 								char *new_fullpath);
 int							openfile_heredoc(int *fd, char **file_loc);

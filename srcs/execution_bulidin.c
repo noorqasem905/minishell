@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 15:00:40 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/26 21:52:39 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ int	run_buildin_execution_2(t_cmd *cmd, t_list *current, char *tmp)
 		cmd->bulidin = 13;
 		return (-1);
 	}
-	else if (ft_strcmp(tmp, "echo") == 0)
+	else if (ft_strncmp(tmp, "echo", 4) == 0)
 	{
 		free(tmp);
+		ft_echo(cmd, current);
 		cmd->bulidin = 17;
 		return (-1);
 	}

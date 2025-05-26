@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helper_export.c                                    :+:      :+:    :+:   */
+/*   ft_split_custom_exp.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 15:09:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 15:19:23 by nqasem           ###   ########.fr       */
+/*   Created: 2025/05/26 15:09:34 by nqasem            #+#    #+#             */
+/*   Updated: 2025/05/26 21:51:08 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
 static void	skip_delimiters(char **s, char c, int *flag)
 {

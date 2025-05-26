@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/23 17:27:00 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/26 17:07:35 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,6 @@ static char	*expantions(char *input, int *i, t_cmd *cmd)
 	return (value);
 }
 
-int	next_expander(char *content, int *flag_single, int *flag_double, int *i)
-{
-	if (content[*i] == '\'' && !(*flag_double))
-	{
-		*flag_single = !(*flag_single);
-		(*i)++;
-		return (1);
-	}
-	else if (content[*i] == '\"' && !(*flag_single))
-	{
-		*flag_double = !(*flag_double);
-		(*i)++;
-		return (1);
-	}
-	return (0);
-}
-
 void	append_expansion(char **expanded, char *content, int *i, t_cmd *cmd)
 {
 	char	*expand_var;
@@ -97,9 +80,7 @@ char	*expander_input(t_cmd **cmd)
 	content = (char *)(*cmd)->word->content;
 	while (content[i])
 	{
-		if (next_expander(content, &flag_single, &flag_double, &i))
-			continue ;
-		else if (content[i] == '$' && !flag_single)
+		if (content[i] == '$' && !flag_single)
 			append_expansion(&expanded, content, &i, *cmd);
 		else
 			append_char(&expanded, content[i++]);

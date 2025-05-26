@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 22:39:47 by nqasem	           #+#    #+#             */
-/*   Updated: 2025/05/23 14:44:40 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/26 06:40:39 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ void	init_data(t_cmd **cmd)
 
 	here_doc = (*cmd)->here_doc;
 	(*cmd)->word = NULL;
+	(*cmd)->current = NULL;
 	(*cmd)->env = NULL;
 	(*cmd)->expo = NULL;
 	(*cmd)->pryority = NULL;
 	(*cmd)->who_am_i = 0;
 	(*cmd)->counter = 0;
+	(*cmd)->bulidin = 0;
 	(*cmd)->index = 0;
 	(*cmd)->here_doc->file_loc = NULL;
 	(*cmd)->exit_status = 0;

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 20:14:59 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 17:33:44 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/26 05:59:22 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,14 @@ int	check_validation_handle(int flag, char *m, char **result)
 	return (0);
 }
 
-int	ft_execve(char *file, char **ev)
+int	ft_execve(char *file, t_cmd **cmd)
 {
 	char	**result;
 	char	**paths;
 	int		flag;
 	char	*m;
 
-	if (ft_setup_execve(file, &result, ev, &paths) == -1)
+	if (ft_setup_execve(file, &result, (*cmd)->env, &paths) == -1)
 		return (-1);
 	if (!result || !result[0] || !*result[0])
 	{
@@ -119,7 +119,7 @@ int	ft_execve(char *file, char **ev)
 	flag = check_validation(paths, result, &m);
 	if (check_validation_handle(flag, m, result) < 0)
 		return (-1);
-	if (execve(m, result, ev) == -1)
+	if (execve(m, result, (*cmd)->env) == -1)
 	{
 		free_it_noww(result, m, 1);
 		return (-1);

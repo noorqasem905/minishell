@@ -6,17 +6,17 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:14:36 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 17:38:51 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/26 06:00:11 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	dup_process_2_handle(t_cmd **cmd, t_list **current, char **env)
+int	dup_process_2_handle(t_cmd **cmd, t_list **current)
 {
 	if (run_buildin_execution(*cmd, *current) < 0)
 		return (-1);
-	if (ft_execve((*current)->content, env) == -1)
+	if (ft_execve((*current)->content, cmd) == -1)
 	{
 		(*cmd)->exit_status = 127;
 		ft_printf("%2Command not found\n");

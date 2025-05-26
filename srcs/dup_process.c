@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:03:40 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 18:18:28 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/26 06:51:33 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 int	dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 {
 	char	**redirection_split;
-	char	**env;
 	int		heredoc_idx;
 
-	env = (*cmd)->env;
 	if ((*cmd)->here_doc->pryority[i] >= 2)
 	{
 		heredoc_idx = (*cmd)->here_doc->pryority[i] - 2;
@@ -30,12 +28,12 @@ int	dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 	{
 		if (ft_redirection((*current)->content, &redirection_split, cmd) < 0)
 		{
-			if ((*cmd)->exit_status == 0)
+			if ((*cmd)->exit_status == 0 && (*cmd)->bulidin <= 0)
 				ft_printf("%2syntax error near unexpected token `newline`\n");
 			return (-1);
 		}
 	}
-	if (dup_process_2_handle(cmd, current, env) < 0)
+	if (dup_process_2_handle(cmd, current) < 0)
 		return (-1);
 	return (0);
 }

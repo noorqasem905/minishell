@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:06:12 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 22:47:00 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/26 08:10:55 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,12 @@ int	execute_heredoc_manage_exeu(char *file, char **str, t_cmd **cmd, char *temp)
 	}
 	if (!(*str))
 	{
-/* 		if (run_buildin_execution(*cmd, temp) < 0)
-			return (-1); */
-		if (ft_execve(temp, (*cmd)->env))
+		if (run_buildin_exechr(cmd, temp) < 0)
+		{
+			free(temp);
+			return (-1);
+		}
+		if (ft_execve(temp, cmd))
 		{
 			ft_printf("%2Command not found\n");
 			(*cmd)->exit_status = 127;
@@ -117,16 +120,13 @@ int	execute_heredoc_manage_exeu(char *file, char **str, t_cmd **cmd, char *temp)
 int	execute_heredoc_redirection(char ***redirection_split, char *str, char *st,
 		t_cmd **cmd)
 {
-	if (ft_redirection(st, redirection_split, cmd) < 0)
-	{
-		if (str)
-			free(str);
-		if (st)
-			free(st);
-		return (-1);
-	}
 	if (str)
 		free(str);
+	if (ft_redirection(st, redirection_split, cmd) < 0)
+	{
+		if (st)
+			return (-1);
+	}
 	if (st)
 		free(st);
 	return (0);

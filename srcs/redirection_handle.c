@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:43:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 23:09:50 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/26 08:20:32 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,13 @@ int	error_process_redirection(char ***redirection_split, char **temp,
 
 int	error_ft_execute_redirection(char *temp, char *command, t_cmd **cmd, int i)
 {
-/* 	if (run_buildin_execution(*cmd, command) < 0)
-		return (-1); */
-	if (ft_execve(command, (*cmd)->env) == -1)
+	if (run_buildin_exechr(cmd, command) < 0)
+	{
+		free(temp);
+		free(command);
+		return (-1);
+	}
+	if (ft_execve(command, cmd) == -1)
 	{
 		if (command)
 			free(command);

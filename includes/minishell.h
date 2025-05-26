@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 18:40:25 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/26 08:31:37 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ struct						s_cmd
 {
 	t_here_doc				*here_doc;
 	t_list					*word;
+	t_list					*current;
 	char					*input;
 	char					**expo;
 	char					**env;
@@ -53,6 +54,7 @@ struct						s_cmd
 	int						who_am_i;
 	int						counter;
 	int						index;
+	int						bulidin;
 	int						exit_status;
 	int						flag;
 };
@@ -116,7 +118,7 @@ int							dup_process_2(t_cmd **cmd, t_list **current,
 int							get_path(char **ev);
 int							ft_strfind(char *str, char *c);
 int							execution(t_cmd **cmd);
-int							ft_execve(char *file, char **ev);
+int							ft_execve(char *file, t_cmd **cmd);
 int							searching_comand(char **input, char **temp);
 int							save_data(char **input, t_cmd **cmd, int *flag,
 								char ***temp);
@@ -209,6 +211,11 @@ int							setup_execution_heredoc(t_cmd **cmd,
 int							open_pipe(t_cmd **cmd, int size, int pipe_fd2[][2]);
 int							execution_process(t_cmd **cmd);
 int							run_buildin_execution(t_cmd *cmd, t_list *current);
+int							run_buildin_execution_2(t_cmd *cmd, t_list *current,
+								char *tmp);
+int							run_buildin_execution_3(t_cmd *cmd, t_list *current,
+								char *tmp);
+int							run_buildin_exechr(t_cmd **cmd, char *command);
 int							str_size_element(char const *s, char c);
 int							setup_extra_command_h(char *temp5, char **command);
 int							ft_heredoc_redirection_process(char **str,
@@ -224,8 +231,7 @@ int							execute_heredoc_redirection(
 								char *str, char *st, t_cmd **cmd);
 int							execute_heredoc(char *file, t_cmd **cmd, int i,
 								char **file_loc);
-int							dup_process_2_handle(t_cmd **cmd, t_list **current,
-								char **env);
+int							dup_process_2_handle(t_cmd **cmd, t_list **current);
 void						handle_here_doc_unlink(t_cmd **cmd,
 								char **file_loc);
 void						run_export_execution(char **run);

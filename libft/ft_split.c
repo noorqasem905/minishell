@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 22:04:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 19:29:44 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/26 08:11:51 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@ void	frees_split(char **root)
 {
 	int	i;
 
-	i = 0;
-	if (!*root | !root)
+	if (!root)
 		return ;
+	i = 0;
 	while (root[i])
 	{
 		free(root[i]);
 		i++;
 	}
 	free(root);
-	root = NULL;
 }
 
 static int	word_count(char const *s, char c)

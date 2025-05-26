@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:08:07 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/20 17:09:57 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/26 08:04:14 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,11 @@ void	setup_extra_command_h_2(char **split_2, char **command)
 		{
 			tmp2 = ft_strjoin(*command, tmp);
 			free(tmp);
-			if (*command)
-				free(*command);
+			free(*command);
 			*command = tmp2;
 		}
 		j++;
 	}
-	frees_split(split_2);
 }
 
 int	setup_extra_command_h(char *temp5, char **command)
@@ -114,8 +112,8 @@ int	setup_extra_command_h(char *temp5, char **command)
 			frees_split(split);
 			return (-1);
 		}
-		if (split_2)
-			setup_extra_command_h_2(split_2, command);
+		setup_extra_command_h_2(split_2, command);
+		frees_split(split_2);
 		i++;
 	}
 	frees_split(split);

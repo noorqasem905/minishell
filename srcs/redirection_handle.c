@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:43:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 08:20:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/26 14:58:33 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	error_ft_execute_redirection(char *temp, char *command, t_cmd **cmd, int i)
 			return (-1);
 		}
 		(*cmd)->exit_status = 127;
-		ft_printf("%2Command not found");
+		ft_printf("%2Command not found\n");
 		return (-1);
 	}
 	free(command);

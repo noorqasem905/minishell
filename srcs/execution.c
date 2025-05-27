@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 16:27:37 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 16:56:31 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ int	execution_process(t_cmd **cmd)
 
 	size = ft_lstsize((*cmd)->word);
 	pids = malloc((size + 1) * sizeof(pid_t));
+	if (!pids)
+		return (-1);
 	pipe_fd2 = malloc((size + 1) * sizeof(int [2]));
+	if (!pipe_fd2)
+		return (free_err_ret(NULL, pids, NULL, -1));
 	pids[size] = '\0';
 	(*cmd)->current = (*cmd)->word;
 	ret = open_pipe(cmd, size, pipe_fd2);
@@ -61,6 +65,8 @@ int	execution_process(t_cmd **cmd)
 		return (free_err_ret("NULL", pids, NULL, -1));
 	}
 	close_wait(pids, size, pipe_fd2, cmd);
+	if ((*cmd)->exit_status == 42)
+		return (-1);
 	return (0);
 }
 

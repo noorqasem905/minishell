@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 22:09:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 16:53:14 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	reading_manager_handle_2(t_cmd **cmd, int ret, char ***temp)
 		(*cmd)->expo = NULL;
 		free((*cmd)->here_doc);
 		exit_status = (*cmd)->exit_status;
+		if ((*cmd)->who_am_i == 42)
+			exit_status = 42;
 		free(*cmd);
 		exit(exit_status);
 	}

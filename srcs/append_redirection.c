@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:55:46 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 15:05:06 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 17:00:15 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,12 @@ int	ft_heredoc_redirection_manager(char *file, char **str)
 	char	*tmp;
 	int		j;
 
-	*str = NULL;
 	j = 0;
+	*str = NULL;
 	tmp = ft_strmchr(file, "<>");
 	while (tmp != NULL)
-		ft_heredoc_redirection_manager_2(&j, str, &tmp);
+		if (ft_heredoc_redirection_manager_2(&j, str, &tmp) < 0)
+			return (-1);
 	if (j)
 	{
 		tmp2 = ft_strjoin(">", *str);

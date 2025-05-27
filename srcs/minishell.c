@@ -16,7 +16,6 @@ static void	error_main(int argc, t_cmd *cmd, char *str)
 {
 	if (argc > 1)
 		exit(EXIT_FAILURE);
-	ft_printf("%2 Usage: %s\n", str);
 }
 
 static void	malloc_error(void *err)
@@ -33,6 +32,26 @@ static void	free_main(void *mal)
 	if (!mal)
 		return ;
 	free(mal);
+	exit(0);
+}
+
+static void	ft_env(t_cmd **cmd, char **robo_env)
+{
+	(*cmd)->env = my_env(robo_env);
+	if (!(*cmd)->env)
+	{
+		free((*cmd)->here_doc);
+		free(*cmd);
+		exit(0);
+	}
+	save_export_to_expo(cmd);
+	if (!(*cmd)->expo)
+	{
+		frees_split((*cmd)->env);
+		free((*cmd)->here_doc);
+		free(*cmd);
+		exit(0);
+	}
 }
 
 int	main(int argc, char *argv[], char **robo_env)
@@ -53,8 +72,7 @@ int	main(int argc, char *argv[], char **robo_env)
 	if (!cmd->here_doc)
 		free_main(cmd);
 	init_data(&cmd);
-	cmd->env = my_env(robo_env);
-	save_export_to_expo(&cmd);
+	ft_env(&cmd, robo_env);
 	reading_manager(&cmd, &flag, &temp, cmd->env);
 	frees_split(cmd->env);
 	frees_split(cmd->expo);

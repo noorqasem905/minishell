@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:06:12 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 14:58:10 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 18:00:58 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	ft_heredoc_redirection_process(char **str, char *temp)
 	else
 		tmp = ft_strjoin(">", st);
 	free(st);
+	if (!tmp)
+		return (-1);
 	st = tmp;
 	tmp2 = ft_strjoin(*str, st);
 	free(st);
@@ -52,7 +54,7 @@ int	ft_heredoc_redirection_manager_2(int *j, char **str, char **tmp)
 			*j = 1;
 		}
 		if (ft_heredoc_redirection_process(str, (*tmp)))
-			return (-1);
+			return (-3);
 		tmp2 = ft_strmchr((*tmp) + 1, "<>");
 		(*tmp) = tmp2;
 	}
@@ -83,7 +85,7 @@ int	execute_heredoc_setup_exe(char *file, t_cmd **cmd, int i, char **temp)
 	dup2(fd, STDIN_FILENO);
 	if (manager_execution_heredoc(file, temp) < 0)
 	{
-		free(*temp);
+		close(fd);
 		return (-1);
 	}
 	close(fd);
@@ -96,6 +98,7 @@ int	execute_heredoc_manage_exeu(char *file, char **str, t_cmd **cmd, char *temp)
 	{
 		free(temp);
 		free(*str);
+		(*cmd)->who_am_i = 42;
 		return (-1);
 	}
 	if (!(*str))

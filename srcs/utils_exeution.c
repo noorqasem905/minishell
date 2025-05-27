@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:08:07 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 08:04:14 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 16:01:39 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	setup_extra_command_h_2(char **split_2, char **command)
 
 	j = 1;
 	tmp = ft_strjoin(*command, " ");
+	if (!tmp)
+		return ;
 	free(*command);
 	*command = tmp;
 	while (j < (int)element_size(split_2))
@@ -102,7 +104,7 @@ int	setup_extra_command_h(char *temp5, char **command)
 
 	split = ft_mult_split(temp5, "<>");
 	if (!split)
-		return (-1);
+		return (-13);
 	i = 0;
 	while (i < (int)element_size(split))
 	{
@@ -110,7 +112,7 @@ int	setup_extra_command_h(char *temp5, char **command)
 		if (!split_2)
 		{
 			frees_split(split);
-			return (-1);
+			return (-13);
 		}
 		setup_extra_command_h_2(split_2, command);
 		frees_split(split_2);

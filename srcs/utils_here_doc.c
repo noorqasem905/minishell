@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:45:53 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 14:45:57 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 18:19:00 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int	get_free_filename(char **file_loc, char *new_fullpath)
 		new_file_loc = ft_strjoin(new_fullpath, temp);
 		free(temp);
 		if (!new_file_loc)
+			return(-1);
+		if (!new_file_loc)
 			return (-1);
 		i++;
 	}
@@ -86,17 +88,15 @@ int	get_free_filename(char **file_loc, char *new_fullpath)
 
 int	openfile_heredoc(int *fd, char **file_loc)
 {
-	if (get_free_filename(file_loc, "/tmp/minishell_heredoc"))
+	if (get_free_filename(file_loc, "/tmp/minishell_heredoc") < 0)
 	{
-		perror("malloc");
-		if (*file_loc)
-			free(*file_loc);
+		ft_printf("%2malloc invalid\n");
 		return (-1);
 	}
 	*fd = open(*file_loc, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (*fd < 0)
 	{
-		perror("open");
+		ft_printf("%2open\n");
 		free(*file_loc);
 		return (-1);
 	}

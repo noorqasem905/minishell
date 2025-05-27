@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:43:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 14:58:33 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 17:50:59 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	setup_handle_redirection(char *input, char ***redirection_split,
 	if (!*redirection_split)
 	{
 		free(*temp);
-		free(*temp2);
 		return (-1);
 	}
 	return (ret);

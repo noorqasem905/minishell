@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:54:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 14:58:12 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 18:10:55 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	here_doc_manger(t_cmd **cmd, char **file_loc)
 			if (size > 1023 || heredoc(current->content, &(file_loc[i_j[1]]),
 					size) < 0)
 			{
-				ft_printf("%2heredoc");
+				ft_printf("%2heredoc initialize\n");
 				return (-1);
 			}
 			i_j[1]++;
@@ -112,6 +112,11 @@ int	execute_heredoc(char *file, t_cmd **cmd, int i, char **file_loc)
 	if (execute_heredoc_manage_exeu(file, &str, cmd, temp) < 0)
 		return (-1);
 	st = ft_strjoin(temp, str);
+	if (!st)
+	{
+		free_err_ret(NULL, str, NULL, -1);
+		return (free_err_ret(NULL, temp, NULL, -1));
+	}
 	if (execute_heredoc_redirection
 		(&redirection_split, str, st, cmd) < 0)
 	{

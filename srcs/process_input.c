@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 21:52:57 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 14:16:24 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 		free(*temp);
 		return (-42);
 	}
-	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3)
+	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3 || *flag == 12)
 	{
 		if (*flag == -3)
 			return (-3);
@@ -51,6 +51,8 @@ int	process_set_input(t_cmd **cmd, char **t, char ***split, char **input)
 		return (-3);
 	}
 	*t = expander_input(cmd);
+	if (!t)
+		return (-1);
 	ret_of_searching = searching_bulidin((*split), cmd, (*t), input);
 	if (ret_of_searching < 0)
 	{

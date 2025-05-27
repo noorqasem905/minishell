@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 17:59:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 18:12:32 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 		return ((free_err_ret(NULL, NULL, NULL, -2)));
 	*input_split = ft_mult_split(temp, " <>");
 	if (!*input_split)
-		return ((free_err_ret(NULL, (void *)(*file_loc), NULL, -1)));
+	{
+		close(*fd);
+		return (-1);
+	}
 	return (check_error);
 }
 
@@ -114,6 +117,8 @@ int	heredoc(char *temp, char **file_loc, size_t size)
 	search = (temp);
 	heredoc_count = 0;
 	heredoc_ptrs = malloc((size + 1) * sizeof(char *));
+	if (!heredoc_ptrs)
+		return (-1);
 	while (1)
 	{
 		search = ft_strnstr(search, "<<", ft_strlen(search));
@@ -124,10 +129,7 @@ int	heredoc(char *temp, char **file_loc, size_t size)
 	}
 	heredoc_ptrs[heredoc_count] = NULL;
 	if (heredoc_mult(heredoc_count, file_loc, heredoc_ptrs) < 0)
-	{
-		free(heredoc_ptrs);
-		return (-1);
-	}
+		return (free_err_ret(NULL, heredoc_ptrs, NULL, -1));
 	free(heredoc_ptrs);
 	return (0);
 }

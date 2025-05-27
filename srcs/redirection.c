@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 07:00:55 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 17:53:53 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	process_redirections(char ***redirection_split, t_cmd **cmd,
 	ccount_i[1] = i;
 	ccount_i[2] = 0;
 	tty = ft_mult_split((*temp3), "<>");
+	if (!tty)
+		return (free_err_ret(NULL, NULL, *redirection_split, -1));
 	while (++ccount_i[0] < ft_2dlen(*redirection_split))
 	{
 		(*temp3) = ft_strmchr((*temp3), "<>");

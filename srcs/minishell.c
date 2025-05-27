@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+volatile sig_atomic_t	s_sig = 0;
+
 static void	error_main(int argc, t_cmd *cmd, char *str)
 {
 	if (argc > 1)

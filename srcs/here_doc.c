@@ -6,11 +6,15 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/25 17:59:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 08:10:51 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+#include <sys/types.h>
+#include <signal.h>
+
 
 int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 {
@@ -36,15 +40,27 @@ int	implement_heredoc(int *fd, char **input, int original_stdout)
 {
 	char	*here_doc;
 	size_t	len;
+	struct sigaction old_sigint;
+	struct sigaction new_sigint;
 
+	new_sigint.sa_handler = handle_heredoc_sigint;
+	sigemptyset(&new_sigint.sa_mask);
+	new_sigint.sa_flags = 0;
+	sigaction(SIGINT, &new_sigint, &old_sigint);
 	while (1)
 	{
-		here_doc = get_next_line(STDIN_FILENO);
+		here_doc = readline("> ");
+		if (s_sig || here_doc == NULL)
+		{
+			free(here_doc);
+			write(2,"exitting\n",10); 
+			sigaction(SIGINT, &old_sigint, NULL);
+			break;
+		}
 		if (here_doc == NULL)
 			break ;
+		
 		len = ft_strlen(here_doc);
-		if (len > 0 && here_doc[len - 1] == '\n')
-			here_doc[len - 1] = '\0';
 		if (ft_strcmp(here_doc, input[0]) == 0)
 		{
 			free(here_doc);
@@ -56,8 +72,10 @@ int	implement_heredoc(int *fd, char **input, int original_stdout)
 		dup2(original_stdout, STDOUT_FILENO);
 		free(here_doc);
 	}
+	sigaction(SIGINT, &old_sigint, NULL);
 	return (0);
 }
+
 
 int	heredoc_mult_process(int check_error, char **file_loc, int fd[])
 {

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 21:54:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 07:44:23 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,16 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+#include <signal.h>
+#include <readline/readline.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 typedef struct s_cmd		t_cmd;
 typedef struct s_here_doc	t_here_doc;
 typedef struct s_exp		t_exp;
+
+extern volatile sig_atomic_t s_sig;
 struct						s_here_doc
 {
 	int						fd;
@@ -67,6 +73,7 @@ struct						s_exp
 	char					**value;
 	int						flag;
 };
+void						handle_heredoc_sigint(int sig);
 int							check_redirection_mult_siggr(int mult[],
 								int conflect_handle[], int is_file_enter[],
 								char *input);

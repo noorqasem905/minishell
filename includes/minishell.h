@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 21:54:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 22:02:21 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,7 @@ int							handle_space_infile(char ***temp, char **dir);
 int							robo_cd_access(char **dir, char **temp);
 char						*trim_quotess(char *str);
 void						frees_newsplit(char **root);
+t_exp						*init_export(int count);
 size_t						word_lenn(char *s, char c);
 void						free_exp(t_exp *export);
 void						ft_echo_setquotes(int *quotes, int *first,
@@ -269,8 +270,8 @@ int							get_free_filename(char **file_loc,
 								char *new_fullpath);
 int							openfile_heredoc(int *fd, char **file_loc);
 char						*ft_strjoin_free(char *s1, char *s2);
-void						append_char(char **expanded, char ch);
-void						append_expansion(char **expanded, char *content,
+int							append_char(char **expanded, char ch);
+int							append_expansion(char **expanded, char *content,
 								int *i, t_cmd *cmd);
 void						no_space(int *l, char **m, char **o);
 int							is_closed(char *input);

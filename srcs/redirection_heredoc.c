@@ -6,11 +6,17 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:06:12 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 18:00:58 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 22:08:28 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+/* 
+static void	ft_heredoc_redirection_process_free(char *st, char **str)
+{
+	free(st);
+	free(*str);
+}
 
 int	ft_heredoc_redirection_process(char **str, char *temp)
 {
@@ -36,12 +42,11 @@ int	ft_heredoc_redirection_process(char **str, char *temp)
 		return (-1);
 	st = tmp;
 	tmp2 = ft_strjoin(*str, st);
-	free(st);
-	free(*str);
+	ft_heredoc_redirection_process_free(st, str);
 	*str = tmp2;
 	return (0);
 }
-
+ */
 int	ft_heredoc_redirection_manager_2(int *j, char **str, char **tmp)
 {
 	char	*tmp2;

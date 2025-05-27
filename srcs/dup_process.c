@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:03:40 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 16:58:53 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 21:51:37 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,34 +61,42 @@ int	dup_process(int *i, int size, int pipe_fd2[][2])
 	return (0);
 }
 
+int	close_wait2_exit(int status, t_cmd **cmd)
+{
+	int	g_sig;
+
+	if (WIFEXITED(status))
+	{
+		(*cmd)->exit_status = WEXITSTATUS(status);
+		if ((*cmd)->exit_status == 42)
+			return (-1);
+		if ((*cmd)->exit_status != 0)
+			ft_printf("%2Error: Command failed with status %d\n",
+				(*cmd)->exit_status);
+	}
+	else if (WIFSIGNALED(status))
+	{
+		g_sig = WTERMSIG(status);
+		if (g_sig == SIGINT)
+			write(1, "\n", 1);
+		else if (g_sig == SIGQUIT)
+			ft_printf("Quit (core dumped)\n");
+		(*cmd)->exit_status = 128 + g_sig;
+	}
+	return (0);
+}
+
 void	close_wait2(pid_t pids[], int size, t_cmd **cmd)
 {
 	int	status;
-	int	g_sig;
 	int	i;
 
 	i = -1;
 	while (++i < size && pids[i] && pids[i] != -1)
 	{
 		waitpid(pids[i], &status, 0);
-		if (WIFEXITED(status))
-		{
-			(*cmd)->exit_status = WEXITSTATUS(status);
-			if ((*cmd)->exit_status == 42)
-                return ;
-			if ((*cmd)->exit_status != 0)
-				ft_printf("%2Error: Command failed with status %d\n",
-					(*cmd)->exit_status);
-		}
-		else if (WIFSIGNALED(status))
-		{
-			g_sig = WTERMSIG(status);
-			if (g_sig == SIGINT)
-				write(1, "\n", 1);
-			else if (g_sig == SIGQUIT)
-				ft_printf("Quit (core dumped)\n");
-			(*cmd)->exit_status = 128 + g_sig;
-		}
+		if (close_wait2_exit(status, cmd) < 0)
+			return ;
 	}
 }
 

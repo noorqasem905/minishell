@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:45:53 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 18:19:00 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 22:13:21 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ int	get_free_filename(char **file_loc, char *new_fullpath)
 			return (-1);
 		new_file_loc = ft_strjoin(new_fullpath, temp);
 		free(temp);
-		if (!new_file_loc)
-			return(-1);
 		if (!new_file_loc)
 			return (-1);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:54:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 18:10:55 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 21:57:51 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,49 +41,6 @@ int	here_doc_manger(t_cmd **cmd, char **file_loc)
 	return (0);
 }
 
-void	handle_here_doc_unlink(t_cmd **cmd, char **file_loc)
-{
-	int	no;
-
-	no = 0;
-	while (no < (*cmd)->here_doc->counter)
-	{
-		if ((*cmd)->here_doc->file_loc[no])
-		{
-			unlink((*cmd)->here_doc->file_loc[no]);
-			free((*cmd)->here_doc->file_loc[no]);
-			(*cmd)->here_doc->file_loc[no] = NULL;
-		}
-		no++;
-	}
-	if ((*cmd)->here_doc->file_loc)
-	{
-		free((*cmd)->here_doc->file_loc);
-		(*cmd)->here_doc->file_loc = NULL;
-	}
-}
-
-int	setup_execution_heredoc(t_cmd **cmd, char ***file_loc)
-{
-	(*file_loc) = NULL;
-	if ((*cmd)->here_doc->counter > 0)
-	{
-		(*file_loc) = malloc(sizeof(char *) * ((*cmd)->here_doc->counter + 1));
-		if (!file_loc)
-		{
-			ft_printf("%2malloc\n");
-			return (-1);
-		}
-		(*cmd)->here_doc->file_loc = (*file_loc);
-		if (here_doc_manger(cmd, (*cmd)->here_doc->file_loc) < 0)
-		{
-			(*cmd)->exit_status = 2;
-			return (65);
-		}
-	}
-	return (0);
-}
-
 int	manager_execution_heredoc(char *file, char **temp)
 {
 	char	*command;
@@ -100,6 +57,17 @@ int	manager_execution_heredoc(char *file, char **temp)
 	return (0);
 }
 
+static int	st_protuction(char **st, char *temp, char *str)
+{
+	(*st) = ft_strjoin(temp, str);
+	if (!(*st))
+	{
+		free_err_ret(NULL, str, NULL, -1);
+		return (free_err_ret(NULL, temp, NULL, -1));
+	}
+	return (0);
+}
+
 int	execute_heredoc(char *file, t_cmd **cmd, int i, char **file_loc)
 {
 	char	**redirection_split;
@@ -111,12 +79,7 @@ int	execute_heredoc(char *file, t_cmd **cmd, int i, char **file_loc)
 		return (-1);
 	if (execute_heredoc_manage_exeu(file, &str, cmd, temp) < 0)
 		return (-1);
-	st = ft_strjoin(temp, str);
-	if (!st)
-	{
-		free_err_ret(NULL, str, NULL, -1);
-		return (free_err_ret(NULL, temp, NULL, -1));
-	}
+	st_protuction(&st, temp, str);
 	if (execute_heredoc_redirection
 		(&redirection_split, str, st, cmd) < 0)
 	{

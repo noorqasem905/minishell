@@ -6,36 +6,21 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 16:56:31 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 22:00:14 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	open_pipe(t_cmd **cmd, int size, int pipe_fd2[][2])
+int	execution_setup_process(int size, int (**pipe_fd2)[2], pid_t **pids)
 {
-	int	i;
-
-	i = 0;
-	if (!cmd || !(*cmd) || !(*cmd)->word)
-	{
-		ft_printf("%2Invalid command structure");
+	(*pids) = malloc((size + 1) * sizeof(pid_t));
+	if (!(*pids))
 		return (-1);
-	}
-	if (size == 0)
-	{
-		ft_printf("%2No commands to execute");
-		return (-1);
-	}
-	while (i < size - 1)
-	{
-		if (pipe(pipe_fd2[i]) == -1)
-		{
-			ft_printf("%2pipe failed at index %d\n", i);
-			return (-1);
-		}
-		i++;
-	}
+	(*pipe_fd2) = malloc((size + 1) * sizeof(int [2]));
+	if (!*pipe_fd2)
+		return (free_err_ret(NULL, (*pids), NULL, -1));
+	(*pids)[size] = '\0';
 	return (0);
 }
 
@@ -48,13 +33,8 @@ int	execution_process(t_cmd **cmd)
 	int		size;
 
 	size = ft_lstsize((*cmd)->word);
-	pids = malloc((size + 1) * sizeof(pid_t));
-	if (!pids)
+	if (execution_setup_process(size, &pipe_fd2, &pids) < 0)
 		return (-1);
-	pipe_fd2 = malloc((size + 1) * sizeof(int [2]));
-	if (!pipe_fd2)
-		return (free_err_ret(NULL, pids, NULL, -1));
-	pids[size] = '\0';
 	(*cmd)->current = (*cmd)->word;
 	ret = open_pipe(cmd, size, pipe_fd2);
 	if (ret != 0)

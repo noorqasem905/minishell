@@ -6,34 +6,13 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 16:53:14 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 22:11:22 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #define COLOR_CUSTOM "\x1b[38;2;42;161;179m"
 #define COLOR_RESET "\x1b[0m"
-
-void	handle_here_doc_nolink(t_cmd **cmd)
-{
-	int	no;
-
-	no = 0;
-	while (no < (*cmd)->here_doc->counter)
-	{
-		if ((*cmd)->here_doc->file_loc[no])
-		{
-			free((*cmd)->here_doc->file_loc[no]);
-			(*cmd)->here_doc->file_loc[no] = NULL;
-		}
-		no++;
-	}
-	if ((*cmd)->here_doc->file_loc)
-	{
-		free((*cmd)->here_doc->file_loc);
-		(*cmd)->here_doc->file_loc = NULL;
-	}
-}
 
 int	exitting_handle(int ret, t_cmd **cmd, char **input)
 {
@@ -62,13 +41,8 @@ int	exitting_handle(int ret, t_cmd **cmd, char **input)
 	return (0);
 }
 
-int	reading_manager_handle_2(t_cmd **cmd, int ret, char ***temp)
+static void	reading_manager_handle_2_norm(t_cmd **cmd, int ret)
 {
-	int	exit_status;
-
-	exit_status = 0;
-	frees_split(*temp);
-	free_list((&(*cmd)->word));
 	if ((*cmd)->who_am_i == 102)
 		(*cmd)->exit_status = 0;
 	if (ret == -1)
@@ -76,6 +50,16 @@ int	reading_manager_handle_2(t_cmd **cmd, int ret, char ***temp)
 		ft_printf("%2No command found\n");
 		(*cmd)->exit_status = 127;
 	}
+}
+
+int	reading_manager_handle_2(t_cmd **cmd, int ret, char ***temp)
+{
+	int	exit_status;
+
+	exit_status = 0;
+	frees_split(*temp);
+	free_list((&(*cmd)->word));
+	reading_manager_handle_2_norm(cmd, ret);
 	if (ret == -12)
 	{
 		frees_split((*cmd)->env);

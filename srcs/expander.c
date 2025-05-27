@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/27 14:18:19 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 21:57:17 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,24 @@ static char	*expantions(char *input, int *i, t_cmd *cmd)
 	return (value);
 }
 
-void	append_expansion(char **expanded, char *content, int *i, t_cmd *cmd)
+int	append_expansion(char **expanded, char *content, int *i, t_cmd *cmd)
 {
 	char	*expand_var;
 
 	expand_var = expantions(content, i, cmd);
+	if (!expand_var)
+		return (-1);
 	*expanded = ft_strjoin_free(*expanded, expand_var);
 	free(expand_var);
+	if (!*expanded)
+		return (-1);
+	return (0);
+}
+
+static char	*free_and_ret(char *tmp)
+{
+	free(tmp);
+	return (NULL);
 }
 
 char	*expander_input(t_cmd **cmd)
@@ -81,9 +92,15 @@ char	*expander_input(t_cmd **cmd)
 	while (content[i])
 	{
 		if (content[i] == '$' && !flag_single)
-			append_expansion(&expanded, content, &i, *cmd);
+		{
+			if (append_expansion(&expanded, content, &i, *cmd) < 0)
+				return (free_and_ret(expanded));
+		}
 		else
-			append_char(&expanded, content[i++]);
+		{
+			if (append_char(&expanded, content[i++]) < 0)
+				return (free_and_ret(expanded));
+		}
 	}
 	return (expanded);
 }

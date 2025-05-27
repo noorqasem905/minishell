@@ -6,33 +6,11 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 17:53:53 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/27 22:05:32 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	setup_redirection(char *input, char **temp, char **temp2)
-{
-	char	state;
-	int		mult;
-
-	mult = check_redirection_mult(input);
-	if (mult == -1)
-		return (-1);
-	state = ft_strmchr(input, "<>")[0];
-	if (state == '<')
-	{
-		*temp = ft_strfchr(input, '<');
-		*temp2 = ft_strchr(input, '<');
-	}
-	else
-	{
-		*temp = ft_strfchr(input, '>');
-		*temp2 = ft_strchr(input, '>');
-	}
-	return (mult);
-}
 
 char	*get_redirection_command(char *temp, char **redirection_split,
 		int iteritor)
@@ -63,6 +41,13 @@ char	*get_redirection_command(char *temp, char **redirection_split,
 	return (NULL);
 }
 
+static void	init_process_redirections(int ccount_i[3], int i)
+{
+	ccount_i[0] = -1;
+	ccount_i[1] = i;
+	ccount_i[2] = 0;
+}
+
 int	process_redirections(char ***redirection_split, t_cmd **cmd,
 		char **temp3, int i)
 {
@@ -70,9 +55,7 @@ int	process_redirections(char ***redirection_split, t_cmd **cmd,
 	int		ccount_i[3];
 	int		fd;
 
-	ccount_i[0] = -1;
-	ccount_i[1] = i;
-	ccount_i[2] = 0;
+	init_process_redirections(ccount_i, i);
 	tty = ft_mult_split((*temp3), "<>");
 	if (!tty)
 		return (free_err_ret(NULL, NULL, *redirection_split, -1));

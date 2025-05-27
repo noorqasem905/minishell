@@ -24,6 +24,8 @@ SRCS = 	srcs/env.c							\
 		srcs/handle_export.c				\
 		srcs/setup_execution.c				\
 		srcs/setup_execution_heredoc.c		\
+		srcs/setup_heredoc_redirection.c	\
+		srcs/utils_exection_heredoc.c		\
 		srcs/redirection_extract_2.c		\
 		srcs/dup_process_handle.c			\
 		srcs/redirection_extract.c			\
@@ -36,6 +38,7 @@ SRCS = 	srcs/env.c							\
 		srcs/execution_bulidin.c			\
 		srcs/utils_redirection.c			\
 		srcs/searching_bulidin.c			\
+		srcs/setup_redirection.c			\
 		srcs/execute_heredoc.c				\
 		srcs/utils_set_data2.c				\
 		srcs/utils_exeution.c				\
@@ -47,6 +50,8 @@ SRCS = 	srcs/env.c							\
 		srcs/ft_echo_utils.c				\
 		srcs/dup_process.c					\
 		srcs/utils_setup.c					\
+		srcs/init_export.c					\
+		srcs/open_pipe.c 					\
 		srcs/robo_cd.c						\
 		srcs/utils2.c 						\
 		srcs/ft_echo.c

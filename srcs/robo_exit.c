@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:29:22 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/25 23:17:01 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/28 16:40:01 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	robo_exit(char **split, t_cmd *cmd)
 		if (!check_n(split[1]))
 		{
 			ft_printf("%2exit: %s: numeric argument required\n", split[1]);
-			cmd->exit_status = 255;
+			cmd->exit_status = 1;
 		}
 		else if (split[2] || size > 19)
 		{

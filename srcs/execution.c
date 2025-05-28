@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 22:00:14 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/28 16:31:24 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	execution(t_cmd **cmd)
 	ret = setup_execution_heredoc(cmd, &file_loc);
 	if (ret != 0)
 		return (ret);
+	expand_cmds(cmd, (*cmd)->input);
 	ret = execution_process(cmd);
 	if (ret != 0)
 		return (ret);

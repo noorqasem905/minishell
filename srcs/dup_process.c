@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:03:40 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 21:51:37 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/28 15:36:30 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,6 @@ int	close_wait2_exit(int status, t_cmd **cmd)
 		(*cmd)->exit_status = WEXITSTATUS(status);
 		if ((*cmd)->exit_status == 42)
 			return (-1);
-		if ((*cmd)->exit_status != 0)
-			ft_printf("%2Error: Command failed with status %d\n",
-				(*cmd)->exit_status);
 	}
 	else if (WIFSIGNALED(status))
 	{

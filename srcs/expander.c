@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/27 21:57:17 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/29 14:32:52 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,36 +70,45 @@ int	append_expansion(char **expanded, char *content, int *i, t_cmd *cmd)
 	return (0);
 }
 
-static char	*free_and_ret(char *tmp)
+static int	handle_quotes_and_expand(
+	char **expanded, char *content, int *i, t_cmd *cmd)
 {
-	free(tmp);
-	return (NULL);
+	static int	flag_single = 0;
+	static int	flag_double = 0;
+
+	if (content[*i] == '\'' && !flag_double)
+	{
+		flag_single = !flag_single;
+		return (append_char(expanded, content[(*i)++]));
+	}
+	else if (content[*i] == '"' && !flag_single)
+	{
+		flag_double = !flag_double;
+		return (append_char(expanded, content[(*i)++]));
+	}
+	else if (content[*i] == '$' && !flag_single)
+		return (append_expansion(expanded, content, i, cmd));
+	else
+		return (append_char(expanded, content[(*i)++]));
 }
 
 char	*expander_input(t_cmd **cmd)
 {
 	char	*expanded;
-	int		i;
-	int		flag_single;
-	int		flag_double;
 	char	*content;
+	int		i;
 
 	expanded = ft_strdup("");
-	flag_single = 0;
-	flag_double = 0;
+	if (!expanded)
+		return (NULL);
 	i = 0;
 	content = (char *)(*cmd)->word->content;
 	while (content[i])
 	{
-		if (content[i] == '$' && !flag_single)
+		if (handle_quotes_and_expand(&expanded, content, &i, *cmd) < 0)
 		{
-			if (append_expansion(&expanded, content, &i, *cmd) < 0)
-				return (free_and_ret(expanded));
-		}
-		else
-		{
-			if (append_char(&expanded, content[i++]) < 0)
-				return (free_and_ret(expanded));
+			free(expanded);
+			return (NULL);
 		}
 	}
 	return (expanded);

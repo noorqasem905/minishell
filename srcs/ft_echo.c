@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:02:03 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 21:47:47 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/29 15:10:08 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,28 @@ static char	*echo_join_args(char **split, int i)
 int	ft_echo(t_cmd *cmd, t_list *command)
 {
 	char	new_line;
-	char	**split;
-	char	*buff;
+	char	**args;
 	int		i;
 
 	new_line = '\n';
-	i = 0;
-	split = ft_split_custom_exp(command->content, ' ');
-	if (!split)
+	args = ft_split_custom_exp(command->content, ' ');
+	if (!args)
 		return (-1);
-	while (split[++i] && ft_strcmp(split[i], "-n") == 0)
-		new_line = '\0';
-	buff = echo_join_args(split, i);
-	frees_split(split);
-	if (!buff)
-		printf("%c", new_line);
-	else
+
+	i = 1;
+	if (args[i] && ft_strcmp(args[i], "-n") == 0)
 	{
-		printf("%s%c", buff, new_line);
-		free(buff);
+		new_line = '\0';
+		i++;
 	}
+	while (args[i])
+	{
+		printf("%s", args[i]);
+		if (args[i + 1])
+			printf(" ");
+		i++;
+	}
+	printf("%c", new_line);
+	frees_split(args);
 	return (0);
 }

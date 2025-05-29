@@ -39,6 +39,7 @@ SRCS = 	srcs/env.c							\
 		srcs/utils_redirection.c			\
 		srcs/searching_bulidin.c			\
 		srcs/setup_redirection.c			\
+		srcs/helper_export_2.c 				\
 		srcs/execute_heredoc.c				\
 		srcs/utils_set_data2.c				\
 		srcs/utils_exeution.c				\

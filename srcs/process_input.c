@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/28 18:29:10 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:50:05 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 		return (-42);
 	}
 	remove_qoute(input);
-	*temp = ft_split(*input, '|');
+	*temp = ft_split_custom_exp(*input, '|');
 	if (!*temp)
 		return (-1);
 	if (!*temp[0])

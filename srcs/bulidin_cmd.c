@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/23 14:43:20 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:48:45 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	handle_cd_slash(char *temp)
 {
-	if (temp == NULL)
+	if (temp == NULL || ft_strcmp(temp, ".") == 0)
 	{
 		chdir(getenv("HOME"));
 		return (-1);

@@ -81,10 +81,5 @@ int	main(int argc, char *argv[], char **robo_env)
 	free(cmd);
 	return (e);
 }
-
-
-//pwd pwd pwd ignore pwd 
 //echo '$USER' no print
-//cd . go to home
 //cat ^\ exit cat
-// echo "ls | ls" not command

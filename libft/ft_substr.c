@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 15:12:47 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/22 16:49:19 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/31 22:13:56 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,9 @@ int	main(void) {
 	unsigned int start = 8;
 	size_t len = 3;
 
-	//char *substr = ft_substr(str, start, len);
-   char *substr = ft_substr(str, start, len);
+		//char *substr = ft_substr(str, start, len);
+   		char *substr = ft_substr(str, start, len);
 		printf("Substring: %s\n", substr);
-
-
 	return (0);
 }
 */

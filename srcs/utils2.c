@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:40:51 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 17:42:14 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/05/31 17:42:39 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,18 @@ int	ft_isspace(char c)
 		|| c == '\r');
 }
 
-void	free_it(char **str, size_t i)
+void	free_it(char **str, size_t n)
 {
-	while (i != 0)
-	{
-		free(str[i]);
-		i--;
-	}
-	free(str[i]);
-	free(str);
+    size_t i = 0;
+    if (!str)
+        return;
+    while (i < n)
+    {
+        free(str[i]);
+        str[i] = NULL;
+        i++;
+    }
+    free(str);
 }
 
 char	*trim_quotess(char *str)

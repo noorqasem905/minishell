@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/29 15:02:10 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/01 00:53:28 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ struct						s_exp
 	char					**value;
 	int						flag;
 };
+void						remove_quote(char **str);
 int							check_redirection_mult_siggr(int mult[],
 								int conflect_handle[], int is_file_enter[],
 								char *input);
@@ -177,8 +178,8 @@ void						update_env(char **env, int j, char *name,
 void						error_export(t_cmd **cmd);
 void						handle_added(t_cmd **cmd, t_exp *export, int i,
 								int j);
-void						skip_delimiters(char **s, char c, int *flag, char *quote_char);
-void						skip_word(char **s, char c, int *flag, char *quote_char);
+void						skip_delimiters(char const **s, char c);
+void						skip_word(char const **s, char c, int *flag, char *quote_char);
 void						print_with_value(char *name, char *value);
 void						handle_invalid(char *name, t_cmd **cmd);
 void						print_saved_cmd(t_list *saved_cmd);
@@ -194,7 +195,7 @@ void						setup_extra_command_2(char **split_2,
 void						set_data_extr_apy_redir(int *which, char *temp2,
 								char **temp4, char **redirection_split);
 int							word_count_custom(char const *s, char c);
-size_t						word_len_custuom(char *s, char c, int *flag, char *quote_char);
+size_t						word_len_custom(char *s, char c, int *flag, char *quote_char);
 char						**ft_split_custom_exp(char const *s, char c);
 char						*extract_filename(char **redirection_split,
 								int ccount);

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:56:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/29 15:01:22 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/01 01:16:49 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int	word_count_custom(char const *s, char c)
     quote_char = 0;
     while (*s)
     {
-        skip_delimiters((char **)&s, c, &flag, &quote_char);
+        skip_delimiters(&s, c);
         if (*s)
             i++;
-        skip_word((char **)&s, c, &flag, &quote_char);
+        skip_word(&s, c, &flag, &quote_char);
     }
     return (i);
 }
 
-size_t	word_len_custuom(char *s, char c, int *flag, char *quote_char)
+size_t	word_len_custom(char *s, char c, int *flag, char *quote_char)
 {
     size_t	i;
 
@@ -44,7 +44,7 @@ size_t	word_len_custuom(char *s, char c, int *flag, char *quote_char)
             i++;
             continue ;
         }
-        if (s[i] == '\'' || s[i] == '\"')
+        if (!*flag && (s[i] == '\'' || s[i] == '\"'))
         {
             *flag = 1;
             *quote_char = s[i];

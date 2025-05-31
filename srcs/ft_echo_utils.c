@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 21:47:06 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/29 15:05:36 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/05/31 14:43:49 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,3 @@ void	ft_echo_ignore_quotes(int new_line, int ignore, char *buff)
 	free(buff);
 }
 
-char	*strip_outer_quotes(char *str)
-{
-	size_t	len;
-
-	if (!str)
-		return (NULL);
-	len = ft_strlen(str);
-	if ((str[0] == '\'' || str[0] == '\"') && str[len - 1] == str[0] && len > 1)
-		return (ft_substr(str, 1, len - 2));
-	return (ft_strdup(str));
-}

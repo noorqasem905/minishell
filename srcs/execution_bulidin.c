@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 18:32:15 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/01 15:32:07 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,14 @@ int	run_buildin_execution_2(t_cmd *cmd, t_list *current, char *tmp)
 	}
 	else if (ft_strncmp(tmp, "echo", 4) == 0)
 	{
-		free(tmp);
+		if (run_buildin_echo(tmp, cmd) < 0)
+			return (-1);
 		ft_echo(cmd, current);
 		cmd->bulidin = 17;
 		return (-1);
 	}
-	else
-		if (run_buildin_execution_3(cmd, current, tmp) < 0)
-			return (-1);
+	else if (run_buildin_execution_3(cmd, current, tmp) < 0)
+		return (-1);
 	return (0);
 }
 
@@ -114,9 +114,8 @@ int	run_buildin_execution(t_cmd *cmd, t_list *current)
 		cmd->expo = NULL;
 		return (-1);
 	}
-	else
-		if (run_buildin_execution_2(cmd, current, tmp) < 0)
-			return (free_err_ret(NULL, NULL, NULL, -1));
+	else if (run_buildin_execution_2(cmd, current, tmp) < 0)
+		return (free_err_ret(NULL, NULL, NULL, -1));
 	if (ft_strncmp(tmp, "export", 6) == 0)
 	{
 		free(tmp);

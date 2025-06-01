@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 15:02:22 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/01 15:33:01 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,7 @@ int							str_size_element(char const *s, char c);
 int							setup_extra_command_h(char *temp5, char **command);
 int							ft_heredoc_redirection_process(char **str,
 								char *temp);
+int							run_buildin_echo(char *tmp, t_cmd *cmd);
 void						remove_qoute(char **str);
 int							ft_heredoc_redirection_manager(char *file,
 								char **str);

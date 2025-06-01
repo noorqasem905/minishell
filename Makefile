@@ -35,6 +35,7 @@ SRCS = 	srcs/env.c							\
 		srcs/redirection_handle.c			\
 		srcs/exeute_redirection.c			\
 		srcs/append_redirection.c			\
+		srcs/execution_bulidin2.c			\
 		srcs/check_redirection.c			\
 		srcs/execution_bulidin.c			\
 		srcs/utils_redirection.c			\

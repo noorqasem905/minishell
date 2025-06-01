@@ -6,46 +6,20 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:02:03 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 12:10:48 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/01 14:49:50 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_echo_setquotes1(char *first, char value)
-{
-	*first = value;
-}
-
-int	ft_echo_quotes1(char *word, char *ignore)
-{
-	char	first = '\0';
-	int		i = -1;
-
-	while (word[++i])
-	{
-		if (*ignore == '\0')
-			*ignore = first;
-		if (word[i] == '\'' && first == '\0')
-			ft_echo_setquotes1(&first, '\'');
-		else if (word[i] == '\"' && first == '\0')
-			ft_echo_setquotes1(&first, '\"');
-		else if (word[i] == '\'' && first == '\'')
-			ft_echo_setquotes1(&first, '\0');
-		else if (word[i] == '\"' && first == '\"')
-			ft_echo_setquotes1(&first, '\0');
-	}
-	if (first != '\0')
-		return (-1);
-	return (0);
-}
-
 char	*skip_quotes(char *split, char ignore)
 {
 	char	*buff;
-	int		i = 0;
-	int		j = 0;
+	int		i;
+	int		j;
 
+	i = 0;
+	j = 0;
 	buff = malloc(ft_strlen(split) + 1);
 	if (!buff)
 		return (NULL);
@@ -110,12 +84,12 @@ static int	handle_unquoted(char **buff, char *token)
 	return (0);
 }
 
-static int	process_token(char **buff, char *token, char *ignore)
+int	process_token(char **buff, char *token, char *ignore)
 {
 	int	ret;
 
 	*ignore = '\0';
-	ret = ft_echo_quotes1(token, ignore);
+	ret = ft_echo_quotes(token, ignore);
 	if (ret < 0)
 		return (-1);
 	if (*ignore)
@@ -133,52 +107,31 @@ static int	process_token(char **buff, char *token, char *ignore)
 	return (0);
 }
 
-int	ft_echo_quotes_manger1(char **split, int *index, char *ignore,
-		char **buff)
-{
-	int	ret;
-
-	*buff = ft_strdup("");
-	if (!(*buff))
-		return (-1);
-	while (split[*index])
-	{
-		ret = process_token(buff, split[*index], ignore);
-		if (ret < 0)
-		{
-			free(*buff);
-			if (ret == -1)
-				frees_split(split);
-			return (-1);
-		}
-		(*index)++;
-	}
-	return (0);
-}
-
-
 int	ft_echo(t_cmd *cmd, t_list *command)
 {
-    char	**split;
-    char	*buff;
-    char	ignore = '\0';
-    int		i = 1;
-    int		n_flag = 0;
+	char	**split;
+	char	*buff;
+	char	ignore;
+	int		i;
+	int		n_flag;
 
-    split = ft_split_custom_exp(command->content, ' ');
-    if (!split)
-        return (-1);
-    while (split[i] && ft_strcmp(split[i], "-n") == 0)
-    {
-        n_flag = 1;
-        i++;
-    }
-	if(ft_echo_quotes_manger1(split, &i, &ignore, &buff) < 0)
+	ignore = '\0';
+	i = 1;
+	n_flag = 0;
+	split = ft_split_custom_exp(command->content, ' ');
+	if (!split)
+		return (-1);
+	while (split[i] && ft_strcmp(split[i], "-n") == 0)
+	{
+		n_flag = 1;
+		i++;
+	}
+	if (ft_echo_quotes_manger(split, &i, &ignore, &buff) < 0)
 		return (-1);
 	printf("%s", buff);
 	free(buff);
-    if (!n_flag)
-        printf("\n");
-    frees_split(split);
-    return (0);
+	if (!n_flag)
+		printf("\n");
+	frees_split(split);
+	return (0);
 }

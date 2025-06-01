@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:09:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 01:24:16 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/01 15:01:22 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	init_variable(int *flag, size_t *i, char *quote_char)
 	*quote_char = 0;
 }
 
-int	split_loop(char **str, const char *s, char c, size_t *i, char *quote_char)
+int	split_loop(char **str, const char *s, char c, t_split_state *state)
 {
 	int		flag;
 	size_t	word_len;
@@ -51,14 +51,14 @@ int	split_loop(char **str, const char *s, char c, size_t *i, char *quote_char)
 		skip_delimiters(&s, c);
 		if (*s)
 		{
-			word_len = word_len_custom((char *)s, c, &flag, quote_char);
-			str[*i] = ft_substr(s, 0, word_len);
-			if (!str[*i])
+			word_len = word_len_custom((char *)s, c, &flag, &state->quote_char);
+			str[state->i] = ft_substr(s, 0, word_len);
+			if (!str[state->i])
 			{
-				free_it(str, *i);
+				free_it(str, state->i);
 				return (0);
 			}
-			(*i)++;
+			state->i++;
 			s += word_len;
 		}
 	}
@@ -67,20 +67,18 @@ int	split_loop(char **str, const char *s, char c, size_t *i, char *quote_char)
 
 char	**ft_split_custom_exp(const char *s, char c)
 {
-	char	quote_char;
-	char	**str;
-	int		flag;
-	size_t	i;
+	t_split_state	state;
+	char			**str;
+	int				flag;
 
 	if (!s)
 		return (NULL);
-	init_variable(&flag, &i, &quote_char);
+	init_variable(&flag, &state.i, &state.quote_char);
 	str = malloc(sizeof(char *) * (word_count_custom(s, c) + 1));
 	if (!str)
 		return (NULL);
-	if (!split_loop(str, s, c, &i, &quote_char))
+	if (!split_loop(str, s, c, &state))
 		return (NULL);
-	str[i] = NULL;
+	str[state.i] = NULL;
 	return (str);
 }
-

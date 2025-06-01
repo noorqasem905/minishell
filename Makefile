@@ -31,6 +31,7 @@ SRCS = 	srcs/env.c							\
 		srcs/redirection_extract.c			\
 		srcs/redirection_handle2.c			\
 		srcs/redirection_heredoc.c			\
+		srcs/remove_quote_utils.c			\
 		srcs/redirection_handle.c			\
 		srcs/exeute_redirection.c			\
 		srcs/append_redirection.c			\

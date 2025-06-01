@@ -6,36 +6,11 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:25:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 12:26:57 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/01 14:57:36 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	remove_quote_condition(char **str, char *who_im_i,
-				int save_i[3], int *close)
-{
-	int	i;
-
-	i = save_i[2];
-	if ((*str)[i] == '\"' || (*str)[i] == '\'')
-	{
-		if (*who_im_i == ' ')
-			*who_im_i = (*str)[i];
-		else if ((*str)[i] != *who_im_i)
-		{
-			*who_im_i = (*str)[i];
-			*close = 0;
-		}
-		if (*close == 0)
-			save_i[0] = i;
-		else
-			save_i[1] = i;
-		(*close)++;
-	}
-	else if (ft_isspace((*str)[i]))
-		*close = 0;
-}
 
 int	is_valid_after_echo(const char *str, int i)
 {
@@ -83,8 +58,9 @@ static void	init_value(int save_i[3], char *who_im_i, int *allow, int *close)
 	*who_im_i = ' ';
 	save_i[0] = -1;
 	save_i[1] = -1;
-	save_i[2] = 0;	
+	save_i[2] = 0;
 }
+
 void	remove_qoute(char **str)
 {
 	char	who_im_i;

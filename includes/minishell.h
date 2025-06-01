@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 00:53:28 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/01 15:02:22 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,13 @@ struct						s_cmd
 	int						exit_status;
 	int						flag;
 };
-
+typedef struct s_split_state
+{
+	size_t					i;
+	char					quote_char;
+}							t_split_state;
+void						remove_quote_condition(char **str, char *who_im_i,
+								int save_i[3], int *close);
 int							heredoc(char *temp, char **file_loc, size_t size);
 int							handle_here_doc(char *temp);
 struct						s_exp
@@ -179,7 +185,8 @@ void						error_export(t_cmd **cmd);
 void						handle_added(t_cmd **cmd, t_exp *export, int i,
 								int j);
 void						skip_delimiters(char const **s, char c);
-void						skip_word(char const **s, char c, int *flag, char *quote_char);
+void						skip_word(char const **s, char c, int *flag,
+								char *quote_char);
 void						print_with_value(char *name, char *value);
 void						handle_invalid(char *name, t_cmd **cmd);
 void						print_saved_cmd(t_list *saved_cmd);
@@ -195,7 +202,8 @@ void						setup_extra_command_2(char **split_2,
 void						set_data_extr_apy_redir(int *which, char *temp2,
 								char **temp4, char **redirection_split);
 int							word_count_custom(char const *s, char c);
-size_t						word_len_custom(char *s, char c, int *flag, char *quote_char);
+size_t						word_len_custom(char *s, char c, int *flag,
+								char *quote_char);
 char						**ft_split_custom_exp(char const *s, char c);
 char						*extract_filename(char **redirection_split,
 								int ccount);
@@ -257,18 +265,19 @@ void						frees_newsplit(char **root);
 t_exp						*init_export(int count);
 size_t						word_lenn(char *s, char c);
 void						free_exp(t_exp *export);
-void						ft_echo_setquotes(int *quotes, int *first,
-								int value);
+void						ft_echo_setquotes(char *first, char value);
 void						ft_echo_ignore_quotes(int new_line, int ignore,
 								char *buff);
-int							ft_echo_quotes(char *word, int *igonre);
+int							process_token(char **buff, char *token,
+								char *ignore);
+int							ft_echo_quotes(char *word, char *ignore);
 void						ski_delimiters(char **s, char c);
 int							is_there_else_heredoc(char *temp);
 int							handle_here_doc(char *temp);
 char						*strip_outer_quotes(char *str);
 int							ft_echo(t_cmd *cmd, t_list *command);
-int							ft_echo_quotes_manger(char **split, int *i,
-								int *ignore, char **buff);
+int							ft_echo_quotes_manger(char **split, int *index,
+								char *ignore, char **buff);
 int							get_free_filename(char **file_loc,
 								char *new_fullpath);
 int							openfile_heredoc(int *fd, char **file_loc);

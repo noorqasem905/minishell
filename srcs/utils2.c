@@ -30,16 +30,18 @@ int	ft_isspace(char c)
 
 void	free_it(char **str, size_t n)
 {
-    size_t i = 0;
-    if (!str)
-        return;
-    while (i < n)
-    {
-        free(str[i]);
-        str[i] = NULL;
-        i++;
-    }
-    free(str);
+	size_t	i;
+
+	i = 0;
+	if (!str)
+		return ;
+	while (i < n)
+	{
+		free(str[i]);
+		str[i] = NULL;
+		i++;
+	}
+	free(str);
 }
 
 char	*trim_quotess(char *str)

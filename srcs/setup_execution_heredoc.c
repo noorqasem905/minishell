@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:11:43 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 14:22:03 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 21:21:10 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	searching_here_doc_2(t_cmd **cmd, t_here_doc **here_doc, t_list **current,
 
 	if (ft_strfind((*current)->content, "<<"))
 	{
+		(*cmd)->exit_status = 2;
 		(*cmd)->who_am_i = 13;
 		counter_total_heredoc(here_doc, (*current)->content);
 		temp = ft_strnstr((*current)->content, "<<",

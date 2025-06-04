@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 19:44:45 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 21:32:27 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	run_buildin_execution_2(t_cmd *cmd, t_list *current, char *tmp)
 int	run_buildin_execution(t_cmd *cmd, t_list *current)
 {
 	char	*tmp;
-
+	
 	tmp = ft_strtrim(cmd->current->content, " ");
 	if (!tmp)
 		return (-1);

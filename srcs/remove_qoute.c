@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:25:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 14:57:36 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 21:41:35 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,21 @@ void	remove_qoute(char **str)
 	int		save_i[3];
 	int		close;
 	int		allow;
+	int		j;
 
 	init_value(save_i, &who_im_i, &allow, &close);
 	while ((*str) && (*str)[save_i[2]])
 	{
 		remove_quote_condition(str, &who_im_i, save_i, &close);
-		if (is_echo_command(*str, save_i[2]) && allow < 1)
+		if ((*str)[save_i[2]] == '|')
+		{
+			j = save_i[2] + 1;
+			while ((*str)[j] && ft_isspace((*str)[j]))
+				j++;
+			if (is_echo_command(*str, j) && allow < 1)
+				allow = 8;
+		}
+		else if (is_echo_command(*str, save_i[2]) && allow < 1)
 			allow = 8;
 		if (allow > 0 && allow < 5)
 			no_value_of_echo(*str, save_i, &allow);

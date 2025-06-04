@@ -6,13 +6,13 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 20:42:57 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/04 21:28:39 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	save_data(char **input, t_cmd **cmd, int *flag, char ***temp)
+int	save_data(t_cmd **cmd, int *flag, char ***temp)
 {
 	int	size;
 	int	iterator;

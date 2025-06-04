@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 22:35:32 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/04 20:42:43 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/04 20:50:59 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,34 +31,6 @@ int	is_closed(char *input)
 	}
 	if (squote || dquote)
 		return (-1);
-	return (0);
-}
-
-int	save_data(t_cmd **cmd, int *flag, char ***temp)
-{
-	int	size;
-	int	iterator;
-
-	*flag = 0;
-	if (*temp == NULL)
-	{
-		perror("ft_split");
-		return (-1);
-	}
-	size = ft_2dlen(*temp);
-	if (size == 0)
-		return (*flag = -3);
-	(*cmd)->word = NULL;
-	iterator = -1;
-	while (++iterator < size)
-	{
-		if ((*temp)[iterator] != NULL)
-		{
-			insertend(&((*cmd)->word), (*temp)[iterator], flag);
-			if (*flag == 12)
-				break ;
-		}
-	}
 	return (0);
 }
 
@@ -104,11 +76,9 @@ int	check_pipe_input(char *input)
 
 	i = 0;
 	pipe_count = 0;
-	while (input[i] && input[i] == ' ')
-		i++;
-	if (!input)
-		return (-1);
-	if ((input[i] && input[i] == '|' ) || (input[ft_strlen(input) - 1] == '|'))
+	squote = 0;
+	dquote = 0;
+	if (is_pipe_invalid(input, &i))
 		return (-1);
 	while (input[i])
 	{

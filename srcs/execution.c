@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 15:38:54 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 19:37:48 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	execution_setup_process(int size, int (**pipe_fd2)[2], pid_t **pids)
 
 int	execution_process(t_cmd **cmd)
 {
-	t_list	*current;
 	pid_t	*pids;
 	int		(*pipe_fd2)[2];
 	int		ret;
@@ -39,7 +38,7 @@ int	execution_process(t_cmd **cmd)
 	ret = open_pipe(cmd, size, pipe_fd2);
 	if (ret != 0)
 		return (ret);
-	if (child_process(cmd, &current, pipe_fd2, pids) < 0)
+	if (child_process(cmd, pipe_fd2, pids) < 0)
 	{
 		free(pipe_fd2);
 		return (free_err_ret("NULL", pids, NULL, -1));
@@ -52,7 +51,6 @@ int	execution_process(t_cmd **cmd)
 
 int	execution(t_cmd **cmd)
 {
-	t_list	*current;
 	char	**file_loc;
 	int		one_command;
 	int		ret;
@@ -73,11 +71,11 @@ int	execution(t_cmd **cmd)
 	ret = execution_process(cmd);
 	if (ret != 0)
 		return (ret);
-	handle_here_doc_unlink(cmd, file_loc);
+	handle_here_doc_unlink(cmd);
 	return (one_command);
 }
 
-void	child_process_close(int pipe_fd2[][2], pid_t pids[], int i, int size)
+void	child_process_close(int pipe_fd2[][2], int i, int size)
 {
 	if (i > 0)
 		close(pipe_fd2[i - 1][0]);
@@ -85,31 +83,30 @@ void	child_process_close(int pipe_fd2[][2], pid_t pids[], int i, int size)
 		close(pipe_fd2[i][1]);
 }
 
-int	child_process(t_cmd **cmd, t_list **current, int pipe_fd2[][2],
+int	child_process(t_cmd **cmd, int pipe_fd2[][2],
 		pid_t pids[])
 {
 	int	size;
 	int	i;
 
 	i = -1;
+	set_parent_signals();
 	size = ft_lstsize((*cmd)->word);
 	while (++i < size)
 	{
 		(pids)[i] = fork();
 		if ((pids)[i] < 0)
-		{
-			perror("fork");
-			return (-1);
-		}
+			return (free_err_ret("error", NULL, NULL, -1));
 		if ((pids)[i] == 0)
 		{
+			dfl_parent_signals();
 			if (dup_process(&i, size, pipe_fd2) == -1)
 				return (-1);
 			if (dup_process_2(cmd, (&(*cmd)->current),
-					(*cmd)->here_doc->file_loc, i) == -1)
+					i) == -1)
 				return (-1);
 		}
-		child_process_close(pipe_fd2, pids, i, size);
+		child_process_close(pipe_fd2, i, size);
 		(*cmd)->current = (*cmd)->current->next;
 	}
 	return (0);

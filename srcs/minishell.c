@@ -12,8 +12,10 @@
 
 #include "../includes/minishell.h"
 
-static void	error_main(int argc, t_cmd *cmd, char *str)
+static void	error_main(int argc, char **str)
 {
+	if (str[0])
+		;
 	if (argc > 1)
 		exit(EXIT_FAILURE);
 }
@@ -65,7 +67,7 @@ int	main(int argc, char *argv[], char **robo_env)
 	e = 0;
 	input = NULL;
 	temp = NULL;
-	error_main(argc, cmd, argv[0]);
+	error_main(argc, argv);
 	cmd = malloc(sizeof(t_cmd));
 	malloc_error(cmd);
 	cmd->here_doc = malloc(sizeof(t_here_doc));
@@ -73,7 +75,7 @@ int	main(int argc, char *argv[], char **robo_env)
 		free_main(cmd);
 	init_data(&cmd);
 	ft_env(&cmd, robo_env);
-	reading_manager(&cmd, &flag, &temp, cmd->env);
+	reading_manager(&cmd, &flag, &temp);
 	frees_split(cmd->env);
 	frees_split(cmd->expo);
 	free(cmd->here_doc);

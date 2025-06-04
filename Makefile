@@ -1,5 +1,5 @@
 CC =  cc
-CFLAGS =  -g
+CFLAGS =  -Wall -Wextra -Werror -g
 NAME = minishell
 
 SRCS = 	srcs/env.c							\

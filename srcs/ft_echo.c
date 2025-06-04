@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:02:03 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 14:49:50 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 17:42:53 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	process_token(char **buff, char *token, char *ignore)
 	return (0);
 }
 
-int	ft_echo(t_cmd *cmd, t_list *command)
+int	ft_echo(t_list *command)
 {
 	char	**split;
 	char	*buff;

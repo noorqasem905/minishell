@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 15:33:01 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 19:41:49 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,21 +117,21 @@ int							ft_heredoc_redirection_manager_2(int *j, char **str,
 								char **tmp);
 void						init_append_redirection(int heredoc_append[]);
 void						close_wait2(pid_t pids[], int size, t_cmd **cmd);
-int							child_process(t_cmd **cmd, t_list **current,
+int							child_process(t_cmd **cmd,
 								int pipe_fd2[][2], pid_t pids[]);
 int							dup_process(int *i, int size, int pipe_fd2[][2]);
 int							dup_process_2(t_cmd **cmd, t_list **current,
-								char **file_loc, int i);
+								int i);
 int							get_path(char **ev);
 int							ft_strfind(char *str, char *c);
 int							execution(t_cmd **cmd);
 int							ft_execve(char *file, t_cmd **cmd);
-int							searching_comand(char **input, char **temp);
-int							save_data(char **input, t_cmd **cmd, int *flag,
+int							searching_comand(char **temp);
+int							save_data(t_cmd **cmd, int *flag,
 								char ***temp);
 int							which_redirection_char(char *temp);
 int							reading_manager(t_cmd **cmd, int *flag,
-								char ***temp, char **robo_env);
+								char ***temp);
 int							ft_redirection(char *input,
 								char ***redirection_split, t_cmd **cmd);
 int							ft_execute_redirection(char **redirection_split,
@@ -157,7 +157,7 @@ int							extract_apply_short(char **temp, char **tmp,
 void						free_list(t_list **root);
 void						frees(t_list **root);
 void						printf_split(char *str, char **split);
-void						robo_cd(char **temp, char **robo_env);
+void						robo_cd(char **temp);
 void						free_it_noww(char **s, char *s2, int emassage);
 void						signal_handler(int x);
 char						*check_access(char **paths, char **result);
@@ -193,8 +193,7 @@ void						print_saved_cmd(t_list *saved_cmd);
 void						free_it(char **str, size_t i);
 void						save_export_to_expo(t_cmd **cmd);
 void						check_redirection_mult_nosiggrle(int mult[],
-								int conflect_handle[], int is_file_enter[],
-								char *input);
+								int conflect_handle[], int is_file_enter[]);
 void						init_check_redirection_mult(int mult[],
 								int conflect_handle[], int is_file_enter[]);
 void						setup_extra_command_2(char **split_2,
@@ -242,13 +241,11 @@ int							execute_heredoc_manage_exeu(char *file, char **str,
 int							execute_heredoc_redirection(
 								char ***redirection_split,
 								char *str, char *st, t_cmd **cmd);
-int							execute_heredoc(char *file, t_cmd **cmd, int i,
-								char **file_loc);
+int							execute_heredoc(char *file, t_cmd **cmd, int i);
 int							dup_process_2_handle(t_cmd **cmd, t_list **current);
-void						handle_here_doc_unlink(t_cmd **cmd,
-								char **file_loc);
+void						handle_here_doc_unlink(t_cmd **cmd);
 void						run_export_execution(char **run);
-void						child_process_close(int pipe_fd2[][2], pid_t pids[],
+void						child_process_close(int pipe_fd2[][2],
 								int i, int size);
 void						setup_extra_command_h_2(char **split_2,
 								char **command);
@@ -276,7 +273,7 @@ void						ski_delimiters(char **s, char c);
 int							is_there_else_heredoc(char *temp);
 int							handle_here_doc(char *temp);
 char						*strip_outer_quotes(char *str);
-int							ft_echo(t_cmd *cmd, t_list *command);
+int							ft_echo(t_list *command);
 int							ft_echo_quotes_manger(char **split, int *index,
 								char *ignore, char **buff);
 int							get_free_filename(char **file_loc,
@@ -304,5 +301,7 @@ int							reading_manager_handle_2(t_cmd **cmd, int ret,
 								char ***temp);
 int							reading_manager_handle(t_cmd **cmd, int *flag,
 								char ***temp, char **input);
+void						set_parent_signals(void);
+void						dfl_parent_signals(void);
 
 #endif

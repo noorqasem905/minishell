@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 22:05:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 17:07:56 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 char	*get_redirection_command(char *temp, char **redirection_split,
 		int iteritor)
 {
-	int	i;
-	int	j;
-	int	k;
+	size_t	i;
+	size_t	j;
+	int		k;
 
 	i = 0;
 	if (!temp || !redirection_split || !redirection_split[iteritor])

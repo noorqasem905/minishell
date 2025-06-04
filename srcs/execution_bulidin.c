@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_bulidin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 15:32:07 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 19:38:08 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 void	run_export_execution(char **run)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = 1;
 	while (run[i])
 	{
-		ft_printf("%s\n", run[i]);
+		j = ft_strlen(run[i]);
+		write(1, run[i], j);
+		write(1, "\n", 1);
 		i++;
 	}
 }
@@ -89,7 +93,7 @@ int	run_buildin_execution_2(t_cmd *cmd, t_list *current, char *tmp)
 	{
 		if (run_buildin_echo(tmp, cmd) < 0)
 			return (-1);
-		ft_echo(cmd, current);
+		ft_echo(current);
 		cmd->bulidin = 17;
 		return (-1);
 	}

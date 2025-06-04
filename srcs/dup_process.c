@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   dup_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:03:40 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/28 15:36:30 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 17:40:31 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
+int	dup_process_2(t_cmd **cmd, t_list **current, int i)
 {
 	char	**redirection_split;
 	int		heredoc_idx;
@@ -20,7 +20,7 @@ int	dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 	if ((*cmd)->here_doc->pryority[i] >= 2)
 	{
 		heredoc_idx = (*cmd)->here_doc->pryority[i] - 2;
-		if (execute_heredoc((*current)->content, cmd, heredoc_idx, file_loc)
+		if (execute_heredoc((*current)->content, cmd, heredoc_idx)
 			== -1)
 			return (-1);
 	}

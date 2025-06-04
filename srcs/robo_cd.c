@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:10:19 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/21 21:14:12 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/04 17:42:05 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,9 @@ int	robo_cd_access(char **dir, char **temp)
 
 int	handle_space_infile(char ***temp, char **dir)
 {
-	size_t	total_len;
 	char	quote;
 	int		start;
 	int		end;
-	int		k;
 
 	*dir = NULL;
 	if ((*temp)[1] && ((*temp)[1][0] == '"' || (*temp)[1][0] == '\''))
@@ -59,7 +57,7 @@ int	handle_space_infile(char ***temp, char **dir)
 	return (0);
 }
 
-void	robo_cd(char **temp, char **robo_env)
+void	robo_cd(char **temp)
 {
 	char	*dir;
 

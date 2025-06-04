@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_set_data.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 22:35:32 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/23 14:45:19 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 17:34:36 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	is_closed(char *input)
 	return (0);
 }
 
-int	save_data(char **input, t_cmd **cmd, int *flag, char ***temp)
+int	save_data(t_cmd **cmd, int *flag, char ***temp)
 {
 	int	size;
 	int	iterator;
@@ -88,7 +88,7 @@ int	check_pipe_input(char *input)
 		i++;
 	if (!input)
 		return (-1);
-	if (input[i] && input[i] == '|' || input[ft_strlen(input) - 1] == '|')
+	if ((input[i] && input[i] == '|' ) || (input[ft_strlen(input) - 1] == '|'))
 		return (-1);
 	while (input[i])
 	{

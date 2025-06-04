@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exeution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:08:07 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 16:01:39 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 19:41:11 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	set_init(t_cmd **cmd, int size)
 
 int	ft_strfind(char *str, char *c)
 {
-	int	i;
-	int	j;
+	int		i;
+	size_t	j;
 
 	i = 0;
 	while (str[i])

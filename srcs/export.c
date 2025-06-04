@@ -3,55 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:18:35 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/24 15:28:57 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 19:38:25 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static void	print_env_var(char *env_var)
-{
-	char	*eq;
-	int		name_len;
-	char	*name;
-	char	*value;
-
-	eq = ft_strchr(env_var, '=');
-	if (!eq)
-	{
-		ft_printf("declare -x %s\n", env_var);
-		return ;
-	}
-	name_len = eq - env_var;
-	name = ft_substr(env_var, 0, name_len);
-	value = ft_strdup(eq + 1);
-	if (!name || !value)
-		return ;
-	print_with_value(name, value);
-	free(name);
-	free(value);
-}
-
-static void	print_export(t_cmd *cmd)
-{
-	int	i;
-
-	if (!cmd->env)
-	{
-		ft_printf("%2Error: Environment is not initialized.\n");
-		cmd->exit_status = 1;
-		return ;
-	}
-	i = 0;
-	while (cmd->env[i])
-	{
-		print_env_var(cmd->env[i]);
-		i++;
-	}
-}
 
 static char	*join_name_value(char *name, char *value)
 {
@@ -72,7 +31,6 @@ char	**add_env(char **env, char *name, char *value)
 	int		j;
 	char	**new_env;
 	char	*new_name;
-	char	*temp;
 
 	i = 0;
 	j = -1;
@@ -96,7 +54,6 @@ char	**add_env(char **env, char *name, char *value)
 
 void	robo_export(t_cmd **cmd, t_exp *export)
 {
-	char	**tmp;
 	int		i;
 	int		j;
 

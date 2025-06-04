@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bulidin_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/29 13:48:45 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 17:05:40 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	build_quoted_string(char **dir, char ***temp, int total_len, int *end)
 int	merge_quoted_tokens(char ***temp, char **dir, int start, int *end)
 {
 	size_t	total_len;
-	size_t	len;
 	char	quote;
 	int		k;
 
@@ -114,7 +113,7 @@ int	merge_quoted_tokens(char ***temp, char **dir, int start, int *end)
 	return (0);
 }
 
-int	searching_comand(char **input, char **temp)
+int	searching_comand(char **temp)
 {
 	if (ft_strcmp(temp[0], "exit") == 0)
 		return (-13);

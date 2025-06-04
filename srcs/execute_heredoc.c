@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:54:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 21:57:51 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 17:31:22 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	here_doc_manger(t_cmd **cmd, char **file_loc)
 {
 	t_list	*current;
-	int		num_here_doc;
 	int		size;
 	int		i_j[2];
 
@@ -68,7 +67,7 @@ static int	st_protuction(char **st, char *temp, char *str)
 	return (0);
 }
 
-int	execute_heredoc(char *file, t_cmd **cmd, int i, char **file_loc)
+int	execute_heredoc(char *file, t_cmd **cmd, int i)
 {
 	char	**redirection_split;
 	char	*temp;

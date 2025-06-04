@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 01:26:07 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 17:34:58 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 		free(*temp);
 		return (-42);
 	}
-	if (save_data(NULL, cmd, flag, temp) == -1 || *flag == -3 || *flag == 12)
+	if (save_data(cmd, flag, temp) == -1 || *flag == -3 || *flag == 12)
 	{
 		if (*flag == -3)
 			return (-3);
@@ -79,7 +79,6 @@ int	process_input_leaks(t_cmd **cmd, int ret)
 
 int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 {
-	t_list	*current;
 	char	**split;
 	char	*t;
 	int		ret_of_searching;
@@ -87,13 +86,13 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 	ret_of_searching = process_handle_input(cmd, flag, temp, input);
 	if (ret_of_searching < 0)
 		return (ret_of_searching);
-	if (searching_comand(input, *temp) == -1)
+	if (searching_comand(*temp) == -1)
 		return (-1);
 	split = ft_split((*temp)[0], ' ');
 	ret_of_searching = process_set_input(cmd, &t, &split, input);
 	if (ret_of_searching < 0)
 		return (ret_of_searching);
-	if (searching_comand(input, *temp) == -13)
+	if (searching_comand(*temp) == -13)
 		return (-13);
 	(*cmd)->input = *input;
 	ret_of_searching = execution(cmd);

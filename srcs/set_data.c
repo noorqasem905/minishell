@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 22:11:22 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 17:57:34 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	reading_manager_handle(t_cmd **cmd, int *flag, char ***temp, char **input)
 	return (0);
 }
 
-int	reading_manager(t_cmd **cmd, int *flag, char ***temp, char **robo_env)
+int	reading_manager(t_cmd **cmd, int *flag, char ***temp)
 {
 	char	*input;
 	int		ret;

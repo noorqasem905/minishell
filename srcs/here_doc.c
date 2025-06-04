@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 18:12:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 17:26:08 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int	heredoc(char *temp, char **file_loc, size_t size)
 	char	**heredoc_ptrs;
 	char	*search;
 	int		heredoc_count;
-	int		fd[2];
 
 	search = (temp);
 	heredoc_count = 0;

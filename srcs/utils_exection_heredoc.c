@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exection_heredoc.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 21:53:55 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 22:10:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 19:39:30 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	handle_here_doc_nolink(t_cmd **cmd)
 	}
 }
 
-void	handle_here_doc_unlink(t_cmd **cmd, char **file_loc)
+void	handle_here_doc_unlink(t_cmd **cmd)
 {
 	int	no;
 

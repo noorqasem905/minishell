@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 22:35:32 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/04 17:34:36 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/04 20:42:43 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,30 @@ int	check_no_pipe(char *input)
 	return (0);
 }
 
+static int	is_pipe_invalid(char *input, int *i)
+{
+	while (input[*i] && input[*i] == ' ')
+		(*i)++;
+	if (!input || (input[*i] == '|' && !input[*i + 1])
+		|| (input[ft_strlen(input) - 1] == '|'))
+		return (1);
+	return (0);
+}
+
+static void	update_quotes(char c, int *squote, int *dquote)
+{
+	if (c == '\'' && *dquote == 0)
+		*squote = !(*squote);
+	else if (c == '"' && *squote == 0)
+		*dquote = !(*dquote);
+}
+
 int	check_pipe_input(char *input)
 {
 	int	i;
 	int	pipe_count;
+	int	squote;
+	int	dquote;
 
 	i = 0;
 	pipe_count = 0;
@@ -92,10 +112,11 @@ int	check_pipe_input(char *input)
 		return (-1);
 	while (input[i])
 	{
-		if (input[i] != '|' && input[i] != ' ')
-			pipe_count = 0;
-		else if (input[i] == '|')
+		update_quotes(input[i], &squote, &dquote);
+		if (input[i] == '|' && !squote && !dquote)
 			pipe_count++;
+		else if (input[i] != ' ' && input[i] != '|' && !squote && !dquote)
+			pipe_count = 0;
 		if (pipe_count > 1)
 			return (-1);
 		i++;

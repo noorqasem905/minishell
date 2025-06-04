@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 19:38:08 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/04 20:41:57 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	run_buildin_execution(t_cmd *cmd, t_list *current)
 {
 	char	*tmp;
 
-	tmp = ft_strtrim(current->content, " ");
+	tmp = ft_strtrim(cmd->current->content, " ");
 	if (!tmp)
 		return (-1);
 	if (ft_strcmp(tmp, "export") == 0)

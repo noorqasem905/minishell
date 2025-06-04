@@ -6,11 +6,39 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 17:34:58 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/04 20:42:57 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	save_data(char **input, t_cmd **cmd, int *flag, char ***temp)
+{
+	int	size;
+	int	iterator;
+
+	*flag = 0;
+	if (*temp == NULL)
+	{
+		perror("ft_split");
+		return (-1);
+	}
+	size = ft_2dlen(*temp);
+	if (size == 0)
+		return (*flag = -3);
+	(*cmd)->word = NULL;
+	iterator = -1;
+	while (++iterator < size)
+	{
+		if ((*temp)[iterator] != NULL)
+		{
+			insertend(&((*cmd)->word), (*temp)[iterator], flag);
+			if (*flag == 12)
+				break ;
+		}
+	}
+	return (0);
+}
 
 int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 {

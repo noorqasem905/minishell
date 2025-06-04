@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:11:43 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 22:19:18 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/04 22:43:17 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,54 +50,29 @@ int	handle_here_doc_qouts(char *temp)
 	return (flag);
 }
 
-int	searching_here_doc_2(t_cmd **cmd, t_here_doc **here_doc, t_list **current,
-		int i_p[])
+int	searching_here_doc_2_logic(
+	t_cmd **cmd, t_here_doc **here_doc,
+	t_list **current, int i_p[])
 {
-	int		check_error;
 	char	*temp;
+	int		check_error;
 
-	if (ft_strfind((*current)->content, "<<") && handle_here_doc_qouts((*current)->content))
+	(*cmd)->exit_status = 2;
+	(*cmd)->who_am_i = 13;
+	counter_total_heredoc(here_doc, (*current)->content);
+	temp = ft_strnstr(
+			(*current)->content, "<<", ft_strlen((*current)->content));
+	check_error = handle_here_doc(temp);
+	if (check_error < 0)
 	{
-		(*cmd)->exit_status = 2;
-		(*cmd)->who_am_i = 13;
-		counter_total_heredoc(here_doc, (*current)->content);
-		temp = ft_strnstr((*current)->content, "<<",
-				ft_strlen((*current)->content));
-		check_error = handle_here_doc(temp);
-		if (check_error < 0)
-		{
-			(*cmd)->exit_status = -14;
-			return (-1);
-		}
-		(*here_doc)->pryority[i_p[0]] = 2 + i_p[1];
-		(*here_doc)->counter++;
-		i_p[1]++;
-		if (check_extra_redirection((*current)->content) < 0)
-			return (-1);
+		(*cmd)->exit_status = -14;
+		return (-1);
 	}
-	else
-		(*here_doc)->pryority[i_p[0]] = 1;
-	(*current) = (*current)->next;
-	return (0);
-}
-
-int	searching_here_doc(t_cmd **cmd, t_here_doc **here_doc)
-{
-	t_list	*current;
-	int		i_p[2];
-
-	i_p[0] = 0;
-	i_p[1] = 0;
-	current = (*cmd)->word;
-	(*here_doc)->counter = 0;
-	(*here_doc)->counter_total = 0;
-	while (current != NULL)
-	{
-		if (searching_here_doc_2(cmd, here_doc, &current, i_p) < 0)
-			return (-1);
-		i_p[0]++;
-	}
-	(*here_doc)->pryority[i_p[0]] = '\0';
+	(*here_doc)->pryority[i_p[0]] = 2 + i_p[1];
+	(*here_doc)->counter++;
+	i_p[1]++;
+	if (check_extra_redirection((*current)->content) < 0)
+		return (-1);
 	return (0);
 }
 

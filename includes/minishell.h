@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 22:19:01 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/04 22:51:40 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,18 +117,16 @@ int							ft_heredoc_redirection_manager_2(int *j, char **str,
 								char **tmp);
 void						init_append_redirection(int heredoc_append[]);
 void						close_wait2(pid_t pids[], int size, t_cmd **cmd);
-int							child_process(t_cmd **cmd,
-								int pipe_fd2[][2], pid_t pids[]);
+int							child_process(t_cmd **cmd, int pipe_fd2[][2],
+								pid_t pids[]);
 int							dup_process(int *i, int size, int pipe_fd2[][2]);
-int							dup_process_2(t_cmd **cmd, t_list **current,
-								int i);
+int							dup_process_2(t_cmd **cmd, t_list **current, int i);
 int							get_path(char **ev);
 int							ft_strfind(char *str, char *c);
 int							execution(t_cmd **cmd);
 int							ft_execve(char *file, t_cmd **cmd);
 int							searching_comand(char **temp);
-int							save_data(t_cmd **cmd, int *flag,
-								char ***temp);
+int							save_data(t_cmd **cmd, int *flag, char ***temp);
 int							which_redirection_char(char *temp);
 int							reading_manager(t_cmd **cmd, int *flag,
 								char ***temp);
@@ -143,8 +141,8 @@ int							handle_mult_redirection(char *temp3, char *temp2,
 int							extract_and_apply_redirection(char **temp,
 								char *temp2, char ***redirection_split,
 								char **command);
-int							handle_redirection_segment(
-								char ***redirection_split,
+int							handle_redirection_segment(char
+								***redirection_split,
 								char **temp, char **temp4, char *th);
 int							read_input(char **input);
 size_t						element_size(char **str);
@@ -236,17 +234,18 @@ int							ft_heredoc_redirection_manager(char *file,
 								char **str);
 int							execute_heredoc_setup_exe(char *file, t_cmd **cmd,
 								int i, char **temp);
-int							execute_heredoc_manage_exeu(char *file, char **str,
-								t_cmd **cmd, char *temp);
+int							execute_heredoc_manage_exeu(char *file,
+								char **str, t_cmd **cmd,
+								char *temp);
 int							execute_heredoc_redirection(
-								char ***redirection_split,
+								char	***redirection_split,
 								char *str, char *st, t_cmd **cmd);
 int							execute_heredoc(char *file, t_cmd **cmd, int i);
 int							dup_process_2_handle(t_cmd **cmd, t_list **current);
 void						handle_here_doc_unlink(t_cmd **cmd);
 void						run_export_execution(char **run);
-void						child_process_close(int pipe_fd2[][2],
-								int i, int size);
+void						child_process_close(int pipe_fd2[][2], int i,
+								int size);
 void						setup_extra_command_h_2(char **split_2,
 								char **command);
 void						dup_process_handle(int size, int pipe_fd2[][2]);
@@ -304,7 +303,16 @@ int							reading_manager_handle(t_cmd **cmd, int *flag,
 								char ***temp, char **input);
 void						set_parent_signals(void);
 void						dfl_parent_signals(void);
-void                        quote_remove_helper(char **str, int *save_i, int *close, int *allow);
-void                        no_value_of_echo(char *str, int save_i[3], int *allow);
-
+void						quote_remove_helper(char **str, int *save_i,
+								int *close, int *allow);
+void						no_value_of_echo(char *str, int save_i[3],
+								int *allow);
+int							searching_here_doc_2(t_cmd **cmd,
+								t_here_doc **here_doc, t_list **current,
+								int i_p[]);
+int							searching_here_doc(t_cmd **cmd,
+								t_here_doc **here_doc);
+int							searching_here_doc_2_logic(t_cmd **cmd,
+								t_here_doc **here_doc, t_list **current,
+								int i_p[]);
 #endif

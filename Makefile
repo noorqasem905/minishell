@@ -56,6 +56,7 @@ SRCS = 	srcs/env.c							\
 		srcs/utils_setup.c					\
 		srcs/init_export.c					\
 		srcs/open_pipe.c 					\
+		srcs/utils_dup.c					\
 		srcs/robo_cd.c						\
 		srcs/utils2.c 						\
 		srcs/ft_echo.c

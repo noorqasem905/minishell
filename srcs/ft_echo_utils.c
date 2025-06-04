@@ -19,16 +19,16 @@ void	ft_echo_setquotes(char *first, char value)
 
 int	ft_echo_quotes(char *word, char *ignore)
 {
-    size_t	len;
+	size_t	len;
 
-    *ignore = '\0';
-    len = ft_strlen(word);
-    if (len >= 2 && (word[0] == '\'' || word[0] == '\"')
-        && word[0] == word[len - 1])
-    {
-        *ignore = word[0];
-    }
-    return (0);
+	*ignore = '\0';
+	len = ft_strlen(word);
+	if (len >= 2 && (word[0] == '\'' || word[0] == '\"') && word[0] == word[len
+			- 1])
+	{
+		*ignore = word[0];
+	}
+	return (0);
 }
 
 int	ft_echo_quotes_manger(char **split, int *index, char *ignore, char **buff)

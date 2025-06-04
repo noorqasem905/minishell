@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_qoute.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:25:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 21:41:35 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 22:12:55 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,7 @@ void	remove_qoute(char **str)
 		}
 		else if (is_echo_command(*str, save_i[2]) && allow < 1)
 			allow = 8;
-		if (allow > 0 && allow < 5)
-			no_value_of_echo(*str, save_i, &allow);
-		if (close == 2)
-		{
-			(*str)[save_i[0]] = ' ';
-			(*str)[save_i[1]] = ' ';
-			close = 0;
-		}
-		if (allow > 4)
-			allow--;
+		quote_remove_helper(str, save_i, &close, &allow);
 		save_i[2]++;
 	}
 }

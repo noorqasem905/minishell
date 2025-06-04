@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 19:41:49 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/04 22:14:11 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,5 +303,7 @@ int							reading_manager_handle(t_cmd **cmd, int *flag,
 								char ***temp, char **input);
 void						set_parent_signals(void);
 void						dfl_parent_signals(void);
+void                        quote_remove_helper(char **str, int *save_i, int *close, int *allow);
+void                        no_value_of_echo(char *str, int save_i[3], int *allow);
 
 #endif

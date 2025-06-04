@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:25:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 21:41:35 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 22:33:42 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,15 @@ void	remove_qoute(char **str)
 			no_value_of_echo(*str, save_i, &allow);
 		if (close == 2)
 		{
-			(*str)[save_i[0]] = ' ';
-			(*str)[save_i[1]] = ' ';
+			if ((save_i[0] == 0 || ft_isspace((*str)[save_i[0] - 1]))
+				&& (ft_isspace((*str)[save_i[1] + 1]) || (*str)[save_i[1] + 1] == '\0'))
+			{
+				(*str)[save_i[0]] = ' ';
+				(*str)[save_i[1]] = ' ';
+			}
 			close = 0;
 		}
+
 		if (allow > 4)
 			allow--;
 		save_i[2]++;

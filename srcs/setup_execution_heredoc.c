@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:11:43 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 21:44:32 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/04 22:19:18 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,38 @@ static	void	counter_total_heredoc(t_here_doc **here_doc, char *str)
 	}
 }
 
+int	handle_here_doc_qouts(char *temp)
+{
+	int		i;
+	int		flag;
+	char	quote_char;
+
+	i = 0;
+	flag = 0;
+	while (temp[i])
+	{
+		if (temp[i] == '"' || temp[i] == '\'')
+		{
+			if (flag == 0)
+			{
+				flag = 1;
+				quote_char = temp[i];
+			}
+			else if (flag == 1 && temp[i] == quote_char)
+				flag = 0;
+		}
+		i++;
+	}
+	return (flag);
+}
+
 int	searching_here_doc_2(t_cmd **cmd, t_here_doc **here_doc, t_list **current,
 		int i_p[])
 {
 	int		check_error;
 	char	*temp;
 
-	if (ft_strfind((*current)->content, "<<"))
+	if (ft_strfind((*current)->content, "<<") && handle_here_doc_qouts((*current)->content))
 	{
 		(*cmd)->exit_status = 2;
 		(*cmd)->who_am_i = 13;

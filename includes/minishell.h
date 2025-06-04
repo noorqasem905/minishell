@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 22:14:11 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/04 22:19:01 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,7 @@ void						free_exp(t_exp *export);
 void						ft_echo_setquotes(char *first, char value);
 void						ft_echo_ignore_quotes(int new_line, int ignore,
 								char *buff);
+int							handle_here_doc_qouts(char *temp);
 int							process_token(char **buff, char *token,
 								char *ignore);
 int							ft_echo_quotes(char *word, char *ignore);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   robo_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:29:22 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/04 19:17:36 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/05 00:02:43 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,11 @@ static int	check_n(char *n)
 
 void	robo_exit(char **split, t_cmd *cmd)
 {
-	long long	value;
 	int			size;
 
 	ft_printf("exit\n");
 	cmd->exit_status = 0;
 	size = ft_strlen(split[1]);
-	value = 0;
 	if (split && split[1])
 	{
 		if (!check_n(split[1]))

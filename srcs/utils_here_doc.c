@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:45:53 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 22:13:21 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/05 00:03:15 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,9 @@ int	handle_here_doc(char *temp)
 {
 	int	i;
 	int	err_after;
-	int	is_it_correct;
 
 	i = 2;
 	err_after = -3;
-	is_it_correct = 0;
 	while (temp[i])
 	{
 		if (temp[i] == '<' || temp[i] == '>')

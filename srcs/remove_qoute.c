@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_qoute.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:25:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 22:35:18 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/05 01:00:04 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,20 @@ void	remove_qoute(char **str)
 	int		save_i[3];
 	int		close;
 	int		allow;
-	int		j;
 
 	init_value(save_i, &who_im_i, &allow, &close);
 	while ((*str) && (*str)[save_i[2]])
 	{
-		remove_quote_condition(str, &who_im_i, save_i, &close);
-		if ((*str)[save_i[2]] == '|')
+		if (is_echo_command(*str, save_i[2]))
 		{
-			j = save_i[2] + 1;
-			while ((*str)[j] && ft_isspace((*str)[j]))
-				j++;
-			if (is_echo_command(*str, j) && allow < 1)
-				allow = 8;
+			save_i[2] += 4;
+			while ((*str)[save_i[2]] && ft_isspace((*str)[save_i[2]]))
+				save_i[2]++;
+			while ((*str)[save_i[2]] && (*str)[save_i[2]] != '|')
+				save_i[2]++;
+			continue;
 		}
-		else if (is_echo_command(*str, save_i[2]) && allow < 1)
-			allow = 8;
+		remove_quote_condition(str, &who_im_i, save_i, &close);
 		quote_remove_helper(str, save_i, &close, &allow);
 		save_i[2]++;
 	}

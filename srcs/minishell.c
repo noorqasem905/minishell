@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:32:33 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 17:53:47 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/05 00:01:29 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 static void	error_main(int argc, char **str)
 {
 	if (str[0])
-		;
+	{
+		
+	}
 	if (argc > 1)
 		exit(EXIT_FAILURE);
 }
@@ -59,13 +61,11 @@ static void	ft_env(t_cmd **cmd, char **robo_env)
 int	main(int argc, char *argv[], char **robo_env)
 {
 	t_cmd	*cmd;
-	char	*input;
 	char	**temp;
 	int		flag;
 	int		e;
 
 	e = 0;
-	input = NULL;
 	temp = NULL;
 	error_main(argc, argv);
 	cmd = malloc(sizeof(t_cmd));

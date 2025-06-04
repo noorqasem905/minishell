@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 20:03:00 by nqasem            #+#    #+#             */
-/*   Updated: 2025/04/30 22:04:29 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/05 01:30:15 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,39 @@ char	*ft_strmchr(const char *s, char c[])
 		s++;
 	}
 	return (NULL);
+}
+
+static void	is_quote(char c, int *in_quote, char *quote_char)
+{
+	*in_quote = 1;
+	*quote_char = c;
+}
+
+char	*ft_strmchr_noqoute(const char *s, char c[])
+{
+    int		i;
+    int		in_quote = 0;
+    char	quote_char = 0;
+
+    while (*s)
+    {
+        if ((*s == '"' || *s == '\''))
+        {
+            if (!in_quote)
+				is_quote(*s, &in_quote, &quote_char);
+            else if (*s == quote_char)
+                in_quote = 0;
+        }
+        else if (!in_quote)
+        {
+            i = 0;
+            while (c[i])
+                if (*s == c[i++])
+                    return ((char *)s);
+        }
+        s++;
+    }
+    return (NULL);
 }
 
 char	*ft_strchr(const char *s, int c)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_execution_heredoc.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:11:43 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 22:43:17 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/05 00:22:36 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,17 @@ int	handle_here_doc_qouts(char *temp)
 {
 	int		i;
 	int		flag;
+	int		enter;
 	char	quote_char;
 
-	i = 0;
+	i = -1;
 	flag = 0;
-	while (temp[i])
+	enter = 1;
+	while (temp[++i])
 	{
 		if (temp[i] == '"' || temp[i] == '\'')
 		{
+			enter = 0;
 			if (flag == 0)
 			{
 				flag = 1;
@@ -45,8 +48,9 @@ int	handle_here_doc_qouts(char *temp)
 			else if (flag == 1 && temp[i] == quote_char)
 				flag = 0;
 		}
-		i++;
 	}
+	if (enter == 1)
+		return (1);
 	return (flag);
 }
 

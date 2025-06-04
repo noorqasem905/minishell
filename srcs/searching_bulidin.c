@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   searching_bulidin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:43:49 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 17:42:27 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/05 01:00:20 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int	searching_bulidin_2(char **split, t_cmd **cmd, char *t)
 {
 	int	s;
 
-	if (ft_strcmp(split[0], "export") == 0)
+	if (!ft_strcmp(split[0], "export") && split[1] == NULL)
 	{
 		ft_export(t, cmd);
 		return (13);
 	}
-	if (ft_strcmp(split[0], "unset") == 0)
+	if (!ft_strcmp(split[0], "unset") && split[1] == NULL)
 	{
 		s = 1;
 		while (split[s])
@@ -29,11 +29,6 @@ int	searching_bulidin_2(char **split, t_cmd **cmd, char *t)
 			robo_unset(split[s], cmd);
 			s++;
 		}
-		return (-3);
-	}
-	if (ft_strcmp(split[0], "env") == 0)
-	{
-		env(*cmd);
 		return (-3);
 	}
 	return (0);

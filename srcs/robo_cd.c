@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   robo_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:10:19 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/04 17:42:05 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/05 00:03:55 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,12 @@ int	robo_cd_access(char **dir, char **temp)
 
 int	handle_space_infile(char ***temp, char **dir)
 {
-	char	quote;
 	int		start;
 	int		end;
 
 	*dir = NULL;
 	if ((*temp)[1] && ((*temp)[1][0] == '"' || (*temp)[1][0] == '\''))
 	{
-		quote = (*temp)[1][0];
 		start = 1;
 		end = start;
 		if (merge_quoted_tokens(temp, dir, start, &end))

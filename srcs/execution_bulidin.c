@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_bulidin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 22:00:47 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/05 01:03:58 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	run_buildin_exechr(t_cmd **cmd, char *command)
 		return (-1);
 	edit_command->content = command;
 	edit_command->next = NULL;
+	ft_printf("%2Running buildin command: %s\n", (char *)edit_command->content);
 	if (run_buildin_execution(*cmd, edit_command) < 0)
 	{
 		free(edit_command);
@@ -106,7 +107,7 @@ int	run_buildin_execution(t_cmd *cmd, t_list *current)
 {
 	char	*tmp;
 
-	tmp = ft_strtrim(cmd->current->content, " ");
+	tmp = ft_strtrim(current->content, " ");
 	if (!tmp)
 		return (-1);
 	if (ft_strcmp(tmp, "export") == 0)
@@ -116,11 +117,11 @@ int	run_buildin_execution(t_cmd *cmd, t_list *current)
 		frees_split(cmd->expo);
 		cmd->bulidin = 11;
 		cmd->expo = NULL;
-		return (-1);
+		return (1);
 	}
 	else if (run_buildin_execution_2(cmd, current, tmp) < 0)
 		return (free_err_ret(NULL, NULL, NULL, -1));
-	if (ft_strncmp(tmp, "export", 6) == 0)
+	else if (ft_strncmp(tmp, "export", 6) == 0)
 	{
 		free(tmp);
 		cmd->bulidin = 15;

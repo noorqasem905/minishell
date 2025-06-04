@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:03:40 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 21:32:33 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 22:17:02 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	dup_process_2(t_cmd **cmd, t_list **current, char **file_loc, int i)
 			== -1)
 			return (-1);
 	}
-	else if (ft_strmchr((*current)->content, "<>"))
+	else if (ft_strmchr((*current)->content, "<>") && handle_here_doc_qouts((*current)->content))
 	{
 		if (ft_redirection((*current)->content, &redirection_split, cmd) < 0)
 		{

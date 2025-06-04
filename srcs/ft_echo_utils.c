@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 21:47:06 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 14:47:23 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 21:57:49 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,16 @@ void	ft_echo_setquotes(char *first, char value)
 
 int	ft_echo_quotes(char *word, char *ignore)
 {
-	char	first;
-	int		i;
+    size_t	len;
 
-	first = '\0';
-	i = -1;
-	while (word[++i])
-	{
-		if (*ignore == '\0')
-			*ignore = first;
-		if (word[i] == '\'' && first == '\0')
-			ft_echo_setquotes(&first, '\'');
-		else if (word[i] == '\"' && first == '\0')
-			ft_echo_setquotes(&first, '\"');
-		else if (word[i] == '\'' && first == '\'')
-			ft_echo_setquotes(&first, '\0');
-		else if (word[i] == '\"' && first == '\"')
-			ft_echo_setquotes(&first, '\0');
-	}
-	if (first != '\0')
-		return (-1);
-	return (0);
+    *ignore = '\0';
+    len = ft_strlen(word);
+    if (len >= 2 && (word[0] == '\'' || word[0] == '\"')
+        && word[0] == word[len - 1])
+    {
+        *ignore = word[0];
+    }
+    return (0);
 }
 
 int	ft_echo_quotes_manger(char **split, int *index, char *ignore, char **buff)

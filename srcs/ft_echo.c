@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:02:03 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 14:49:50 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/04 19:45:49 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,10 @@ int	ft_echo(t_cmd *cmd, t_list *command)
 	}
 	if (ft_echo_quotes_manger(split, &i, &ignore, &buff) < 0)
 		return (-1);
-	printf("%s", buff);
+	write(STDOUT_FILENO, buff, ft_strlen(buff));
 	free(buff);
 	if (!n_flag)
-		printf("\n");
+		write(1, "\n", 1);
 	frees_split(split);
 	return (0);
 }

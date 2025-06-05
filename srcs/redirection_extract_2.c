@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:45:38 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 01:33:02 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:34:30 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,3 @@ int	extract_and_apply_redirection(char **temp, char *temp2,
 		extract_apply_short_3(&th, temp, temp4, command);
 	return (0);
 }
-
-
-// here you can add sections to add echo value to command with includes ">" or something like that
-// here you can add sections to add echo value to command with includes "<<" or something like that

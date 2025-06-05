@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:25:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:23:14 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:53:10 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,47 +78,10 @@ void	remove_qoute(char **str)
 				save_i[2]++;
 			while ((*str)[save_i[2]] && (*str)[save_i[2]] != '|')
 				save_i[2]++;
-			continue;
+			continue ;
 		}
 		remove_quote_condition(str, &who_im_i, save_i, &close);
 		quote_remove_helper(str, save_i, &close, &allow);
 		save_i[2]++;
 	}
-}
-
-void	replace_special_char(char **str)
-{
-    int		i;
-    int		in_quote;
-    char	quote_char;
-
-    if (!str || !(*str))
-        return;
-    i = 0;
-    in_quote = 0;
-    while ((*str)[i])
-    {
-        if ((*str)[i] == '"' || (*str)[i] == '\'')
-        {
-            if (!in_quote)
-            {
-                in_quote = 1;
-                quote_char = (*str)[i];
-            }
-            else if (in_quote && (*str)[i] == quote_char)
-            {
-                in_quote = 0;
-            }
-            i++;
-            continue;
-        }
-        if (in_quote)
-        {
-            if ((*str)[i] == '<')
-                (*str)[i] = '\x11';
-            else if ((*str)[i] == '>')
-                (*str)[i] = '\x12';
-        }
-        i++;
-    }
 }

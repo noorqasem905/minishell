@@ -6,35 +6,11 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:02:03 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:27:04 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:49:46 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-char	*skip_quotes(char *split, char ignore)
-{
-	char	*buff;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	buff = malloc(ft_strlen(split) + 1);
-	if (!buff)
-		return (NULL);
-	while (split[i])
-	{
-		if (split[i] != ignore)
-		{
-			buff[j] = split[i];
-			j++;
-		}
-		i++;
-	}
-	buff[j] = '\0';
-	return (buff);
-}
 
 static int	handle_quoted(char **buff, char *token, char ignore)
 {
@@ -107,55 +83,19 @@ int	process_token(char **buff, char *token, char *ignore)
 	return (0);
 }
 
-char	*restore_special_char_in_quotes(const char *str)
+static char	**preprocess_echo_input(t_list *command)
 {
-    int		i;
-    int		j;
-    int		in_quote;
-    char	quote_char;
-    char	*res;
+	char	*buff;
+	char	**split;
 
-    if (!str)
-        return (NULL);
-    res = malloc(ft_strlen(str) + 1);
-    if (!res)
-        return (NULL);
-    i = 0;
-    j = 0;
-    in_quote = 0;
-    while (str[i])
-    {
-        if (str[i] == '"' || str[i] == '\'')
-        {
-            if (!in_quote)
-            {
-                in_quote = 1;
-                quote_char = str[i];
-            }
-            else if (in_quote && str[i] == quote_char)
-            {
-                in_quote = 0;
-            }
-            res[j++] = str[i++];
-            continue;
-        }
-        if (in_quote)
-        {
-            if (str[i] == '\x11')
-                res[j++] = '<';
-            else if (str[i] == '\x12')
-                res[j++] = '>';
-            else
-                res[j++] = str[i];
-        }
-        else
-        {
-            res[j++] = str[i];
-        }
-        i++;
-    }
-    res[j] = '\0';
-    return (res);
+	buff = restore_special_char_in_quotes(command->content);
+	if (!buff)
+		return (NULL);
+	split = ft_split_custom_exp(buff, ' ');
+	free(buff);
+	if (!split)
+		return (NULL);
+	return (split);
 }
 
 int	ft_echo(t_list *command)
@@ -169,13 +109,7 @@ int	ft_echo(t_list *command)
 	ignore = '\0';
 	i = 1;
 	n_flag = 0;
-	buff = restore_special_char_in_quotes(command->content);
-	if (!buff)
-		return (-1);
-	split = ft_split_custom_exp(buff, ' ');
-	free(buff);
-	if (!split)
-		return (-1);
+	split = preprocess_echo_input(command);
 	while (split[i] && ft_strcmp(split[i], "-n") == 0)
 	{
 		n_flag = 1;

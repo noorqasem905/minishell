@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:32:33 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 00:01:29 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:36:45 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	error_main(int argc, char **str)
 {
 	if (str[0])
 	{
-		
 	}
 	if (argc > 1)
 		exit(EXIT_FAILURE);

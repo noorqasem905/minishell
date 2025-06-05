@@ -27,10 +27,12 @@ SRCS = 	srcs/env.c							\
 		srcs/setup_heredoc_redirection.c	\
 		srcs/utils_exection_heredoc.c		\
 		srcs/redirection_extract_2.c		\
-		srcs/dup_process_handle.c			\
+		srcs/replace_special_char.c 		\
 		srcs/redirection_extract.c			\
 		srcs/redirection_handle2.c			\
+		srcs/retore_special_char.c 			\
 		srcs/redirection_heredoc.c			\
+		srcs/dup_process_handle.c			\
 		srcs/remove_quote_utils.c			\
 		srcs/redirection_handle.c			\
 		srcs/exeute_redirection.c			\

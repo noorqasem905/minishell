@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 01:35:33 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:36:20 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ int	execution(t_cmd **cmd)
 		((*cmd)->word->content, 'e')
 		&& ft_strncmp(ft_strchr((*cmd)->word->content,
 				'e'), "exit", 4) == 0)
-	one_command = -1;
+		one_command = -1;
 	ret = setup_execution(cmd);
 	if (ret != 0)
 		return (ret);
 	ret = setup_execution_heredoc(cmd, &file_loc);
-	if (ret != 0) 
+	if (ret != 0)
 		return (ret);
 	expand_cmds(cmd, (*cmd)->input);
 	ret = execution_process(cmd);

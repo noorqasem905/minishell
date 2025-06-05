@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:20:47 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:50:13 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int							child_process(t_cmd **cmd, int pipe_fd2[][2],
 int							dup_process(int *i, int size, int pipe_fd2[][2]);
 int							dup_process_2(t_cmd **cmd, t_list **current, int i);
 int							get_path(char **ev);
+
 int							ft_strfind(char *str, char *c);
 int							execution(t_cmd **cmd);
 int							ft_execve(char *file, t_cmd **cmd);
@@ -169,9 +170,11 @@ void						robo_export(t_cmd **cmd, t_exp *export);
 int							ft_export(char *str, t_cmd **cmd);
 int							is_valid(char *name);
 int							ft_isspace(char c);
+char						*skip_quotes(char *split, char ignore);
 char						**add_env(char **env, char *name, char *value);
 char						*get_redirection_command(char *temp,
 								char **redirection_split, int iteritor);
+char						*restore_special_char_in_quotes(const char *str);
 int							get_env_j(char **env, char *name);
 char						*trim_quotes(char *str);
 void						robo_exit(char **split, t_cmd *cmd);

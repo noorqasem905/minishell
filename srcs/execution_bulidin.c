@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 01:03:58 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:27:40 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	run_buildin_exechr(t_cmd **cmd, char *command)
 		return (-1);
 	edit_command->content = command;
 	edit_command->next = NULL;
-	ft_printf("%2Running buildin command: %s\n", (char *)edit_command->content);
 	if (run_buildin_execution(*cmd, edit_command) < 0)
 	{
 		free(edit_command);

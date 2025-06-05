@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:02:03 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 22:19:14 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:27:04 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,57 @@ int	process_token(char **buff, char *token, char *ignore)
 	return (0);
 }
 
+char	*restore_special_char_in_quotes(const char *str)
+{
+    int		i;
+    int		j;
+    int		in_quote;
+    char	quote_char;
+    char	*res;
+
+    if (!str)
+        return (NULL);
+    res = malloc(ft_strlen(str) + 1);
+    if (!res)
+        return (NULL);
+    i = 0;
+    j = 0;
+    in_quote = 0;
+    while (str[i])
+    {
+        if (str[i] == '"' || str[i] == '\'')
+        {
+            if (!in_quote)
+            {
+                in_quote = 1;
+                quote_char = str[i];
+            }
+            else if (in_quote && str[i] == quote_char)
+            {
+                in_quote = 0;
+            }
+            res[j++] = str[i++];
+            continue;
+        }
+        if (in_quote)
+        {
+            if (str[i] == '\x11')
+                res[j++] = '<';
+            else if (str[i] == '\x12')
+                res[j++] = '>';
+            else
+                res[j++] = str[i];
+        }
+        else
+        {
+            res[j++] = str[i];
+        }
+        i++;
+    }
+    res[j] = '\0';
+    return (res);
+}
+
 int	ft_echo(t_list *command)
 {
 	char	**split;
@@ -118,7 +169,11 @@ int	ft_echo(t_list *command)
 	ignore = '\0';
 	i = 1;
 	n_flag = 0;
-	split = ft_split_custom_exp(command->content, ' ');
+	buff = restore_special_char_in_quotes(command->content);
+	if (!buff)
+		return (-1);
+	split = ft_split_custom_exp(buff, ' ');
+	free(buff);
 	if (!split)
 		return (-1);
 	while (split[i] && ft_strcmp(split[i], "-n") == 0)

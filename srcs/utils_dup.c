@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_dup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 22:30:33 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/04 22:48:22 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:29:14 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	searching_here_doc(t_cmd **cmd, t_here_doc **here_doc)
 int	searching_here_doc_2(t_cmd **cmd, t_here_doc **here_doc, t_list **current,
 		int i_p[])
 {
-	if (ft_strfind((*current)->content, "<<")
-		&& handle_here_doc_qouts((*current)->content))
+	if (ft_strfind((*current)->content, "<<"))
 	{
 		if (searching_here_doc_2_logic(cmd, here_doc, current, i_p) < 0)
 			return (-1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 22:51:40 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:20:47 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int							extract_apply_short(char **temp, char **tmp,
 								char ***redirection_split, char *temp4_copy);
 void						free_list(t_list **root);
 void						frees(t_list **root);
+void						replace_special_char(char **str);
 void						printf_split(char *str, char **split);
 void						robo_cd(char **temp);
 void						free_it_noww(char **s, char *s2, int emassage);

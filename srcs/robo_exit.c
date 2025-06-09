@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:29:22 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/05 00:02:43 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/09 18:14:41 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,25 @@ static int	check_n(char *n)
 	return (1);
 }
 
-void	robo_exit(char **split, t_cmd *cmd)
+int	robo_exit(char **split, t_cmd *cmd)
 {
-	int			size;
-
-	ft_printf("exit\n");
 	cmd->exit_status = 0;
-	size = ft_strlen(split[1]);
-	if (split && split[1])
+	if (split[1] && split[2])
+	{
+		ft_printf("%2exit: too many arguments\n");
+		cmd->exit_status = 1;
+		return (-1);
+	}
+	if (split[1] && ft_strlen(split[1]) > 0)
 	{
 		if (!check_n(split[1]))
 		{
 			ft_printf("%2exit: %s: numeric argument required\n", split[1]);
-			cmd->exit_status = 1;
-		}
-		else if (split[2] || size > 19)
-		{
-			ft_printf("%2exit: too many arguments\n");
-			cmd->exit_status = 1;
-			return ;
+			cmd->exit_status = 2;
+			return (-12);
 		}
 		else
 			cmd->exit_status = ft_mod(ft_atoi_long(split[1]), 256);
 	}
+	return (-12);
 }

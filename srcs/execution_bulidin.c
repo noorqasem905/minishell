@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:27:40 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/09 15:18:29 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	run_buildin_execution(t_cmd *cmd, t_list *current)
 		frees_split(cmd->expo);
 		cmd->bulidin = 11;
 		cmd->expo = NULL;
-		return (1);
+		return (-1);
 	}
 	else if (run_buildin_execution_2(cmd, current, tmp) < 0)
 		return (free_err_ret(NULL, NULL, NULL, -1));

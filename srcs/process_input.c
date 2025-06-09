@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:21:03 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/09 14:55:32 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 	ret_of_searching = process_handle_input(cmd, flag, temp, input);
 	if (ret_of_searching < 0)
 		return (ret_of_searching);
+	(*cmd)->input = *input;
 	if (searching_comand(*temp) == -1)
 		return (-1);
 	split = ft_split((*temp)[0], ' ');

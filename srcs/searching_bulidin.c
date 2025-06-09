@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:43:49 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 01:00:20 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/09 14:56:17 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ int	searching_bulidin_2(char **split, t_cmd **cmd, char *t)
 {
 	int	s;
 
-	if (!ft_strcmp(split[0], "export") && split[1] == NULL)
+	if (!ft_strncmp(split[0], "export", 6) && !ft_strchr((*cmd)->input, '|'))
 	{
+		write(1,"export\n", 7);
 		ft_export(t, cmd);
 		return (13);
 	}
-	if (!ft_strcmp(split[0], "unset") && split[1] == NULL)
+	if (!ft_strncmp(split[0], "unset", 5) && !ft_strchr((*cmd)->input, '|'))
 	{
 		s = 1;
 		while (split[s])

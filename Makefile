@@ -61,7 +61,8 @@ SRCS = 	srcs/env.c							\
 		srcs/utils_dup.c					\
 		srcs/robo_cd.c						\
 		srcs/utils2.c 						\
-		srcs/ft_echo.c
+		srcs/ft_echo.c						\
+		srcs/skp_export.c					
 
 all: $(NAME)
 

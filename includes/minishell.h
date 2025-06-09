@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:50:13 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/09 18:17:34 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,4 +319,5 @@ int							searching_here_doc(t_cmd **cmd,
 int							searching_here_doc_2_logic(t_cmd **cmd,
 								t_here_doc **here_doc, t_list **current,
 								int i_p[]);
+char	*skp(char *str);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_export.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/27 22:02:29 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/09 18:38:32 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ static int	handle_key_value_pair(t_exp *export, char **result, int *x, int *j)
 {
 	int	len;
 
+	if (!is_valid(result[*x]))
+	{
+		ft_printf("export: `%s': not a valid identifier\n", result[*x]);
+		return (-1);
+	}
 	if (result[*x + 1] && result[*x + 1][0] == '=')
 	{
 		export->name[*j] = ft_strdup(result[*x]);
@@ -74,6 +79,11 @@ static int	fill_export(t_exp *export, char **result)
 	j = 0;
 	while (result[x])
 	{
+		if (ft_strcmp(result[x], "<<") == 0 || ft_strcmp(result[x], ">>") == 0)
+		{
+			x++;
+			continue ;
+		}
 		if (handle_key_value_pair(export, result, &x, &j) < 0)
 			return (-1);
 		x++;
@@ -101,8 +111,13 @@ int	ft_export(char *str, t_cmd **cmd)
 	char	**result;
 	t_exp	*export;
 	int		i;
+	char	*cleaned;
 
-	result = ft_split_custom_exp(str, ' ');
+	cleaned = skp(str);
+	if (!cleaned)
+		return ((*cmd)->exit_status = 1);
+	result = ft_split_custom_exp(cleaned, ' ');
+	free(cleaned);
 	if (!result)
 		return ((*cmd)->exit_status = 1);
 	if (remove_leading_tabs(result) < 0)

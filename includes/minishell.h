@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:50:13 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/09 18:15:05 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ char						*get_redirection_command(char *temp,
 char						*restore_special_char_in_quotes(const char *str);
 int							get_env_j(char **env, char *name);
 char						*trim_quotes(char *str);
-void						robo_exit(char **split, t_cmd *cmd);
+int							robo_exit(char **split, t_cmd *cmd);
 void						env(t_cmd *cmd);
 void						handle_here_doc_nolink(t_cmd **cmd);
 void						robo_pwd(void);

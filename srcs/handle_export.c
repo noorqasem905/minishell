@@ -6,45 +6,16 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/09 18:38:32 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/09 22:13:34 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	remove_leading_tabs(char **result)
-{
-	char	*tmp;
-	int		m;
-	int		kk;
-
-	m = 0;
-	while (result[0] && result[0][m] == '\t')
-		m++;
-	if (m > 0)
-	{
-		tmp = malloc(ft_strlen(result[0]) - m + 1);
-		if (!tmp)
-			return (-1);
-		kk = 0;
-		while (result[0][m])
-			tmp[kk++] = result[0][m++];
-		tmp[kk] = '\0';
-		free(result[0]);
-		result[0] = tmp;
-	}
-	return (0);
-}
-
 static int	handle_key_value_pair(t_exp *export, char **result, int *x, int *j)
 {
 	int	len;
 
-	if (!is_valid(result[*x]))
-	{
-		ft_printf("export: `%s': not a valid identifier\n", result[*x]);
-		return (-1);
-	}
 	if (result[*x + 1] && result[*x + 1][0] == '=')
 	{
 		export->name[*j] = ft_strdup(result[*x]);
@@ -106,6 +77,21 @@ static int	fill_export_manger(t_exp **export, char **result)
 	return (0);
 }
 
+/* int	ft_export(char *str, t_cmd **cmd)
+{
+	char	**result;
+
+	result = ft_split_custom_exp(quoted, ' ');
+	free(quoted);
+	if (!result)
+		return ((*cmd)->exit_status = 1);
+	
+	if (remove_leading_tabs(result) < 0)
+		return (free_err_ret(NULL, NULL, result, -1));
+	*out_res = result;
+	return (0);
+} */
+
 int	ft_export(char *str, t_cmd **cmd)
 {
 	char	**result;
@@ -127,11 +113,7 @@ int	ft_export(char *str, t_cmd **cmd)
 		i++;
 	export = init_export(i);
 	if (!export)
-	{
-		ft_printf("%2Error: Memory allocation failed\n");
-		frees_split(result);
-		return (-60);
-	}
+		free_err_ret("%2Error: Memory allocation failed\n", NULL, result, -60);
 	if (fill_export_manger(&export, result) < 0)
 		return (-1);
 	robo_export(cmd, export);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/09 18:18:42 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/09 19:36:46 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ int	reading_manager_handle_2(t_cmd **cmd, int ret, char ***temp)
 		exit(exit_status);
 	}
 	if (ret == -22 && (*cmd)->who_am_i == 402)
-    {
-    	(*cmd)->exit_status = 1;
-    	return (26);
-    }
+	{
+		(*cmd)->exit_status = 1;
+		return (26);
+	}
 	return (25);
 }
 

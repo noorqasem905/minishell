@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:25:38 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/09 18:38:57 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:24:23 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@
 
 static int	is_invalid_redirect(char *str, int i)
 {
-	char	a = str[i];
-	char	b = str[i + 1];
-	char	c = str[i + 2];
+	char	a;
+	char	b;
+	char	c;
 
-	if ((a == '<' || a == '>') &&
-		(b == '<' || b == '>') &&
-		(c == '<' || c == '>'))
+	a = str[i];
+	b = str[i + 1];
+	c = str[i + 2];
+	if ((a == '<' || a == '>')
+		&& (b == '<' || b == '>')
+		&& (c == '<' || c == '>'))
 		return (1);
 	if ((a == '<' && b == '>') || (a == '>' && b == '<'))
 		return (1);
@@ -41,9 +44,8 @@ static int	handle_redirection(char *str, int *i, int *enter)
 	if (str[*i + 1] && str[*i + 1] == c)
 		(*i)++;
 	k = *i + 1;
-	while (str[k] && isspace(str[k]))
+	while (str[k] && ft_isspace(str[k]))
 		k++;
-	// Error: no word after redirection
 	if (!str[k] || str[k] == '<' || str[k] == '>')
 		return (1);
 	return (0);
@@ -63,8 +65,36 @@ static int	append_char_export(char **tmp, char *ch)
 
 static void	skip_redirect_word(char *str, int *i)
 {
-	while (str[*i] && !isspace(str[*i]))
+	while (str[*i] && !ft_isspace(str[*i]))
 		(*i)++;
+}
+
+int	loop_skip(char **str, char **tmp, int *enter, int *i)
+{
+	char	ch[2];
+	
+	if (((*str)[*i] == '<' || (*str)[*i] == '>') && *enter == 0)
+	{
+		if (handle_redirection((*str), i, enter))
+		{
+			free(*tmp);
+			return (-1);
+		}
+	}
+	else if (*enter == 0)
+	{
+		ch[0] = (*str)[*i];
+		ch[1] = '\0';
+		if (append_char_export(tmp, ch))
+			return (-1);
+	}
+	else if (!ft_isspace((*str)[*i]))
+	{
+		*enter = 0;
+		skip_redirect_word((*str), i);
+		return (1);
+	}
+	return (0);
 }
 
 char	*skp(char *str)
@@ -72,36 +102,27 @@ char	*skp(char *str)
 	int		i;
 	int		enter;
 	char	*tmp;
-	char	ch[2];
+	int		ret;
 
 	i = 0;
 	enter = 0;
 	tmp = ft_strdup("");
+	ret = 0;
 	if (!tmp)
 		return (NULL);
 	while (str[i])
 	{
-		if ((str[i] == '<' || str[i] == '>') && enter == 0)
-		{
-			if (handle_redirection(str, &i, &enter))
-				return (free(tmp), NULL);
-		}
-		else if (enter == 0)
-		{
-			ch[0] = str[i];
-			ch[1] = '\0';
-			if (append_char_export(&tmp, ch))
-				return (NULL);
-		}
-		else if (!isspace(str[i]))
-		{
-			enter = 0;
-			skip_redirect_word(str, &i);
-			continue ;
-		}
+		ret = loop_skip(&str, &tmp, &enter, &i);
+		if (ret == -1)
+			return (NULL);
+		else if (ret == 1)
+			continue;
 		i++;
 	}
 	if (enter == 1)
-		return (free(tmp), NULL);
+	{
+		free(tmp);
+		return (NULL);
+	}
 	return (tmp);
 }

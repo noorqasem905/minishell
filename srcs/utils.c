@@ -42,7 +42,7 @@ int	is_valid(char *name)
 {
 	int	i;
 
-	if (!name || (!ft_isalpha(name[0]) && name[0] != '_'))
+	if (!name || name[0] == ' ' || (!ft_isalpha(name[0]) && name[0] != '_'))
 		return (0);
 	i = 1;
 	while (name[i] && name[i] != '=')

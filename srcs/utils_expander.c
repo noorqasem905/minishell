@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expander.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:49:49 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/27 18:44:35 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/10 17:05:53 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,24 @@ int	append_char(char **expanded, char ch)
 
 void	expand_cmds(t_cmd **cmd, char *input)
 {
-	t_list	*current;
 	char	*expanded_cmd;
 
-	current = NULL;
-	expanded_cmd = NULL;
-	if (ft_strchr(input, '|'))
+	if (!cmd || !(*cmd))
 		return ;
-	current = (*cmd)->word;
-	while (current != NULL)
+	expanded_cmd = NULL;
+	if (ft_strchr(input, '|') || *cmd)
 	{
-		expanded_cmd = expander_input(cmd);
-		if (!expanded_cmd)
-			return ;
-		free(current->content);
-		current->content = expanded_cmd;
-		current = current->next;
+	}
+	(*cmd)->current = (*cmd)->word;
+	while ((*cmd)->current != NULL)
+	{
+		expanded_cmd = expander_input(cmd, (*cmd)->current);
+		if (expanded_cmd)
+		{
+			free((*cmd)->current->content);
+			(*cmd)->current->content = expanded_cmd;
+		}
+		(*cmd)->current = (*cmd)->current->next;
 	}
 }
 

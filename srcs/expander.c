@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/29 14:32:52 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/10 17:24:06 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static int	handle_quotes_and_expand(
 		return (append_char(expanded, content[(*i)++]));
 }
 
-char	*expander_input(t_cmd **cmd)
+char	*expander_input(t_cmd **cmd, t_list *str)
 {
 	char	*expanded;
 	char	*content;
@@ -102,7 +102,7 @@ char	*expander_input(t_cmd **cmd)
 	if (!expanded)
 		return (NULL);
 	i = 0;
-	content = (char *)(*cmd)->word->content;
+	content = (char *)str->content;
 	while (content[i])
 	{
 		if (handle_quotes_and_expand(&expanded, content, &i, *cmd) < 0)

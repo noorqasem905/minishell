@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/10 15:38:29 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/10 17:31:08 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	process_set_input(t_cmd **cmd, char **t, char ***split, char **input)
 {
 	int	ret_of_searching;
 
+	ret_of_searching = 0;
 	if (!(*split) || !*(*split))
 	{
 		if ((*split))
@@ -80,7 +81,7 @@ int	process_set_input(t_cmd **cmd, char **t, char ***split, char **input)
 		free(*input);
 		return (-3);
 	}
-	*t = expander_input(cmd);
+	*t = expander_input(cmd, (*cmd)->word);
 	if (!t)
 		return (-1);
 	ret_of_searching = searching_bulidin((*split), cmd, (*t), input);

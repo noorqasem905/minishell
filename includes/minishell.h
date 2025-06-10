@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/10 14:04:05 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:48:37 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ struct						s_exp
 	int						flag;
 };
 void						remove_quote(char **str);
+int							run_buildin_execution_4(t_cmd *cmd,
+								t_list *current, char *tmp);
 int							check_redirection_mult_siggr(int mult[],
 								int conflect_handle[], int is_file_enter[],
 								char *input);

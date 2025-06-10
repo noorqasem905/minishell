@@ -47,6 +47,23 @@ int	remove_quotues(char ***result)
 	return (0);
 }
 
+int	handle_ret_export(char *str, t_cmd **cmd)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i + 1] && str[i] == ' ' && str[i + 1] == '=')
+		{
+			(*cmd)->exit_status = 1;
+			write(2, "export: `=`:not a valid identifier\n", 36);
+			return (-1);
+		}
+	}
+	return (0);
+}
+
 char	*skp(char *str)
 {
 	int		i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/11 11:34:02 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/10 12:57:10 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void						init_append_redirection(int heredoc_append[]);
 void						close_wait2(pid_t pids[], int size, t_cmd **cmd);
 int							child_process(t_cmd **cmd, int pipe_fd2[][2],
 								pid_t pids[]);
+int							handle_ret_export(char *str, t_cmd **cmd);
 int							dup_process(int *i, int size, int pipe_fd2[][2]);
 int							dup_process_2(t_cmd **cmd, t_list **current, int i);
 int							get_path(char **ev);

@@ -101,6 +101,8 @@ int	ft_export(char *str, t_cmd **cmd)
 	t_exp	*export;
 	int		i;
 
+	if (handle_ret_export(str, cmd) < 0)
+		return (-1);
 	if (setup_export(str, cmd, &result) < 0)
 		return (-1);
 	i = 0;
@@ -108,7 +110,7 @@ int	ft_export(char *str, t_cmd **cmd)
 		i++;
 	export = init_export(i);
 	if (!export)
-		free_err_ret("%2Error: Memory allocation failed\n", NULL, result, -60);
+		free_err_ret("Error: Memory allocation failed\n", NULL, result, -60);
 	if (fill_export_manger(&export, result) < 0)
 		return (-1);
 	robo_export(cmd, export);

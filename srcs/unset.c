@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 23:20:32 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/10 13:51:33 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:07:13 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	robo_unset(char *name_t, t_cmd **cmd)
 	if (!is_valid(name))
 	{
 		ft_printf("unset: `%s`: not a valid identifier\n", name);
-			return (free_err_ret(NULL, name, NULL, -1));
+		return (free_err_ret(NULL, name, NULL, -1));
 	}
 	if (!is_var_exist(name, (*cmd)))
 		return (free_err_ret(NULL, name, NULL, -1));

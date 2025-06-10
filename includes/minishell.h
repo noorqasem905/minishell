@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/10 13:35:20 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:04:05 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,4 +324,7 @@ int							searching_here_doc_2_logic(t_cmd **cmd,
 								int i_p[]);
 char						*skp(char *str);
 int							remove_leading_tabs(char **result);
+int							handle_redirection(char *str, int *i, int *enter);
+int							is_invalid_redirect(char *str, int i);
+
 #endif

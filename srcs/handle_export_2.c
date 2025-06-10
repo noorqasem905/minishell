@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:16:28 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/10 13:49:54 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:23:25 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,30 @@ int	remove_quotues(char ***result)
 	return (0);
 }
 
-int	handle_ret_export(char *str, t_cmd **cmd)
+static int	handle_loop_skip(char *str, char **tmp, int *enter)
 {
 	int	i;
+	int	ret;
 
 	i = 0;
 	while (str[i])
 	{
-		if (str[i + 1] && str[i] == ' ' && str[i + 1] == '=')
-		{
-			(*cmd)->exit_status = 1;
-			write(2, "export: `=`:not a valid identifier\n", 36);
+		ret = loop_skip(&str, tmp, enter, &i);
+		if (ret == -1)
 			return (-1);
-		}
+		else if (ret == 1)
+			continue ;
 		i++;
+	}
+	return (i);
+}
+
+static int	check_enter_and_free(char **tmp, int enter)
+{
+	if (enter == 1)
+	{
+		free(*tmp);
+		return (-1);
 	}
 	return (0);
 }
@@ -78,19 +88,8 @@ char	*skp(char *str)
 	tmp = ft_strdup("");
 	if (!tmp)
 		return (NULL);
-	while (str[i])
-	{
-		ret = loop_skip(&str, &tmp, &enter, &i);
-		if (ret == -1)
-			return (NULL);
-		else if (ret == 1)
-			continue ;
-		i++;
-	}
-	if (enter == 1)
-	{
-		free(tmp);
+	ret = handle_loop_skip(str, &tmp, &enter);
+	if (ret == -1 || check_enter_and_free(&tmp, enter) == -1)
 		return (NULL);
-	}
 	return (tmp);
 }

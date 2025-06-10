@@ -63,7 +63,8 @@ SRCS = 	srcs/env.c							\
 		srcs/robo_cd.c						\
 		srcs/utils2.c 						\
 		srcs/ft_echo.c						\
-		srcs/skp_export.c					
+		srcs/skp_export.c					\
+		srcs/utils_skp.c
 all: $(NAME)
 
 OBJS_DIR =includes/build

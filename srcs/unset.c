@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 23:20:32 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/28 16:13:04 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/10 13:51:33 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ static int	is_var_exist(char *name, t_cmd *cmd)
 	while (cmd->env[i])
 	{
 		if (ft_strncmp(cmd->env[i], name, ft_strlen(name)) == 0
-			&& cmd->env[i][ft_strlen(name)] == '='
-			/* || cmd->env[i][ft_strlen(name) - 1] == '\0' */)
+			&& cmd->env[i][ft_strlen(name)] == '=')
 			return (1);
 		i++;
 	}
@@ -60,27 +59,32 @@ static char	**copy_env_without_var(char **env, char *name)
 	return (new_env);
 }
 
-void	robo_unset(char *name, t_cmd **cmd)
+int	robo_unset(char *name_t, t_cmd **cmd)
 {
 	char	**new_env;
+	char	*name;
 
+	name = skp(name_t);
+	if (!name)
+		return (free_err_ret(NULL, name, NULL, -1));
 	if (ft_strcmp(name, "PATH") == 0 || ft_strcmp(name, "HOME") == 0)
 		(*cmd)->flag = 1;
 	if (!is_valid(name))
 	{
 		ft_printf("unset: `%s`: not a valid identifier\n", name);
-		return ;
+			return (free_err_ret(NULL, name, NULL, -1));
 	}
 	if (!is_var_exist(name, (*cmd)))
-		return ;
+		return (free_err_ret(NULL, name, NULL, -1));
 	new_env = copy_env_without_var((*cmd)->env, name);
+	free(name);
 	if (!new_env)
-		return ;
+		return (-1);
 	frees_split((*cmd)->env);
 	(*cmd)->env = new_env;
 	save_export_to_expo(cmd);
+	return (0);
 }
-
 /* void	robo_unset(char *name, t_cmd **cmd)
 {
 	int		i;

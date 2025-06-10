@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_export_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:16:28 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/11 11:33:43 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/10 13:49:54 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	handle_ret_export(char *str, t_cmd **cmd)
 {
 	int	i;
 
-	i = -1;
-	while (str[++i])
+	i = 0;
+	while (str[i])
 	{
 		if (str[i + 1] && str[i] == ' ' && str[i + 1] == '=')
 		{
@@ -60,6 +60,7 @@ int	handle_ret_export(char *str, t_cmd **cmd)
 			write(2, "export: `=`:not a valid identifier\n", 36);
 			return (-1);
 		}
+		i++;
 	}
 	return (0);
 }
@@ -71,19 +72,20 @@ char	*skp(char *str)
 	int		enter;
 	char	*tmp;
 
-	i = -1;
+	i = 0;
 	ret = 0;
 	enter = 0;
 	tmp = ft_strdup("");
 	if (!tmp)
 		return (NULL);
-	while (str[++i])
+	while (str[i])
 	{
 		ret = loop_skip(&str, &tmp, &enter, &i);
 		if (ret == -1)
 			return (NULL);
 		else if (ret == 1)
 			continue ;
+		i++;
 	}
 	if (enter == 1)
 	{

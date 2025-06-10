@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_export.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/11 11:22:41 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/10 13:04:55 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,18 +83,24 @@ static int	setup_export(char *str, t_cmd **cmd, char ***result)
 
 	cleaned = skp(str);
 	if (!cleaned)
-		return ((*cmd)->exit_status = 1);
+	{
+		(*cmd)->exit_status = 1;
+		return (1);
+	}
 	*result = ft_split_custom_exp(cleaned, ' ');
 	free(cleaned);
 	if (remove_quotues(result))
 		return (free_err_ret(NULL, NULL, *result, -1));
 	if (!(*result))
-		return ((*cmd)->exit_status = 1);
+	{
+		(*cmd)->exit_status = 1;
+		return (1);
+	}
 	if (remove_leading_tabs(*result) < 0)
 		return (free_err_ret(NULL, NULL, *result, -1));
 	return (0);
 }
-
+	
 int	ft_export(char *str, t_cmd **cmd)
 {
 	char	**result;

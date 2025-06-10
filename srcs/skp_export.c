@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skp_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:25:38 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/11 11:32:52 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/10 13:55:51 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static int	is_invalid_redirect(char *str, int i)
 
 	a = str[i];
 	b = str[i + 1];
-	c = str[i + 2];
+	if (ft_strlen(str + i) == 1)
+		c = '\0';
+	else
+		c = str[i + 2];
 	if ((a == '<' || a == '>')
 		&& (b == '<' || b == '>')
 		&& (c == '<' || c == '>'))
@@ -84,7 +87,10 @@ int	loop_skip(char **str, char **tmp, int *enter, int *i)
 		ch[0] = (*str)[*i];
 		ch[1] = '\0';
 		if (append_char_export(tmp, ch))
+		{
+			free(*tmp);
 			return (-1);
+		}
 	}
 	else if (!ft_isspace((*str)[*i]))
 	{

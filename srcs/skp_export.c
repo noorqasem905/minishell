@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   skp_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/09 18:25:38 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/09 20:24:23 by aalquraa         ###   ########.fr       */
+/*   Created: 2025/06/09 18:25:38 by nqasem            #+#    #+#             */
+/*   Updated: 2025/06/11 11:32:52 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "../includes/minishell.h"
-#include "../libft/libft.h"
 
 static int	is_invalid_redirect(char *str, int i)
 {
@@ -72,7 +70,7 @@ static void	skip_redirect_word(char *str, int *i)
 int	loop_skip(char **str, char **tmp, int *enter, int *i)
 {
 	char	ch[2];
-	
+
 	if (((*str)[*i] == '<' || (*str)[*i] == '>') && *enter == 0)
 	{
 		if (handle_redirection((*str), i, enter))
@@ -95,34 +93,4 @@ int	loop_skip(char **str, char **tmp, int *enter, int *i)
 		return (1);
 	}
 	return (0);
-}
-
-char	*skp(char *str)
-{
-	int		i;
-	int		enter;
-	char	*tmp;
-	int		ret;
-
-	i = 0;
-	enter = 0;
-	tmp = ft_strdup("");
-	ret = 0;
-	if (!tmp)
-		return (NULL);
-	while (str[i])
-	{
-		ret = loop_skip(&str, &tmp, &enter, &i);
-		if (ret == -1)
-			return (NULL);
-		else if (ret == 1)
-			continue;
-		i++;
-	}
-	if (enter == 1)
-	{
-		free(tmp);
-		return (NULL);
-	}
-	return (tmp);
 }

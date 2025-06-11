@@ -43,6 +43,7 @@ SRCS = 	srcs/env.c							\
 		srcs/utils_redirection.c			\
 		srcs/searching_bulidin.c			\
 		srcs/setup_redirection.c			\
+		srcs/handle_export_2.c				\
 		srcs/helper_export_2.c 				\
 		srcs/execute_heredoc.c				\
 		srcs/utils_set_data2.c				\
@@ -63,7 +64,6 @@ SRCS = 	srcs/env.c							\
 		srcs/utils2.c 						\
 		srcs/ft_echo.c						\
 		srcs/skp_export.c					
-
 all: $(NAME)
 
 OBJS_DIR =includes/build

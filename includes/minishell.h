@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/09 19:50:21 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/11 11:34:02 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int							child_process(t_cmd **cmd, int pipe_fd2[][2],
 int							dup_process(int *i, int size, int pipe_fd2[][2]);
 int							dup_process_2(t_cmd **cmd, t_list **current, int i);
 int							get_path(char **ev);
-
+int							remove_quotues(char ***result);
 int							ft_strfind(char *str, char *c);
 int							execution(t_cmd **cmd);
 int							ft_execve(char *file, t_cmd **cmd);
@@ -133,6 +133,8 @@ int							reading_manager(t_cmd **cmd, int *flag,
 								char ***temp);
 int							ft_redirection(char *input,
 								char ***redirection_split, t_cmd **cmd);
+int							loop_skip(char **str, char **tmp,
+								int *enter, int *i);
 int							ft_execute_redirection(char **redirection_split,
 								int ccount_i[], int *fd, char *temp3);
 int							process_redirections(char ***redirection_split,

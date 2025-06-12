@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/10 17:16:43 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:40:36 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_split_state
 	char					quote_char;
 }							t_split_state;
 void						remove_quote_condition(char **str, char *who_im_i,
-								int save_i[3], int *close);
+								int save_i[3], int *close, char **result);
 int							heredoc(char *temp, char **file_loc, size_t size);
 int							handle_here_doc(char *temp);
 struct						s_exp
@@ -313,7 +313,7 @@ int							reading_manager_handle(t_cmd **cmd, int *flag,
 void						set_parent_signals(void);
 void						dfl_parent_signals(void);
 void						quote_remove_helper(char **str, int *save_i,
-								int *close, int *allow);
+								int *close, int *allow, char **result);
 void						no_value_of_echo(char *str, int save_i[3],
 								int *allow);
 int							searching_here_doc_2(t_cmd **cmd,

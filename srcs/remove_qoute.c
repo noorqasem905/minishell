@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:25:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:53:10 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 14:40:42 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	init_value(int save_i[3], char *who_im_i, int *allow, int *close)
 {
 	*allow = 0;
 	*close = 0;
-	*who_im_i = ' ';
+	*who_im_i = '\0';
 	save_i[0] = -1;
 	save_i[1] = -1;
 	save_i[2] = 0;
@@ -64,10 +64,12 @@ static void	init_value(int save_i[3], char *who_im_i, int *allow, int *close)
 void	remove_qoute(char **str)
 {
 	char	who_im_i;
+	char	*result;
 	int		save_i[3];
 	int		close;
 	int		allow;
 
+	result = *str;
 	init_value(save_i, &who_im_i, &allow, &close);
 	while ((*str) && (*str)[save_i[2]])
 	{
@@ -80,8 +82,8 @@ void	remove_qoute(char **str)
 				save_i[2]++;
 			continue ;
 		}
-		remove_quote_condition(str, &who_im_i, save_i, &close);
-		quote_remove_helper(str, save_i, &close, &allow);
+		remove_quote_condition(str, &who_im_i, save_i, &close, &result);
+		quote_remove_helper(str, save_i, &close, &allow, &result);
 		save_i[2]++;
 	}
 }

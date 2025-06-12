@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:58:09 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/28 18:04:44 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 14:54:54 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	handle_ecv_slash(char *result, char **m, char **paths)
 	{
 		if (access(result, F_OK | X_OK) == 0 && ft_strcmp(result, "/") != 0)
 		{
+			free_it_noww(paths, NULL, 0);
 			*m = ft_strdup(result);
 			return (5);
 		}
@@ -56,6 +57,7 @@ int	handle_ecv_slash(char *result, char **m, char **paths)
 			free_it_noww(paths, NULL, 0);
 			return (-6);
 		}
+		free_it_noww(paths, NULL, 0);
 	}
 	return (0);
 }
@@ -75,9 +77,9 @@ int	check_validation(char **paths, char **result, char **m)
 		if (access(result[0], X_OK) == -1 || ft_strcmp(result[0], "./") == 0)
 		{
 			free_it_noww(paths, NULL, 0);
-			perror("Error: File is not executable or doesn't exist");
 			return (1);
 		}
+		free_it_noww(paths, NULL, 0);
 		*m = ft_strdup(result[0]);
 		return (4);
 	}

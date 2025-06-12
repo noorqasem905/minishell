@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:32:33 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:36:45 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 14:03:30 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	error_main(int argc, char **str)
 	{
 	}
 	if (argc > 1)
-		exit(EXIT_FAILURE);
+		exit(127);
 }
 
 static void	malloc_error(void *err)
@@ -82,4 +82,3 @@ int	main(int argc, char *argv[], char **robo_env)
 	free(cmd);
 	return (e);
 }
-// cat ^\ exit cat

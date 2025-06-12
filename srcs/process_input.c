@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/10 17:31:08 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:48:48 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,57 @@ int	save_data(t_cmd **cmd, int *flag, char ***temp)
 	return (0);
 }
 
+static int	count_special_char(char *str, char special_char)
+{
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == special_char)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+char	*remove_special_char(char *str, char special_char)
+{
+	char	*result;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	result = malloc(ft_strlen(str) + 1 - count_special_char(str, special_char));
+	if (!result)
+		return (NULL);
+	while (str[i])
+	{
+		if (str[i] == special_char)
+			i++;
+		else
+			result[j++] = str[i++];
+	}
+	result[j] = '\0';
+	free(str);
+	return (result);
+}
+
 int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 {
 	if (*input)
 		add_history(*input);
+	remove_qoute(input);
+	*input = remove_special_char(*input, '\x15');
 	if (check_no_pipe(*input) && check_pipe_input(*input) == -1)
 	{
 		ft_printf("%2syntax error near unexpected token `|`\n");
 		(*cmd)->exit_status = 2;
 		return (-42);
 	}
-	remove_qoute(input);
 	replace_special_char(input);
 	*temp = ft_split_custom_exp(*input, '|');
 	if (!*temp)

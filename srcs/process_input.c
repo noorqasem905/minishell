@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 18:22:39 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 19:31:53 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,12 @@ char	*remove_special_char(char *str, char special_char)
 
 int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 {
+	char *tmp;
 	if (*input)
 		add_history(*input);
 	remove_qoute(input);
-	*input = remove_special_char(*input, '\x15');
+	tmp = remove_special_char(*input, '\x15');
+	*input = tmp;
 	if (check_no_pipe(*input) && check_pipe_input(*input) == -1)
 	{
 		ft_printf("%2syntax error near unexpected token `|`\n");

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 20:14:59 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 14:54:44 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 18:59:47 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	ft_execve(char *file, t_cmd **cmd)
 		free_it_noww(result, NULL, 1);
 		return (-1);
 	}
-	flag = check_validation(paths, result, &m);
+	flag = check_validation(paths, result, &m, cmd);
 	if (check_validation_handle(flag, m, result) < 0)
 		return (-1);
 	if (execve(m, result, (*cmd)->env) == -1)

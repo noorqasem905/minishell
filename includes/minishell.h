@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 17:41:01 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 19:22:07 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ struct						s_cmd
 	int						who_am_i;
 	int						counter;
 	int						index;
+	int						shell_level;
 	int						bulidin;
 	int						exit_status;
 	int						flag;
@@ -113,7 +114,7 @@ int							error_ft_execute_redirection(char *temp,
 int							process_input(t_cmd **cmd, int *flag, char ***temp,
 								char **input);
 int							check_validation(char **paths, char **result,
-								char **m);
+								char **m, t_cmd **cmd);
 int							check_extra_redirection(char *tmp);
 int							check_append_redirection(char **curr,
 								int heredoc_append[]);
@@ -164,7 +165,7 @@ void						free_list(t_list **root);
 void						frees(t_list **root);
 void						replace_special_char(char **str);
 void						printf_split(char *str, char **split);
-void						robo_cd(char **temp);
+void						robo_cd(char **temp, t_cmd **cmd);
 void						free_it_noww(char **s, char *s2, int emassage);
 void						signal_handler(int x);
 char						*check_access(char **paths, char **result);
@@ -261,7 +262,7 @@ void						setup_extra_command_h_2(char **split_2,
 								char **command);
 void						dup_process_handle(int size, int pipe_fd2[][2]);
 int							handle_cd_slash(char *temp);
-int							handle_cd_dup_dot(char *temp);
+int							handle_cd_dup_dot(char *temp, t_cmd **cmd);
 int							build_quoted_string(char **dir, char ***temp,
 								int total_len, int *end);
 int							merge_quoted_tokens(char ***temp, char **dir,
@@ -279,6 +280,7 @@ void						ft_echo_ignore_quotes(int new_line, int ignore,
 int							handle_here_doc_qouts(char *temp);
 int							process_token(char **buff, char *token,
 								char *ignore);
+int							shell_level_increment(t_cmd **cmd, int flag);
 int							ft_echo_quotes(char *word, char *ignore);
 void						ski_delimiters(char **s, char c);
 int							is_there_else_heredoc(char *temp);

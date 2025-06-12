@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:54:33 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 18:37:51 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 int	handle_cd_slash(char *temp)
 {
-	if (temp == NULL || ft_strcmp(temp, ".") == 0)
-	{
-		chdir(getenv("HOME"));
-		return (-1);
-	}
 	if (temp[0] == '/')
 	{
 		if (chdir(temp) == -1)
@@ -31,10 +26,12 @@ int	handle_cd_slash(char *temp)
 	return (0);
 }
 
-int	handle_cd_dup_dot(char *temp)
+int	handle_cd_dup_dot(char *temp, t_cmd **cmd)
 {
 	char	*parent;
 	char	*cwd;
+	char	*join;
+	char	*tmp;
 
 	if (ft_strcmp(temp, "..") == 0)
 	{
@@ -45,8 +42,18 @@ int	handle_cd_dup_dot(char *temp)
 			return (-1);
 		}
 		parent = ft_strrchr(cwd, '/');
+		tmp = ft_strjoin("export OLDPWD=\"", cwd);
+		join = ft_strjoin(tmp, "\"");
+		free(tmp);
+		ft_export(join, cmd);
+		free(join);	
 		if (parent != NULL)
 			*parent = '\0';
+		tmp = ft_strjoin("export PWD=\"", cwd);
+		join = ft_strjoin(tmp, "\"");
+		free(tmp);
+		ft_export(join, cmd);
+		free(join);
 		if (chdir(cwd) == -1)
 		{
 			perror("cd");

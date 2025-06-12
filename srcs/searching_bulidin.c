@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:43:49 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/10 15:37:51 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 18:20:23 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	searching_bulidin(char **split, t_cmd **cmd, char *t, char **input)
 		return (ret);
 	if (ft_strncmp(split[0], "cd", 2) == 0)
 	{
-		robo_cd(split);
+		robo_cd(split, cmd);
 		free(*input);
 		return (-3);
 	}

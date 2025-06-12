@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:10:19 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/05 00:03:55 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 18:19:00 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ int	handle_space_infile(char ***temp, char **dir)
 	return (0);
 }
 
-void	robo_cd(char **temp)
+void	robo_cd(char **temp, t_cmd **cmd)
 {
 	char	*dir;
 
 	if (handle_cd_slash(temp[1]) == -1)
 		return ;
-	if (handle_cd_dup_dot(temp[1]) == -1)
+	if (handle_cd_dup_dot(temp[1], cmd) == -1)
 		return ;
 	if (handle_space_infile(&temp, &dir) == -1)
 		return ;

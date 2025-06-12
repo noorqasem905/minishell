@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:58:09 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/12 14:54:54 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 19:21:54 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,36 @@ int	handle_ecv_slash(char *result, char **m, char **paths)
 	return (0);
 }
 
-int	check_validation(char **paths, char **result, char **m)
+int shell_level_increment(t_cmd **cmd, int flag)
 {
-	int	ret;
+	int		shlvl_idx;
+	char	*shlvl_val;
+	int		new_shlvl;
+	char	*num;
+	char	*export_str;
+
+	shlvl_idx = get_env_j((*cmd)->env, "SHLVL");
+	if (shlvl_idx != -1)
+	{
+		shlvl_val = ft_strchr((*cmd)->env[shlvl_idx], '=');
+		if (shlvl_val)
+			new_shlvl = ft_atoi(shlvl_val + 1) + (1 * (flag));
+	}
+	else
+		new_shlvl = 1;
+	num = ft_itoa(new_shlvl);
+	export_str = ft_strjoin("export SHLVL=", num);
+	ft_export(export_str, cmd);
+	free(num);
+	free(export_str);
+	return (0);
+}
+
+int	check_validation(char **paths, char **result, char **m, t_cmd **cmd)
+{
+	int		ret;
+	char	*cwd;
+	char	*num;
 
 	*m = NULL;
 	if (!paths)
@@ -81,6 +108,8 @@ int	check_validation(char **paths, char **result, char **m)
 		}
 		free_it_noww(paths, NULL, 0);
 		*m = ft_strdup(result[0]);
+		if (ft_strcmp(*m, "./minishell") == 0)
+			shell_level_increment(cmd, 1);
 		return (4);
 	}
 	ret = handle_ecv_slash(result[0], m, paths);

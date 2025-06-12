@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 17:19:18 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 18:17:53 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	implement_heredoc(int *fd, char **input, int original_stdout, t_cmd **cmd)
 			here_doc[len - 1] = '\0';
 		if (ft_strcmp(here_doc, input[0]) == 0)
 		{
-			free(str);
 			free(here_doc);
 			break ;
 		}
@@ -71,6 +70,7 @@ int	implement_heredoc(int *fd, char **input, int original_stdout, t_cmd **cmd)
 		dup2(original_stdout, STDOUT_FILENO);
 		free(here_doc);
 	}
+	free(str);
 	return (0);
 }
 

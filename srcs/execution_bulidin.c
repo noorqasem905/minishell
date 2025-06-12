@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/10 15:50:18 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 15:25:27 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	run_buildin_execution_2(t_cmd *cmd, t_list *current, char *tmp)
 			return (-1);
 		ft_echo(current);
 		cmd->bulidin = 17;
+		(cmd)->exit_status = 0;
 		return (-1);
 	}
 	else if (run_buildin_execution_3(cmd, current, tmp) < 0)

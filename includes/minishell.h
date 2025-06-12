@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 14:40:36 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 17:41:01 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+extern int g_exit_status;
 
 typedef struct s_cmd		t_cmd;
 typedef struct s_here_doc	t_here_doc;

@@ -27,7 +27,7 @@ int	here_doc_manger(t_cmd **cmd, char **file_loc)
 		{
 			size = sizeof_heredoc(current->content);
 			if (size > 1023 || heredoc(current->content, &(file_loc[i_j[1]]),
-					size) < 0)
+					size, cmd) < 0)
 			{
 				ft_printf("%2heredoc initialize\n");
 				return (-1);

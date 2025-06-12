@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/10 15:52:54 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 17:19:18 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,14 @@ int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 	return (check_error);
 }
 
-int	implement_heredoc(int *fd, char **input, int original_stdout)
+int	implement_heredoc(int *fd, char **input, int original_stdout, t_cmd **cmd)
 {
+	t_list	*str;
+	char	*str_ntr;
 	char	*here_doc;
 	size_t	len;
 
+	str = malloc(sizeof(t_list));
 	while (1)
 	{
 		here_doc = get_next_line(STDIN_FILENO);
@@ -50,8 +53,17 @@ int	implement_heredoc(int *fd, char **input, int original_stdout)
 			here_doc[len - 1] = '\0';
 		if (ft_strcmp(here_doc, input[0]) == 0)
 		{
+			free(str);
 			free(here_doc);
 			break ;
+		}
+		str->content = here_doc;
+		str->next = NULL;
+		str_ntr = expander_input(cmd, str);
+		if (str_ntr)
+		{
+			free(here_doc);
+			here_doc = str_ntr;
 		}
 		dup2((*fd), STDOUT_FILENO);
 		write(*fd, here_doc, len);
@@ -78,7 +90,7 @@ int	heredoc_mult_process(int check_error, char **file_loc, int fd[])
 	return (0);
 }
 
-int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[])
+int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[], t_cmd **cmd)
 {
 	char	**input;
 	int		fd[2];
@@ -92,7 +104,7 @@ int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[])
 		check_error = dbg_heredoc(heredoc_ptrs[i], &fd[1], &input, file_loc);
 		if (heredoc_mult_process(check_error, file_loc, fd) < 0)
 			return (-1);
-		implement_heredoc(&fd[1], input, fd[0]);
+		implement_heredoc(&fd[1], input, fd[0], cmd);
 		close(fd[1]);
 		close(fd[0]);
 		frees_split(input);
@@ -107,7 +119,7 @@ int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[])
 	return (0);
 }
 
-int	heredoc(char *temp, char **file_loc, size_t size)
+int	heredoc(char *temp, char **file_loc, size_t size, t_cmd **cmd)
 {
 	char	**heredoc_ptrs;
 	char	*search;
@@ -127,7 +139,7 @@ int	heredoc(char *temp, char **file_loc, size_t size)
 		search += 2;
 	}
 	heredoc_ptrs[heredoc_count] = NULL;
-	if (heredoc_mult(heredoc_count, file_loc, heredoc_ptrs) < 0)
+	if (heredoc_mult(heredoc_count, file_loc, heredoc_ptrs, cmd) < 0)
 		return (free_err_ret(NULL, heredoc_ptrs, NULL, -1));
 	free(heredoc_ptrs);
 	return (0);

@@ -65,7 +65,7 @@ typedef struct s_split_state
 }							t_split_state;
 void						remove_quote_condition(char **str, char *who_im_i,
 								int save_i[3], int *close, char **result);
-int							heredoc(char *temp, char **file_loc, size_t size);
+int							heredoc(char *temp, char **file_loc, size_t size, t_cmd **cmd);
 int							handle_here_doc(char *temp);
 struct						s_exp
 {

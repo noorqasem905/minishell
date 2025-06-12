@@ -1,5 +1,5 @@
 CC =  cc
-CFLAGS =  -g
+CFLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
 
 SRCS = 	srcs/env.c							\
@@ -90,13 +90,8 @@ clean:
 	$(HIDE)make $(HIDED) -C libft/printf clean
 	$(HIDE)make $(HIDED) -C libft clean
 	$(HIDE)rm -f $(OBJS)
-	$(HIDE)rm -f $(HEADERS)
-	$(HIDE)rm -f $(HEADERS)
 
-fclean:
-	$(HIDE)make $(HIDED) -C libft/printf fclean
-	$(HIDE)make $(HIDED) -C libft fclean
-	$(HIDE)rm -f $(OBJS)
+fclean: clean
 	$(HIDE)rm -f $(NAME)
 	$(HIDE)rm -df $(OBJS_DIR)
 

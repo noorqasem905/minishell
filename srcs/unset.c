@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 23:20:32 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/10 18:06:01 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:19:58 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	robo_unset(char *name_t, t_cmd **cmd)
 	name = skp(name_t);
 	if (!name)
 		return (free_err_ret(NULL, name, NULL, -1));
-	printf("name %s\n", name);
 	if (ft_strcmp(name, "PATH") == 0 || ft_strcmp(name, "HOME") == 0)
 		(*cmd)->flag = 1;
 	if (!is_valid(name))

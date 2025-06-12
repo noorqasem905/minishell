@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 19:31:53 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 20:41:41 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,34 +59,60 @@ static int	count_special_char(char *str, char special_char)
 char	*remove_special_char(char *str, char special_char)
 {
 	char	*result;
-	int		i;
-	int		j;
+	int		i = 0;
+	int		j = 0;
+	int		count;
 
-	i = 0;
-	j = 0;
-	result = malloc(ft_strlen(str) + 1 - count_special_char(str, special_char));
+	if (!str)
+		return (NULL);
+
+	count = count_special_char(str, special_char);
+	if (count == 0)
+		return (NULL);
+	result = malloc(ft_strlen(str) + 1 - count);
 	if (!result)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == special_char)
-			i++;
-		else
-			result[j++] = str[i++];
+		if (str[i] && str[i] != special_char)
+			result[j++] = str[i];
+		i++;
 	}
-	result[j] = '\0';
+	if (j == 0)
+	{
+		if (*str)
+			free(str);
+		free(result);
+		return (NULL);
+	}
 	free(str);
+	result[j] = '\0';
 	return (result);
+}
+
+static int space_history(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (!ft_isspace(input[i]))
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 {
 	char *tmp;
-	if (*input)
+	if (*input && space_history(*input))
 		add_history(*input);
 	remove_qoute(input);
 	tmp = remove_special_char(*input, '\x15');
-	*input = tmp;
+	if (tmp)
+		*input = tmp;
 	if (check_no_pipe(*input) && check_pipe_input(*input) == -1)
 	{
 		ft_printf("%2syntax error near unexpected token `|`\n");

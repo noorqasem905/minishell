@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 19:22:07 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 19:38:25 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,8 @@ int							build_quoted_string(char **dir, char ***temp,
 int							merge_quoted_tokens(char ***temp, char **dir,
 								int start, int *end);
 int							handle_space_infile(char ***temp, char **dir);
-int							robo_cd_access(char **dir, char **temp);
+int							robo_cd_access(char **dir, char **temp, 
+								t_cmd **cmd);
 char						*trim_quotess(char *str);
 void						frees_newsplit(char **root);
 t_exp						*init_export(int count);

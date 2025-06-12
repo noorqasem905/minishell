@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 15:31:47 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/10 15:49:52 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 20:57:35 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	run_buildin_execution_4(t_cmd *cmd, t_list *current, char *tmp)
 {
 	char	**split;
 
-	if (ft_strncmp(tmp, "exit", 4) == 0)
+	if (!ft_strncmp(tmp, "exit", 4) &&
+		(tmp[5] == '\0' || ft_isspace(tmp[5])))
 	{
 		split = ft_split(current->content, ' ');
 		if (!split)

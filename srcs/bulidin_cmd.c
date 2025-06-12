@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 18:37:51 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/12 20:59:32 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,6 @@ int	searching_comand(char **temp)
 	if (!ft_strncmp(temp[0], "export", 7))
 		return (1);
 	if (!ft_strncmp(temp[0], "unset", 6))
-		return (1);
-	if (!ft_strncmp(temp[0], "exit", 5))
 		return (1);
 	if (!ft_strncmp(temp[0], "env", 4))
 		return (1);

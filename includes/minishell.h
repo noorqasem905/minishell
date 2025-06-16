@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 19:38:25 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/16 17:53:04 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ struct						s_cmd
 	int						bulidin;
 	int						exit_status;
 	int						flag;
+	int						lock;
 };
 typedef struct s_split_state
 {

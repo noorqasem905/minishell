@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 20:14:59 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 18:59:47 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/16 17:56:50 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 		perror("Error splitting file");
 		return (-1);
 	}
+	if ((*result)[0] && (!ft_strncmp((*result)[0], "./", 2) || !ft_strncmp((*result)[0], "/", 1)))
+		return (3);
 	get = get_path(ev);
 	if (get < 0)
 	{
@@ -107,7 +109,8 @@ int	ft_execve(char *file, t_cmd **cmd)
 	int		flag;
 	char	*m;
 
-	if (ft_setup_execve(file, &result, (*cmd)->env, &paths) == -1)
+	flag = ft_setup_execve(file, &result, (*cmd)->env, &paths);
+	if (flag == -1)
 		return (-1);
 	if (!result || !result[0] || !*result[0])
 	{
@@ -116,6 +119,7 @@ int	ft_execve(char *file, t_cmd **cmd)
 		free_it_noww(result, NULL, 1);
 		return (-1);
 	}
+	(*cmd)->lock = flag;
 	flag = check_validation(paths, result, &m, cmd);
 	if (check_validation_handle(flag, m, result) < 0)
 		return (-1);

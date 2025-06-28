@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/16 17:53:04 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/26 16:57:39 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ struct						s_exp
 	int						flag;
 };
 void						remove_quote(char **str);
+void						remove_qoute(char **str);
 int							run_buildin_execution_4(t_cmd *cmd,
 								t_list *current, char *tmp);
 int							check_redirection_mult_siggr(int mult[],
@@ -187,7 +188,7 @@ char						*restore_special_char_in_quotes(const char *str);
 int							get_env_j(char **env, char *name);
 char						*trim_quotes(char *str);
 int							robo_exit(char **split, t_cmd *cmd);
-void						env(t_cmd *cmd);
+void						robo_env(t_cmd *cmd);
 void						handle_here_doc_nolink(t_cmd **cmd);
 void						robo_pwd(void);
 void						update_env(char **env, int j, char *name,

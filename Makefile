@@ -53,7 +53,6 @@ SRCS = 	srcs/env.c							\
 		srcs/utils_set_data.c				\
 		srcs/process_input.c				\
 		srcs/utils_export2.c				\
-		srcs/ft_echo_utils.c				\
 		srcs/remove_qoute.c 				\
 		srcs/dup_process.c					\
 		srcs/utils_setup.c					\

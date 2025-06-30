@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:40:16 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/30 19:44:09 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/30 19:55:02 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int	ft_execute_redirection(char **redirection_split, int ccount_i[], int *fd,
 	ccount_i[2] = 0;
 	if (ccount_i[1] == 6 && ccount_i[0] + 1 == ccount_i[3])
 	{
+		write(2,"output\n", 8);
 		ccount_i[2] = 1;
 		if (ft_execute_redirection_p3(redirection_split, ccount_i[0], fd) < 0)
 			return (-1);
@@ -125,6 +126,8 @@ int	ft_execute_redirection(char **redirection_split, int ccount_i[], int *fd,
 	}
 	else if (temp3[0] == '>')
 	{
+		write(2,"ouput\n", 7);
+
 		ccount_i[2] = 3;
 		if (ft_execute_redirection_p2(redirection_split, ccount_i[0], fd) < 0)
 			return (-2);

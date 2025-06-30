@@ -93,6 +93,8 @@ clean:
 
 fclean: clean
 	$(HIDE)rm -f $(NAME)
+	$(HIDE)make $(HIDED) -C libft/printf fclean
+	$(HIDE)make $(HIDED) -C libft fclean
 	$(HIDE)rm -df $(OBJS_DIR)
 
 re: fclean all

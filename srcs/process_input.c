@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 20:41:41 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/30 23:26:32 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static int	count_special_char(char *str, char special_char)
 	int	count;
 	int	i;
 
-	count = 0;
 	i = 0;
+	count = 0;
 	while (str[i])
 	{
 		if (str[i] == special_char)
@@ -65,7 +65,6 @@ char	*remove_special_char(char *str, char special_char)
 
 	if (!str)
 		return (NULL);
-
 	count = count_special_char(str, special_char);
 	if (count == 0)
 		return (NULL);
@@ -74,7 +73,7 @@ char	*remove_special_char(char *str, char special_char)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] && str[i] != special_char)
+		if (str[i] != special_char)
 			result[j++] = str[i];
 		i++;
 	}
@@ -104,23 +103,57 @@ static int space_history(char *input)
 	return (0);
 }
 
+static void	restore_loop(char **str)
+{
+	int		i;
+
+	i = 0;
+	while ((*str)[i])
+	{
+		if ((*str)[i] == '\x13')
+			(*str)[i] = '|';
+		i++;
+	}
+}
+
+static void	restore_loop_2d(char ***str)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while ((*str)[i])
+	{
+		j = 0;	
+		while ((*str)[i][j])
+		{
+			if ((*str)[i][j] == '\x13')
+				(*str)[i][j] = '|';
+			j++;
+		}
+		i++;
+	}
+}
+
 int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 {
 	char *tmp;
 	if (*input && space_history(*input))
 		add_history(*input);
+	replace_special_char(input);
 	remove_qoute(input);
 	tmp = remove_special_char(*input, '\x15');
 	if (tmp)
 		*input = tmp;
 	if (check_no_pipe(*input) && check_pipe_input(*input) == -1)
 	{
-		ft_printf("%2syntax error near unexpected token `|`\n");
+		ft_printf("%2syntax haah error near unexpected token `|`\n");
 		(*cmd)->exit_status = 2;
 		return (-42);
 	}
-	replace_special_char(input);
 	*temp = ft_split_custom_exp(*input, '|');
+	restore_loop(input);
+	restore_loop_2d(temp);
 	if (!*temp)
 		return (-1);
 	if (!*temp[0])

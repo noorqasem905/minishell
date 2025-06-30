@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 01:34:35 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/30 19:45:05 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,26 @@ char	*get_redirection_command(char *temp, char **redirection_split,
 	return (NULL);
 }
 
-static void	init_process_redirections(int ccount_i[3], int i)
+static void	init_process_redirections(int ccount_i[3], int i, char **redirection_split)
 {
 	ccount_i[0] = -1;
 	ccount_i[1] = i;
 	ccount_i[2] = 0;
+	ccount_i[3] = ft_2dlen(redirection_split);
 }
 
 int	process_redirections(char ***redirection_split, t_cmd **cmd,
 		char **temp3, int i)
 {
 	char	**tty;
-	int		ccount_i[3];
+	int		ccount_i[4];
 	int		fd;
 
-	init_process_redirections(ccount_i, i);
+	init_process_redirections(ccount_i, i, *redirection_split);
 	tty = ft_mult_split((*temp3), "<>");
 	if (!tty)
 		return (free_err_ret(NULL, NULL, *redirection_split, -1));
-	while (++ccount_i[0] < ft_2dlen(*redirection_split))
+	while (++ccount_i[0] < ccount_i[3])
 	{
 		(*temp3) = ft_strmchr((*temp3), "<>");
 		if (!(*temp3))

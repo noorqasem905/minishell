@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:40:16 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 17:58:31 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/30 19:39:08 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	ft_execute_redirection(char **redirection_split, int ccount_i[], int *fd,
 		char *temp3)
 {
 	ccount_i[2] = 0;
-	if (ccount_i[1] == 6)
+	if (ccount_i[1] == 6 && ccount_i[0] + 1 == ccount_i[3])
 	{
 		ccount_i[2] = 1;
 		if (ft_execute_redirection_p3(redirection_split, ccount_i[0], fd) < 0)

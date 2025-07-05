@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   searching_bulidin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:43:49 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 20:55:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/28 19:06:40 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	searching_bulidin(char **split, t_cmd **cmd, char *t, char **input)
 	ret = searching_bulidin_2(split, cmd, t);
 	if (ret < 0)
 		return (ret);
-	if (ft_strncmp(split[0], "cd", 2) == 0)
+	if (split && split[0] && ft_strcmp(split[0], "cd") == 0)
 	{
 		robo_cd(split, cmd);
 		free(*input);

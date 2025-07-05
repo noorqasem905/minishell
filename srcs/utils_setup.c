@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_setup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:58:09 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/16 18:18:29 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/05 12:28:59 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	handle_ecv_slash(char *result, char **m, char **paths, t_cmd **cmd)
 	return (0);
 }
 
-int shell_level_increment(t_cmd **cmd, int flag)
+/*int	shell_level_increment(t_cmd **cmd, int flag)
 {
 	int		shlvl_idx;
 	char	*shlvl_val;
@@ -88,7 +88,7 @@ int shell_level_increment(t_cmd **cmd, int flag)
 	free(num);
 	free(export_str);
 	return (0);
-}
+}*/
 
 int	check_validation(char **paths, char **result, char **m, t_cmd **cmd)
 {
@@ -108,8 +108,8 @@ int	check_validation(char **paths, char **result, char **m, t_cmd **cmd)
 		if ((*cmd)->lock != 3 && *paths)
 			free_it_noww(paths, NULL, 0);
 		*m = ft_strdup(result[0]);
-		if (ft_strcmp(*m, "./minishell") == 0)
-			shell_level_increment(cmd, 1);
+		/*if (ft_strcmp(*m, "./minishell") == 0)
+			shell_level_increment(cmd, 1);*/
 		return (4);
 	}
 	ret = handle_ecv_slash(result[0], m, paths, cmd);
@@ -117,16 +117,4 @@ int	check_validation(char **paths, char **result, char **m, t_cmd **cmd)
 		return (ret);
 	*m = check_access(paths, result);
 	return (0);
-}
-
-void	printf_split(char *str, char **split)
-{
-	int	i;
-
-	i = 0;
-	while (split[i])
-	{
-		ft_printf("%2%s%s\n", str, split[i]);
-		i++;
-	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 19:25:10 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/05 13:07:52 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,9 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		dup2(1, 0);
 		input = readline(COLOR_CUSTOM "~/Roboshell> " COLOR_RESET);
+		
 		if (input == NULL)
 			break ;
 		if (is_closed(input) == -1)

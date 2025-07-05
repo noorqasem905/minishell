@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_bulidin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 20:59:11 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/05 11:59:38 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	run_buildin_execution_2(t_cmd *cmd, t_list *current, char *tmp)
 	if (ft_strcmp(tmp, "env") == 0)
 	{
 		free(tmp);
-		run_export_execution(cmd->env);
+		//run_export_execution(cmd->env);
+		robo_env(cmd);
 		cmd->bulidin = 12;
 		return (-1);
 	}

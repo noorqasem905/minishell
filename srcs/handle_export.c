@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_export.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/12 18:34:39 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/05 13:30:05 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,15 @@ int	ft_export(char *str, t_cmd **cmd)
 	t_exp	*export;
 	int		i;
 
+	result = NULL;
 	if (handle_ret_export(str, cmd) < 0)
 		return (-1);
 	if (setup_export(str, cmd, &result) < 0)
 		return (-1);
+	//printf("EXPORT: %s\n", str);
 	i = 0;
+	if (!result)
+        return (-1);
 	while (result[i])
 		i++;
 	export = init_export(i);
@@ -120,6 +124,7 @@ int	ft_export(char *str, t_cmd **cmd)
 	if (fill_export_manger(&export, result) < 0)
 		return (-1);
 	robo_export(cmd, export);
+	//printf_split("EXPORT SPLIT: ", result);
 	free_exp(export);
 	frees_split(result);
 	return (0);

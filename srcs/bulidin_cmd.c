@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bulidin_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 20:59:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:50:32 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	handle_cd_slash(char *temp)
 	return (0);
 }
 
-int	handle_cd_dup_dot(char *temp, t_cmd **cmd)
+/*int	handle_cd_dup_dot(char *temp, t_cmd **cmd)
 {
 	char	*parent;
 	char	*cwd;
@@ -46,7 +46,7 @@ int	handle_cd_dup_dot(char *temp, t_cmd **cmd)
 		join = ft_strjoin(tmp, "\"");
 		free(tmp);
 		ft_export(join, cmd);
-		free(join);	
+		free(join);
 		if (parent != NULL)
 			*parent = '\0';
 		tmp = ft_strjoin("export PWD=\"", cwd);
@@ -64,7 +64,7 @@ int	handle_cd_dup_dot(char *temp, t_cmd **cmd)
 		return (-1);
 	}
 	return (0);
-}
+}*/
 
 int	build_quoted_string(char **dir, char ***temp, int total_len, int *end)
 {

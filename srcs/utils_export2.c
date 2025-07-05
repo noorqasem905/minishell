@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:26:37 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/09 19:50:10 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:46:04 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,16 @@ int	remove_leading_tabs(char **result)
 		result[0] = tmp;
 	}
 	return (0);
+}
+
+void	printf_split(char *str, char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		ft_printf("%2%s%s\n", str, split[i]);
+		i++;
+	}
 }

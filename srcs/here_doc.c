@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/05 13:27:08 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:37:28 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ void signal_handler_heredoc1(int signum)
     (void)signum;
     g_exit_status = 130;
     rl_replace_line("", 0);
-    //rl_done = 1;
     write(STDOUT_FILENO, "\n", 1);
 	close (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 21:53:55 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/04 21:44:59 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/05 13:05:20 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ int	setup_execution_heredoc(t_cmd **cmd, char ***file_loc)
 		{
 			(*cmd)->exit_status = 2;
 			return (65);
+		}
+		if (g_exit_status == 130)
+		{
+			(*cmd)->exit_status = 130;
+			return (130);
 		}
 	}
 	return (0);

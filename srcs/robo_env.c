@@ -6,13 +6,13 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 23:42:58 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/05/22 17:32:16 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/06/26 16:56:16 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	env(t_cmd *cmd)
+void	robo_env(t_cmd *cmd)
 {
 	char	*eq;
 	int		i;

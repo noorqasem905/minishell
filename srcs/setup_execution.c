@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_execution.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 20:14:59 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/16 17:56:50 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:48:02 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int	ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
 		perror("Error splitting file");
 		return (-1);
 	}
-	if ((*result)[0] && (!ft_strncmp((*result)[0], "./", 2) || !ft_strncmp((*result)[0], "/", 1)))
+	if ((*result)[0] && (!ft_strncmp((*result)[0], "./", 2)
+		|| !ft_strncmp((*result)[0], "/", 1)))
 		return (3);
 	get = get_path(ev);
 	if (get < 0)

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:52:29 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/30 22:27:54 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:54:09 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void	replace_in_quotes(char *str, int *i)
 		str[*i] = '\x11';
 	else if (str[*i] == '>')
 		str[*i] = '\x12';
-	else if (str[*i] == '|')
-		str[*i] = '\x13';
 	(*i)++;
 }
 

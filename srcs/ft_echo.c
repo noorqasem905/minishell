@@ -3,124 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 15:02:03 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:49:46 by nqasem           ###   ########.fr       */
+/*   Created: 2025/06/26 16:29:58 by aalquraa          #+#    #+#             */
+/*   Updated: 2025/07/03 14:28:23 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	handle_quoted(char **buff, char *token, char ignore)
+static int	skip_n(char *line, int *i)
 {
-	char	*quoted_str;
-	char	*tmp;
+	int	j;
+	int	no_newline;
 
-	quoted_str = skip_quotes(token, ignore);
-	if (!quoted_str)
-		return (-1);
-	if (**buff != '\0')
+	no_newline = 0;
+	while (line[*i] == '-' && line[*i + 1] == 'n')
 	{
-		tmp = ft_strjoin(*buff, " ");
-		free(*buff);
-		if (!tmp)
+		j = *i + 2;
+		while (line[j] == 'n')
+			j++;
+		if (line[j] == ' ' || line[j] == '\0')
 		{
-			free(quoted_str);
-			return (-1);
+			no_newline = 1;
+			*i = j;
+			while (line[*i] == ' ')
+				(*i)++;
 		}
-		*buff = tmp;
+		else
+			break ;
 	}
-	tmp = ft_strjoin(*buff, quoted_str);
-	free(quoted_str);
-	free(*buff);
-	if (!tmp)
-		return (-1);
-	*buff = tmp;
-	return (0);
+	return (no_newline);
 }
 
-static int	handle_unquoted(char **buff, char *token)
+static void	print_line(char *line, int *i)
 {
-	char	*tmp;
+	int	quote;
 
-	if (**buff != '\0')
+	quote = 0;
+	while (line[*i])
 	{
-		tmp = ft_strjoin(*buff, " ");
-		free(*buff);
-		if (!tmp)
-			return (-1);
-		*buff = tmp;
+		if (!quote && (line[*i] == '\'' || line[*i] == '"'))
+		{
+			quote = line[(*i)++];
+			continue ;
+		}
+		if (quote && line[*i] == quote)
+		{
+			quote = 0;
+			(*i)++;
+			continue ;
+		}
+		if (!quote && line[*i] == ' ')
+		{
+			write(1, " ", 1);
+			while (line[*i] == ' ')
+				(*i)++;
+			continue ;
+		}
+		write(1, &line[(*i)++], 1);
 	}
-	tmp = ft_strjoin(*buff, token);
-	free(*buff);
-	if (!tmp)
-		return (-1);
-	*buff = tmp;
-	return (0);
-}
-
-int	process_token(char **buff, char *token, char *ignore)
-{
-	int	ret;
-
-	*ignore = '\0';
-	ret = ft_echo_quotes(token, ignore);
-	if (ret < 0)
-		return (-1);
-	if (*ignore)
-	{
-		ret = handle_quoted(buff, token, *ignore);
-		if (ret < 0)
-			return (-1);
-	}
-	else
-	{
-		ret = handle_unquoted(buff, token);
-		if (ret < 0)
-			return (-1);
-	}
-	return (0);
-}
-
-static char	**preprocess_echo_input(t_list *command)
-{
-	char	*buff;
-	char	**split;
-
-	buff = restore_special_char_in_quotes(command->content);
-	if (!buff)
-		return (NULL);
-	split = ft_split_custom_exp(buff, ' ');
-	free(buff);
-	if (!split)
-		return (NULL);
-	return (split);
 }
 
 int	ft_echo(t_list *command)
 {
-	char	**split;
-	char	*buff;
-	char	ignore;
+	char	*line;
 	int		i;
-	int		n_flag;
+	int		flag_newline;
 
-	ignore = '\0';
-	i = 1;
-	n_flag = 0;
-	split = preprocess_echo_input(command);
-	while (split[i] && ft_strcmp(split[i], "-n") == 0)
-	{
-		n_flag = 1;
+	i = 0;
+	flag_newline = 0;
+	line = command->content;
+	if (ft_strncmp(line, "echo", 4) == 0)
+		i = 4;
+	while (line[i] && line[i] == ' ')
 		i++;
-	}
-	if (ft_echo_quotes_manger(split, &i, &ignore, &buff) < 0)
-		return (-1);
-	write(STDOUT_FILENO, buff, ft_strlen(buff));
-	free(buff);
-	if (!n_flag)
+	flag_newline = skip_n(line, &i);
+	print_line(line, &i);
+	if (!flag_newline)
 		write(1, "\n", 1);
-	frees_split(split);
 	return (0);
 }

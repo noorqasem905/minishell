@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_special_char.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:52:29 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:54:09 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/07 15:04:17 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	replace_in_quotes(char *str, int *i)
 		str[*i] = '\x11';
 	else if (str[*i] == '>')
 		str[*i] = '\x12';
+	else if (str[*i] == '|')
+		str[*i] = '\x13';
 	(*i)++;
 }
 

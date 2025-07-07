@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_handle2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:47:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/26 08:31:48 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/07 15:03:49 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	check_redirection_mult(char *input)
 			ret_mul_ret[1] = ret_mul_ret[0];
 			mult_i[2]++;
 		}
+		else if(ret_mul_ret[0] == 1)
+			ret_mul_ret[1] = 0;
 		mult_i[2]++;
 	}
 	if ((is_file_enter[1] > 0 && is_file_enter[0] == 0) || mult_i[0] > 1

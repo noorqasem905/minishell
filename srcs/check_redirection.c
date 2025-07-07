@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:37:38 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:54:38 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/07 15:00:46 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,11 @@ int	check_redirection_mult_sign(int mult[], int conflect_handle[],
 		if (check_redirection_mult_sigls(mult, conflect_handle, is_file_enter,
 				input) < 0)
 			return (-1);
+		ret = 1;
 	}
 	else if (input[mult[2]] == '>')
 	{
+		ret = 1;
 		if (input[mult[2] + 1] == '>' && input[mult[2] + 2] != '>')
 		{
 			input[mult[2] + 1] = ' ';
@@ -104,3 +106,4 @@ int	check_redirection_mult_sign(int mult[], int conflect_handle[],
 		check_redirection_mult_nosiggrle(mult, conflect_handle, is_file_enter);
 	return (ret);
 }
+

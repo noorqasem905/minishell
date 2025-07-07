@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   retore_special_char.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:47:58 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:51:45 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/07 15:04:46 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static char	restore_special_char(char c)
 		return ('<');
 	else if (c == '\x12')
 		return ('>');
+	else if (c == '\x13')
+		return ('|');
 	return (c);
 }
 
@@ -71,7 +73,7 @@ static void	restore_loop(const char *str, char *res)
 	{
 		if (str[i] == '"' || str[i] == '\'')
 			update_quote_state(str, i, &in_quote, &quote_char);
-		if (in_quote && (str[i] == '\x11' || str[i] == '\x12'))
+		if (in_quote && (str[i] == '\x11' || str[i] == '\x12' || str[i] == '\x13'))
 			res[j++] = restore_special_char(str[i]);
 		else
 			res[j++] = str[i];

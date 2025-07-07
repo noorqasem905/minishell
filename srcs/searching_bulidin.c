@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:43:49 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/28 19:06:40 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:13:20 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	searching_bulidin_2(char **split, t_cmd **cmd, char *t)
 	if (!ft_strncmp(split[0], "export", 6)
 		&& !ft_strchr((*cmd)->input, '|'))
 	{
+		printf("export = %s\n", t);
 		ft_export(t, cmd);
 		return (13);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dup_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:03:40 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:34:07 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/07 14:00:31 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	dup_process_2(t_cmd **cmd, t_list **current, int i)
 		{
 			if (((*cmd)->exit_status == 2
 					|| (*cmd)->exit_status == 0) && (*cmd)->bulidin <= 0)
-				ft_printf("%2syntax error near unexpected token `newline`\n");
+				ft_printf("%2syntax error near unexpected token `newlinez`\n");
 			return (-1);
 		}
 	}

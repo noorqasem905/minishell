@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/05 12:28:31 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:07:17 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ char						**add_env(char **env, char *name, char *value);
 char						*get_redirection_command(char *temp,
 								char **redirection_split, int iteritor);
 char						*restore_special_char_in_quotes(const char *str);
+int							ft_strmchr_quote_safe(char *s, const char *delimiters);
 int							get_env_j(char **env, char *name);
 char						*trim_quotes(char *str);
 int							robo_exit(char **split, t_cmd *cmd);

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 18:12:04 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:42:58 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,29 +125,6 @@ int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[],
 	return (0);
 }
 
-void	signal_handler_heredoc1(int signum)
-{
-	(void)signum;
-	g_exit_status = 130;
-	rl_replace_line("", 0);
-	// rl_done = 1;
-	write(STDOUT_FILENO, "\n", 1);
-	close(0);
-}
-
-void	signal_handler_heredoc(void)
-{
-	signal(SIGINT, signal_handler_heredoc1);
-	signal(SIGQUIT, SIG_IGN);
-}
-void	ssignal_handler(int x)
-{
-	(void)x;
-	g_exit_status = 130;
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
 int	heredoc(char *temp, char **file_loc, size_t size, t_cmd **cmd)
 {
 	char	**heredoc_ptrs;

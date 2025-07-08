@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:13:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 17:33:06 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:34:08 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,15 @@ int	run_buildin_execution_3(t_cmd *cmd, t_list *current, char *tmp)
 		cmd->bulidin = 14;
 		return (-1);
 	}
-	else
+	else if (ft_strcmp(tmp, "pwd") == 0)
 	{
-		if (run_buildin_execution_4(cmd, current, tmp) < 0)
-			return (-1);
+		free(tmp);
+		robo_pwd();
+		cmd->bulidin = 13;
+		return (-1);
 	}
+	else if (run_buildin_execution_4(cmd, current, tmp) < 0)
+		return (-1);
 	return (0);
 }
 
@@ -69,13 +73,6 @@ int	run_buildin_execution_2(t_cmd *cmd, t_list *current, char *tmp)
 		free(tmp);
 		robo_env(cmd);
 		cmd->bulidin = 12;
-		return (-1);
-	}
-	else if (ft_strcmp(tmp, "pwd") == 0)
-	{
-		free(tmp);
-		robo_pwd();
-		cmd->bulidin = 13;
 		return (-1);
 	}
 	else if (ft_strncmp(tmp, "echo", 4) == 0)

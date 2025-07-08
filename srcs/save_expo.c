@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:32:38 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/07/08 16:35:37 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:42:44 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@
 } */
 static char	*join_and_free(char *s1, char *s2)
 {
-	char *res;
-	
+	char	*res;
+
 	res = ft_strjoin(s1, s2);
 	free(s1);
 	return (res);

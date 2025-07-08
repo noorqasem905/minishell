@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:07:11 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 18:09:24 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:21:06 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +115,10 @@ int	reading_manager(t_cmd **cmd, int *flag, char ***temp)
 	{
 		dup2(1, 0);
 		input = readline(COLOR_CUSTOM "~/Roboshell> " COLOR_RESET);
-		if (input == NULL)
+		if (!input)
 			break ;
-		if (is_closed(input) == -1)
-		{
-			ft_printf("%2Syntax error: Unclosed quotes\n");
-			(*cmd)->exit_status = 1;
-			free(input);
+		if (read_unclosed_quotes(cmd, input))
 			continue ;
-		}
 		ret = reading_manager_handle(cmd, flag, temp, &input);
 		if (ret == 25)
 			break ;

@@ -6,35 +6,11 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 20:14:59 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 17:26:36 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:44:53 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	free_it_noww(char **s, char *s2, int emassage)
-{
-	int	n;
-
-	n = 0;
-	if (s2 != NULL)
-	{
-		free(s2);
-		s2 = NULL;
-	}
-	while (s[n])
-	{
-		free(s[n]);
-		n++;
-	}
-	if (s)
-	{
-		free(s);
-		s = NULL;
-	}
-	if (emassage || emassage == -1)
-		ft_printf("%2");
-}
 
 char	*check_access(char **paths, char **result)
 {
@@ -61,35 +37,6 @@ char	*check_access(char **paths, char **result)
 	return (m);
 }
 
-int	ft_setup_execve(char *file, char ***result, char **ev, char ***paths)
-{
-	int		get;
-
-	if (!file || !*file)
-		return (-1);
-	*result = ft_split(file, ' ');
-	if (!*result)
-	{
-		perror("Error splitting file");
-		return (-1);
-	}
-	if ((*result)[0] && (!ft_strncmp((*result)[0], "./", 2) || !ft_strncmp((*result)[0], "/", 1)))
-		return (3);
-	get = get_path(ev);
-	if (get < 0)
-	{
-		frees_split(*result);
-		return (-1);
-	}
-	*paths = ft_split(ev[get] + 5, ':');
-	if (!*paths)
-	{
-		free_it_noww(*result, NULL, 1);
-		return (-1);
-	}
-	return (0);
-}
-
 int	check_validation_handle(int flag, char *m, char **result)
 {
 	if (m == NULL || flag < 0)
@@ -100,6 +47,14 @@ int	check_validation_handle(int flag, char *m, char **result)
 		return (-1);
 	}
 	return (0);
+}
+
+int	ft_execve_handle_empty(char **paths, char **result)
+{
+	if (paths)
+		frees_split(paths);
+	free_it_noww(result, NULL, 1);
+	return (-1);
 }
 
 int	ft_execve(char *file, t_cmd **cmd)
@@ -113,12 +68,7 @@ int	ft_execve(char *file, t_cmd **cmd)
 	if (flag == -1)
 		return (-1);
 	if (!result || !result[0] || !*result[0])
-	{
-		if (paths)
-			frees_split(paths);
-		free_it_noww(result, NULL, 1);
-		return (-1);
-	}
+		return (ft_execve_handle_empty(paths, result));
 	(*cmd)->lock = flag;
 	flag = check_validation(paths, result, &m, cmd);
 	if (check_validation_handle(flag, m, result) < 0)

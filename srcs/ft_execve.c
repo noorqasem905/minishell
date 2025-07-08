@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 17:03:10 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/07/08 17:19:45 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:53:30 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,3 @@ int	ft_execve(char *file, t_cmd **cmd)
 		return (-1);
 	return (ft_execve_execute(m, result, cmd));
 }
-

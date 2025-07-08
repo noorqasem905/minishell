@@ -3,25 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_handle2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:47:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/30 19:57:59 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/08 18:50:21 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_redirection_mult(char *input)
+static int	loop_check_redirection_mult(char *input, int mult_i[3],
+		int conflect_handle[2], int is_file_enter[2])
 {
-	int	mult_i[3];
-	int	conflect_handle[2];
-	int	is_file_enter[2];
 	int	ret_mul_ret[2];
 
-	mult_i[2] = 0;
 	ret_mul_ret[1] = 0;
-	init_check_redirection_mult(mult_i, conflect_handle, is_file_enter);
 	while (input[mult_i[2]])
 	{
 		ret_mul_ret[0] = check_redirection_mult_sign(mult_i, conflect_handle,
@@ -37,10 +33,26 @@ int	check_redirection_mult(char *input)
 			ret_mul_ret[1] = 0;
 		mult_i[2]++;
 	}
+	return (ret_mul_ret[1]);
+}
+
+int	check_redirection_mult(char *input)
+{
+	int	mult_i[3];
+	int	conflect_handle[2];
+	int	is_file_enter[2];
+	int	ret;
+
+	mult_i[2] = 0;
+	init_check_redirection_mult(mult_i, conflect_handle, is_file_enter);
+	ret = loop_check_redirection_mult(input, mult_i, conflect_handle,
+			is_file_enter);
+	if (ret < 0)
+		return (-1);
 	if ((is_file_enter[1] > 0 && is_file_enter[0] == 0) || mult_i[0] > 1
 		|| mult_i[1] > 1 || conflect_handle[0] > 1)
 		return (-1);
-	return (ret_mul_ret[1]);
+	return (ret);
 }
 
 int	handle_mult_redirection(char *temp3, char *temp2, char **temp,

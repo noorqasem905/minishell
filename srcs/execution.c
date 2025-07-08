@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 15:24:58 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/08 19:37:03 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	execution_setup_process(int size, int (**pipe_fd2)[2], pid_t **pids)
 	(*pids) = malloc((size + 1) * sizeof(pid_t));
 	if (!(*pids))
 		return (-1);
-	(*pipe_fd2) = malloc((size + 1) * sizeof(int[2]));
+	(*pipe_fd2) = malloc((size + 1) * sizeof(int [2]));
 	if (!*pipe_fd2)
 		return (free_err_ret(NULL, (*pids), NULL, -1));
 	(*pids)[size] = '\0';
@@ -29,8 +29,8 @@ int	execution_process(t_cmd **cmd)
 	pid_t	*pids;
 	int		ret;
 	int		size;
+	int		(*pipe_fd2)[2];
 
-	int(*pipe_fd2)[2];
 	size = ft_lstsize((*cmd)->word);
 	if (execution_setup_process(size, &pipe_fd2, &pids) < 0)
 		return (-1);

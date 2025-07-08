@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:02:01 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/07/08 17:24:59 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:44:52 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,8 @@ int	is_invalid_redirect(char *str, int i)
 		c = '\0';
 	else
 		c = str[i + 2];
-	if ((a == '<' || a == '>')
-		&& (b == '<' || b == '>')
-		&& (c == '<' || c == '>'))
+	if ((a == '<' || a == '>') && (b == '<' || b == '>') && (c == '<'
+			|| c == '>'))
 		return (1);
 	if ((a == '<' && b == '>') || (a == '>' && b == '<'))
 		return (1);
@@ -68,4 +67,25 @@ int	handle_ret_export(char *str, t_cmd **cmd)
 		i++;
 	}
 	return (0);
+}
+
+int	read_unclosed_quotes(t_cmd **cmd, char *input)
+{
+	if (is_closed(input) == -1)
+	{
+		ft_printf("%2Syntax error: Unclosed quotes\n");
+		(*cmd)->exit_status = 1;
+		free(input);
+		return (1);
+	}
+	return (0);
+}
+
+void	ssignal_handler(int x)
+{
+	(void)x;
+	g_exit_status = 130;
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }

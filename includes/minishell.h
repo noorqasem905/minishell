@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 17:06:13 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:20:32 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,10 @@ int							ft_redirection(char *input,
 								char ***redirection_split, t_cmd **cmd);
 int							loop_skip(char **str, char **tmp, int *enter,
 								int *i);
+int							read_unclosed_quotes(t_cmd **cmd, char *input);
+void						signal_handler_heredoc1(int signum);
+void						signal_handler_heredoc(void);
+void						ssignal_handler(int x);
 int							ft_execute_redirection(char **redirection_split,
 								int ccount_i[], int *fd, char *temp3);
 int							process_redirections(char ***redirection_split,
@@ -336,5 +340,9 @@ char						*skp(char *str);
 int							remove_leading_tabs(char **result);
 int							handle_redirection(char *str, int *i, int *enter);
 int							is_invalid_redirect(char *str, int i);
+int							process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input);
+char						*remove_special_char(char *str, char special_char);
+void						restore_loop_two(char **str);
+void						restore_loop_2d(char ***str);
 
 #endif

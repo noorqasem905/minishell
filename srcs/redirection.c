@@ -41,7 +41,8 @@ char	*get_redirection_command(char *temp, char **redirection_split,
 	return (NULL);
 }
 
-static void	init_process_redirections(int ccount_i[3], int i, char **redirection_split)
+static void	init_process_redirections(int ccount_i[3], int i,
+		char **redirection_split)
 {
 	ccount_i[0] = -1;
 	ccount_i[1] = i;
@@ -49,8 +50,8 @@ static void	init_process_redirections(int ccount_i[3], int i, char **redirection
 	ccount_i[3] = ft_2dlen(redirection_split);
 }
 
-int	process_redirections(char ***redirection_split, t_cmd **cmd,
-		char **temp3, int i)
+int	process_redirections(char ***redirection_split, t_cmd **cmd, char **temp3,
+		int i)
 {
 	char	**tty;
 	int		ccount_i[4];

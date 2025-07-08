@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   bulidin_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:12:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 20:59:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/08 12:48:20 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	handle_cd_slash(char *temp)
+/*int	handle_cd_slash(char *temp)
 {
 	if (temp[0] == '/')
 	{
@@ -46,7 +46,7 @@ int	handle_cd_dup_dot(char *temp, t_cmd **cmd)
 		join = ft_strjoin(tmp, "\"");
 		free(tmp);
 		ft_export(join, cmd);
-		free(join);	
+		free(join);
 		if (parent != NULL)
 			*parent = '\0';
 		tmp = ft_strjoin("export PWD=\"", cwd);
@@ -118,8 +118,7 @@ int	merge_quoted_tokens(char ***temp, char **dir, int start, int *end)
 			return (-1);
 	}
 	return (0);
-}
-
+}*/
 int	searching_comand(char **temp)
 {
 	if (ft_strcmp(temp[0], "exit") == 0)

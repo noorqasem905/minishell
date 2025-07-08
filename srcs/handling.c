@@ -12,8 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	free_err_ret(char *message, void *free_it,
-			char **free_splt, int ret_value)
+int	free_err_ret(char *message, void *free_it, char **free_splt, int ret_value)
 {
 	if (message)
 		ft_printf("%2", message);

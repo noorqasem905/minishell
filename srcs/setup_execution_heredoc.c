@@ -12,9 +12,9 @@
 
 #include "../includes/minishell.h"
 
-static	void	counter_total_heredoc(t_here_doc **here_doc, char *str)
+static void	counter_total_heredoc(t_here_doc **here_doc, char *str)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -54,9 +54,8 @@ int	handle_here_doc_qouts(char *temp)
 	return (flag);
 }
 
-int	searching_here_doc_2_logic(
-	t_cmd **cmd, t_here_doc **here_doc,
-	t_list **current, int i_p[])
+int	searching_here_doc_2_logic(t_cmd **cmd, t_here_doc **here_doc,
+		t_list **current, int i_p[])
 {
 	char	*temp;
 	int		check_error;
@@ -64,8 +63,8 @@ int	searching_here_doc_2_logic(
 	(*cmd)->exit_status = 2;
 	(*cmd)->who_am_i = 13;
 	counter_total_heredoc(here_doc, (*current)->content);
-	temp = ft_strnstr(
-			(*current)->content, "<<", ft_strlen((*current)->content));
+	temp = ft_strnstr((*current)->content, "<<",
+			ft_strlen((*current)->content));
 	check_error = handle_here_doc(temp);
 	if (check_error < 0)
 	{
@@ -101,7 +100,7 @@ int	sizeof_heredoc(char *str)
 
 int	setup_execution(t_cmd **cmd)
 {
-	int		size;
+	int	size;
 
 	(size) = ft_lstsize((*cmd)->word);
 	(*cmd)->here_doc->pryority = NULL;

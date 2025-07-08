@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 18:17:53 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/08 18:12:04 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,12 @@ int	implement_heredoc(int *fd, char **input, int original_stdout, t_cmd **cmd)
 	str = malloc(sizeof(t_list));
 	while (1)
 	{
-		here_doc = get_next_line(STDIN_FILENO);
+		here_doc = readline(">");
+		if (g_exit_status == 130)
+		{
+			free(here_doc);
+			break ;
+		}
 		if (here_doc == NULL)
 			break ;
 		len = ft_strlen(here_doc);
@@ -90,7 +95,8 @@ int	heredoc_mult_process(int check_error, char **file_loc, int fd[])
 	return (0);
 }
 
-int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[], t_cmd **cmd)
+int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[],
+		t_cmd **cmd)
 {
 	char	**input;
 	int		fd[2];
@@ -119,6 +125,29 @@ int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[], t_cmd
 	return (0);
 }
 
+void	signal_handler_heredoc1(int signum)
+{
+	(void)signum;
+	g_exit_status = 130;
+	rl_replace_line("", 0);
+	// rl_done = 1;
+	write(STDOUT_FILENO, "\n", 1);
+	close(0);
+}
+
+void	signal_handler_heredoc(void)
+{
+	signal(SIGINT, signal_handler_heredoc1);
+	signal(SIGQUIT, SIG_IGN);
+}
+void	ssignal_handler(int x)
+{
+	(void)x;
+	g_exit_status = 130;
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
 int	heredoc(char *temp, char **file_loc, size_t size, t_cmd **cmd)
 {
 	char	**heredoc_ptrs;
@@ -127,6 +156,7 @@ int	heredoc(char *temp, char **file_loc, size_t size, t_cmd **cmd)
 
 	search = (temp);
 	heredoc_count = 0;
+	signal_handler_heredoc();
 	heredoc_ptrs = malloc((size + 1) * sizeof(char *));
 	if (!heredoc_ptrs)
 		return (-1);
@@ -142,5 +172,7 @@ int	heredoc(char *temp, char **file_loc, size_t size, t_cmd **cmd)
 	if (heredoc_mult(heredoc_count, file_loc, heredoc_ptrs, cmd) < 0)
 		return (free_err_ret(NULL, heredoc_ptrs, NULL, -1));
 	free(heredoc_ptrs);
+	signal(SIGINT, ssignal_handler);
+	signal(SIGQUIT, SIG_DFL);
 	return (0);
 }

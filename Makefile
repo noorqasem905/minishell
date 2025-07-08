@@ -53,18 +53,17 @@ SRCS = 	srcs/env.c							\
 		srcs/utils_set_data.c				\
 		srcs/process_input.c				\
 		srcs/utils_export2.c				\
-		srcs/ft_echo_utils.c				\
 		srcs/remove_qoute.c 				\
 		srcs/dup_process.c					\
 		srcs/utils_setup.c					\
 		srcs/init_export.c					\
 		srcs/open_pipe.c 					\
 		srcs/utils_dup.c					\
-		srcs/robo_cd.c						\
+		srcs/ft_cd.c						\
 		srcs/utils2.c 						\
-		srcs/ft_echo.c						\
+		srcs/robo_echo.c					\
 		srcs/skp_export.c					\
-		srcs/utils_skp.c
+		srcs/utils_skp.c														
 all: $(NAME)
 
 OBJS_DIR =includes/build

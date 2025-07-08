@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   searching_bulidin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:43:49 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 20:55:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/08 16:31:54 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int	searching_bulidin_3(char **split, t_cmd **cmd)
 {
 	int	ret;
 
-	if (!ft_strcmp(split[0], "exit")
-		&& !ft_strchr((*cmd)->input, '|'))
+	if (!ft_strcmp(split[0], "exit") && !ft_strchr((*cmd)->input, '|'))
 	{
 		(*cmd)->who_am_i = 402;
 		ret = robo_exit(split, *cmd);
@@ -32,14 +31,12 @@ int	searching_bulidin_2(char **split, t_cmd **cmd, char *t)
 {
 	int	i;
 
-	if (!ft_strncmp(split[0], "export", 6)
-		&& !ft_strchr((*cmd)->input, '|'))
+	if (!ft_strncmp(split[0], "export", 6) && !ft_strchr((*cmd)->input, '|'))
 	{
 		ft_export(t, cmd);
 		return (13);
 	}
-	if (!ft_strncmp(split[0], "unset", 5)
-		&& !ft_strchr((*cmd)->input, '|'))
+	if (!ft_strncmp(split[0], "unset", 5) && !ft_strchr((*cmd)->input, '|'))
 	{
 		i = 1;
 		while (split[i])
@@ -65,12 +62,14 @@ int	searching_bulidin_exit(char **split, t_cmd **cmd, char **input)
 
 int	searching_bulidin(char **split, t_cmd **cmd, char *t, char **input)
 {
-	int	ret;
+	char	*str1;
+	int		ret;
 
+	// str1 = restore_special_char_in_quotes(t);
 	ret = searching_bulidin_2(split, cmd, t);
 	if (ret < 0)
 		return (ret);
-	if (ft_strncmp(split[0], "cd", 2) == 0)
+	if (split && split[0] && ft_strcmp(split[0], "cd") == 0)
 	{
 		robo_cd(split, cmd);
 		free(*input);

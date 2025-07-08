@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:18:35 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/12 18:25:33 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/08 13:40:11 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ char	**add_env(char **env, char *name, char *value)
 
 void	robo_export(t_cmd **cmd, t_exp *export)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	if (export->name[0] == NULL)

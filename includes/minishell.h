@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/16 17:53:04 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/08 17:06:13 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-extern int g_exit_status;
+extern int					g_exit_status;
 
 typedef struct s_cmd		t_cmd;
 typedef struct s_here_doc	t_here_doc;
@@ -69,7 +69,8 @@ typedef struct s_split_state
 }							t_split_state;
 void						remove_quote_condition(char **str, char *who_im_i,
 								int save_i[3], int *close, char **result);
-int							heredoc(char *temp, char **file_loc, size_t size, t_cmd **cmd);
+int							heredoc(char *temp, char **file_loc, size_t size,
+								t_cmd **cmd);
 int							handle_here_doc(char *temp);
 struct						s_exp
 {
@@ -78,8 +79,8 @@ struct						s_exp
 	int						flag;
 };
 void						remove_quote(char **str);
-int							run_buildin_execution_4(t_cmd *cmd,
-								t_list *current, char *tmp);
+int							run_buildin_execution_4(t_cmd *cmd, t_list *current,
+								char *tmp);
 int							check_redirection_mult_siggr(int mult[],
 								int conflect_handle[], int is_file_enter[],
 								char *input);
@@ -140,8 +141,8 @@ int							reading_manager(t_cmd **cmd, int *flag,
 								char ***temp);
 int							ft_redirection(char *input,
 								char ***redirection_split, t_cmd **cmd);
-int							loop_skip(char **str, char **tmp,
-								int *enter, int *i);
+int							loop_skip(char **str, char **tmp, int *enter,
+								int *i);
 int							ft_execute_redirection(char **redirection_split,
 								int ccount_i[], int *fd, char *temp3);
 int							process_redirections(char ***redirection_split,
@@ -151,8 +152,7 @@ int							handle_mult_redirection(char *temp3, char *temp2,
 int							extract_and_apply_redirection(char **temp,
 								char *temp2, char ***redirection_split,
 								char **command);
-int							handle_redirection_segment(char
-								***redirection_split,
+int							handle_redirection_segment(char ***redirection_split,
 								char **temp, char **temp4, char *th);
 int							read_input(char **input);
 size_t						element_size(char **str);
@@ -169,6 +169,8 @@ void						printf_split(char *str, char **split);
 void						robo_cd(char **temp, t_cmd **cmd);
 void						free_it_noww(char **s, char *s2, int emassage);
 void						signal_handler(int x);
+int							ft_execve(char *file, t_cmd **cmd);
+int							ft_setup_execve(char *file, char ***result, char **ev, char ***paths);
 char						*check_access(char **paths, char **result);
 char						*expander_input(t_cmd **cmd, t_list *str);
 void						expand_cmds(t_cmd **cmd, char *input);
@@ -177,6 +179,7 @@ int							robo_unset(char *name, t_cmd **cmd);
 void						init_data(t_cmd **cmd);
 void						robo_export(t_cmd **cmd, t_exp *export);
 int							ft_export(char *str, t_cmd **cmd);
+char						*restore_special_str(const char *str);
 int							is_valid(char *name);
 int							ft_isspace(char c);
 char						*skip_quotes(char *split, char ignore);
@@ -187,7 +190,7 @@ char						*restore_special_char_in_quotes(const char *str);
 int							get_env_j(char **env, char *name);
 char						*trim_quotes(char *str);
 int							robo_exit(char **split, t_cmd *cmd);
-void						env(t_cmd *cmd);
+void						robo_env(t_cmd *cmd);
 void						handle_here_doc_nolink(t_cmd **cmd);
 void						robo_pwd(void);
 void						update_env(char **env, int j, char *name,
@@ -247,11 +250,9 @@ int							ft_heredoc_redirection_manager(char *file,
 								char **str);
 int							execute_heredoc_setup_exe(char *file, t_cmd **cmd,
 								int i, char **temp);
-int							execute_heredoc_manage_exeu(char *file,
-								char **str, t_cmd **cmd,
-								char *temp);
-int							execute_heredoc_redirection(
-								char	***redirection_split,
+int							execute_heredoc_manage_exeu(char *file, char **str,
+								t_cmd **cmd, char *temp);
+int							execute_heredoc_redirection(char ***redirection_split,
 								char *str, char *st, t_cmd **cmd);
 int							execute_heredoc(char *file, t_cmd **cmd, int i);
 int							dup_process_2_handle(t_cmd **cmd, t_list **current);
@@ -269,7 +270,7 @@ int							build_quoted_string(char **dir, char ***temp,
 int							merge_quoted_tokens(char ***temp, char **dir,
 								int start, int *end);
 int							handle_space_infile(char ***temp, char **dir);
-int							robo_cd_access(char **dir, char **temp, 
+int							robo_cd_access(char **dir, char **temp,
 								t_cmd **cmd);
 char						*trim_quotess(char *str);
 void						frees_newsplit(char **root);
@@ -311,6 +312,7 @@ int							process_handle_input(t_cmd **cmd, int *flag,
 								char ***temp, char **input);
 int							process_set_input(t_cmd **cmd, char **t,
 								char ***split, char **input);
+char						*export_expander(char *input, t_cmd *cmd);
 int							process_input_leaks(t_cmd **cmd, int ret);
 int							reading_manager_handle_2(t_cmd **cmd, int ret,
 								char ***temp);

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:16:28 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/10 14:23:25 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:01:53 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static void	rem_complete(char ***result, int i_k_j[3])
 {
-	(*result)[i_k_j[0]][i_k_j[1]++]
-		= (*result)[i_k_j[0]][i_k_j[2]];
+	(*result)[i_k_j[0]][i_k_j[1]++] = (*result)[i_k_j[0]][i_k_j[2]];
 }
 
 int	remove_quotues(char ***result)
@@ -32,7 +31,7 @@ int	remove_quotues(char ***result)
 		while ((*result)[i_k_j[0]][i_k_j[2]])
 		{
 			if (!quote && ((*result)[i_k_j[0]][i_k_j[2]] == '\''
-				|| (*result)[i_k_j[0]][i_k_j[2]] == '\"'))
+					|| (*result)[i_k_j[0]][i_k_j[2]] == '\"'))
 				quote = (*result)[i_k_j[0]][i_k_j[2]];
 			else if (quote && (*result)[i_k_j[0]][i_k_j[2]] == quote)
 				quote = 0;

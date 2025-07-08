@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-/* 
+
+/*
 static void	ft_heredoc_redirection_process_free(char *st, char **str)
 {
 	free(st);
@@ -133,7 +134,7 @@ int	execute_heredoc_redirection(char ***redirection_split, char *str, char *st,
 	if (ft_redirection(st, redirection_split, cmd) < 0)
 	{
 		if (st)
-			free (st);
+			free(st);
 		return (-1);
 	}
 	if (st)

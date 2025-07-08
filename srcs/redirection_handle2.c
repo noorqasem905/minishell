@@ -33,7 +33,7 @@ int	check_redirection_mult(char *input)
 			ret_mul_ret[1] = ret_mul_ret[0];
 			mult_i[2]++;
 		}
-		else if(ret_mul_ret[0] == 1)
+		else if (ret_mul_ret[0] == 1)
 			ret_mul_ret[1] = 0;
 		mult_i[2]++;
 	}

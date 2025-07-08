@@ -12,7 +12,8 @@
 
 #include "../includes/minishell.h"
 
-void	quote_remove_helper(char **str, int *save_i, int *close, int *allow, char **result)
+void	quote_remove_helper(char **str, int *save_i, int *close, int *allow,
+		char **result)
 {
 	if (*allow > 0 && *allow < 5)
 		no_value_of_echo(*str, save_i, allow);

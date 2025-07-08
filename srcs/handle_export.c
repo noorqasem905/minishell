@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_export.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/12 18:34:39 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/08 17:34:18 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ static int	fill_export(t_exp *export, char **result)
 	j = 0;
 	while (result[x])
 	{
-		if (ft_strcmp(result[x], "<<") == 0 || ft_strcmp(result[x], ">>") == 0)
-		{
-			x++;
-			continue ;
-		}
 		if (handle_key_value_pair(export, result, &x, &j) < 0)
 			return (-1);
 		x++;
@@ -101,17 +96,21 @@ static int	setup_export(char *str, t_cmd **cmd, char ***result)
 	return (0);
 }
 
-int	ft_export(char *str, t_cmd **cmd)
+int	ft_export(char *strr, t_cmd **cmd)
 {
 	char	**result;
+	char	*str;
 	t_exp	*export;
 	int		i;
 
-	if (handle_ret_export(str, cmd) < 0)
+	result = NULL;
+	if (handle_ret_export(strr, cmd) < 0)
 		return (-1);
-	if (setup_export(str, cmd, &result) < 0)
+	if (setup_export(strr, cmd, &result) < 0)
 		return (-1);
 	i = 0;
+	if (!result)
+		return (-1);
 	while (result[i])
 		i++;
 	export = init_export(i);

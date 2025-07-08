@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/30 23:26:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/08 15:22:59 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,12 @@ static int	count_special_char(char *str, char special_char)
 char	*remove_special_char(char *str, char special_char)
 {
 	char	*result;
-	int		i = 0;
-	int		j = 0;
+	int		i;
+	int		j;
 	int		count;
 
+	i = 0;
+	j = 0;
 	if (!str)
 		return (NULL);
 	count = count_special_char(str, special_char);
@@ -89,7 +91,7 @@ char	*remove_special_char(char *str, char special_char)
 	return (result);
 }
 
-static int space_history(char *input)
+static int	space_history(char *input)
 {
 	int	i;
 
@@ -105,7 +107,7 @@ static int space_history(char *input)
 
 static void	restore_loop(char **str)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while ((*str)[i])
@@ -118,13 +120,13 @@ static void	restore_loop(char **str)
 
 static void	restore_loop_2d(char ***str)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while ((*str)[i])
 	{
-		j = 0;	
+		j = 0;
 		while ((*str)[i][j])
 		{
 			if ((*str)[i][j] == '\x13')
@@ -134,10 +136,36 @@ static void	restore_loop_2d(char ***str)
 		i++;
 	}
 }
+char	*restore_special_str(const char *str)
+{
+	size_t	len;
+	char	*restr;
+
+	if (!str)
+		return (NULL);
+	len = strlen(str);
+	restr = (char *)malloc(len + 1);
+	if (!restr)
+		return (NULL);
+	for (size_t i = 0; i < len; ++i)
+	{
+		if (str[i] == '\x11')
+			restr[i] = '<';
+		else if (str[i] == '\x12')
+			restr[i] = '>';
+		else if (str[i] == '\x13')
+			restr[i] = '|';
+		else
+			restr[i] = str[i];
+	}
+	restr[len] = '\0';
+	return (restr);
+}
 
 int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 {
-	char *tmp;
+	char	*tmp;
+
 	if (*input && space_history(*input))
 		add_history(*input);
 	replace_special_char(input);

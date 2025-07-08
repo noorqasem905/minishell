@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int g_exit_status = 0;
+int		g_exit_status = 0;
 
 void	signal_handler(int x)
 {

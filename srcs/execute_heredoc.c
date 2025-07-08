@@ -79,8 +79,7 @@ int	execute_heredoc(char *file, t_cmd **cmd, int i)
 	if (execute_heredoc_manage_exeu(file, &str, cmd, temp) < 0)
 		return (-1);
 	st_protuction(&st, temp, str);
-	if (execute_heredoc_redirection
-		(&redirection_split, str, st, cmd) < 0)
+	if (execute_heredoc_redirection(&redirection_split, str, st, cmd) < 0)
 	{
 		if ((*cmd)->exit_status != 127)
 			(*cmd)->exit_status = 2;

@@ -16,8 +16,7 @@ int	run_buildin_execution_4(t_cmd *cmd, t_list *current, char *tmp)
 {
 	char	**split;
 
-	if (!ft_strncmp(tmp, "exit", 4) &&
-		(tmp[5] == '\0' || ft_isspace(tmp[5])))
+	if (!ft_strncmp(tmp, "exit", 4) && (tmp[5] == '\0' || ft_isspace(tmp[5])))
 	{
 		split = ft_split(current->content, ' ');
 		if (!split)

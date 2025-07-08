@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_setup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:58:09 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/16 18:18:29 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/08 17:34:46 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	handle_ecv_slash(char *result, char **m, char **paths, t_cmd **cmd)
 	return (0);
 }
 
-int shell_level_increment(t_cmd **cmd, int flag)
+int	shell_level_increment(t_cmd **cmd, int flag)
 {
 	int		shlvl_idx;
 	char	*shlvl_val;

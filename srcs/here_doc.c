@@ -6,76 +6,27 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 18:42:58 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:07:55 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
-{
-	int		check_error;
-	char	*temp;
-
-	temp = ft_strnstr(input, "<<", ft_strlen(input));
-	if (!temp)
-		return ((free_err_ret("no here doc\n", (NULL), NULL, 0)));
-	check_error = handle_here_doc(temp);
-	if (check_error < 0)
-		return ((free_err_ret("error here doc\n", NULL, NULL, -1)));
-	(*fd) = openfile_heredoc(fd, file_loc);
-	if ((*fd) < 0)
-		return ((free_err_ret(NULL, NULL, NULL, -2)));
-	*input_split = ft_mult_split(temp, " <>");
-	if (!*input_split)
-	{
-		close(*fd);
-		return (-1);
-	}
-	return (check_error);
-}
-
 int	implement_heredoc(int *fd, char **input, int original_stdout, t_cmd **cmd)
 {
-	t_list	*str;
-	char	*str_ntr;
 	char	*here_doc;
-	size_t	len;
 
-	str = malloc(sizeof(t_list));
 	while (1)
 	{
 		here_doc = readline(">");
-		if (g_exit_status == 130)
+		if (!here_doc || handle_exit_heredoc(here_doc)
+			|| ft_strcmp(here_doc, input[0]) == 0)
 		{
 			free(here_doc);
 			break ;
 		}
-		if (here_doc == NULL)
-			break ;
-		len = ft_strlen(here_doc);
-		if (len > 0 && here_doc[len - 1] == '\n')
-			here_doc[len - 1] = '\0';
-		if (ft_strcmp(here_doc, input[0]) == 0)
-		{
-			free(here_doc);
-			break ;
-		}
-		str->content = here_doc;
-		str->next = NULL;
-		str_ntr = expander_input(cmd, str);
-		if (str_ntr)
-		{
-			free(here_doc);
-			here_doc = str_ntr;
-		}
-		dup2((*fd), STDOUT_FILENO);
-		write(*fd, here_doc, len);
-		write(*fd, "\n", 1);
-		dup2(original_stdout, STDOUT_FILENO);
-		free(here_doc);
+		write_and_expand_line(fd, here_doc, original_stdout, cmd);
 	}
-	free(str);
 	return (0);
 }
 

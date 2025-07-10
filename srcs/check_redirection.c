@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:37:38 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 19:46:09 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:14:37 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,30 +79,13 @@ void	check_redirection_mult_nosiggrle(int mult[], int conflect_handle[],
 int	check_redirection_mult_sign(int mult[], int conflect_handle[],
 		int is_file_enter[], char *input)
 {
-	int	ret;
-
-	ret = 0;
 	if (input[mult[2]] == '<')
-	{
-		if (check_redirection_mult_sigls(mult, conflect_handle, is_file_enter,
-				input) < 0)
-			return (-1);
-		ret = 1;
-	}
+		return (handle_less_than(mult, conflect_handle, is_file_enter, input));
 	else if (input[mult[2]] == '>')
-	{
-		ret = 1;
-		if (input[mult[2] + 1] == '>' && input[mult[2] + 2] != '>')
-		{
-			input[mult[2] + 1] = ' ';
-			ret = 6;
-		}
-		if (check_redirection_mult_siggr(mult, conflect_handle, is_file_enter,
-				input) < 0)
-			return (-1);
-	}
+		return (handle_greater_than(mult, conflect_handle,
+				is_file_enter, input));
 	else if (input[mult[2]] != ' ' && input[mult[2]] != '>'
 		&& input[mult[2]] != '<')
 		check_redirection_mult_nosiggrle(mult, conflect_handle, is_file_enter);
-	return (ret);
+	return (0);
 }

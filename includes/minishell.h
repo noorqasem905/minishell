@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 19:20:32 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:13:34 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_split_state
 	char					quote_char;
 }							t_split_state;
 void						remove_quote_condition(char **str, char *who_im_i,
-								int save_i[3], int *close, char **result);
+								int save_i[3], int *close);
 int							heredoc(char *temp, char **file_loc, size_t size,
 								t_cmd **cmd);
 int							handle_here_doc(char *temp);
@@ -156,8 +156,8 @@ int							handle_mult_redirection(char *temp3, char *temp2,
 int							extract_and_apply_redirection(char **temp,
 								char *temp2, char ***redirection_split,
 								char **command);
-int							handle_redirection_segment(char ***redirection_split,
-								char **temp, char **temp4, char *th);
+int							handle_red_segment(char ***red_split, char **temp,
+								char **temp4, char *th);
 int							read_input(char **input);
 size_t						element_size(char **str);
 void						close_wait(pid_t pids[], int size,
@@ -174,7 +174,8 @@ void						robo_cd(char **temp, t_cmd **cmd);
 void						free_it_noww(char **s, char *s2, int emassage);
 void						signal_handler(int x);
 int							ft_execve(char *file, t_cmd **cmd);
-int							ft_setup_execve(char *file, char ***result, char **ev, char ***paths);
+int							ft_setup_execve(char *file, char ***result,
+								char **ev, char ***paths);
 char						*check_access(char **paths, char **result);
 char						*expander_input(t_cmd **cmd, t_list *str);
 void						expand_cmds(t_cmd **cmd, char *input);
@@ -256,7 +257,7 @@ int							execute_heredoc_setup_exe(char *file, t_cmd **cmd,
 								int i, char **temp);
 int							execute_heredoc_manage_exeu(char *file, char **str,
 								t_cmd **cmd, char *temp);
-int							execute_heredoc_redirection(char ***redirection_split,
+int							execute_heredoc_red(char ***redirection_split,
 								char *str, char *st, t_cmd **cmd);
 int							execute_heredoc(char *file, t_cmd **cmd, int i);
 int							dup_process_2_handle(t_cmd **cmd, t_list **current);
@@ -325,7 +326,7 @@ int							reading_manager_handle(t_cmd **cmd, int *flag,
 void						set_parent_signals(void);
 void						dfl_parent_signals(void);
 void						quote_remove_helper(char **str, int *save_i,
-								int *close, int *allow, char **result);
+								int *close, int *allow);
 void						no_value_of_echo(char *str, int save_i[3],
 								int *allow);
 int							searching_here_doc_2(t_cmd **cmd,
@@ -340,9 +341,19 @@ char						*skp(char *str);
 int							remove_leading_tabs(char **result);
 int							handle_redirection(char *str, int *i, int *enter);
 int							is_invalid_redirect(char *str, int i);
-int							process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input);
+int							process_handle_input(t_cmd **cmd, int *flag,
+								char ***temp, char **input);
 char						*remove_special_char(char *str, char special_char);
 void						restore_loop_two(char **str);
 void						restore_loop_2d(char ***str);
+void						write_and_expand_line(int *fd, char *here_doc,
+								int original_stdout, t_cmd **cmd);
+int							handle_exit_heredoc(char *here_doc);
+int							dbg_heredoc(char *input, int *fd,
+								char ***input_split, char **file_loc);
+int							handle_less_than(int mult[], int conf[],
+								int file[], char *input);
+int							handle_greater_than(int mult[], int conf[],
+								int file[], char *input);
 
 #endif

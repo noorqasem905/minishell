@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:36:24 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/07/08 17:34:18 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:16:29 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ static int	setup_export(char *str, t_cmd **cmd, char ***result)
 int	ft_export(char *strr, t_cmd **cmd)
 {
 	char	**result;
-	char	*str;
 	t_exp	*export;
 	int		i;
 

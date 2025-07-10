@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:54:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:54:45 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/10 13:38:21 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	execute_heredoc(char *file, t_cmd **cmd, int i)
 	if (execute_heredoc_manage_exeu(file, &str, cmd, temp) < 0)
 		return (-1);
 	st_protuction(&st, temp, str);
-	if (execute_heredoc_redirection(&redirection_split, str, st, cmd) < 0)
+	if (execute_heredoc_red(&redirection_split, str, st, cmd) < 0)
 	{
 		if ((*cmd)->exit_status != 127)
 			(*cmd)->exit_status = 2;

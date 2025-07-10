@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:06:12 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 22:08:28 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/10 13:38:28 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	execute_heredoc_manage_exeu(char *file, char **str, t_cmd **cmd, char *temp)
 	return (0);
 }
 
-int	execute_heredoc_redirection(char ***redirection_split, char *str, char *st,
+int	execute_heredoc_red(char ***redirection_split, char *str, char *st,
 		t_cmd **cmd)
 {
 	if (str)

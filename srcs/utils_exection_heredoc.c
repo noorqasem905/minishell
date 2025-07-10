@@ -6,11 +6,33 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 21:53:55 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 12:32:46 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:13:14 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	handle_less_than(int mult[], int conf[], int file[], char *input)
+{
+	if (check_redirection_mult_sigls(mult, conf, file, input) < 0)
+		return (-1);
+	return (1);
+}
+
+int	handle_greater_than(int mult[], int conf[], int file[], char *input)
+{
+	int	ret;
+
+	ret = 1;
+	if (input[mult[2] + 1] == '>' && input[mult[2] + 2] != '>')
+	{
+		input[mult[2] + 1] = ' ';
+		ret = 6;
+	}
+	if (check_redirection_mult_siggr(mult, conf, file, input) < 0)
+		return (-1);
+	return (ret);
+}
 
 void	handle_here_doc_nolink(t_cmd **cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:43:49 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 18:27:21 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:16:48 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	searching_bulidin_exit(char **split, t_cmd **cmd, char **input)
 
 int	searching_bulidin(char **split, t_cmd **cmd, char *t, char **input)
 {
-	char	*str1;
 	int		ret;
 
 	ret = searching_bulidin_2(split, cmd, t);

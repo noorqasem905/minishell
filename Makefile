@@ -1,5 +1,5 @@
 CC =  cc
-CFLAGS =  -g
+CFLAGS =  -Wall -Wextra -Werror
 NAME = minishell
 
 SRCS = 	srcs/env.c							\
@@ -67,7 +67,8 @@ SRCS = 	srcs/env.c							\
 		srcs/utils_proc.c					\
 		srcs/utils_2proc.c					\
 		srcs/utils_special.c				\
-		srcs/utils_exe.c						
+		srcs/utils_exe.c					\
+		srcs/utils_here.c					
 all: $(NAME)
 
 OBJS_DIR =includes/build

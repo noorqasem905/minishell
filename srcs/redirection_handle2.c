@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:47:14 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 18:50:21 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:36:54 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,19 @@ int	handle_mult_redirection(char *temp3, char *temp2, char **temp,
 	return (0);
 }
 
-int	handle_redirection_segment(char ***redirection_split, char **temp,
+int	handle_red_segment(char ***red_split, char **temp,
 		char **temp4, char *th)
 {
 	if (!temp4)
 	{
-		redirection_check2free(temp, redirection_split);
+		redirection_check2free(temp, red_split);
 		return (-1);
 	}
-	*temp4 = get_redirection_command(th, *redirection_split, 0);
+	*temp4 = get_redirection_command(th, *red_split, 0);
 	if (!(*temp4))
 	{
 		free(th);
-		redirection_check2free(temp, redirection_split);
+		redirection_check2free(temp, red_split);
 		return (-1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 16:29:58 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/07/10 14:36:01 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:16:34 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_echo(t_list *command)
 
 	i = 0;
 	flag_newline = 0;
-	line = command->content;
+	line = restore_special_char_in_quotes(command->content);
 	if (ft_strncmp(line, "echo", 4) == 0)
 		i = 4;
 	while (line[i] && line[i] == ' ')
@@ -92,5 +92,6 @@ int	ft_echo(t_list *command)
 	print_line(line, &i);
 	if (!flag_newline)
 		write(1, "\n", 1);
+	free(line);
 	return (0);
 }

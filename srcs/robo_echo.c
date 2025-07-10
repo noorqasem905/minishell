@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 16:29:58 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/07/08 16:36:19 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:36:01 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,18 @@ static int	skip_n(char *line, int *i)
 	return (no_newline);
 }
 
+static void	print_space(char *line, int *i)
+{
+	int	j;
+
+	j = *i;
+	while (line[j] == ' ')
+		j++;
+	if (line[j] != '\0')
+		write(1, " ", 1);
+	*i = j;
+}
+
 static void	print_line(char *line, int *i)
 {
 	int	quote;
@@ -56,9 +68,7 @@ static void	print_line(char *line, int *i)
 		}
 		if (!quote && line[*i] == ' ')
 		{
-			write(1, " ", 1);
-			while (line[*i] == ' ')
-				(*i)++;
+			print_space(line, i);
 			continue ;
 		}
 		write(1, &line[(*i)++], 1);

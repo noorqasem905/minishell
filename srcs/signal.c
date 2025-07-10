@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:56:26 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/07/08 18:52:55 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 18:41:02 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ void	dfl_parent_signals(void)
 
 void	signal_handler_heredoc1(int signum)
 {
-	(void)signum;
-	g_exit_status = 130;
-	rl_replace_line("", 0);
-	write(STDOUT_FILENO, "\n", 1);
-	close(0);
+	if (signum == SIGINT)
+	{
+		g_exit_status = 130;
+		rl_replace_line("", 0);
+		write(STDOUT_FILENO, "\n", 1);
+		close(0);
+	}
 }
 
 void	signal_handler_heredoc(void)

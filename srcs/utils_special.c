@@ -5,14 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 19:14:41 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/07/08 19:15:07 by aalquraa         ###   ########.fr       */
+/*   Created: 2025/07/10 17:44:05 by aalquraa          #+#    #+#             */
+/*   Updated: 2025/07/10 18:41:25 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	count_special_char(char *str, char special_char)
+char	*allocate_result(char *str, char special_char)
+{
+	int		count;
+	char	*result;
+
+	if (!str)
+		return (NULL);
+	count = count_special_char(str, special_char);
+	if (count == 0)
+		return (NULL);
+	result = malloc(strlen(str) + 1 - count);
+	if (!result)
+		return (NULL);
+	return (result);
+}
+
+int	count_special_char(char *str, char special_char)
 {
 	int	count;
 	int	i;
@@ -28,48 +44,36 @@ static int	count_special_char(char *str, char special_char)
 	return (count);
 }
 
-static int	should_return_null(char *str, int count)
-{
-	if (!str || count == 0)
-		return (1);
-	return (0);
-}
-
-static void	copy_except_special(char *src, char *dest, char special, int *j)
-{
-	int	i;
-
-	i = 0;
-	while (src[i])
-	{
-		if (src[i] != special)
-			dest[(*j)++] = src[i];
-		i++;
-	}
-}
-
 char	*remove_special_char(char *str, char special_char)
 {
 	char	*result;
+	int		i;
 	int		j;
-	int		count;
 
+	i = 0;
 	j = 0;
-	count = count_special_char(str, special_char);
-	if (should_return_null(str, count))
-		return (NULL);
-	result = malloc(ft_strlen(str) + 1 - count);
+	result = allocate_result(str, special_char);
 	if (!result)
 		return (NULL);
-	copy_except_special(str, result, special_char, &j);
+	while (str[i])
+	{
+		if (str[i] != special_char)
+			result[j++] = str[i];
+		i++;
+	}
 	if (j == 0)
 	{
-		if (*str)
-			free(str);
+		free(str);
 		free(result);
 		return (NULL);
 	}
 	free(str);
 	result[j] = '\0';
 	return (result);
+}
+
+void	signal_main(void)
+{
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }

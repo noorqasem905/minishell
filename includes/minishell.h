@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/10 14:13:34 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 18:38:54 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,8 +344,6 @@ int							is_invalid_redirect(char *str, int i);
 int							process_handle_input(t_cmd **cmd, int *flag,
 								char ***temp, char **input);
 char						*remove_special_char(char *str, char special_char);
-void						restore_loop_two(char **str);
-void						restore_loop_2d(char ***str);
 void						write_and_expand_line(int *fd, char *here_doc,
 								int original_stdout, t_cmd **cmd);
 int							handle_exit_heredoc(char *here_doc);
@@ -355,5 +353,11 @@ int							handle_less_than(int mult[], int conf[],
 								int file[], char *input);
 int							handle_greater_than(int mult[], int conf[],
 								int file[], char *input);
-
+void						signal_main(void);
+int							space_history(char *input);
+void						restore_loop(char **str);
+void						restore_loop_2d(char ***str);
+char						*remove_special_char(char *str, char special_char);
+int							count_special_char(char *str, char special_char);
+char						*allocate_result(char *str, char special_char);
 #endif

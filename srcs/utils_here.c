@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 14:07:30 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/07/10 14:08:08 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 17:24:22 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
 
 int	handle_exit_heredoc(char *here_doc)
 {
+	(void)here_doc;
 	if (g_exit_status == 130)
 	{
-		free(here_doc);
 		return (1);
 	}
 	return (0);

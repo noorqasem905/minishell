@@ -6,36 +6,56 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 19:01:30 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 18:38:29 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	save_data(t_cmd **cmd, int *flag, char ***temp)
+int	process_preprocessing(char **input)
 {
-	int	size;
-	int	iterator;
+	char	*tmp;
 
-	*flag = 0;
-	if (*temp == NULL)
+	if (*input && space_history(*input))
+		add_history(*input);
+	replace_special_char(input);
+	remove_qoute(input);
+	tmp = remove_special_char(*input, '\x15');
+	if (tmp)
+		*input = tmp;
+	if (check_no_pipe(*input) && check_pipe_input(*input) == -1)
 	{
-		perror("ft_split");
-		return (-1);
+		ft_printf("%2syntax haah error near unexpected token `|`\n");
+		return (-42);
 	}
-	size = ft_2dlen(*temp);
-	if (size == 0)
-		return (*flag = -3);
-	(*cmd)->word = NULL;
-	iterator = -1;
-	while (++iterator < size)
+	return (0);
+}
+
+int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
+{
+	int	status;
+
+	status = process_preprocessing(input);
+	if (status != 0)
 	{
-		if ((*temp)[iterator] != NULL)
-		{
-			insertend(&((*cmd)->word), (*temp)[iterator], flag);
-			if (*flag == 12)
-				break ;
-		}
+		(*cmd)->exit_status = 2;
+		return (status);
+	}
+	*temp = ft_split_custom_exp(*input, '|');
+	restore_loop(input);
+	restore_loop_2d(temp);
+	if (!*temp)
+		return (-1);
+	if (!*temp[0])
+	{
+		free(*temp);
+		return (-42);
+	}
+	if (save_data(cmd, flag, temp) == -1 || *flag == -3 || *flag == 12)
+	{
+		if (*flag == -3)
+			return (-3);
+		return (-1);
 	}
 	return (0);
 }
@@ -65,17 +85,6 @@ int	process_set_input(t_cmd **cmd, char **t, char ***split, char **input)
 	free(*t);
 	frees_split((*split));
 	return (ret_of_searching);
-}
-
-int	process_input_leaks(t_cmd **cmd, int ret)
-{
-	if (ret < 0)
-		return (ret);
-	if ((*cmd)->here_doc->file_loc)
-		handle_here_doc_nolink(cmd);
-	if ((*cmd)->here_doc->pryority)
-		free((*cmd)->here_doc->pryority);
-	return (0);
 }
 
 int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)

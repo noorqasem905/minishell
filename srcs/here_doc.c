@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/10 14:07:55 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 17:53:10 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	implement_heredoc(int *fd, char **input, int original_stdout, t_cmd **cmd)
 {
 	char	*here_doc;
 
+	g_exit_status = 0;
 	while (1)
 	{
 		here_doc = readline(">");
@@ -101,6 +102,6 @@ int	heredoc(char *temp, char **file_loc, size_t size, t_cmd **cmd)
 		return (free_err_ret(NULL, heredoc_ptrs, NULL, -1));
 	free(heredoc_ptrs);
 	signal(SIGINT, ssignal_handler);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
 	return (0);
 }

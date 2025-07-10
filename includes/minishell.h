@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:43:02 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/10 18:38:54 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:40:29 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_split_state
 	size_t					i;
 	char					quote_char;
 }							t_split_state;
+char						*replace_brackets(char *str);
 void						remove_quote_condition(char **str, char *who_im_i,
 								int save_i[3], int *close);
 int							heredoc(char *temp, char **file_loc, size_t size,

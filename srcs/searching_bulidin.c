@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   searching_bulidin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:43:49 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/10 14:16:48 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:42:21 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	searching_bulidin_2(char **split, t_cmd **cmd, char *t)
 
 	if (!ft_strncmp(split[0], "export", 6) && !ft_strchr((*cmd)->input, '|'))
 	{
-		ft_export(t, cmd);
+		ft_export(t, cmd);ft_export(t, cmd);//tshould use replace_brackets(t); function
 		return (13);
 	}
 	if (!ft_strncmp(split[0], "unset", 5) && !ft_strchr((*cmd)->input, '|'))

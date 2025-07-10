@@ -76,12 +76,10 @@ static int	check_enter_and_free(char **tmp, int enter)
 
 char	*skp(char *str)
 {
-	int		i;
 	int		ret;
 	int		enter;
 	char	*tmp;
 
-	i = 0;
 	ret = 0;
 	enter = 0;
 	tmp = ft_strdup("");

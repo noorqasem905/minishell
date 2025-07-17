@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:06:12 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/10 13:38:28 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:45:48 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ int	execute_heredoc_manage_exeu(char *file, char **str, t_cmd **cmd, char *temp)
 		(*cmd)->who_am_i = 42;
 		return (-1);
 	}
+	if ((*cmd)->flag == 19)
+		return (0);
 	if (!(*str))
 	{
 		if (run_buildin_exechr(cmd, temp) < 0)

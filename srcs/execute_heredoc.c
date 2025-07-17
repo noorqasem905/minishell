@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:54:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/17 11:40:30 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/17 14:58:26 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	st_protuction(char **st, char *temp, char *str)
 	return (0);
 }
 
-static int	nono_heredoc_command(char *temp)
+static int	nono_heredoc_command(char *temp, t_cmd **cmd)
 {
 	int	i;
 
@@ -48,6 +48,8 @@ static int	nono_heredoc_command(char *temp)
 		i++;
 	if (!temp[i])
 	{
+		(*cmd)->flag = 19;
+		(*cmd)->exit_status = 0;
 		free(temp);
 		return (-1);
 	}
@@ -61,12 +63,14 @@ int	execute_heredoc(char *file, t_cmd **cmd, int i)
 	char	*str;
 	char	*st;
 
+	(*cmd)->flag = 0;
 	if (execute_heredoc_setup_exe(file, cmd, i, &temp) < 0)
 		return (-1);
-	if (nono_heredoc_command(temp) < 0)
-		return (-1);
+	nono_heredoc_command(temp, cmd);
 	if (execute_heredoc_manage_exeu(file, &str, cmd, temp) < 0)
 		return (-1);
+	if ((*cmd)->flag == 19)
+		temp = "ls";
 	st_protuction(&st, temp, str);
 	if (execute_heredoc_red(&redirection_split, str, st, cmd) < 0)
 	{

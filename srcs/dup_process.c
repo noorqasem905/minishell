@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dup_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:03:40 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/08 16:47:25 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:22:49 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	dup_process_2(t_cmd **cmd, t_list **current, int i)
 	if ((*cmd)->here_doc->pryority[i] >= 2)
 	{
 		heredoc_idx = (*cmd)->here_doc->pryority[i] - 2;
-		if (execute_heredoc((*current)->content, cmd, heredoc_idx) == -1)
+		if (execute_heredoc((*current)->content, cmd, heredoc_idx) == -1 || (*cmd)->flag != 19)
 			return (-1);
 	}
 	else if (ft_strmchr((*current)->content, "<>"))

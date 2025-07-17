@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:00:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/30 19:45:05 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/17 14:32:20 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	ft_redirection(char *input, char ***redirection_split, t_cmd **cmd)
 		return (error_process_redirection_free(command, temp));
 	if (error_redirection(*redirection_split, command, temp2, temp) < 0)
 		return (-1);
-	if (error_ft_execute_redirection(temp, command, cmd, ret) < 0)
+	if (error_ft_execute_redirection(temp, command, cmd, ret) < 0 && (*cmd)->flag != 19)
 		return (-12);
 	return (0);
 }

@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/10 17:53:10 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:41:02 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	here_doc_manger(t_cmd **cmd, char **file_loc)
+{
+	t_list	*current;
+	int		size;
+	int		i_j[2];
+
+	i_j[0] = 0;
+	i_j[1] = 0;
+	current = (*cmd)->word;
+	while ((*cmd)->here_doc->pryority[i_j[0]] != '\0')
+	{
+		if ((*cmd)->here_doc->pryority[i_j[0]] >= 2)
+		{
+			size = sizeof_heredoc(current->content);
+			if (size > 1023 || heredoc(current->content, &(file_loc[i_j[1]]),
+					size, cmd) < 0)
+			{
+				ft_printf("%2heredoc initialize\n");
+				return (-1);
+			}
+			i_j[1]++;
+		}
+		current = current->next;
+		i_j[0]++;
+	}
+	return (0);
+}
 
 int	implement_heredoc(int *fd, char **input, int original_stdout, t_cmd **cmd)
 {

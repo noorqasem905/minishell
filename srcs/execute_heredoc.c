@@ -3,42 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:54:15 by nqasem            #+#    #+#             */
-/*   Updated: 2025/07/10 13:38:21 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:40:30 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	here_doc_manger(t_cmd **cmd, char **file_loc)
-{
-	t_list	*current;
-	int		size;
-	int		i_j[2];
-
-	i_j[0] = 0;
-	i_j[1] = 0;
-	current = (*cmd)->word;
-	while ((*cmd)->here_doc->pryority[i_j[0]] != '\0')
-	{
-		if ((*cmd)->here_doc->pryority[i_j[0]] >= 2)
-		{
-			size = sizeof_heredoc(current->content);
-			if (size > 1023 || heredoc(current->content, &(file_loc[i_j[1]]),
-					size, cmd) < 0)
-			{
-				ft_printf("%2heredoc initialize\n");
-				return (-1);
-			}
-			i_j[1]++;
-		}
-		current = current->next;
-		i_j[0]++;
-	}
-	return (0);
-}
 
 int	manager_execution_heredoc(char *file, char **temp)
 {
@@ -67,6 +39,21 @@ static int	st_protuction(char **st, char *temp, char *str)
 	return (0);
 }
 
+static int	nono_heredoc_command(char *temp)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isspace(temp[i]))
+		i++;
+	if (!temp[i])
+	{
+		free(temp);
+		return (-1);
+	}
+	return (0);
+}
+
 int	execute_heredoc(char *file, t_cmd **cmd, int i)
 {
 	char	**redirection_split;
@@ -75,6 +62,8 @@ int	execute_heredoc(char *file, t_cmd **cmd, int i)
 	char	*st;
 
 	if (execute_heredoc_setup_exe(file, cmd, i, &temp) < 0)
+		return (-1);
+	if (nono_heredoc_command(temp) < 0)
 		return (-1);
 	if (execute_heredoc_manage_exeu(file, &str, cmd, temp) < 0)
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:37:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/10 17:24:06 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:27:30 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	append_expansion(char **expanded, char *content, int *i, t_cmd *cmd)
 	return (0);
 }
 
-static int	handle_quotes_and_expand(
-	char **expanded, char *content, int *i, t_cmd *cmd)
+static int	handle_quotes_and_expand(char **expanded, char *content, int *i,
+		t_cmd *cmd)
 {
 	static int	flag_single = 0;
 	static int	flag_double = 0;

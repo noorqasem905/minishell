@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   retore_special_char.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:47:58 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/30 22:31:45 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/10 17:47:28 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*skip_quotes(char *split, char ignore)
 }
 
 static void	update_quote_state(const char *str, int i, int *in_quote,
-	char *quote_char)
+		char *quote_char)
 {
 	if (!*in_quote)
 	{
@@ -59,7 +59,7 @@ static char	restore_special_char(char c)
 	return (c);
 }
 
-static void	restore_loop(const char *str, char *res)
+static void	restore_loopp(const char *str, char *res)
 {
 	int		i;
 	int		j;
@@ -73,7 +73,8 @@ static void	restore_loop(const char *str, char *res)
 	{
 		if (str[i] == '"' || str[i] == '\'')
 			update_quote_state(str, i, &in_quote, &quote_char);
-		if (in_quote && (str[i] == '\x11' || str[i] == '\x12' || str[i] == '\x13'))
+		if (in_quote && (str[i] == '\x11' || str[i] == '\x12'
+				|| str[i] == '\x13'))
 			res[j++] = restore_special_char(str[i]);
 		else
 			res[j++] = str[i];
@@ -91,6 +92,6 @@ char	*restore_special_char_in_quotes(const char *str)
 	res = malloc(ft_strlen(str) + 1);
 	if (!res)
 		return (NULL);
-	restore_loop(str, res);
+	restore_loopp(str, res);
 	return (res);
 }

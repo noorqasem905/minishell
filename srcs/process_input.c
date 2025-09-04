@@ -3,141 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:39:45 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/30 23:26:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/10 18:38:29 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	save_data(t_cmd **cmd, int *flag, char ***temp)
+int	process_preprocessing(char **input)
 {
-	int	size;
-	int	iterator;
+	char	*tmp;
 
-	*flag = 0;
-	if (*temp == NULL)
-	{
-		perror("ft_split");
-		return (-1);
-	}
-	size = ft_2dlen(*temp);
-	if (size == 0)
-		return (*flag = -3);
-	(*cmd)->word = NULL;
-	iterator = -1;
-	while (++iterator < size)
-	{
-		if ((*temp)[iterator] != NULL)
-		{
-			insertend(&((*cmd)->word), (*temp)[iterator], flag);
-			if (*flag == 12)
-				break ;
-		}
-	}
-	return (0);
-}
-
-static int	count_special_char(char *str, char special_char)
-{
-	int	count;
-	int	i;
-
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if (str[i] == special_char)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-char	*remove_special_char(char *str, char special_char)
-{
-	char	*result;
-	int		i = 0;
-	int		j = 0;
-	int		count;
-
-	if (!str)
-		return (NULL);
-	count = count_special_char(str, special_char);
-	if (count == 0)
-		return (NULL);
-	result = malloc(ft_strlen(str) + 1 - count);
-	if (!result)
-		return (NULL);
-	while (str[i])
-	{
-		if (str[i] != special_char)
-			result[j++] = str[i];
-		i++;
-	}
-	if (j == 0)
-	{
-		if (*str)
-			free(str);
-		free(result);
-		return (NULL);
-	}
-	free(str);
-	result[j] = '\0';
-	return (result);
-}
-
-static int space_history(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (!ft_isspace(input[i]))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static void	restore_loop(char **str)
-{
-	int		i;
-
-	i = 0;
-	while ((*str)[i])
-	{
-		if ((*str)[i] == '\x13')
-			(*str)[i] = '|';
-		i++;
-	}
-}
-
-static void	restore_loop_2d(char ***str)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while ((*str)[i])
-	{
-		j = 0;	
-		while ((*str)[i][j])
-		{
-			if ((*str)[i][j] == '\x13')
-				(*str)[i][j] = '|';
-			j++;
-		}
-		i++;
-	}
-}
-
-int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
-{
-	char *tmp;
 	if (*input && space_history(*input))
 		add_history(*input);
 	replace_special_char(input);
@@ -148,8 +26,20 @@ int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
 	if (check_no_pipe(*input) && check_pipe_input(*input) == -1)
 	{
 		ft_printf("%2syntax haah error near unexpected token `|`\n");
-		(*cmd)->exit_status = 2;
 		return (-42);
+	}
+	return (0);
+}
+
+int	process_handle_input(t_cmd **cmd, int *flag, char ***temp, char **input)
+{
+	int	status;
+
+	status = process_preprocessing(input);
+	if (status != 0)
+	{
+		(*cmd)->exit_status = 2;
+		return (status);
 	}
 	*temp = ft_split_custom_exp(*input, '|');
 	restore_loop(input);
@@ -195,17 +85,6 @@ int	process_set_input(t_cmd **cmd, char **t, char ***split, char **input)
 	free(*t);
 	frees_split((*split));
 	return (ret_of_searching);
-}
-
-int	process_input_leaks(t_cmd **cmd, int ret)
-{
-	if (ret < 0)
-		return (ret);
-	if ((*cmd)->here_doc->file_loc)
-		handle_here_doc_nolink(cmd);
-	if ((*cmd)->here_doc->pryority)
-		free((*cmd)->here_doc->pryority);
-	return (0);
 }
 
 int	process_input(t_cmd **cmd, int *flag, char ***temp, char **input)

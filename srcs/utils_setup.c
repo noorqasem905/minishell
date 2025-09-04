@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_setup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:58:09 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/16 18:18:29 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/10 14:19:02 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	handle_ecv_slash(char *result, char **m, char **paths, t_cmd **cmd)
 	return (0);
 }
 
-int shell_level_increment(t_cmd **cmd, int flag)
+int	shell_level_increment(t_cmd **cmd, int flag)
 {
 	int		shlvl_idx;
 	char	*shlvl_val;
@@ -73,6 +73,8 @@ int shell_level_increment(t_cmd **cmd, int flag)
 	char	*num;
 	char	*export_str;
 
+	shlvl_val = NULL;
+	new_shlvl = 1;
 	shlvl_idx = get_env_j((*cmd)->env, "SHLVL");
 	if (shlvl_idx != -1)
 	{
@@ -93,8 +95,6 @@ int shell_level_increment(t_cmd **cmd, int flag)
 int	check_validation(char **paths, char **result, char **m, t_cmd **cmd)
 {
 	int		ret;
-	char	*cwd;
-	char	*num;
 
 	*m = NULL;
 	if (result[0] && ft_strncmp(result[0], "./", 2) == 0)
@@ -117,16 +117,4 @@ int	check_validation(char **paths, char **result, char **m, t_cmd **cmd)
 		return (ret);
 	*m = check_access(paths, result);
 	return (0);
-}
-
-void	printf_split(char *str, char **split)
-{
-	int	i;
-
-	i = 0;
-	while (split[i])
-	{
-		ft_printf("%2%s%s\n", str, split[i]);
-		i++;
-	}
 }

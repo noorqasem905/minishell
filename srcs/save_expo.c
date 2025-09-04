@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:32:38 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/06/04 18:19:38 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:42:44 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 	char	*value;
 	char	*line;
 	char	*tmp;
+	char	*res;
 
 	eq = ft_strchr(env, '=');
 	if (eq)
@@ -65,7 +66,6 @@
 		return (ft_strjoin("declare -x ", env));
 	}
 } */
-
 static char	*join_and_free(char *s1, char *s2)
 {
 	char	*res;

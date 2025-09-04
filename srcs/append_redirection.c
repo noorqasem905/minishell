@@ -20,8 +20,8 @@ void	init_append_redirection(int heredoc_append[])
 
 int	check_append_redirection(char **curr, int heredoc_append[])
 {
-	if (*(*curr) == '<' && *((*curr) + 1) == '<'
-		&& heredoc_append[0] && heredoc_append[1])
+	if (*(*curr) == '<' && *((*curr) + 1) == '<' && heredoc_append[0]
+		&& heredoc_append[1])
 	{
 		heredoc_append[0] = 0;
 		(*curr) += 2;
@@ -29,8 +29,8 @@ int	check_append_redirection(char **curr, int heredoc_append[])
 	}
 	if (*(*curr) != '<' && *(*curr) != '>' && !ft_isspace(*(*curr)))
 		init_append_redirection(heredoc_append);
-	if (*(*curr) == '>' && *((*curr) + 1) == '>'
-		&& heredoc_append[0] && heredoc_append[1])
+	if (*(*curr) == '>' && *((*curr) + 1) == '>' && heredoc_append[0]
+		&& heredoc_append[1])
 	{
 		heredoc_append[1] = 0;
 		(*curr) += 2;
@@ -41,8 +41,8 @@ int	check_append_redirection(char **curr, int heredoc_append[])
 		(*curr)++;
 		return (2);
 	}
-	if (((*(*curr) == '<') || (*(*curr) == '>'))
-		&& heredoc_append[0] && heredoc_append[1])
+	if (((*(*curr) == '<') || (*(*curr) == '>')) && heredoc_append[0]
+		&& heredoc_append[1])
 		(*curr)++;
 	return (0);
 }

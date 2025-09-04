@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:56:09 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/01 01:16:49 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/17 11:30:53 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,20 @@ size_t	word_len_custom(char *s, char c, int *flag, char *quote_char)
 		i++;
 	}
 	return (i);
+}
+
+char	*replace_brackets(char *str)
+{
+	int	i;
+
+	i = 0;
+	while ((str)[i])
+	{
+		if ((str)[i] == '\x11')
+			(str)[i] = '<';
+		else if ((str)[i] == '\x12')
+			(str)[i] = '>';
+		i++;
+	}
+	return (ft_strdup(str));
 }

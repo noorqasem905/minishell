@@ -1,0 +1,97 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   robo_echo.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 16:29:58 by aalquraa          #+#    #+#             */
+/*   Updated: 2025/07/10 19:16:34 by aalquraa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/minishell.h"
+
+static int	skip_n(char *line, int *i)
+{
+	int	j;
+	int	no_newline;
+
+	no_newline = 0;
+	while (line[*i] == '-' && line[*i + 1] == 'n')
+	{
+		j = *i + 2;
+		while (line[j] == 'n')
+			j++;
+		if (line[j] == ' ' || line[j] == '\0')
+		{
+			no_newline = 1;
+			*i = j;
+			while (line[*i] == ' ')
+				(*i)++;
+		}
+		else
+			break ;
+	}
+	return (no_newline);
+}
+
+static void	print_space(char *line, int *i)
+{
+	int	j;
+
+	j = *i;
+	while (line[j] == ' ')
+		j++;
+	if (line[j] != '\0')
+		write(1, " ", 1);
+	*i = j;
+}
+
+static void	print_line(char *line, int *i)
+{
+	int	quote;
+
+	quote = 0;
+	while (line[*i])
+	{
+		if (!quote && (line[*i] == '\'' || line[*i] == '"'))
+		{
+			quote = line[(*i)++];
+			continue ;
+		}
+		if (quote && line[*i] == quote)
+		{
+			quote = 0;
+			(*i)++;
+			continue ;
+		}
+		if (!quote && line[*i] == ' ')
+		{
+			print_space(line, i);
+			continue ;
+		}
+		write(1, &line[(*i)++], 1);
+	}
+}
+
+int	ft_echo(t_list *command)
+{
+	char	*line;
+	int		i;
+	int		flag_newline;
+
+	i = 0;
+	flag_newline = 0;
+	line = restore_special_char_in_quotes(command->content);
+	if (ft_strncmp(line, "echo", 4) == 0)
+		i = 4;
+	while (line[i] && line[i] == ' ')
+		i++;
+	flag_newline = skip_n(line, &i);
+	print_line(line, &i);
+	if (!flag_newline)
+		write(1, "\n", 1);
+	free(line);
+	return (0);
+}

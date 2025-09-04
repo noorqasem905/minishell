@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_set_data2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 22:39:47 by nqasem	           #+#    #+#             */
-/*   Updated: 2025/06/12 18:42:31 by nqasem           ###   ########.fr       */
+/*   Created: 2025/05/22 22:39:47 by nqasem			     #+#    #+#           */
+/*   Updated: 2025/07/08 12:50:25 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	init_data(t_cmd **cmd)
 	(*cmd)->counter = 0;
 	(*cmd)->bulidin = 0;
 	(*cmd)->index = 0;
-	(*cmd)->shell_level = 1;
 	(*cmd)->here_doc->file_loc = NULL;
 	(*cmd)->exit_status = 0;
 	here_doc->counter = 0;

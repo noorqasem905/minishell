@@ -6,12 +6,13 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:06:12 by nqasem            #+#    #+#             */
-/*   Updated: 2025/05/27 22:08:28 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/17 14:45:48 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-/* 
+
+/*
 static void	ft_heredoc_redirection_process_free(char *st, char **str)
 {
 	free(st);
@@ -106,6 +107,8 @@ int	execute_heredoc_manage_exeu(char *file, char **str, t_cmd **cmd, char *temp)
 		(*cmd)->who_am_i = 42;
 		return (-1);
 	}
+	if ((*cmd)->flag == 19)
+		return (0);
 	if (!(*str))
 	{
 		if (run_buildin_exechr(cmd, temp) < 0)
@@ -125,7 +128,7 @@ int	execute_heredoc_manage_exeu(char *file, char **str, t_cmd **cmd, char *temp)
 	return (0);
 }
 
-int	execute_heredoc_redirection(char ***redirection_split, char *str, char *st,
+int	execute_heredoc_red(char ***redirection_split, char *str, char *st,
 		t_cmd **cmd)
 {
 	if (str)
@@ -133,7 +136,7 @@ int	execute_heredoc_redirection(char ***redirection_split, char *str, char *st,
 	if (ft_redirection(st, redirection_split, cmd) < 0)
 	{
 		if (st)
-			free (st);
+			free(st);
 		return (-1);
 	}
 	if (st)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_extract_2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:45:38 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/05 15:34:30 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/10 13:39:28 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	extract_and_apply_redirection(char **temp, char *temp2,
 	{
 		th = ft_strfchr(temp2 + 1, which);
 		temp5 = ft_strmchr(temp4, "<>");
-		if (handle_redirection_segment(redirection_split, temp, &temp4, th) < 0)
+		if (handle_red_segment(redirection_split, temp, &temp4, th) < 0)
 			return (free_and_ret(temp5, -1, NULL));
 		temp4_copy = ft_strdup(temp4);
 		free(th);

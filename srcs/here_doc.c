@@ -6,71 +6,56 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 12:48:10 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 18:17:53 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/17 11:41:02 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	dbg_heredoc(char *input, int *fd, char ***input_split, char **file_loc)
+int	here_doc_manger(t_cmd **cmd, char **file_loc)
 {
-	int		check_error;
-	char	*temp;
+	t_list	*current;
+	int		size;
+	int		i_j[2];
 
-	temp = ft_strnstr(input, "<<", ft_strlen(input));
-	if (!temp)
-		return ((free_err_ret("no here doc\n", (NULL), NULL, 0)));
-	check_error = handle_here_doc(temp);
-	if (check_error < 0)
-		return ((free_err_ret("error here doc\n", NULL, NULL, -1)));
-	(*fd) = openfile_heredoc(fd, file_loc);
-	if ((*fd) < 0)
-		return ((free_err_ret(NULL, NULL, NULL, -2)));
-	*input_split = ft_mult_split(temp, " <>");
-	if (!*input_split)
+	i_j[0] = 0;
+	i_j[1] = 0;
+	current = (*cmd)->word;
+	while ((*cmd)->here_doc->pryority[i_j[0]] != '\0')
 	{
-		close(*fd);
-		return (-1);
+		if ((*cmd)->here_doc->pryority[i_j[0]] >= 2)
+		{
+			size = sizeof_heredoc(current->content);
+			if (size > 1023 || heredoc(current->content, &(file_loc[i_j[1]]),
+					size, cmd) < 0)
+			{
+				ft_printf("%2heredoc initialize\n");
+				return (-1);
+			}
+			i_j[1]++;
+		}
+		current = current->next;
+		i_j[0]++;
 	}
-	return (check_error);
+	return (0);
 }
 
 int	implement_heredoc(int *fd, char **input, int original_stdout, t_cmd **cmd)
 {
-	t_list	*str;
-	char	*str_ntr;
 	char	*here_doc;
-	size_t	len;
 
-	str = malloc(sizeof(t_list));
+	g_exit_status = 0;
 	while (1)
 	{
-		here_doc = get_next_line(STDIN_FILENO);
-		if (here_doc == NULL)
-			break ;
-		len = ft_strlen(here_doc);
-		if (len > 0 && here_doc[len - 1] == '\n')
-			here_doc[len - 1] = '\0';
-		if (ft_strcmp(here_doc, input[0]) == 0)
+		here_doc = readline(">");
+		if (!here_doc || handle_exit_heredoc(here_doc)
+			|| ft_strcmp(here_doc, input[0]) == 0)
 		{
 			free(here_doc);
 			break ;
 		}
-		str->content = here_doc;
-		str->next = NULL;
-		str_ntr = expander_input(cmd, str);
-		if (str_ntr)
-		{
-			free(here_doc);
-			here_doc = str_ntr;
-		}
-		dup2((*fd), STDOUT_FILENO);
-		write(*fd, here_doc, len);
-		write(*fd, "\n", 1);
-		dup2(original_stdout, STDOUT_FILENO);
-		free(here_doc);
+		write_and_expand_line(fd, here_doc, original_stdout, cmd);
 	}
-	free(str);
 	return (0);
 }
 
@@ -90,7 +75,8 @@ int	heredoc_mult_process(int check_error, char **file_loc, int fd[])
 	return (0);
 }
 
-int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[], t_cmd **cmd)
+int	heredoc_mult(int heredoc_count, char **file_loc, char *heredoc_ptrs[],
+		t_cmd **cmd)
 {
 	char	**input;
 	int		fd[2];
@@ -127,6 +113,7 @@ int	heredoc(char *temp, char **file_loc, size_t size, t_cmd **cmd)
 
 	search = (temp);
 	heredoc_count = 0;
+	signal_handler_heredoc();
 	heredoc_ptrs = malloc((size + 1) * sizeof(char *));
 	if (!heredoc_ptrs)
 		return (-1);
@@ -142,5 +129,7 @@ int	heredoc(char *temp, char **file_loc, size_t size, t_cmd **cmd)
 	if (heredoc_mult(heredoc_count, file_loc, heredoc_ptrs, cmd) < 0)
 		return (free_err_ret(NULL, heredoc_ptrs, NULL, -1));
 	free(heredoc_ptrs);
+	signal(SIGINT, ssignal_handler);
+	signal(SIGQUIT, SIG_IGN);
 	return (0);
 }

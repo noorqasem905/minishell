@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quote_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 14:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 14:46:06 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/10 14:02:38 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	quote_remove_helper(char **str, int *save_i, int *close, int *allow, char **result)
+void	quote_remove_helper(char **str, int *save_i, int *close, int *allow)
 {
 	if (*allow > 0 && *allow < 5)
 		no_value_of_echo(*str, save_i, allow);
@@ -26,8 +26,8 @@ void	quote_remove_helper(char **str, int *save_i, int *close, int *allow, char *
 		(*allow)--;
 }
 
-void	remove_quote_condition(char **str, char *who_im_i, int save_i[3],
-		int *close, char **result)
+void	remove_quote_condition(char **str, char *who_im_i,
+		int save_i[3], int *close)
 {
 	int	i;
 
@@ -49,4 +49,16 @@ void	remove_quote_condition(char **str, char *who_im_i, int save_i[3],
 	}
 	else if (ft_isspace((*str)[i]))
 		*close = 0;
+}
+
+void	printf_split(char *str, char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		ft_printf("%2%s%s\n", str, split[i]);
+		i++;
+	}
 }

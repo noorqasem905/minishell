@@ -1,5 +1,5 @@
 CC =  cc
-CFLAGS =  -g
+CFLAGS =  -Wall -Wextra -Werror -g
 NAME = minishell
 
 SRCS = 	srcs/env.c							\
@@ -53,18 +53,21 @@ SRCS = 	srcs/env.c							\
 		srcs/utils_set_data.c				\
 		srcs/process_input.c				\
 		srcs/utils_export2.c				\
-		srcs/ft_echo_utils.c				\
 		srcs/remove_qoute.c 				\
 		srcs/dup_process.c					\
 		srcs/utils_setup.c					\
 		srcs/init_export.c					\
 		srcs/open_pipe.c 					\
 		srcs/utils_dup.c					\
-		srcs/robo_cd.c						\
+		srcs/ft_cd.c						\
 		srcs/utils2.c 						\
-		srcs/ft_echo.c						\
+		srcs/robo_echo.c					\
 		srcs/skp_export.c					\
-		srcs/utils_skp.c
+		srcs/utils_skp.c					\
+		srcs/utils_exe.c					\
+		srcs/utils_here.c					\
+		srcs/utils_process.c				\
+		srcs/utils_special.c	
 all: $(NAME)
 
 OBJS_DIR =includes/build
@@ -95,7 +98,7 @@ fclean: clean
 	$(HIDE)rm -f $(NAME)
 	$(HIDE)make $(HIDED) -C libft/printf fclean
 	$(HIDE)make $(HIDED) -C libft fclean
-	$(HIDE)rm -df $(OBJS_DIR)
+	$(HIDE)rm -drf $(OBJS_DIR)
 
 re: fclean all
 

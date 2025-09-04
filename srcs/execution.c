@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:55:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 15:24:58 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/08 19:37:03 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	execution_setup_process(int size, int (**pipe_fd2)[2], pid_t **pids)
 int	execution_process(t_cmd **cmd)
 {
 	pid_t	*pids;
-	int		(*pipe_fd2)[2];
 	int		ret;
 	int		size;
+	int		(*pipe_fd2)[2];
 
 	size = ft_lstsize((*cmd)->word);
 	if (execution_setup_process(size, &pipe_fd2, &pids) < 0)
@@ -56,10 +56,8 @@ int	execution(t_cmd **cmd)
 	int		ret;
 
 	one_command = 0;
-	if ((*cmd)->word->next == NULL && ft_strchr
-		((*cmd)->word->content, 'e')
-		&& ft_strncmp(ft_strchr((*cmd)->word->content,
-				'e'), "exit", 4) == 0)
+	if ((*cmd)->word->next == NULL && ft_strchr((*cmd)->word->content, 'e')
+		&& ft_strncmp(ft_strchr((*cmd)->word->content, 'e'), "exit", 4) == 0)
 		one_command = -1;
 	ret = setup_execution(cmd);
 	if (ret != 0)
@@ -88,8 +86,7 @@ void	child_process_close(int pipe_fd2[][2], int i, int size)
 		close(pipe_fd2[i][1]);
 }
 
-int	child_process(t_cmd **cmd, int pipe_fd2[][2],
-		pid_t pids[])
+int	child_process(t_cmd **cmd, int pipe_fd2[][2], pid_t pids[])
 {
 	int	size;
 	int	i;
@@ -107,8 +104,7 @@ int	child_process(t_cmd **cmd, int pipe_fd2[][2],
 			dfl_parent_signals();
 			if (dup_process(&i, size, pipe_fd2) == -1)
 				return (-1);
-			if (dup_process_2(cmd, (&(*cmd)->current),
-					i) == -1)
+			if (dup_process_2(cmd, (&(*cmd)->current), i) == -1)
 				return (-1);
 		}
 		child_process_close(pipe_fd2, i, size);

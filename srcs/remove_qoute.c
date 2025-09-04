@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_qoute.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:25:20 by nqasem            #+#    #+#             */
-/*   Updated: 2025/06/12 14:40:42 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/07/10 14:02:58 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,10 @@ static void	init_value(int save_i[3], char *who_im_i, int *allow, int *close)
 void	remove_qoute(char **str)
 {
 	char	who_im_i;
-	char	*result;
 	int		save_i[3];
 	int		close;
 	int		allow;
 
-	result = *str;
 	init_value(save_i, &who_im_i, &allow, &close);
 	while ((*str) && (*str)[save_i[2]])
 	{
@@ -82,8 +80,8 @@ void	remove_qoute(char **str)
 				save_i[2]++;
 			continue ;
 		}
-		remove_quote_condition(str, &who_im_i, save_i, &close, &result);
-		quote_remove_helper(str, save_i, &close, &allow, &result);
+		remove_quote_condition(str, &who_im_i, save_i, &close);
+		quote_remove_helper(str, save_i, &close, &allow);
 		save_i[2]++;
 	}
 }
